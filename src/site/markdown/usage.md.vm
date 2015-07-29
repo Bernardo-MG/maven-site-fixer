@@ -1,0 +1,64 @@
+#set( $symbol_pound = '#' )
+${symbol_pound} Setting up the dependencies
+
+The project files are hosted on Bintray, and have been replicated on JCenter and OSS Sonatype, which also replicates into the Maven Central Repository. This means that it should not be necessary to set up the repository data, and the dependency should be accessible by default.
+
+All the info required to set up the dependency can be found at the [dependency information](./dependency-info.html) section.
+
+Still, if any problem were to arise, visit the [Bintray repo][bintray-repo], or the [Maven repo][maven-repo] to find out how to set up the dependencies. Take into notice that the Bintray repository should be considered to be the main repository.
+
+${symbol_pound}${symbol_pound} Reducing the dependency scope
+
+If the tools are only required to be used by the site plugin, it is possible to reduce their scope with the following Maven configuration:
+
+```xml
+<build>
+	<plugins>
+		...
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-site-plugin</artifactId>
+			<version>3.3</version>
+			<dependencies>
+				...
+				<dependency>
+					<!-- Wandrell's Velocity Tools -->
+					<groupId>com.wandrell.velocity</groupId>
+					<artifactId>velocity-tools</artifactId>
+					<version>${plugin.site.velocityTools.version}</version>
+				</dependency>
+				<dependency>
+					<!-- Velocity -->
+					<groupId>org.apache.velocity</groupId>
+					<artifactId>velocity</artifactId>
+					<version>${plugin.site.velocity.version}</version>
+				</dependency>
+				...
+			</dependencies>
+			...
+		</plugin>
+		...
+	</plugins>
+</build>
+```
+
+${symbol_pound}${symbol_pound} Snapshots
+
+Snapshot artifacts are stored on OSS Sonatype. They can be accessed by adding the following lines to the configuration files:
+
+${symbol_pound}${symbol_pound}${symbol_pound} Maven
+
+```xml
+<repositories>
+	...
+	<repository>
+		<id>oss-sonatype-snapshots</id>
+		<name>OSS Sonatype snapshots repository</name>
+		<url>https://oss.sonatype.org/content/groups/staging</url>
+	</repository>
+	...
+</repositories>
+```
+
+[bintray-repo]: ${bintrayURL}
+[maven-repo]: ${mavenURL}
