@@ -286,13 +286,67 @@ public final class HTMLUtil {
      *            CSS selector for elements to add the class to
      * @param className
      *            Name of class to add to the selected elements
-     * @return HTML content with the modified elements. If no elements are
-     *         found, the original content is returned.
+     * @return HTML content with the modified elements.
      */
     public final String addClass(final String content, final String selector,
             final String className) {
         return addClass(content, selector,
                 Collections.singletonList(className));
+    }
+
+    /**
+     * Corrects code divisions, by both correction the elements order, and by swapping
+     * code classes for the {@code <code>} block.
+     * <p>
+     * Maven sites handle code blocks in an outdated fashion, and look like this:
+     * 
+     * <pre>
+     * {@code <div class="source">
+     *    <pre>Some code</pre>
+     * </div>}
+     * </pre>
+     * This method fixes them, transforming them into:
+     * <pre>
+     * {@code <pre>
+     *    <source>Some code</source>
+     * </pre>}
+     * </pre>
+     * 
+     * @param content
+     *            HTML content to fix
+     * @return HTML content, with the source blocks updated
+     */
+    public final String fixCodeBlock(final String content) {
+        final Collection<Element> codeDivs; // Code divisions
+        final Element body;     // Element parsed from the content
+        String html;            // Fixed html
+        Element pre;            // <pre> element
+        Element code;           // <code> element
+
+        body = getBodyContents(content);
+
+        codeDivs = body.select(".source:has(pre)");
+
+        if (codeDivs.isEmpty()) {
+            html = content;
+        } else {
+            for (final Element div : codeDivs) {
+                if (!div.children().isEmpty()) {
+                    pre = div.child(0);
+
+                    code = new Element(Tag.valueOf("code"), "");
+                    code.text(div.text());
+                    pre.text("");
+                    pre.appendChild(code);
+
+                    div.replaceWith(pre);
+                }
+            }
+
+            html = body.html();
+        }
+
+        return html;
     }
 
     /**
@@ -304,14 +358,17 @@ public final class HTMLUtil {
      * <pre>
      * {@code <div class="source">
      *    <div class="source"> 
-     *       <pre>Some code</pre>
+     *       <pre>Some code
+    </pre>
+    
      *    </div>
      * </div>}
      * </pre>
      * This method fixes that, by removing the outer division.
      * 
      * @param content
-     * @return
+     *            HTML content to fix
+     * @return HTML content, with the redundant source classes removed
      */
     public final String fixRepeatedSourceDiv(final String content) {
         final Collection<Element> codeDivs; // Repeated code divs
@@ -333,43 +390,6 @@ public final class HTMLUtil {
                     validDiv.remove();
 
                     div.replaceWith(validDiv);
-                }
-            }
-
-            html = body.html();
-        }
-
-        return html;
-    }
-    public final String fixCodeBlock(final String content) {
-        final Collection<Element> codeDivs; // Code divisions
-        final Element body;     // Element parsed from the content
-        String html;            // Fixed html
-        Element pre;            // <pre> element
-        Element code;           // <code> element
-
-        body = getBodyContents(content);
-
-        codeDivs = body.select(".source:has(pre)");
-
-        if (codeDivs.isEmpty()) {
-            html = content;
-        } else {
-            for (final Element div : codeDivs) {
-                if (!div.children().isEmpty()) {
-                    pre = div.child(0);
-
-                    div.append(pre.text());
-                    System.out.println(pre);
-                    pre.text("");
-
-                    div.replaceWith(pre);
-                    
-                    pre.appendChild(div);
-                    
-                    code = new Element(Tag.valueOf("code"), "");
-                    code.text(div.text());
-                    div.replaceWith(code);
                 }
             }
 
