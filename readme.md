@@ -1,6 +1,6 @@
 # Velocity Tools
 
-A small group of tools for the Velocity templating engine, prepared to be used on the [Docs Maven Skin].
+A small group of tools for the Velocity templating engine, prepared to be used on the [Docs Maven Skin][docs-skin].
 
 This project has been created from the [Reflow Maven Skin][reflow-skin] project, which includes both the Reflow skin and it's own Velocity tools. These tools have been simplified and adapted to be used on custom Maven skins.
 
@@ -35,8 +35,10 @@ Documentation is also generated from the latest snapshot, taken from the 'develo
 The documentation site sources come along the source code (as it is a Maven site), so it is always possible to generate them using the following Maven command:
 
 ```
-$ mvn site
+$ mvn verify site
 ```
+
+The verify phase is required, as otherwise some of the reports won't be created.
 
 ## Usage
 
@@ -79,6 +81,7 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 ## License
 The project has been released under the [MIT License][license].
 
+[docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin
 [reflow-skin]: http://andriusvelykis.github.io/reflow-maven-skin/
 [bintray-repo]: https://bintray.com/bernardo-mg/maven/velocity-tools/view
 [maven-repo]: http://mvnrepository.com/artifact/com.wandrell.velocity/velocity-tools
