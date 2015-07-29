@@ -314,26 +314,62 @@ public final class HTMLUtil {
      * @return
      */
     public final String fixRepeatedSourceDiv(final String content) {
-        final Collection<Element> codeBlocksRepeat; // Repeated code blocks
+        final Collection<Element> codeDivs; // Repeated code divs
         final Element body;     // Element parsed from the content
-        String html;            // Fixed html
-        Element validBlock;     // Fixed code block
+        final String html;      // Fixed html
+        Element validDiv;     // Fixed code block
 
         body = getBodyContents(content);
 
-        codeBlocksRepeat = body.select(".source:has(.source)");
+        codeDivs = body.select(".source:has(.source)");
 
-        if (codeBlocksRepeat.isEmpty()) {
+        if (codeDivs.isEmpty()) {
             html = content;
         } else {
-            for (final Element block : codeBlocksRepeat) {
-                if (!block.children().isEmpty()) {
-                    validBlock = block.child(0);
+            for (final Element div : codeDivs) {
+                if (!div.children().isEmpty()) {
+                    validDiv = div.child(0);
 
-                    validBlock.remove();
+                    validDiv.remove();
 
-                    block.after(validBlock);
-                    block.remove();
+                    div.replaceWith(validDiv);
+                }
+            }
+
+            html = body.html();
+        }
+
+        return html;
+    }
+    public final String fixCodeBlock(final String content) {
+        final Collection<Element> codeDivs; // Code divisions
+        final Element body;     // Element parsed from the content
+        String html;            // Fixed html
+        Element pre;            // <pre> element
+        Element code;           // <code> element
+
+        body = getBodyContents(content);
+
+        codeDivs = body.select(".source:has(pre)");
+
+        if (codeDivs.isEmpty()) {
+            html = content;
+        } else {
+            for (final Element div : codeDivs) {
+                if (!div.children().isEmpty()) {
+                    pre = div.child(0);
+
+                    div.append(pre.text());
+                    System.out.println(pre);
+                    pre.text("");
+
+                    div.replaceWith(pre);
+                    
+                    pre.appendChild(div);
+                    
+                    code = new Element(Tag.valueOf("code"), "");
+                    code.text(div.text());
+                    div.replaceWith(code);
                 }
             }
 
