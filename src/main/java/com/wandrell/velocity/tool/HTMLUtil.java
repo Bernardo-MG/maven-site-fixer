@@ -295,21 +295,28 @@ public final class HTMLUtil {
     }
 
     /**
-     * Corrects code divisions, by both correction the elements order, and by swapping
-     * code classes for the {@code <code>} block.
+     * Corrects code divisions, by both correction the elements order, and by
+     * swapping code classes for the {@code <code>} block.
      * <p>
-     * Maven sites handle code blocks in an outdated fashion, and look like this:
+     * Maven sites handle code blocks in an outdated fashion, and look like
+     * this:
      * 
      * <pre>
      * {@code <div class="source">
-     *    <pre>Some code</pre>
+     *    <pre>Some code
+    </pre>
+    
      * </div>}
      * </pre>
      * This method fixes them, transforming them into:
+     * 
      * <pre>
      * {@code <pre>
      *    <source>Some code</source>
-     * </pre>}
+     * 
+    </pre>
+    
+    }
      * </pre>
      * 
      * @param content
@@ -331,16 +338,14 @@ public final class HTMLUtil {
             html = content;
         } else {
             for (final Element div : codeDivs) {
-                if (!div.children().isEmpty()) {
-                    pre = div.child(0);
+                pre = div.getElementsByTag("pre").get(0);
 
-                    code = new Element(Tag.valueOf("code"), "");
-                    code.text(div.text());
-                    pre.text("");
-                    pre.appendChild(code);
+                code = new Element(Tag.valueOf("code"), "");
+                code.text(div.text());
+                pre.text("");
+                pre.appendChild(code);
 
-                    div.replaceWith(pre);
-                }
+                div.replaceWith(pre);
             }
 
             html = body.html();
@@ -758,6 +763,51 @@ public final class HTMLUtil {
         }
 
         return result;
+    }
+
+    /**
+     * Transforms images on the body to figures.
+     * <p>
+     * This will wrap {@code <image>} elements with a {@code <figure>} element,
+     * and add a {@code <figcaption>} with the contents of the image's
+     * {@code alt} attribute, if it has said attribute.
+     * 
+     * @param content
+     *            HTML content to transform
+     * @return HTML content, with the body image wrapped in figures.
+     */
+    public final String transformImagesToFigures(final String content) {
+        final Collection<Element> images; // Image elements from the <body>
+        final Element body;     // Element parsed from the content
+        String html;            // Fixed html
+        Element figure;         // <figure> element
+        Element caption;        // <figcaption> element
+
+        body = getBodyContents(content);
+
+        images = body.select("body > img");
+
+        if (images.isEmpty()) {
+            html = content;
+        } else {
+            for (final Element img : images) {
+                figure = new Element(Tag.valueOf("figure"), "");
+                caption = new Element(Tag.valueOf("figcaption"), "");
+
+                img.replaceWith(figure);
+
+                figure.appendChild(img);
+
+                if (img.hasAttr("alt")) {
+                    caption.text(img.attr("alt"));
+                    figure.appendChild(caption);
+                }
+            }
+
+            html = body.html();
+        }
+
+        return html;
     }
 
     /**
