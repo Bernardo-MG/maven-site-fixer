@@ -785,7 +785,7 @@ public final class HTMLUtil {
 
         body = getBodyContents(content);
 
-        images = body.select("body > img");
+        images = body.select("img");
 
         if (images.isEmpty()) {
             html = content;
