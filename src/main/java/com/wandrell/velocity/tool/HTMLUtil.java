@@ -296,8 +296,55 @@ public final class HTMLUtil {
     }
 
     /**
-     * Corrects HTML code by setting a {@code <thead>} section if missing,
-     * adapting the old code to HTML5.
+     * Corrects source divisions by removing redundant apparitions of it.
+     * <p>
+     * It is a problem with Maven sites that code divisions get wrapped by
+     * another code division, so they appear like this:
+     * 
+     * <pre>
+     * {@code <div class="source">
+     *    <div class="source"> 
+     *       <pre>Some code</pre>
+     *    </div>
+     * </div>}
+     * </pre>
+     * This method fixes that, by removing the outer division.
+     * 
+     * @param content
+     * @return
+     */
+    public final String fixRepeatedSourceDiv(final String content) {
+        final Collection<Element> codeBlocksRepeat; // Repeated code blocks
+        final Element body;     // Element parsed from the content
+        String html;            // Fixed html
+        Element validBlock;     // Fixed code block
+
+        body = getBodyContents(content);
+
+        codeBlocksRepeat = body.select(".source:has(.source)");
+
+        if (codeBlocksRepeat.isEmpty()) {
+            html = content;
+        } else {
+            for (final Element block : codeBlocksRepeat) {
+                if (!block.children().isEmpty()) {
+                    validBlock = block.child(0);
+
+                    validBlock.remove();
+
+                    block.after(validBlock);
+                    block.remove();
+                }
+            }
+
+            html = body.html();
+        }
+
+        return html;
+    }
+
+    /**
+     * Corrects table headers by adding a {@code <thead>} section where missing.
      * <p>
      * This method will search for {@code 
      * 
@@ -360,7 +407,7 @@ public final class HTMLUtil {
      *         were correct, the original content is returned.
      */
     public final String fixTableHeads(final String content) {
-        final Collection<Element> tableHeadRows;
+        final Collection<Element> tableHeadRows; // Heads to fix
         final Element body;     // Element parsed from the content
         final String html;      // Fixed html
         Element table;  // HTML table
