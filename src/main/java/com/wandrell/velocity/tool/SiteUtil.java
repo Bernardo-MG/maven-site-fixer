@@ -130,6 +130,13 @@ public class SiteUtil {
         return result;
     }
 
+    /**
+     * Cleans the tables, removing unneeded attributes and classes.
+     * 
+     * @param html
+     *            HTML content to transform
+     * @return HTML content, with the tables cleaned
+     */
     public final String cleanTables(final String html) {
         final Element body;     // Element parsed from the content
         Collection<Element> elements;   // Tables and rows to fix
@@ -296,6 +303,42 @@ public class SiteUtil {
                     validDiv.remove();
 
                     div.replaceWith(validDiv);
+                }
+            }
+
+            result = body.html();
+        }
+
+        return result;
+    }
+
+    /**
+     * Fixes divisions with the section class, transforming them into actual sections.
+     * 
+     * @param html
+     *            HTML content to transform
+     * @return HTML content, with the sections updated
+     */
+    public final String fixSectionDiv(final String html) {
+        final Collection<Element> sectionDivs; // Section divisions
+        final Element body;     // Element parsed from the content
+        String result;          // Fixed html
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parseBodyFragment(html).body();
+
+        sectionDivs = body.select("div.section");
+
+        if (sectionDivs.isEmpty()) {
+            result = body.html();
+        } else {
+            for (final Element div : sectionDivs) {
+                div.tagName("section");
+                div.removeClass("section");
+                
+                if(div.classNames().isEmpty()){
+                    div.removeAttr("class");
                 }
             }
 
