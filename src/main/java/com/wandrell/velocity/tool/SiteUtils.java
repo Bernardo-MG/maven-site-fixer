@@ -58,6 +58,54 @@ public class SiteUtils {
     }
 
     /**
+     * Fixes same-file links and ids using point separators.
+     * 
+     * @param html
+     *            HTML content to transform
+     * @return HTML content, with the links and ids fixes
+     */
+    public final String fixAnchorsWithPoints(final String html) {
+        Collection<Element> elements; // Elements to fix
+        final Element body;     // Element parsed from the content
+        String result;          // Fixed html
+        String id;              // Id attribute contents
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parseBodyFragment(html).body();
+
+        elements = body.select("[id]");
+
+        if (elements.isEmpty()) {
+            result = body.html();
+        } else {
+            for (final Element element : elements) {
+                id = element.attr("id").replaceAll("\\.", "");
+
+                element.attr("id", id);
+            }
+
+            result = body.html();
+        }
+
+        elements = body.select("a[href^=\"#\"]");
+
+        if (elements.isEmpty()) {
+            result = body.html();
+        } else {
+            for (final Element element : elements) {
+                id = element.attr("href").replaceAll("\\.", "");
+
+                element.attr("href", id);
+            }
+
+            result = body.html();
+        }
+
+        return result;
+    }
+
+    /**
      * Removes the externalLink class from links.
      * <p>
      * If a links ends without classes due to this, then the class attribute
