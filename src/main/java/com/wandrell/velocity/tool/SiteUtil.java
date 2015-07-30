@@ -95,6 +95,40 @@ public class SiteUtil {
     }
 
     /**
+     * Removes the links with no {@code href} attribute.
+     * <p>
+     * These links are added by Doxia to the headings.
+     * 
+     * @param html
+     *            HTML content to transform
+     * @return HTML content, with no link not having the href attribute
+     */
+    public final String cleanNoHrefLinks(final String html) {
+        final Collection<Element> links; // Links to fix
+        final Element body;     // Element parsed from the content
+        final String result;    // Fixed html
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parseBodyFragment(html).body();
+
+        // Selects links with no href attribute
+        links = body.select("a:not([href])");
+        if (links.isEmpty()) {
+            // No links to remove
+            result = body.html();
+        } else {
+            for (final Element link : links) {
+                link.remove();
+            }
+
+            result = body.html();
+        }
+
+        return result;
+    }
+
+    /**
      * Corrects code divisions, by both correction the elements order, and by
      * swapping code classes for the {@code <code>} block.
      * <p>
