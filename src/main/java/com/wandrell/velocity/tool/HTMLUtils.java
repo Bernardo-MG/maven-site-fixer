@@ -85,7 +85,7 @@ import com.google.common.collect.Iterables;
  * @see <a href="http://jsoup.org/">jsoup</a>
  */
 @DefaultKey("htmlTool")
-public final class HTMLUtil {
+public final class HTMLUtils {
 
     /**
      * Returns the result from recursively splitting an {@code Element} based in
@@ -217,7 +217,7 @@ public final class HTMLUtil {
     /**
      * Constructs an instance of the {@code HTMLUtil}.
      */
-    public HTMLUtil() {
+    public HTMLUtils() {
         super();
     }
 

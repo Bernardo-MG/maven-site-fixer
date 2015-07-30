@@ -84,7 +84,7 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("config")
-public final class SkinConfigUtil extends SafeConfig {
+public final class SkinConfigUtils extends SafeConfig {
 
     /**
      * Key for the skin configuration.
@@ -136,7 +136,7 @@ public final class SkinConfigUtil extends SafeConfig {
     /**
      * Constructs an instance of the {@code SkinConfigUtil}.
      */
-    public SkinConfigUtil() {
+    public SkinConfigUtils() {
         super();
     }
 

@@ -48,12 +48,12 @@ import org.jsoup.parser.Tag;
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("siteTool")
-public class SiteUtil {
+public class SiteUtils {
 
     /**
      * Constructs an instance of the {@code SiteUtil}.
      */
-    public SiteUtil() {
+    public SiteUtils() {
         super();
     }
 

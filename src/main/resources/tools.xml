@@ -3,8 +3,8 @@
 	the classpath and Velocity finds it. -->
 <tools>
 	<toolbox scope="application">
-		<tool key="config" class="com.wandrell.velocity.tool.SkinConfigUtil" />
-		<tool key="htmlTool" class="com.wandrell.velocity.tool.HTMLUtil" />
-		<tool key="siteTool" class="com.wandrell.velocity.tool.SiteUtil" />
+		<tool key="config" class="com.wandrell.velocity.tool.SkinConfigUtils" />
+		<tool key="htmlTool" class="com.wandrell.velocity.tool.HTMLUtils" />
+		<tool key="siteTool" class="com.wandrell.velocity.tool.SiteUtils" />
 	</toolbox>
 </tools>

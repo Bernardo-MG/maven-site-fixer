@@ -25,13 +25,13 @@ package com.wandrell.velocity.tool.testing.test.unit.site;
 
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtil;
-import com.wandrell.velocity.tool.SiteUtil;
+import com.wandrell.velocity.tool.HTMLUtils;
+import com.wandrell.velocity.tool.SiteUtils;
 
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtil}.
+ * Unit tests for {@link HTMLUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
@@ -42,14 +42,14 @@ import junit.framework.Assert;
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtil
+ * @see HTMLUtils
  */
 public final class TestUpdateTableHeadSiteUtil {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtil util = new SiteUtil();
+    private final SiteUtils util = new SiteUtils();
 
     /**
      * Default constructor.

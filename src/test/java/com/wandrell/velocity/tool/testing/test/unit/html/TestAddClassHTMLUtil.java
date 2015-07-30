@@ -28,12 +28,12 @@ import java.util.LinkedList;
 
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtil;
+import com.wandrell.velocity.tool.HTMLUtils;
 
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtil}.
+ * Unit tests for {@link HTMLUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
@@ -56,14 +56,14 @@ import junit.framework.Assert;
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtil
+ * @see HTMLUtils
  */
 public final class TestAddClassHTMLUtil {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTMLUtil util = new HTMLUtil();
+    private final HTMLUtils util = new HTMLUtils();
 
     /**
      * Default constructor.

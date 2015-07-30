@@ -29,10 +29,10 @@ import java.util.Iterator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtil;
+import com.wandrell.velocity.tool.HTMLUtils;
 
 /**
- * Unit tests for {@link HTMLUtil}.
+ * Unit tests for {@link HTMLUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
@@ -44,14 +44,14 @@ import com.wandrell.velocity.tool.HTMLUtil;
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtil
+ * @see HTMLUtils
  */
 public final class TestSplitHTMLUtil {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTMLUtil util = new HTMLUtil();
+    private final HTMLUtils util = new HTMLUtils();
 
     /**
      * Default constructor.
