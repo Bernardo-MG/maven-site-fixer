@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wandrell.velocity.tool.testing.test.unit.html;
+package com.wandrell.velocity.tool.testing.test.unit.site;
 
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HTMLUtil;
+import com.wandrell.velocity.tool.SiteUtil;
 
 import junit.framework.Assert;
 
@@ -44,17 +45,17 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public final class TransformImagesToFiguresHTMLUtil {
+public final class TransformImagesToFiguresSiteUtil {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTMLUtil util = new HTMLUtil();
+    private final SiteUtil util = new SiteUtil();
 
     /**
      * Default constructor.
      */
-    public TransformImagesToFiguresHTMLUtil() {
+    public TransformImagesToFiguresSiteUtil() {
         super();
     }
 
@@ -105,11 +106,11 @@ public final class TransformImagesToFiguresHTMLUtil {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><img src=\"imgs/footer.png\" alt=\"Footer image\"><footer></footer></body>";
+        html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><footer><img src=\"imgs/footer.png\" alt=\"Footer image\"></footer></body>";
 
         result = util.transformImagesToFigures(html);
 
-        htmlExpected = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><img src=\"imgs/footer.png\" alt=\"Footer image\"><footer></footer></body>";
+        htmlExpected = "<header>\n <img src=\"imgs/header.png\" alt=\"Header image\">\n</header>\n<section></section>\n<footer>\n <img src=\"imgs/footer.png\" alt=\"Footer image\">\n</footer>";
 
         Assert.assertEquals(htmlExpected, result);
     }

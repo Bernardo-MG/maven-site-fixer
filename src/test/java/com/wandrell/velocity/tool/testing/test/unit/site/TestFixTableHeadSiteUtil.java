@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wandrell.velocity.tool.testing.test.unit.html;
+package com.wandrell.velocity.tool.testing.test.unit.site;
 
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HTMLUtil;
+import com.wandrell.velocity.tool.SiteUtil;
 
 import junit.framework.Assert;
 
@@ -43,17 +44,17 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public final class TestFixTableHeadHTMLUtil {
+public final class TestFixTableHeadSiteUtil {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTMLUtil util = new HTMLUtil();
+    private final SiteUtil util = new SiteUtil();
 
     /**
      * Default constructor.
      */
-    public TestFixTableHeadHTMLUtil() {
+    public TestFixTableHeadSiteUtil() {
         super();
     }
 
@@ -90,7 +91,7 @@ public final class TestFixTableHeadHTMLUtil {
 
         result = util.fixTableHeads(html);
 
-        htmlExpected = html;
+        htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1.1</td>\n   <td>Data 1.2</td>\n  </tr>\n  <tr>\n   <td>Data 2.1</td>\n   <td>Data 2.2</td>\n  </tr>\n </tbody>\n</table>";
 
         Assert.assertEquals(htmlExpected, result);
     }

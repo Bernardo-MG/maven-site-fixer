@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wandrell.velocity.tool.testing.test.unit.html;
+package com.wandrell.velocity.tool.testing.test.unit.site;
 
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HTMLUtil;
+import com.wandrell.velocity.tool.SiteUtil;
 
 import junit.framework.Assert;
 
@@ -34,42 +35,42 @@ import junit.framework.Assert;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>When trying to fix the outdated code blocks these are updated correctly.
- * </li>
+ * <li>When trying to fix the redundant source div, if there are divs needing to
+ * be removed these are edited out correctly.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public final class TestFixCodeBlock {
+public final class TestFixRepeatedSourceDivSiteUtil {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTMLUtil util = new HTMLUtil();
+    private final SiteUtil util = new SiteUtil();
 
     /**
      * Default constructor.
      */
-    public TestFixCodeBlock() {
+    public TestFixRepeatedSourceDivSiteUtil() {
         super();
     }
 
     /**
-     * Tests that when trying to fix the outdated code blocks these are updated
-     * correctly.
+     * Tests that when trying to fix the redundant source div, if there are divs
+     * needing to be removed these are edited out correctly.
      */
     @Test
-    public final void testFixCodeBlock() {
+    public final void testFixRepeatedSourceDiv() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<div class=\"source\"><pre>Some code</pre></div>";
+        html = "<div class=\"source\"><div class=\"source\"><pre>Some code</pre></div></div>";
 
-        result = util.fixCodeBlock(html);
+        result = util.fixRepeatedSourceDiv(html);
 
-        htmlExpected = "<pre><code>Some code</code></pre>";
+        htmlExpected = "<div class=\"source\">\n <pre>Some code</pre>\n</div>";
 
         Assert.assertEquals(htmlExpected, result);
     }

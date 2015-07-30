@@ -5,5 +5,6 @@
 	<toolbox scope="application">
 		<tool key="config" class="com.wandrell.velocity.tool.SkinConfigUtil" />
 		<tool key="htmlTool" class="com.wandrell.velocity.tool.HTMLUtil" />
+		<tool key="siteTool" class="com.wandrell.velocity.tool.SiteUtil" />
 	</toolbox>
 </tools>

@@ -109,7 +109,7 @@ public final class TestSetAttrHTMLUtil {
 
         result = util.setAttr(html, "h3", "attr1", "value1");
 
-        htmlExpected = html;
+        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

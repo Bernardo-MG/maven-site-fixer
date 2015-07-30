@@ -87,7 +87,7 @@ public final class TestWrapHTMLUtil {
 
         result = util.wrap(html, "h3", "<header></header>");
 
-        htmlExpected = html;
+        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

@@ -215,7 +215,7 @@ public final class HTMLUtil {
     }
 
     /**
-     * Constructs an instance of the {@code HtmlTool}.
+     * Constructs an instance of the {@code HTMLUtil}.
      */
     public HTMLUtil() {
         super();
@@ -232,7 +232,7 @@ public final class HTMLUtil {
      * The modified HTML code will be returned by the method, which won't change
      * the received content.
      * 
-     * @param content
+     * @param html
      *            HTML content to modify
      * @param selector
      *            CSS selector for elements to add classes to
@@ -241,22 +241,22 @@ public final class HTMLUtil {
      * @return HTML content with the modified elements. If no elements are
      *         found, the original content is returned.
      */
-    public final String addClass(final String content, final String selector,
+    public final String addClass(final String html, final String selector,
             final Collection<String> classNames) {
         final Collection<Element> elements; // All elements selected
         final Element body;     // Element parsed from the content
-        final String html;      // Modified HTML code
+        final String result;    // Modified HTML code
 
-        checkNotNull(content, "Received a null pointer as content");
+        checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(classNames, "Received a null pointer as class names");
 
-        body = getBodyContents(content);
+        body = Jsoup.parseBodyFragment(html).body();
         elements = body.select(selector);
 
         if (elements.isEmpty()) {
             // Nothing to update
-            html = content;
+            result = body.html();
         } else {
             for (final Element element : elements) {
                 for (final String className : classNames) {
@@ -264,10 +264,10 @@ public final class HTMLUtil {
                 }
             }
 
-            html = body.html();
+            result = body.html();
         }
 
-        return html;
+        return result;
     }
 
     /**
@@ -295,221 +295,11 @@ public final class HTMLUtil {
     }
 
     /**
-     * Corrects code divisions, by both correction the elements order, and by
-     * swapping code classes for the {@code <code>} block.
-     * <p>
-     * Maven sites handle code blocks in an outdated fashion, and look like
-     * this:
-     * 
-     * <pre>
-     * {@code <div class="source">
-     *    <pre>Some code
-    </pre>
-    
-     * </div>}
-     * </pre>
-     * This method fixes them, transforming them into:
-     * 
-     * <pre>
-     * {@code <pre>
-     *    <source>Some code</source>
-     * 
-    </pre>
-    
-    }
-     * </pre>
-     * 
-     * @param content
-     *            HTML content to fix
-     * @return HTML content, with the source blocks updated
-     */
-    public final String fixCodeBlock(final String content) {
-        final Collection<Element> codeDivs; // Code divisions
-        final Element body;     // Element parsed from the content
-        String html;            // Fixed html
-        Element pre;            // <pre> element
-        Element code;           // <code> element
-
-        body = getBodyContents(content);
-
-        codeDivs = body.select(".source:has(pre)");
-
-        if (codeDivs.isEmpty()) {
-            html = content;
-        } else {
-            for (final Element div : codeDivs) {
-                pre = div.getElementsByTag("pre").get(0);
-
-                code = new Element(Tag.valueOf("code"), "");
-                code.text(div.text());
-                pre.text("");
-                pre.appendChild(code);
-
-                div.replaceWith(pre);
-            }
-
-            html = body.html();
-        }
-
-        return html;
-    }
-
-    /**
-     * Corrects source divisions by removing redundant apparitions of it.
-     * <p>
-     * It is a problem with Maven sites that code divisions get wrapped by
-     * another code division, so they appear like this:
-     * 
-     * <pre>
-     * {@code <div class="source">
-     *    <div class="source"> 
-     *       <pre>Some code
-    </pre>
-    
-     *    </div>
-     * </div>}
-     * </pre>
-     * This method fixes that, by removing the outer division.
-     * 
-     * @param content
-     *            HTML content to fix
-     * @return HTML content, with the redundant source classes removed
-     */
-    public final String fixRepeatedSourceDiv(final String content) {
-        final Collection<Element> codeDivs; // Repeated code divs
-        final Element body;     // Element parsed from the content
-        final String html;      // Fixed html
-        Element validDiv;     // Fixed code block
-
-        body = getBodyContents(content);
-
-        codeDivs = body.select(".source:has(.source)");
-
-        if (codeDivs.isEmpty()) {
-            html = content;
-        } else {
-            for (final Element div : codeDivs) {
-                if (!div.children().isEmpty()) {
-                    validDiv = div.child(0);
-
-                    validDiv.remove();
-
-                    div.replaceWith(validDiv);
-                }
-            }
-
-            html = body.html();
-        }
-
-        return html;
-    }
-
-    /**
-     * Corrects table headers by adding a {@code <thead>} section where missing.
-     * <p>
-     * This method will search for {@code 
-     * 
-    <th>} within a {@code <tbody>} tag, but not wrapped by a {@code <thead>}.
-     * <p>
-     * This means it will search for headers such as:
-     * 
-     * <pre>
-     * {@code <table>
-     *    <tbody>
-     *       <tr>
-     *          <th>Header 1</th>
-     *          <th>Header 2</th>
-     *       </tr>
-     *       <tr>
-     *          <td>Data 1.1</td>
-     *          <td>Data 1.2</td>
-     *       </tr>
-     *       <tr>
-     *          <td>Data 2.1</td>
-     *          <td>Data 2.2</td>
-     *       </tr>
-     *    </tbody>
-     * </table>}
-     * </pre>
-     * <p>
-     * And transforms it into:
-     * 
-     * <pre>
-     * {@code <table>
-     *    <thead>
-     *       <tr>
-     *          <th>Header 1</th>
-     *          <th>Header 2</th>
-     *       </tr>
-     *    </thead>
-     *    <tbody>
-     *       <tr>
-     *          <th>Header 1</th>
-     *          <th>Header 2</th>
-     *       </tr>
-     *       <tr>
-     *          <td>Data 1.1</td>
-     *          <td>Data 1.2</td>
-     *       </tr>
-     *       <tr>
-     *          <td>Data 2.1</td>
-     *          <td>Data 2.2</td>
-     *       </tr>
-     *    </tbody>
-     * </table>}
-     * </pre>
-     * 
-     * This serves to fix an error with tables created by some Maven report
-     * plugins.
-     * 
-     * @param content
-     *            HTML content to modify
-     * @return HTML content with all the table heads fixed. If all the heads
-     *         were correct, the original content is returned.
-     */
-    public final String fixTableHeads(final String content) {
-        final Collection<Element> tableHeadRows; // Heads to fix
-        final Element body;     // Element parsed from the content
-        final String html;      // Fixed html
-        Element table;  // HTML table
-        Element thead;  // Table's head for wrapping
-
-        checkNotNull(content, "Received a null pointer as content");
-
-        body = getBodyContents(content);
-
-        // Selects rows with <th> tags within a <tr> in a <tbody>
-        tableHeadRows = body.select("table > tbody > tr:has(th)");
-        if (tableHeadRows.isEmpty()) {
-            // No table heads to fix
-            html = content;
-        } else {
-            for (final Element row : tableHeadRows) {
-                // Gets the row's table
-                table = row.parent().parent();
-
-                // Removes the row from its original position
-                row.remove();
-
-                // Creates a table header element with the row
-                thead = new Element(Tag.valueOf("thead"), "");
-                thead.appendChild(row);
-                // Adds the head at the beginning of the table
-                table.prependChild(thead);
-            }
-
-            html = body.html();
-        }
-
-        return html;
-    }
-
-    /**
      * Returns the values for an attribute on a selected element.
      * <p>
      * The element is selected by using a CSS selector.
      * 
-     * @param content
+     * @param html
      *            HTML where the element will be searched
      * @param selector
      *            CSS selector for the elements to query
@@ -518,17 +308,17 @@ public final class HTMLUtil {
      * @return Attribute values for all the matching elements. If no elements
      *         are found, an empty list is returned.
      */
-    public final Collection<String> getAttr(final String content,
+    public final Collection<String> getAttr(final String html,
             final String selector, final String attributeKey) {
         final Collection<Element> elements;  // Selected elements
         final Collection<String> attrs;      // Queried attributes
         final Element body;     // Element parsed from the content
 
-        checkNotNull(content, "Received a null pointer as content");
+        checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attributeKey, "Received a null pointer as attribute key");
 
-        body = getBodyContents(content);
+        body = Jsoup.parseBodyFragment(html).body();
         elements = body.select(selector);
 
         attrs = new ArrayList<String>();
@@ -544,36 +334,36 @@ public final class HTMLUtil {
      * <p>
      * The elements are selected through the use of a CSS selector.
      * 
-     * @param content
+     * @param html
      *            HTML content to modify
      * @param selector
      *            CSS selector for elements to remove
      * @return HTML content without the removed elements. If no elements are
      *         found, the original content is returned.
      */
-    public final String remove(final String content, final String selector) {
+    public final String remove(final String html, final String selector) {
         final Collection<Element> elements; // Elements to remove
         final Element body;     // Element parsed from the content
-        final String html;      // Resulting HTML
+        final String result;    // Resulting HTML
 
-        checkNotNull(content, "Received a null pointer as content");
+        checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
 
-        body = getBodyContents(content);
+        body = Jsoup.parseBodyFragment(html).body();
         elements = body.select(selector);
 
         if (elements.isEmpty()) {
             // Nothing changed
-            html = content;
+            result = body.html();
         } else {
             for (final Element element : elements) {
                 element.remove();
             }
 
-            html = body.html();
+            result = body.html();
         }
 
-        return html;
+        return result;
     }
 
     /**
@@ -583,7 +373,7 @@ public final class HTMLUtil {
      * key is a CSS selector, and the value is the replacement for the selected
      * element.
      * 
-     * @param content
+     * @param html
      *            HTML content to modify
      * @param replacements
      *            {@code Map} where the key is a CSS selector and the value the
@@ -591,20 +381,20 @@ public final class HTMLUtil {
      * @return HTML content with replaced elements. If no elements are found,
      *         the original content is returned.
      */
-    public final String replaceAll(final String content,
+    public final String replaceAll(final String html,
             final Map<String, String> replacements) {
-        final Element body; // Element parsed from the content
-        final String html;  // Resulting HTML
-        Boolean modified;   // Flag indicating if the HTML has been modified
-        String selector;    // Iterated selector
-        String replacement; // Iterated HTML replacement
+        final Element body;  // Element parsed from the content
+        final String result; // Resulting HTML
+        Boolean modified;    // Flag indicating if the HTML has been modified
+        String selector;     // Iterated selector
+        String replacement;  // Iterated HTML replacement
         Element replacementElem; // Iterated replacement
         Collection<Element> elements; // Selected elements
 
-        checkNotNull(content, "Received a null pointer as content");
+        checkNotNull(html, "Received a null pointer as html");
         checkNotNull(replacements, "Received a null pointer as replacements");
 
-        body = getBodyContents(content);
+        body = Jsoup.parseBodyFragment(html).body();
 
         modified = false;
         for (final Entry<String, String> replacementEntry : replacements
@@ -615,7 +405,8 @@ public final class HTMLUtil {
             elements = body.select(selector);
             if (!elements.isEmpty()) {
                 // Take the first child
-                replacementElem = getBodyContents(replacement).child(0);
+                replacementElem = Jsoup.parseBodyFragment(replacement).body()
+                        .child(0);
 
                 if (replacementElem != null) {
                     for (final Element element : elements) {
@@ -628,19 +419,19 @@ public final class HTMLUtil {
         }
 
         if (modified) {
-            html = body.html();
+            result = body.html();
         } else {
             // Nothing changed
-            html = content;
+            result = body.html();
         }
 
-        return html;
+        return result;
     }
 
     /**
      * Sets the attribute on a selected element to the specified value.
      * 
-     * @param content
+     * @param html
      *            HTML content to set attributes on
      * @param selector
      *            CSS selector for elements to modify
@@ -651,32 +442,32 @@ public final class HTMLUtil {
      * @return HTML content with the modified elements. If no elements are
      *         found, the original content is returned.
      */
-    public final String setAttr(final String content, final String selector,
+    public final String setAttr(final String html, final String selector,
             final String attributeKey, final String value) {
         final Collection<Element> elements; // Selected elements
-        final Element body; // Element parsed from the content
-        final String html;  // Resulting HTML
+        final Element body;  // Element parsed from the content
+        final String result; // Resulting HTML
 
-        checkNotNull(content, "Received a null pointer as content");
+        checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attributeKey, "Received a null pointer as attribute key");
         checkNotNull(value, "Received a null pointer as value");
 
-        body = getBodyContents(content);
+        body = Jsoup.parseBodyFragment(html).body();
         elements = body.select(selector);
 
         if (elements.isEmpty()) {
             // Nothing to update
-            html = content;
+            result = body.html();
         } else {
             for (final Element element : elements) {
                 element.attr(attributeKey, value);
             }
 
-            html = body.html();
+            result = body.html();
         }
 
-        return html;
+        return result;
     }
 
     /**
@@ -766,54 +557,6 @@ public final class HTMLUtil {
     }
 
     /**
-     * Transforms images on the body to figures.
-     * <p>
-     * This will wrap {@code <img>} elements with a {@code <figure>} element,
-     * and add a {@code <figcaption>} with the contents of the image's
-     * {@code alt} attribute, if it has said attribute.
-     * <p>
-     * Only {@code <img>} elements inside a {@code <section>} will be
-     * transformed.
-     * 
-     * @param content
-     *            HTML content to transform
-     * @return HTML content, with the body image wrapped in figures.
-     */
-    public final String transformImagesToFigures(final String content) {
-        final Collection<Element> images; // Image elements from the <body>
-        final Element body;     // Element parsed from the content
-        String html;            // Fixed html
-        Element figure;         // <figure> element
-        Element caption;        // <figcaption> element
-
-        body = getBodyContents(content);
-
-        images = body.select("section > img");
-
-        if (images.isEmpty()) {
-            html = content;
-        } else {
-            for (final Element img : images) {
-                figure = new Element(Tag.valueOf("figure"), "");
-                caption = new Element(Tag.valueOf("figcaption"), "");
-
-                img.replaceWith(figure);
-
-                figure.appendChild(img);
-
-                if (img.hasAttr("alt")) {
-                    caption.text(img.attr("alt"));
-                    figure.appendChild(caption);
-                }
-            }
-
-            html = body.html();
-        }
-
-        return html;
-    }
-
-    /**
      * Returns the HTML code with the elements marked by the selector wrapped on
      * the received element.
      * <p>
@@ -821,7 +564,7 @@ public final class HTMLUtil {
      * wrap them with the wrapper element. The HTML code will then be adapted to
      * this change and returned.
      * 
-     * @param content
+     * @param html
      *            HTML content to modify
      * @param selector
      *            CSS selector for elements to wrap
@@ -829,43 +572,31 @@ public final class HTMLUtil {
      *            HTML to use for wrapping the selected elements
      * @return HTML with the selected elements wrapped with the wrapper element
      */
-    public final String wrap(final String content, final String selector,
+    public final String wrap(final String html, final String selector,
             final String wrapper) {
         final Collection<Element> elements; // Selected elements
-        final Element body; // Element parsed from the content
-        final String html;  // Modified HTML
+        final Element body;  // Element parsed from the content
+        final String result; // Modified HTML
 
-        checkNotNull(content, "Received a null pointer as content");
+        checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(wrapper, "Received a null pointer as HTML wrap");
 
-        body = getBodyContents(content);
+        body = Jsoup.parseBodyFragment(html).body();
         elements = body.select(selector);
 
         if (elements.isEmpty()) {
             // Nothing to update
-            html = content;
+            result = body.html();
         } else {
             for (final Element element : elements) {
                 element.wrap(wrapper);
             }
 
-            html = body.html();
+            result = body.html();
         }
 
-        return html;
-    }
-
-    /**
-     * Parses the HTML into a jsoup {@code Element}, which will contain only the
-     * data on the {@code <body>} section.
-     * 
-     * @param html
-     *            the html code of which to get the {@code <body>} contents
-     * @return the content of the {@code <body>} element of the HTML code
-     */
-    private final Element getBodyContents(final String html) {
-        return Jsoup.parseBodyFragment(html).body();
+        return result;
     }
 
     /**
@@ -875,7 +606,7 @@ public final class HTMLUtil {
      * The separator strategy works as in
      * {@link #split(Element, Collection, Position)}.
      * 
-     * @param content
+     * @param html
      *            HTML content to split
      * @param selector
      *            CSS selector for separators
@@ -884,7 +615,7 @@ public final class HTMLUtil {
      * @return the HTML split based on the selectors
      * @see #split(Element, Collection, Position)
      */
-    private final Collection<String> split(final String content,
+    private final Collection<String> split(final String html,
             final String selector, final Position separatorStrategy) {
         final Collection<Collection<Element>> split; // Split HTML before
         // adapting
@@ -892,12 +623,12 @@ public final class HTMLUtil {
         final Collection<Element> separators; // Found separators
         final Element body; // Element parsed from the content
 
-        body = getBodyContents(content);
+        body = Jsoup.parseBodyFragment(html).body();
         separators = body.select(selector);
 
         if (separators.isEmpty()) {
             // Nothing to split
-            partitions = Collections.singletonList(content);
+            partitions = Collections.singletonList(html);
         } else {
             split = split(body, separators, separatorStrategy);
 
