@@ -42,6 +42,8 @@ import org.jsoup.parser.Tag;
  * Note that these methods will only work with the contents of the {@code 
  * <body>} element, and these contents will be the value returned by them, even
  * if the code has not been modified.
+ * <p>
+ * The maven site is created through Doxia, which supports XHTML, not HTML5.
  * 
  * @author Bernardo Martínez Garrido
  */
@@ -120,6 +122,67 @@ public class SiteUtil {
         } else {
             for (final Element link : links) {
                 link.remove();
+            }
+
+            result = body.html();
+        }
+
+        return result;
+    }
+
+    public final String cleanTables(final String html) {
+        final Element body;     // Element parsed from the content
+        Collection<Element> elements;   // Tables and rows to fix
+        String result;          // Fixed html
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parseBodyFragment(html).body();
+
+        // Selects tables with border defined
+        elements = body.select("table[border]");
+        if (elements.isEmpty()) {
+            // No tables to fix
+            result = body.html();
+        } else {
+            for (final Element table : elements) {
+                table.removeAttr("border");
+            }
+
+            result = body.html();
+        }
+
+        // Selects tables with the bodyTable class
+        elements = body.select("table.bodyTable ");
+        if (elements.isEmpty()) {
+            // No tables to fix
+            result = body.html();
+        } else {
+            for (final Element table : elements) {
+                table.removeClass("bodyTable");
+                if (table.classNames().isEmpty()) {
+                    table.removeAttr("class");
+                }
+            }
+
+            result = body.html();
+        }
+
+        // Selects rows with the class "a" or "b"
+        elements = body.select("tr.a, tr.b");
+        if (elements.isEmpty()) {
+            // No tables to fix
+            result = body.html();
+        } else {
+            for (final Element row : elements) {
+                if (row.hasClass("a")) {
+                    row.removeClass("a");
+                } else {
+                    row.removeClass("b");
+                }
+                if (row.classNames().isEmpty()) {
+                    row.removeAttr("class");
+                }
             }
 
             result = body.html();
