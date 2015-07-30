@@ -67,7 +67,7 @@ public class SiteUtil {
      *            HTML content to transform
      * @return HTML content, with no link having the externalLink class
      */
-    public final String cleanExternalLinks(final String html) {
+    public final String removeExternalLinks(final String html) {
         final Collection<Element> links; // Links to fix
         final Element body;     // Element parsed from the content
         final String result;    // Fixed html
@@ -105,7 +105,7 @@ public class SiteUtil {
      *            HTML content to transform
      * @return HTML content, with no link not having the href attribute
      */
-    public final String cleanNoHrefLinks(final String html) {
+    public final String removeNoHrefLinks(final String html) {
         final Collection<Element> links; // Links to fix
         final Element body;     // Element parsed from the content
         final String result;    // Fixed html
@@ -131,64 +131,98 @@ public class SiteUtil {
     }
 
     /**
-     * Cleans the tables, removing unneeded attributes and classes.
+     * Corrects source divisions by removing redundant apparitions of it.
+     * <p>
+     * It is a problem with Maven sites that code divisions get wrapped by
+     * another code division, so they appear like this:
+     * 
+     * <pre>
+     * {@code <div class="source">
+     *    <div class="source"> 
+     *       <pre>Some code
+    </pre>
+    
+     *    </div>
+     * </div>}
+     * </pre>
+     * This method fixes that, by removing the outer division.
      * 
      * @param html
-     *            HTML content to transform
-     * @return HTML content, with the tables cleaned
+     *            HTML content to fix
+     * @return HTML content, with the redundant source classes removed
      */
-    public final String cleanTables(final String html) {
+    public final String removeRedundantSourceDivs(final String html) {
+        final Collection<Element> codeDivs; // Repeated code divs
         final Element body;     // Element parsed from the content
-        Collection<Element> elements;   // Tables and rows to fix
-        String result;          // Fixed html
+        final String result;    // Fixed html
+        Element validDiv;       // Fixed code block
 
         checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        // Selects tables with border defined
-        elements = body.select("table[border]");
-        if (elements.isEmpty()) {
-            // No tables to fix
+        codeDivs = body.select(".source:has(.source)");
+
+        if (codeDivs.isEmpty()) {
             result = body.html();
         } else {
-            for (final Element table : elements) {
-                table.removeAttr("border");
-            }
+            for (final Element div : codeDivs) {
+                if (!div.children().isEmpty()) {
+                    validDiv = div.child(0);
 
-            result = body.html();
-        }
+                    validDiv.remove();
 
-        // Selects tables with the bodyTable class
-        elements = body.select("table.bodyTable ");
-        if (elements.isEmpty()) {
-            // No tables to fix
-            result = body.html();
-        } else {
-            for (final Element table : elements) {
-                table.removeClass("bodyTable");
-                if (table.classNames().isEmpty()) {
-                    table.removeAttr("class");
+                    div.replaceWith(validDiv);
                 }
             }
 
             result = body.html();
         }
 
-        // Selects rows with the class "a" or "b"
-        elements = body.select("tr.a, tr.b");
-        if (elements.isEmpty()) {
-            // No tables to fix
+        return result;
+    }
+
+    /**
+     * Transforms images on the body to figures.
+     * <p>
+     * This will wrap {@code <img>} elements with a {@code <figure>} element,
+     * and add a {@code <figcaption>} with the contents of the image's
+     * {@code alt} attribute, if it has said attribute.
+     * <p>
+     * Only {@code <img>} elements inside a {@code <section>} will be
+     * transformed.
+     * 
+     * @param html
+     *            HTML content to transform
+     * @return HTML content, with the body image wrapped in figures.
+     */
+    public final String transformImagesToFigures(final String html) {
+        final Collection<Element> images; // Image elements from the <body>
+        final Element body;     // Element parsed from the content
+        String result;          // Fixed html
+        Element figure;         // <figure> element
+        Element caption;        // <figcaption> element
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parseBodyFragment(html).body();
+
+        images = body.select("section > img");
+
+        if (images.isEmpty()) {
             result = body.html();
         } else {
-            for (final Element row : elements) {
-                if (row.hasClass("a")) {
-                    row.removeClass("a");
-                } else {
-                    row.removeClass("b");
-                }
-                if (row.classNames().isEmpty()) {
-                    row.removeAttr("class");
+            for (final Element img : images) {
+                figure = new Element(Tag.valueOf("figure"), "");
+                caption = new Element(Tag.valueOf("figcaption"), "");
+
+                img.replaceWith(figure);
+
+                figure.appendChild(img);
+
+                if (img.hasAttr("alt")) {
+                    caption.text(img.attr("alt"));
+                    figure.appendChild(caption);
                 }
             }
 
@@ -227,7 +261,7 @@ public class SiteUtil {
      *            HTML content to fix
      * @return HTML content, with the source blocks updated
      */
-    public final String fixCodeBlock(final String html) {
+    public final String updateCodeBlock(final String html) {
         final Collection<Element> codeDivs; // Code divisions
         final Element body;     // Element parsed from the content
         String result;          // Fixed html
@@ -261,65 +295,14 @@ public class SiteUtil {
     }
 
     /**
-     * Corrects source divisions by removing redundant apparitions of it.
-     * <p>
-     * It is a problem with Maven sites that code divisions get wrapped by
-     * another code division, so they appear like this:
-     * 
-     * <pre>
-     * {@code <div class="source">
-     *    <div class="source"> 
-     *       <pre>Some code
-    </pre>
-    
-     *    </div>
-     * </div>}
-     * </pre>
-     * This method fixes that, by removing the outer division.
-     * 
-     * @param html
-     *            HTML content to fix
-     * @return HTML content, with the redundant source classes removed
-     */
-    public final String fixRepeatedSourceDiv(final String html) {
-        final Collection<Element> codeDivs; // Repeated code divs
-        final Element body;     // Element parsed from the content
-        final String result;    // Fixed html
-        Element validDiv;       // Fixed code block
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parseBodyFragment(html).body();
-
-        codeDivs = body.select(".source:has(.source)");
-
-        if (codeDivs.isEmpty()) {
-            result = body.html();
-        } else {
-            for (final Element div : codeDivs) {
-                if (!div.children().isEmpty()) {
-                    validDiv = div.child(0);
-
-                    validDiv.remove();
-
-                    div.replaceWith(validDiv);
-                }
-            }
-
-            result = body.html();
-        }
-
-        return result;
-    }
-
-    /**
-     * Fixes divisions with the section class, transforming them into actual sections.
+     * Fixes divisions with the section class, transforming them into actual
+     * sections.
      * 
      * @param html
      *            HTML content to transform
      * @return HTML content, with the sections updated
      */
-    public final String fixSectionDiv(final String html) {
+    public final String updateSectionDiv(final String html) {
         final Collection<Element> sectionDivs; // Section divisions
         final Element body;     // Element parsed from the content
         String result;          // Fixed html
@@ -336,8 +319,8 @@ public class SiteUtil {
             for (final Element div : sectionDivs) {
                 div.tagName("section");
                 div.removeClass("section");
-                
-                if(div.classNames().isEmpty()){
+
+                if (div.classNames().isEmpty()) {
                     div.removeAttr("class");
                 }
             }
@@ -411,7 +394,7 @@ public class SiteUtil {
      * @return HTML content with all the table heads fixed. If all the heads
      *         were correct, the original content is returned.
      */
-    public final String fixTableHeads(final String html) {
+    public final String updateTableHeads(final String html) {
         final Collection<Element> tableHeadRows; // Heads to fix
         final Element body;     // Element parsed from the content
         final String result;    // Fixed html
@@ -449,46 +432,64 @@ public class SiteUtil {
     }
 
     /**
-     * Transforms images on the body to figures.
-     * <p>
-     * This will wrap {@code <img>} elements with a {@code <figure>} element,
-     * and add a {@code <figcaption>} with the contents of the image's
-     * {@code alt} attribute, if it has said attribute.
-     * <p>
-     * Only {@code <img>} elements inside a {@code <section>} will be
-     * transformed.
+     * Cleans the tables, removing unneeded attributes and classes.
      * 
      * @param html
      *            HTML content to transform
-     * @return HTML content, with the body image wrapped in figures.
+     * @return HTML content, with the tables cleaned
      */
-    public final String transformImagesToFigures(final String html) {
-        final Collection<Element> images; // Image elements from the <body>
+    public final String updateTables(final String html) {
         final Element body;     // Element parsed from the content
+        Collection<Element> elements;   // Tables and rows to fix
         String result;          // Fixed html
-        Element figure;         // <figure> element
-        Element caption;        // <figcaption> element
 
         checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        images = body.select("section > img");
-
-        if (images.isEmpty()) {
+        // Selects tables with border defined
+        elements = body.select("table[border]");
+        if (elements.isEmpty()) {
+            // No tables to fix
             result = body.html();
         } else {
-            for (final Element img : images) {
-                figure = new Element(Tag.valueOf("figure"), "");
-                caption = new Element(Tag.valueOf("figcaption"), "");
+            for (final Element table : elements) {
+                table.removeAttr("border");
+            }
 
-                img.replaceWith(figure);
+            result = body.html();
+        }
 
-                figure.appendChild(img);
+        // Selects tables with the bodyTable class
+        elements = body.select("table.bodyTable ");
+        if (elements.isEmpty()) {
+            // No tables to fix
+            result = body.html();
+        } else {
+            for (final Element table : elements) {
+                table.removeClass("bodyTable");
+                if (table.classNames().isEmpty()) {
+                    table.removeAttr("class");
+                }
+            }
 
-                if (img.hasAttr("alt")) {
-                    caption.text(img.attr("alt"));
-                    figure.appendChild(caption);
+            result = body.html();
+        }
+
+        // Selects rows with the class "a" or "b"
+        elements = body.select("tr.a, tr.b");
+        if (elements.isEmpty()) {
+            // No tables to fix
+            result = body.html();
+        } else {
+            for (final Element row : elements) {
+                if (row.hasClass("a")) {
+                    row.removeClass("a");
+                } else {
+                    row.removeClass("b");
+                }
+                if (row.classNames().isEmpty()) {
+                    row.removeAttr("class");
                 }
             }
 

@@ -44,7 +44,7 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public final class TestCleanExternalLinksSiteUtil {
+public final class TestRemoveExternalLinksSiteUtil {
 
     /**
      * Instance of the utils class being tested.
@@ -54,7 +54,7 @@ public final class TestCleanExternalLinksSiteUtil {
     /**
      * Default constructor.
      */
-    public TestCleanExternalLinksSiteUtil() {
+    public TestRemoveExternalLinksSiteUtil() {
         super();
     }
 
@@ -70,7 +70,7 @@ public final class TestCleanExternalLinksSiteUtil {
 
         html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
 
-        result = util.cleanExternalLinks(html);
+        result = util.removeExternalLinks(html);
 
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
 
@@ -89,7 +89,7 @@ public final class TestCleanExternalLinksSiteUtil {
 
         html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
 
-        result = util.cleanExternalLinks(html);
+        result = util.removeExternalLinks(html);
 
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
 

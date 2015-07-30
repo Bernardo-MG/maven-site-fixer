@@ -41,7 +41,7 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public class TestCleanTablesSiteUtil {
+public class TestUpdateTablesSiteUtil {
 
     /**
      * Instance of the utils class being tested.
@@ -51,7 +51,7 @@ public class TestCleanTablesSiteUtil {
     /**
      * Default constructor.
      */
-    public TestCleanTablesSiteUtil() {
+    public TestUpdateTablesSiteUtil() {
         super();
     }
 
@@ -66,7 +66,7 @@ public class TestCleanTablesSiteUtil {
 
         html = "<table border=\"0\" class=\"bodyTable table table-striped table-bordered\"><thead><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr></thead><tbody><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
 
-        result = util.cleanTables(html);
+        result = util.updateTables(html);
 
         htmlExpected = "<table class=\"table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 

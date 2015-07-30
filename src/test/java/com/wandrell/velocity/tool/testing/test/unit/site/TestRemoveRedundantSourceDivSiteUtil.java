@@ -42,7 +42,7 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public final class TestFixRepeatedSourceDivSiteUtil {
+public final class TestRemoveRedundantSourceDivSiteUtil {
 
     /**
      * Instance of the utils class being tested.
@@ -52,7 +52,7 @@ public final class TestFixRepeatedSourceDivSiteUtil {
     /**
      * Default constructor.
      */
-    public TestFixRepeatedSourceDivSiteUtil() {
+    public TestRemoveRedundantSourceDivSiteUtil() {
         super();
     }
 
@@ -68,7 +68,7 @@ public final class TestFixRepeatedSourceDivSiteUtil {
 
         html = "<div class=\"source\"><div class=\"source\"><pre>Some code</pre></div></div>";
 
-        result = util.fixRepeatedSourceDiv(html);
+        result = util.removeRedundantSourceDivs(html);
 
         htmlExpected = "<div class=\"source\">\n <pre>Some code</pre>\n</div>";
 

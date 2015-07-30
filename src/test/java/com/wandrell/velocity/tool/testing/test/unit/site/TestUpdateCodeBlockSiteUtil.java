@@ -35,13 +35,14 @@ import junit.framework.Assert;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Links without the {@code href} attribute are removed.</li>
+ * <li>When trying to fix the outdated code blocks these are updated correctly.
+ * </li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public final class TestCleanNoHrefLinksSiteUtil {
+public final class TestUpdateCodeBlockSiteUtil {
 
     /**
      * Instance of the utils class being tested.
@@ -51,24 +52,25 @@ public final class TestCleanNoHrefLinksSiteUtil {
     /**
      * Default constructor.
      */
-    public TestCleanNoHrefLinksSiteUtil() {
+    public TestUpdateCodeBlockSiteUtil() {
         super();
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that when trying to fix the outdated code blocks these are updated
+     * correctly.
      */
     @Test
-    public final void testCleanNoHrefLinks_MultipleClasses() {
+    public final void testFixCodeBlock() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1><a>a_heading</a>A heading</h1>";
+        html = "<div class=\"source\"><pre>Some code</pre></div>";
 
-        result = util.cleanNoHrefLinks(html);
+        result = util.updateCodeBlock(html);
 
-        htmlExpected = "<h1>A heading</h1>";
+        htmlExpected = "<pre><code>Some code</code></pre>";
 
         Assert.assertEquals(htmlExpected, result);
     }

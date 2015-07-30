@@ -35,14 +35,14 @@ import junit.framework.Assert;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>When trying to fix the outdated section divisions these are updated correctly.
- * </li>
+ * <li>When trying to fix the outdated section divisions these are updated
+ * correctly.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public final class TestFixSectionDivSiteUtil {
+public final class TestUpdateSectionDivSiteUtil {
 
     /**
      * Instance of the utils class being tested.
@@ -52,12 +52,13 @@ public final class TestFixSectionDivSiteUtil {
     /**
      * Default constructor.
      */
-    public TestFixSectionDivSiteUtil() {
+    public TestUpdateSectionDivSiteUtil() {
         super();
     }
 
     /**
-     * Tests that when trying to fix the outdated section divisions these are updated correctly.
+     * Tests that when trying to fix the outdated section divisions these are
+     * updated correctly.
      */
     @Test
     public final void testFixCodeBlock() {
@@ -67,7 +68,7 @@ public final class TestFixSectionDivSiteUtil {
 
         html = "<div class=\"section\"><p>Some text</p></div>";
 
-        result = util.fixSectionDiv(html);
+        result = util.updateSectionDiv(html);
 
         htmlExpected = "<section>\n <p>Some text</p>\n</section>";
 

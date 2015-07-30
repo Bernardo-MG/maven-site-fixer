@@ -44,7 +44,7 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtil
  */
-public final class TestFixTableHeadSiteUtil {
+public final class TestUpdateTableHeadSiteUtil {
 
     /**
      * Instance of the utils class being tested.
@@ -54,7 +54,7 @@ public final class TestFixTableHeadSiteUtil {
     /**
      * Default constructor.
      */
-    public TestFixTableHeadSiteUtil() {
+    public TestUpdateTableHeadSiteUtil() {
         super();
     }
 
@@ -70,7 +70,7 @@ public final class TestFixTableHeadSiteUtil {
 
         html = "<table><tbody><tr><th>Header 1</th><th>Header 2</th></tr><tr><td>Data 1.1</td><td>Data 1.2</td></tr><tr><td>Data 2.1</td><td>Data 2.2</td></tr></tbody></table>";
 
-        result = util.fixTableHeads(html);
+        result = util.updateTableHeads(html);
 
         htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1.1</td>\n   <td>Data 1.2</td>\n  </tr>\n  <tr>\n   <td>Data 2.1</td>\n   <td>Data 2.2</td>\n  </tr>\n </tbody>\n</table>";
 
@@ -89,7 +89,7 @@ public final class TestFixTableHeadSiteUtil {
 
         html = "<table><thead><tr><th>Header 1</th><th>Header 2</th></tr></thead><tbody><tr><td>Data 1.1</td><td>Data 1.2</td></tr><tr><td>Data 2.1</td><td>Data 2.2</td></tr></tbody></table>";
 
-        result = util.fixTableHeads(html);
+        result = util.updateTableHeads(html);
 
         htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1.1</td>\n   <td>Data 1.2</td>\n  </tr>\n  <tr>\n   <td>Data 2.1</td>\n   <td>Data 2.2</td>\n  </tr>\n </tbody>\n</table>";
 
