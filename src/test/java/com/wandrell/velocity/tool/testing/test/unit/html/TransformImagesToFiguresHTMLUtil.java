@@ -38,6 +38,7 @@ import junit.framework.Assert;
  * attribute is present.</li>
  * <li>Transforming images to figures works correctly when an {@code alt}
  * attribute is not present.</li>
+ * <li>Images out of a content element are ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -67,11 +68,11 @@ public final class TransformImagesToFiguresHTMLUtil {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<img src=\"imgs/diagram.png\" alt=\"A diagram\">";
+        html = "<section><img src=\"imgs/diagram.png\" alt=\"A diagram\"></section>";
 
         result = util.transformImagesToFigures(html);
 
-        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n <figcaption>\n  A diagram\n </figcaption>\n</figure>";
+        htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n  <figcaption>\n   A diagram\n  </figcaption>\n </figure>\n</section>";
 
         Assert.assertEquals(htmlExpected, result);
     }
@@ -86,11 +87,29 @@ public final class TransformImagesToFiguresHTMLUtil {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<img src=\"imgs/diagram.png\">";
+        html = "<section><img src=\"imgs/diagram.png\"></section>";
 
         result = util.transformImagesToFigures(html);
 
-        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
+        htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
+
+        Assert.assertEquals(htmlExpected, result);
+    }
+
+    /**
+     * Tests that images out of a content element are ignored.
+     */
+    @Test
+    public final void testTransformImagesToFigures_OutOfContent() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><img src=\"imgs/footer.png\" alt=\"Footer image\"><footer></footer></body>";
+
+        result = util.transformImagesToFigures(html);
+
+        htmlExpected = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><img src=\"imgs/footer.png\" alt=\"Footer image\"><footer></footer></body>";
 
         Assert.assertEquals(htmlExpected, result);
     }

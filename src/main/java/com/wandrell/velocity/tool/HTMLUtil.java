@@ -768,9 +768,12 @@ public final class HTMLUtil {
     /**
      * Transforms images on the body to figures.
      * <p>
-     * This will wrap {@code <image>} elements with a {@code <figure>} element,
+     * This will wrap {@code <img>} elements with a {@code <figure>} element,
      * and add a {@code <figcaption>} with the contents of the image's
      * {@code alt} attribute, if it has said attribute.
+     * <p>
+     * Only {@code <img>} elements inside a {@code <section>} will be
+     * transformed.
      * 
      * @param content
      *            HTML content to transform
@@ -785,7 +788,7 @@ public final class HTMLUtil {
 
         body = getBodyContents(content);
 
-        images = body.select("img");
+        images = body.select("section > img");
 
         if (images.isEmpty()) {
             html = content;
