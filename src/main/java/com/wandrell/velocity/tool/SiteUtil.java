@@ -56,6 +56,45 @@ public class SiteUtil {
     }
 
     /**
+     * Removes the externalLink class from links.
+     * <p>
+     * If a links ends without classes due to this, then the class attribute
+     * will be removed too.
+     * 
+     * @param html
+     *            HTML content to transform
+     * @return HTML content, with no link having the externalLink class
+     */
+    public final String cleanExternalLinks(final String html) {
+        final Collection<Element> links; // Links to fix
+        final Element body;     // Element parsed from the content
+        final String result;    // Fixed html
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parseBodyFragment(html).body();
+
+        // Selects rows with <th> tags within a <tr> in a <tbody>
+        links = body.select("a.externalLink");
+        if (links.isEmpty()) {
+            // No links to fix
+            result = body.html();
+        } else {
+            for (final Element link : links) {
+                link.removeClass("externalLink");
+
+                if (link.classNames().isEmpty()) {
+                    link.removeAttr("class");
+                }
+            }
+
+            result = body.html();
+        }
+
+        return result;
+    }
+
+    /**
      * Corrects code divisions, by both correction the elements order, and by
      * swapping code classes for the {@code <code>} block.
      * <p>
