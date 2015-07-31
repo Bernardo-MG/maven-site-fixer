@@ -34,13 +34,13 @@ import junit.framework.Assert;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Links without the {@code href} attribute are removed.</li>
+ * <li>Heading's links without the {@code href} attribute are removed.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils
  */
-public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
+public final class TestRemoveHeadingNoHrefLinksHTML5UpdateUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -50,24 +50,24 @@ public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
     /**
      * Default constructor.
      */
-    public TestRemoveNoHrefLinksHTML5UpdateUtils() {
+    public TestRemoveHeadingNoHrefLinksHTML5UpdateUtils() {
         super();
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests heading's links without the {@code href} attribute are removed.
      */
     @Test
-    public final void testCleanNoHrefLinks_MultipleClasses() {
+    public final void testRemoveHeadingNoHrefLinks() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1><a>a_heading</a>A heading</h1>";
+        html = "<h1><a>a_heading</a>A heading</h1><h3><a>a_heading</a>A heading</h3>";
 
-        result = util.removeNoHrefLinks(html);
+        result = util.removeHeadingNoHrefLinks(html);
 
-        htmlExpected = "<h1>A heading</h1>";
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
         Assert.assertEquals(htmlExpected, result);
     }

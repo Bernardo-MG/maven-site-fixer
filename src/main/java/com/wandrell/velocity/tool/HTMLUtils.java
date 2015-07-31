@@ -215,7 +215,7 @@ public final class HTMLUtils {
     }
 
     /**
-     * Constructs an instance of the {@code HTMLUtil}.
+     * Constructs an instance of the {@code HTMLUtils}.
      */
     public HTMLUtils() {
         super();

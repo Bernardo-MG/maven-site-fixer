@@ -33,6 +33,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
 /**
+ * Utilities class for adapting the site to the patterns used on Maven Skins.
+ * <p>
+ * This is used for customizing the HTML code, transforming the default Maven
+ * Site into something that fits into patterns offered by a Maven Skin.
  * 
  * @author Bernardo Martínez Garrido
  */

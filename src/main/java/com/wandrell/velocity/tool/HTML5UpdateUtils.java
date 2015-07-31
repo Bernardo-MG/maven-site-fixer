@@ -33,14 +33,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
 /**
- * Utilities class for fixing a Maven Site's HTML code.
+ * Utilities class for fixing a Maven Site's HTML code, updating it to HTML5.
  * <p>
  * Maven Sites are created by using Doxia, which supports XHTML, and not HTML5,
  * for this reason, these sites need some fixes and updates, in order to fit
  * into the latest HTML standards.
  * <p>
- * For this various methods are offered, each updating a type of element, or
- * fixing a common error.
+ * For this various methods are offered, which will remove old and obsolete
+ * patterns being used on the HTML files.
  * <p>
  * Note that these methods will only modify the contents of the {@code 
  * <body>} element if it exists, or all the received code otherwise.
@@ -51,7 +51,7 @@ import org.jsoup.parser.Tag;
 public class HTML5UpdateUtils {
 
     /**
-     * Constructs an instance of the {@code SiteUtil}.
+     * Constructs an instance of the {@code SiteUtils}.
      */
     public HTML5UpdateUtils() {
         super();
@@ -59,6 +59,9 @@ public class HTML5UpdateUtils {
 
     /**
      * Fixes same-file links and ids using point separators.
+     * <p>
+     * This is because if a link points to an id with points, that link won't
+     * work.
      * 
      * @param html
      *            HTML content to transform
@@ -71,8 +74,8 @@ public class HTML5UpdateUtils {
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        fixIdsWithPoints(body);
-        fixHrefsWithPoints(body);
+        removePointsFromIds(body);
+        removePointsFromInternalHref(body);
 
         return body.html();
     }
@@ -80,8 +83,8 @@ public class HTML5UpdateUtils {
     /**
      * Removes the externalLink class from links.
      * <p>
-     * If a links ends without classes due to this, then the class attribute
-     * will be removed too.
+     * If a links ends without classes due to this, then the {@code class}
+     * attribute will be removed too.
      * 
      * @param html
      *            HTML content to transform
@@ -95,7 +98,7 @@ public class HTML5UpdateUtils {
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        // Selects rows with <th> tags within a <tr> in a <tbody>
+        // Selects <a> elements with the externalLink class
         links = body.select("a.externalLink");
         if (!links.isEmpty()) {
             for (final Element link : links) {
@@ -111,7 +114,7 @@ public class HTML5UpdateUtils {
     }
 
     /**
-     * Removes the links with no {@code href} attribute.
+     * Removes the links with no {@code href} attribute from headings.
      * <p>
      * These links are added by Doxia to the headings.
      * 
@@ -119,7 +122,7 @@ public class HTML5UpdateUtils {
      *            HTML content to transform
      * @return HTML content, with no link not having the href attribute
      */
-    public final String removeNoHrefLinks(final String html) {
+    public final String removeHeadingNoHrefLinks(final String html) {
         final Collection<Element> links; // Links to fix
         final Element body;     // Body of the HTML code
 
@@ -127,8 +130,9 @@ public class HTML5UpdateUtils {
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        // Selects links with no href attribute
-        links = body.select("a:not([href])");
+        // Selects links in headings which have no href attribute
+        links = body.select(
+                "h1 a:not([href]), h2 a:not([href]), h3 a:not([href]), h4 a:not([href]), h5 a:not([href]), h6 a:not([href])");
         if (!links.isEmpty()) {
             for (final Element link : links) {
                 link.remove();
@@ -234,20 +238,22 @@ public class HTML5UpdateUtils {
         return body.html();
     }
 
-    private final void fixHrefsWithPoints(final Element body) {
-        final Collection<Element> links; // Links to fix
-        String href;    // href attribute contents
+    private final void removeBodyTable(final Element body) {
+        final Collection<Element> tables;   // Tables to fix
 
-        links = body.select("a[href^=\"#\"]");
-        if (!links.isEmpty()) {
-            for (final Element element : links) {
-                href = element.attr("href").replaceAll("\\.", "");
-                element.attr("href", href);
+        // Selects tables with the bodyTable class
+        tables = body.select("table.bodyTable");
+        if (!tables.isEmpty()) {
+            for (final Element table : tables) {
+                table.removeClass("bodyTable");
+                if (table.classNames().isEmpty()) {
+                    table.removeAttr("class");
+                }
             }
         }
     }
 
-    private final void fixIdsWithPoints(final Element body) {
+    private final void removePointsFromIds(final Element body) {
         final Collection<Element> elements; // Elements to fix
         String id;      // id attribute contents
 
@@ -261,17 +267,15 @@ public class HTML5UpdateUtils {
         }
     }
 
-    private final void removeBodyTable(final Element body) {
-        final Collection<Element> tables;   // Tables to fix
+    private final void removePointsFromInternalHref(final Element body) {
+        final Collection<Element> links; // Links to fix
+        String href;    // href attribute contents
 
-        // Selects tables with the bodyTable class
-        tables = body.select("table.bodyTable");
-        if (!tables.isEmpty()) {
-            for (final Element table : tables) {
-                table.removeClass("bodyTable");
-                if (table.classNames().isEmpty()) {
-                    table.removeAttr("class");
-                }
+        links = body.select("a[href^=\"#\"]");
+        if (!links.isEmpty()) {
+            for (final Element element : links) {
+                href = element.attr("href").replaceAll("\\.", "");
+                element.attr("href", href);
             }
         }
     }
