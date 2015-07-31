@@ -75,7 +75,6 @@ public class SiteUtils {
         body = Jsoup.parseBodyFragment(html).body();
 
         images = body.select("section > img");
-
         if (!images.isEmpty()) {
             for (final Element img : images) {
                 figure = new Element(Tag.valueOf("figure"), "");

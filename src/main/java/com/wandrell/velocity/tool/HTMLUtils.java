@@ -245,29 +245,23 @@ public final class HTMLUtils {
             final Collection<String> classNames) {
         final Collection<Element> elements; // All elements selected
         final Element body;     // Element parsed from the content
-        final String result;    // Modified HTML code
 
         checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(classNames, "Received a null pointer as class names");
 
         body = Jsoup.parseBodyFragment(html).body();
-        elements = body.select(selector);
 
-        if (elements.isEmpty()) {
-            // Nothing to update
-            result = body.html();
-        } else {
+        elements = body.select(selector);
+        if (!elements.isEmpty()) {
             for (final Element element : elements) {
                 for (final String className : classNames) {
                     element.addClass(className);
                 }
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**
@@ -319,8 +313,8 @@ public final class HTMLUtils {
         checkNotNull(attributeKey, "Received a null pointer as attribute key");
 
         body = Jsoup.parseBodyFragment(html).body();
-        elements = body.select(selector);
 
+        elements = body.select(selector);
         attrs = new ArrayList<String>();
         for (final Element element : elements) {
             attrs.add(element.attr(attributeKey));
@@ -344,26 +338,20 @@ public final class HTMLUtils {
     public final String remove(final String html, final String selector) {
         final Collection<Element> elements; // Elements to remove
         final Element body;     // Element parsed from the content
-        final String result;    // Resulting HTML
 
         checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
 
         body = Jsoup.parseBodyFragment(html).body();
-        elements = body.select(selector);
 
-        if (elements.isEmpty()) {
-            // Nothing changed
-            result = body.html();
-        } else {
+        elements = body.select(selector);
+        if (!elements.isEmpty()) {
             for (final Element element : elements) {
                 element.remove();
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**
@@ -384,8 +372,6 @@ public final class HTMLUtils {
     public final String replaceAll(final String html,
             final Map<String, String> replacements) {
         final Element body;  // Element parsed from the content
-        final String result; // Resulting HTML
-        Boolean modified;    // Flag indicating if the HTML has been modified
         String selector;     // Iterated selector
         String replacement;  // Iterated HTML replacement
         Element replacementElem; // Iterated replacement
@@ -396,7 +382,6 @@ public final class HTMLUtils {
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        modified = false;
         for (final Entry<String, String> replacementEntry : replacements
                 .entrySet()) {
             selector = replacementEntry.getKey();
@@ -412,20 +397,11 @@ public final class HTMLUtils {
                     for (final Element element : elements) {
                         element.replaceWith(replacementElem.clone());
                     }
-
-                    modified = true;
                 }
             }
         }
 
-        if (modified) {
-            result = body.html();
-        } else {
-            // Nothing changed
-            result = body.html();
-        }
-
-        return result;
+        return body.html();
     }
 
     /**
@@ -446,7 +422,6 @@ public final class HTMLUtils {
             final String attributeKey, final String value) {
         final Collection<Element> elements; // Selected elements
         final Element body;  // Element parsed from the content
-        final String result; // Resulting HTML
 
         checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
@@ -456,18 +431,13 @@ public final class HTMLUtils {
         body = Jsoup.parseBodyFragment(html).body();
         elements = body.select(selector);
 
-        if (elements.isEmpty()) {
-            // Nothing to update
-            result = body.html();
-        } else {
+        if (!elements.isEmpty()) {
             for (final Element element : elements) {
                 element.attr(attributeKey, value);
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**
@@ -576,7 +546,6 @@ public final class HTMLUtils {
             final String wrapper) {
         final Collection<Element> elements; // Selected elements
         final Element body;  // Element parsed from the content
-        final String result; // Modified HTML
 
         checkNotNull(html, "Received a null pointer as html");
         checkNotNull(selector, "Received a null pointer as selector");
@@ -585,18 +554,13 @@ public final class HTMLUtils {
         body = Jsoup.parseBodyFragment(html).body();
         elements = body.select(selector);
 
-        if (elements.isEmpty()) {
-            // Nothing to update
-            result = body.html();
-        } else {
+        if (!elements.isEmpty()) {
             for (final Element element : elements) {
                 element.wrap(wrapper);
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**

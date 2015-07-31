@@ -98,7 +98,7 @@ public class HTML5UpdateUtils {
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        // Selects <a> elements with the externalLink class
+        // <a> elements with the externalLink class
         links = body.select("a.externalLink");
         if (!links.isEmpty()) {
             for (final Element link : links) {
@@ -130,7 +130,7 @@ public class HTML5UpdateUtils {
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        // Selects links in headings which have no href attribute
+        // Links in headings which have no href attribute
         links = body.select(
                 "h1 a:not([href]), h2 a:not([href]), h3 a:not([href]), h4 a:not([href]), h5 a:not([href]), h6 a:not([href])");
         if (!links.isEmpty()) {
@@ -143,18 +143,24 @@ public class HTML5UpdateUtils {
     }
 
     /**
-     * Corrects code divisions, by both correction the elements order, and by
-     * swapping code classes for the {@code <code>} block.
-     * <p>
-     * Maven sites handle code blocks in an outdated fashion, and look like
-     * this:
+     * Transforms outdated source divisions to the new {@code <code>} elements.
+     * Additionally, it will correct the position of the {@code 
      * 
-     * <pre>
-     * {@code <div class="source">
-     *    <pre>Some code
+     * 
+    
+    <pre>
+       * } element,
+       * which will me moved out of the code section.
+       * <p>
+       * Maven sites handle code blocks in an outdated fashion, and look like
+       * this:
+       * 
+       * <pre>
+       * {@code <div class="source">
+       *    <pre>Some code
     </pre>
     
-     * </div>}
+    * </div>}
      * </pre>
      * This method fixes them, transforming them into:
      * 
@@ -179,14 +185,15 @@ public class HTML5UpdateUtils {
         body = Jsoup.parseBodyFragment(html).body();
 
         removeRedundantSourceDivs(body);
-        updateSourceDivs(body);
+        takeOutSourceDivPre(body);
+        updateSourceDivsToCode(body);
 
         return body.html();
     }
 
     /**
-     * Fixes divisions with the section class, transforming them into actual
-     * sections.
+     * Transforms divisions with the section class into the new {@code 
+     * <section>} element.
      * 
      * @param html
      *            HTML content to transform
@@ -200,8 +207,8 @@ public class HTML5UpdateUtils {
 
         body = Jsoup.parseBodyFragment(html).body();
 
+        // divs with the section class
         sectionDivs = body.select("div.section");
-
         if (!sectionDivs.isEmpty()) {
             for (final Element div : sectionDivs) {
                 div.tagName("section");
@@ -217,7 +224,10 @@ public class HTML5UpdateUtils {
     }
 
     /**
-     * Cleans the tables, removing unneeded attributes and classes.
+     * Updates the tables, applying various fixes and removed unneeded code.
+     * <p>
+     * This method will update the table heads, remove the border attribute,
+     * remove the bodyTable class and remove the alternating rows attributes.
      * 
      * @param html
      *            HTML content to transform
@@ -238,10 +248,16 @@ public class HTML5UpdateUtils {
         return body.html();
     }
 
+    /**
+     * Removes the {@code bodyTable} class from tables.
+     * 
+     * @param body
+     *            body element with the HTML code to transform
+     */
     private final void removeBodyTable(final Element body) {
         final Collection<Element> tables;   // Tables to fix
 
-        // Selects tables with the bodyTable class
+        // Tables with the bodyTable class
         tables = body.select("table.bodyTable");
         if (!tables.isEmpty()) {
             for (final Element table : tables) {
@@ -253,10 +269,17 @@ public class HTML5UpdateUtils {
         }
     }
 
+    /**
+     * Removes points from the {@code id} attributes.
+     * 
+     * @param body
+     *            body element with the HTML code to transform
+     */
     private final void removePointsFromIds(final Element body) {
         final Collection<Element> elements; // Elements to fix
         String id;      // id attribute contents
 
+        // Elements with the id attribute
         elements = body.select("[id]");
         if (!elements.isEmpty()) {
             for (final Element element : elements) {
@@ -267,11 +290,19 @@ public class HTML5UpdateUtils {
         }
     }
 
+    /**
+     * Removes points from the {@code href} attributes, if these are pointing
+     * internally to the document.
+     * 
+     * @param body
+     *            body element with the HTML code to transform
+     */
     private final void removePointsFromInternalHref(final Element body) {
         final Collection<Element> links; // Links to fix
         String href;    // href attribute contents
 
-        links = body.select("a[href^=\"#\"]");
+        // Elements with an internal href
+        links = body.select("[href^=\"#\"]");
         if (!links.isEmpty()) {
             for (final Element element : links) {
                 href = element.attr("href").replaceAll("\\.", "");
@@ -281,7 +312,8 @@ public class HTML5UpdateUtils {
     }
 
     /**
-     * Corrects source divisions by removing redundant apparitions of it.
+     * Removes redundant source divisions. This is meant as a cleanup step
+     * before updating the code sections.
      * <p>
      * It is a problem with Maven sites that code divisions get wrapped by
      * another code division, so they appear like this:
@@ -296,20 +328,27 @@ public class HTML5UpdateUtils {
      * </div>}
      * </pre>
      * This method fixes that, by removing the outer division.
+     * <p>
+     * Note that it is expected to have only one children with the
+     * {@code source} class.
      * 
      * @param html
      *            HTML content to fix
      * @return HTML content, with the redundant source classes removed
      */
     private final void removeRedundantSourceDivs(final Element body) {
-        final Collection<Element> codeDivs; // Repeated code divs
-        Element validDiv;       // Fixed code block
+        final Collection<Element> sourceDivs; // Repeated source divs
+        Collection<Element> children;         // Children source divs
+        Element validDiv;                     // Fixed code block
 
-        codeDivs = body.select(".source:has(.source)");
-        if (!codeDivs.isEmpty()) {
-            for (final Element div : codeDivs) {
-                if (!div.children().isEmpty()) {
-                    validDiv = div.child(0);
+        // Divs with the source class with another div with the source class as
+        // a child
+        sourceDivs = body.select("div.source:has(div.source)");
+        if (!sourceDivs.isEmpty()) {
+            for (final Element div : sourceDivs) {
+                children = div.getElementsByClass(".source");
+                if (!children.isEmpty()) {
+                    validDiv = children.iterator().next();
 
                     validDiv.remove();
 
@@ -319,6 +358,14 @@ public class HTML5UpdateUtils {
         }
     }
 
+    /**
+     * Removes the {@code border} attribute from {@code <table} elements.
+     * <p>
+     * This attribute should be defined in CSS files.
+     * 
+     * @param body
+     *            body element with the HTML code to transform
+     */
     private final void removeTableBorder(final Element body) {
         final Collection<Element> tables;   // Tables to fix
 
@@ -331,29 +378,71 @@ public class HTML5UpdateUtils {
         }
     }
 
-    private final void updateSourceDivs(final Element body) {
+    /**
+     * Moves the {@code 
+     * 
+     * 
+    
+    <pre>
+     * } element out of source divisions, so it wraps said division, and not the
+     * other way around.
+     * <p>
+     * Note that it is expected to have only one children with the {@code 
+     * 
+     * 
+    
+    <pre>
+     * } tag.
+     * 
+     * @param body
+     *            body element with the HTML code to transform
+     */
+    private final void takeOutSourceDivPre(final Element body) {
         final Collection<Element> divs; // Code divisions
-        Element pre;    // <pre> element
-        String text;    // Preserved text
+        Collection<Element> pres;       // <pre> elements
+        Element pre;                    // <pre> element
+        String text;                    // Preserved text
 
-        divs = body.select(".source:has(pre)");
+        // Divs with the source class and a pre
+        divs = body.select("div.source:has(pre)");
         if (!divs.isEmpty()) {
             for (final Element div : divs) {
-                pre = div.getElementsByTag("pre").get(0);
+                pres = div.getElementsByTag("pre");
+                if (!pres.isEmpty()) {
+                    pre = pres.iterator().next();
 
-                text = pre.text();
-                pre.text("");
+                    text = pre.text();
+                    pre.text("");
 
+                    div.replaceWith(pre);
+                    pre.appendChild(div);
+
+                    div.text(text);
+                }
+            }
+        }
+    }
+
+    /**
+     * Transforms {@code <div>} elements with the {@code source} class into
+     * {@code <code>} elements.
+     * 
+     * @param body
+     *            body element with the HTML code to transform
+     */
+    private final void updateSourceDivsToCode(final Element body) {
+        final Collection<Element> divs; // Code divisions
+
+        // Divs with the source class
+        divs = body.select("div.source");
+        if (!divs.isEmpty()) {
+            for (final Element div : divs) {
                 div.tagName("code");
-                div.replaceWith(pre);
-                pre.appendChild(div);
 
                 div.removeClass("source");
                 if (div.classNames().isEmpty()) {
                     div.removeAttr("class");
                 }
-
-                div.text(text);
             }
         }
     }
@@ -426,7 +515,7 @@ public class HTML5UpdateUtils {
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
 
-        // Selects rows with <th> tags within a <tr> in a <tbody>
+        // Table rows with <th> tags in a <tbody>
         tableHeadRows = body.select("table > tbody > tr:has(th)");
         if (!tableHeadRows.isEmpty()) {
             for (final Element row : tableHeadRows) {
@@ -445,10 +534,18 @@ public class HTML5UpdateUtils {
         }
     }
 
+    /**
+     * Removes the alternating {@code a} and {@code b} classes from table rows.
+     * <p>
+     * This seems to be an obsolete way to get alternate colored rows.
+     * 
+     * @param body
+     *            body element with the HTML code to transform
+     */
     private final void updateTableRowAlternates(final Element body) {
         final Collection<Element> elements;   // Tables and rows to fix
 
-        // Selects rows with the class "a" or "b"
+        // Table rows with the class "a" or "b"
         elements = body.select("tr.a, tr.b");
         if (!elements.isEmpty()) {
             for (final Element row : elements) {
