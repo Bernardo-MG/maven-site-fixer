@@ -149,15 +149,15 @@ public class HTML5UpdateUtils {
      * 
     
     <pre>
-       * } element,
-       * which will me moved out of the code section.
-       * <p>
-       * Maven sites handle code blocks in an outdated fashion, and look like
-       * this:
-       * 
-       * <pre>
-       * {@code <div class="source">
-       *    <pre>Some code
+        * } element,
+        * which will me moved out of the code section.
+        * <p>
+        * Maven sites handle code blocks in an outdated fashion, and look like
+        * this:
+        * 
+        * <pre>
+        * {@code <div class="source">
+        *    <pre>Some code
     </pre>
     
     * </div>}
@@ -240,6 +240,7 @@ public class HTML5UpdateUtils {
 
         body = Jsoup.parseBodyFragment(html).body();
 
+        updateTableClasses(body);
         updateTableHeads(body);
         removeTableBorder(body);
         removeBodyTable(body);
@@ -442,6 +443,22 @@ public class HTML5UpdateUtils {
                 div.removeClass("source");
                 if (div.classNames().isEmpty()) {
                     div.removeAttr("class");
+                }
+            }
+        }
+    }
+
+    private final void updateTableClasses(final Element body) {
+        final Collection<Element> tables; // Tables to fix
+
+        // Table rows with <th> tags in a <tbody>
+        tables = body.select("table.bodyTable");
+        if (!tables.isEmpty()) {
+            for (final Element table : tables) {
+                table.removeClass("bodyTable");
+
+                if (table.attr("class").isEmpty()) {
+                    table.removeAttr("class");
                 }
             }
         }

@@ -29,8 +29,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
@@ -348,56 +346,6 @@ public final class HTMLUtils {
         if (!elements.isEmpty()) {
             for (final Element element : elements) {
                 element.remove();
-            }
-        }
-
-        return body.html();
-    }
-
-    /**
-     * Replaces a collection of HTML elements.
-     * <p>
-     * These elements are received as a {@code Map}, made up of pairs where the
-     * key is a CSS selector, and the value is the replacement for the selected
-     * element.
-     * 
-     * @param html
-     *            HTML content to modify
-     * @param replacements
-     *            {@code Map} where the key is a CSS selector and the value the
-     *            element's replacement
-     * @return HTML content with replaced elements. If no elements are found,
-     *         the original content is returned.
-     */
-    public final String replaceAll(final String html,
-            final Map<String, String> replacements) {
-        final Element body;  // Element parsed from the content
-        String selector;     // Iterated selector
-        String replacement;  // Iterated HTML replacement
-        Element replacementElem; // Iterated replacement
-        Collection<Element> elements; // Selected elements
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(replacements, "Received a null pointer as replacements");
-
-        body = Jsoup.parseBodyFragment(html).body();
-
-        for (final Entry<String, String> replacementEntry : replacements
-                .entrySet()) {
-            selector = replacementEntry.getKey();
-            replacement = replacementEntry.getValue();
-
-            elements = body.select(selector);
-            if (!elements.isEmpty()) {
-                // Take the first child
-                replacementElem = Jsoup.parseBodyFragment(replacement).body()
-                        .child(0);
-
-                if (replacementElem != null) {
-                    for (final Element element : elements) {
-                        element.replaceWith(replacementElem.clone());
-                    }
-                }
             }
         }
 
