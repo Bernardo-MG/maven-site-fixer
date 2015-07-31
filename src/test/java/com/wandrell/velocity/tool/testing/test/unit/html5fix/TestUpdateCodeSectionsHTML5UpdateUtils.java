@@ -21,17 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wandrell.velocity.tool.testing.test.unit.site;
+package com.wandrell.velocity.tool.testing.test.unit.html5fix;
 
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.HTML5UpdateUtils;
 
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link HTML5UpdateUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
@@ -40,19 +39,19 @@ import junit.framework.Assert;
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see HTML5UpdateUtils
  */
-public final class TestUpdateCodeSectionsSiteUtil {
+public final class TestUpdateCodeSectionsHTML5UpdateUtils {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestUpdateCodeSectionsSiteUtil() {
+    public TestUpdateCodeSectionsHTML5UpdateUtils() {
         super();
     }
 

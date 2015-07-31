@@ -58,7 +58,7 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestAddClassHTMLUtil {
+public final class TestAddClassHTMLUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -68,7 +68,7 @@ public final class TestAddClassHTMLUtil {
     /**
      * Default constructor.
      */
-    public TestAddClassHTMLUtil() {
+    public TestAddClassHTMLUtils() {
         super();
     }
 

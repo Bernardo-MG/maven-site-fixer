@@ -21,54 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wandrell.velocity.tool.testing.test.unit.site;
+package com.wandrell.velocity.tool.testing.test.unit.html5fix;
 
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.HTML5UpdateUtils;
 
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link HTML5UpdateUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Links without the {@code href} attribute are removed.</li>
+ * <li>When trying to fix the outdated section divisions these are updated
+ * correctly.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see HTML5UpdateUtils
  */
-public final class TestRemoveNoHrefLinksSiteUtil {
+public final class TestUpdateSectionDivHTML5UpdateUtils {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestRemoveNoHrefLinksSiteUtil() {
+    public TestUpdateSectionDivHTML5UpdateUtils() {
         super();
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that when trying to fix the outdated section divisions these are
+     * updated correctly.
      */
     @Test
-    public final void testCleanNoHrefLinks_MultipleClasses() {
+    public final void testFixCodeBlock() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1><a>a_heading</a>A heading</h1>";
+        html = "<div class=\"section\"><p>Some text</p></div>";
 
-        result = util.removeNoHrefLinks(html);
+        result = util.updateSectionDiv(html);
 
-        htmlExpected = "<h1>A heading</h1>";
+        htmlExpected = "<section>\n <p>Some text</p>\n</section>";
 
         Assert.assertEquals(htmlExpected, result);
     }

@@ -21,54 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wandrell.velocity.tool.testing.test.unit.site;
+package com.wandrell.velocity.tool.testing.test.unit.html5fix;
 
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.HTML5UpdateUtils;
 
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link HTML5UpdateUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Outdated tables are correctly cleaned up.</li>
+ * <li>Links without the {@code href} attribute are removed.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see HTML5UpdateUtils
  */
-public class TestUpdateTablesSiteUtil {
+public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestUpdateTablesSiteUtil() {
+    public TestRemoveNoHrefLinksHTML5UpdateUtils() {
         super();
     }
 
     /**
-     * Tests that outdated tables are correctly cleaned up.
+     * Tests links without the {@code href} attribute are removed.
      */
     @Test
-    public final void testCleanTables() {
+    public final void testCleanNoHrefLinks_MultipleClasses() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<table border=\"0\" class=\"bodyTable table table-striped table-bordered\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        html = "<h1><a>a_heading</a>A heading</h1>";
 
-        result = util.updateTables(html);
+        result = util.removeNoHrefLinks(html);
 
-        htmlExpected = "<table class=\"table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        htmlExpected = "<h1>A heading</h1>";
 
         Assert.assertEquals(htmlExpected, result);
     }

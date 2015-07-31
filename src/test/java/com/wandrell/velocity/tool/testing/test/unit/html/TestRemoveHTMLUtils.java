@@ -33,16 +33,14 @@ import com.wandrell.velocity.tool.HTMLUtils;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Wrapping an element works as expected.</li>
- * <li>Wrapping an element, without indicating the closing tag, closes the wrap.
- * </li>
- * <li>Wrapping a not existing element does nothing.</li>
+ * <li>Removing an existing element works.</li>
+ * <li>Removing a not existing element does nothing.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestWrapHTMLUtil {
+public final class TestRemoveHTMLUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -52,61 +50,42 @@ public final class TestWrapHTMLUtil {
     /**
      * Default constructor.
      */
-    public TestWrapHTMLUtil() {
+    public TestRemoveHTMLUtils() {
         super();
     }
 
     /**
-     * Tests that wrapping an element works as expected.
+     * Tests that removing an existing element works.
      */
     @Test
-    public final void testWrap() {
-        final String html;         // HTML code to fix
+    public final void testRemove_Exists() {
+        final String html;         // HTML code where the classes are added
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.wrap(html, "h1", "<header></header>");
+        result = util.remove(html, "h1");
 
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
+        htmlExpected = "<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Test that wrapping a not existing element does nothing.
+     * Tests that removing a not existing element does nothing.
      */
     @Test
-    public final void testWrap_NoElement() {
-        final String html;         // HTML code to fix
+    public final void testRemove_NotExists() {
+        final String html;         // HTML code where the classes are added
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.wrap(html, "h3", "<header></header>");
+        result = util.remove(html, "h3");
 
         htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that wrapping an element, without indicating the closing tag,
-     * closes the wrap.
-     */
-    @Test
-    public final void testWrap_NotClosed() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
-
-        result = util.wrap(html, "h1", "<header>");
-
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

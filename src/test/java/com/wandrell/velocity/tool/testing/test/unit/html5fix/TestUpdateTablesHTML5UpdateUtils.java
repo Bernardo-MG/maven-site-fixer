@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wandrell.velocity.tool.testing.test.unit.site;
+package com.wandrell.velocity.tool.testing.test.unit.html5fix;
 
 import org.testng.annotations.Test;
 
+import com.wandrell.velocity.tool.HTML5UpdateUtils;
 import com.wandrell.velocity.tool.HTMLUtils;
-import com.wandrell.velocity.tool.SiteUtils;
 
 import junit.framework.Assert;
 
@@ -35,40 +35,40 @@ import junit.framework.Assert;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Points on anchors are correctly removed.</li>
+ * <li>Outdated tables are correctly cleaned up.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class FixInternalLinksSiteUtil {
+public class TestUpdateTablesHTML5UpdateUtils {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public FixInternalLinksSiteUtil() {
+    public TestUpdateTablesHTML5UpdateUtils() {
         super();
     }
 
     /**
-     * Tests that points on anchors are correctly removed.
+     * Tests that outdated tables are correctly cleaned up.
      */
     @Test
-    public final void testFixInternalLinks() {
+    public final void testCleanTables() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
+        html = "<table border=\"0\" class=\"bodyTable table table-striped table-bordered\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
 
-        result = util.fixInternalLinks(html);
+        result = util.updateTables(html);
 
-        htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
+        htmlExpected = "<table class=\"table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         Assert.assertEquals(htmlExpected, result);
     }

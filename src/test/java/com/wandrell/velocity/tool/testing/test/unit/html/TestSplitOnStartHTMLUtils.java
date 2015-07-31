@@ -40,13 +40,12 @@ import com.wandrell.velocity.tool.HTMLUtils;
  * <li>Splitting an HTML tree of height 1, including a tail split, works as
  * expected.</li>
  * <li>Splitting an HTML tree of height 2 works as expected.</li>
- * <li>Splitting an HTML tree of height 2 multiple times works as expected.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestSplitHTMLUtil {
+public final class TestSplitOnStartHTMLUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -56,7 +55,7 @@ public final class TestSplitHTMLUtil {
     /**
      * Default constructor.
      */
-    public TestSplitHTMLUtil() {
+    public TestSplitOnStartHTMLUtils() {
         super();
     }
 
@@ -69,17 +68,17 @@ public final class TestSplitHTMLUtil {
         final Collection<String> result; // Split HTML
         final Iterator<String> itr; // Split HTML iterator
 
-        html = "<body><hr><p>Some text</p><h2>Subheading</h2><p>More text</p><hr><p>Even more text</p></body>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.split(html, "hr");
+        result = util.splitOnStart(html, "h1");
 
-        Assert.assertEquals(result.size(), 3);
+        Assert.assertEquals(result.size(), 2);
 
         itr = result.iterator();
-        Assert.assertEquals(itr.next(), "");
         Assert.assertEquals(itr.next(),
-                "<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>");
-        Assert.assertEquals(itr.next(), "<p>Even more text</p>");
+                "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>");
+        Assert.assertEquals(itr.next(),
+                "<h1>Another heading</h1>\n<p>Even more text</p>");
     }
 
     /**
@@ -91,41 +90,19 @@ public final class TestSplitHTMLUtil {
         final Collection<String> result; // Split HTML
         final Iterator<String> itr; // Split HTML iterator
 
-        html = "<body><hr><p>Some text</p><div><h2>Subheading</h2><p>More text</p><hr><p>Even more text</p></div></body>";
+        html = "<body><h1>A heading</h1><p>Some text</p><div><h1>Second heading</h1><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></div></body>";
 
-        result = util.split(html, "hr");
+        result = util.splitOnStart(html, "h1");
 
         Assert.assertEquals(result.size(), 3);
 
         itr = result.iterator();
-        Assert.assertEquals(itr.next(), "");
         Assert.assertEquals(itr.next(),
-                "<p>Some text</p>\n<div>\n <h2>Subheading</h2>\n <p>More text</p>\n</div>");
-        Assert.assertEquals(itr.next(), "<p>Even more text</p>");
-    }
-
-    /**
-     * Tests that splitting an HTML tree of height 2 multiple times works as
-     * expected.
-     */
-    @Test
-    public final void testSplit_Deep_Multiple() {
-        final String html;          // HTML code to split
-        final Collection<String> result; // Split HTML
-        final Iterator<String> itr; // Split HTML iterator
-
-        html = "<body><hr><p>Some text</p><div><h2>Subheading</h2><p>More text</p><hr><p>Even more text</p><hr><p>Text</p></div></body>";
-
-        result = util.split(html, "hr");
-
-        Assert.assertEquals(result.size(), 4);
-
-        itr = result.iterator();
-        Assert.assertEquals(itr.next(), "");
+                "<h1>A heading</h1>\n<p>Some text</p>\n<div></div>");
         Assert.assertEquals(itr.next(),
-                "<p>Some text</p>\n<div>\n <h2>Subheading</h2>\n <p>More text</p>\n</div>");
-        Assert.assertEquals(itr.next(), "<p>Even more text</p>");
-        Assert.assertEquals(itr.next(), "<p>Text</p>");
+                "<h1>Second heading</h1>\n<h2>Subheading</h2>\n<p>More text</p>");
+        Assert.assertEquals(itr.next(),
+                "<h1>Another heading</h1>\n<p>Even more text</p>");
     }
 
     /**
@@ -138,18 +115,18 @@ public final class TestSplitHTMLUtil {
         final Collection<String> result; // Split HTML
         final Iterator<String> itr; // Split HTML iterator
 
-        html = "<body><hr><p>Some text</p><h2>Subheading</h2><p>More text</p><hr><p>Even more text</p></body><hr>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body><h1>Extra heading</h1>";
 
-        result = util.split(html, "hr");
+        result = util.splitOnStart(html, "h1");
 
-        Assert.assertEquals(result.size(), 4);
+        Assert.assertEquals(result.size(), 3);
 
         itr = result.iterator();
-        Assert.assertEquals(itr.next(), "");
         Assert.assertEquals(itr.next(),
-                "<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>");
-        Assert.assertEquals(itr.next(), "<p>Even more text</p>");
-        Assert.assertEquals(itr.next(), "");
+                "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>");
+        Assert.assertEquals(itr.next(),
+                "<h1>Another heading</h1>\n<p>Even more text</p>");
+        Assert.assertEquals(itr.next(), "<h1>Extra heading</h1>");
     }
 
 }

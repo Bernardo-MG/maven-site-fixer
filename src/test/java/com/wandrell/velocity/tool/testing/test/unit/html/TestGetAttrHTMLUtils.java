@@ -50,7 +50,7 @@ import com.wandrell.velocity.tool.HTMLUtils;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestGetAttrHTMLUtil {
+public final class TestGetAttrHTMLUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -60,7 +60,7 @@ public final class TestGetAttrHTMLUtil {
     /**
      * Default constructor.
      */
-    public TestGetAttrHTMLUtil() {
+    public TestGetAttrHTMLUtils() {
         super();
     }
 

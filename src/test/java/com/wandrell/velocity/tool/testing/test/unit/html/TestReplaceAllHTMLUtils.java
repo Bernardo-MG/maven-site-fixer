@@ -42,7 +42,7 @@ import com.wandrell.velocity.tool.HTMLUtils;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestReplaceAllHTMLUtil {
+public final class TestReplaceAllHTMLUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -52,7 +52,7 @@ public final class TestReplaceAllHTMLUtil {
     /**
      * Default constructor.
      */
-    public TestReplaceAllHTMLUtil() {
+    public TestReplaceAllHTMLUtils() {
         super();
     }
 
