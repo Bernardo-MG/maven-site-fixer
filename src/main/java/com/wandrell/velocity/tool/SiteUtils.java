@@ -134,7 +134,7 @@ public class SiteUtils {
         tables = body.select("table");
         if (!tables.isEmpty()) {
             for (final Element table : tables) {
-                table.addClass("bodyTable");
+                table.addClass("table");
                 table.addClass("table-striped");
                 table.addClass("table-bordered");
             }
