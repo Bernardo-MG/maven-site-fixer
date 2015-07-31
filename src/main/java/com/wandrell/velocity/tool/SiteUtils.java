@@ -380,6 +380,55 @@ public class SiteUtils {
     }
 
     /**
+     * Cleans the tables, removing unneeded attributes and classes.
+     * 
+     * @param html
+     *            HTML content to transform
+     * @return HTML content, with the tables cleaned
+     */
+    public final String updateTables(final String html) {
+        final Element body;     // Element parsed from the content
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parseBodyFragment(html).body();
+
+        updateTableHeads(body);
+        removeTableBorder(body);
+        removeBodyTable(body);
+        updateTableRowAlternates(body);
+
+        return body.html();
+    }
+
+    private final void removeBodyTable(final Element body) {
+        final Collection<Element> elements;   // Tables and rows to fix
+
+        // Selects tables with the bodyTable class
+        elements = body.select("table.bodyTable");
+        if (!elements.isEmpty()) {
+            for (final Element table : elements) {
+                table.removeClass("bodyTable");
+                if (table.classNames().isEmpty()) {
+                    table.removeAttr("class");
+                }
+            }
+        }
+    }
+
+    private final void removeTableBorder(final Element body) {
+        final Collection<Element> elements;   // Tables and rows to fix
+
+        // Selects tables with border defined
+        elements = body.select("table[border]");
+        if (!elements.isEmpty()) {
+            for (final Element table : elements) {
+                table.removeAttr("border");
+            }
+        }
+    }
+
+    /**
      * Corrects table headers by adding a {@code <thead>} section where missing.
      * <p>
      * This method will search for {@code 
@@ -442,23 +491,14 @@ public class SiteUtils {
      * @return HTML content with all the table heads fixed. If all the heads
      *         were correct, the original content is returned.
      */
-    public final String updateTableHeads(final String html) {
+    private final void updateTableHeads(final Element body) {
         final Collection<Element> tableHeadRows; // Heads to fix
-        final Element body;     // Element parsed from the content
-        final String result;    // Fixed html
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
 
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parseBodyFragment(html).body();
-
         // Selects rows with <th> tags within a <tr> in a <tbody>
         tableHeadRows = body.select("table > tbody > tr:has(th)");
-        if (tableHeadRows.isEmpty()) {
-            // No table heads to fix
-            result = body.html();
-        } else {
+        if (!tableHeadRows.isEmpty()) {
             for (final Element row : tableHeadRows) {
                 // Gets the row's table
                 table = row.parent().parent();
@@ -472,64 +512,15 @@ public class SiteUtils {
                 // Adds the head at the beginning of the table
                 table.prependChild(thead);
             }
-
-            result = body.html();
         }
-
-        return result;
     }
 
-    /**
-     * Cleans the tables, removing unneeded attributes and classes.
-     * 
-     * @param html
-     *            HTML content to transform
-     * @return HTML content, with the tables cleaned
-     */
-    public final String updateTables(final String html) {
-        final Element body;     // Element parsed from the content
-        Collection<Element> elements;   // Tables and rows to fix
-        String result;          // Fixed html
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parseBodyFragment(html).body();
-
-        // Selects tables with border defined
-        elements = body.select("table[border]");
-        if (elements.isEmpty()) {
-            // No tables to fix
-            result = body.html();
-        } else {
-            for (final Element table : elements) {
-                table.removeAttr("border");
-            }
-
-            result = body.html();
-        }
-
-        // Selects tables with the bodyTable class
-        elements = body.select("table.bodyTable ");
-        if (elements.isEmpty()) {
-            // No tables to fix
-            result = body.html();
-        } else {
-            for (final Element table : elements) {
-                table.removeClass("bodyTable");
-                if (table.classNames().isEmpty()) {
-                    table.removeAttr("class");
-                }
-            }
-
-            result = body.html();
-        }
+    private final void updateTableRowAlternates(final Element body) {
+        final Collection<Element> elements;   // Tables and rows to fix
 
         // Selects rows with the class "a" or "b"
         elements = body.select("tr.a, tr.b");
-        if (elements.isEmpty()) {
-            // No tables to fix
-            result = body.html();
-        } else {
+        if (!elements.isEmpty()) {
             for (final Element row : elements) {
                 if (row.hasClass("a")) {
                     row.removeClass("a");
@@ -540,11 +531,7 @@ public class SiteUtils {
                     row.removeAttr("class");
                 }
             }
-
-            result = body.html();
         }
-
-        return result;
     }
 
 }
