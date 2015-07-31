@@ -70,9 +70,6 @@ public class TestUpdateTablesSiteUtil {
 
         htmlExpected = "<table class=\"table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        System.out.println(result);
-        System.out.println(htmlExpected);
-
         Assert.assertEquals(htmlExpected, result);
     }
 

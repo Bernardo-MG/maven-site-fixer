@@ -64,32 +64,15 @@ public class SiteUtils {
      *            HTML content to transform
      * @return HTML content, with the links and ids fixes
      */
-    public final String fixAnchorsWithPoints(final String html) {
-        Collection<Element> elements; // Elements to fix
+    public final String fixInternalLinks(final String html) {
         final Element body;     // Element parsed from the content
-        String id;              // Id attribute contents
 
         checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        elements = body.select("[id]");
-        if (!elements.isEmpty()) {
-            for (final Element element : elements) {
-                id = element.attr("id").replaceAll("\\.", "");
-
-                element.attr("id", id);
-            }
-        }
-
-        elements = body.select("a[href^=\"#\"]");
-        if (!elements.isEmpty()) {
-            for (final Element element : elements) {
-                id = element.attr("href").replaceAll("\\.", "");
-
-                element.attr("href", id);
-            }
-        }
+        fixIdsWithPoints(body);
+        fixHrefsWithPoints(body);
 
         return body.html();
     }
@@ -294,6 +277,34 @@ public class SiteUtils {
         updateTableRowAlternates(body);
 
         return body.html();
+    }
+
+    private final void fixHrefsWithPoints(final Element body) {
+        final Collection<Element> elements; // Elements to fix
+        String id;              // Id attribute contents
+
+        elements = body.select("a[href^=\"#\"]");
+        if (!elements.isEmpty()) {
+            for (final Element element : elements) {
+                id = element.attr("href").replaceAll("\\.", "");
+
+                element.attr("href", id);
+            }
+        }
+    }
+
+    private final void fixIdsWithPoints(final Element body) {
+        final Collection<Element> elements; // Elements to fix
+        String id;              // Id attribute contents
+
+        elements = body.select("[id]");
+        if (!elements.isEmpty()) {
+            for (final Element element : elements) {
+                id = element.attr("id").replaceAll("\\.", "");
+
+                element.attr("id", id);
+            }
+        }
     }
 
     private final void removeBodyTable(final Element body) {

@@ -41,7 +41,7 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class FixAnchorsWithPointsSiteUtil {
+public final class FixInternalLinksSiteUtil {
 
     /**
      * Instance of the utils class being tested.
@@ -51,7 +51,7 @@ public final class FixAnchorsWithPointsSiteUtil {
     /**
      * Default constructor.
      */
-    public FixAnchorsWithPointsSiteUtil() {
+    public FixInternalLinksSiteUtil() {
         super();
     }
 
@@ -59,14 +59,14 @@ public final class FixAnchorsWithPointsSiteUtil {
      * Tests that points on anchors are correctly removed.
      */
     @Test
-    public final void testFixAnchorsWithPoints() {
+    public final void testFixInternalLinks() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
 
-        result = util.fixAnchorsWithPoints(html);
+        result = util.fixInternalLinks(html);
 
         htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
 
