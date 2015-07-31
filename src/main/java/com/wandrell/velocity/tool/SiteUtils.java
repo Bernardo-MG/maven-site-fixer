@@ -67,7 +67,6 @@ public class SiteUtils {
     public final String fixAnchorsWithPoints(final String html) {
         Collection<Element> elements; // Elements to fix
         final Element body;     // Element parsed from the content
-        String result;          // Fixed html
         String id;              // Id attribute contents
 
         checkNotNull(html, "Received a null pointer as html");
@@ -75,34 +74,24 @@ public class SiteUtils {
         body = Jsoup.parseBodyFragment(html).body();
 
         elements = body.select("[id]");
-
-        if (elements.isEmpty()) {
-            result = body.html();
-        } else {
+        if (!elements.isEmpty()) {
             for (final Element element : elements) {
                 id = element.attr("id").replaceAll("\\.", "");
 
                 element.attr("id", id);
             }
-
-            result = body.html();
         }
 
         elements = body.select("a[href^=\"#\"]");
-
-        if (elements.isEmpty()) {
-            result = body.html();
-        } else {
+        if (!elements.isEmpty()) {
             for (final Element element : elements) {
                 id = element.attr("href").replaceAll("\\.", "");
 
                 element.attr("href", id);
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**
@@ -118,7 +107,6 @@ public class SiteUtils {
     public final String removeExternalLinks(final String html) {
         final Collection<Element> links; // Links to fix
         final Element body;     // Element parsed from the content
-        final String result;    // Fixed html
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -126,10 +114,7 @@ public class SiteUtils {
 
         // Selects rows with <th> tags within a <tr> in a <tbody>
         links = body.select("a.externalLink");
-        if (links.isEmpty()) {
-            // No links to fix
-            result = body.html();
-        } else {
+        if (!links.isEmpty()) {
             for (final Element link : links) {
                 link.removeClass("externalLink");
 
@@ -137,11 +122,9 @@ public class SiteUtils {
                     link.removeAttr("class");
                 }
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**
@@ -156,7 +139,6 @@ public class SiteUtils {
     public final String removeNoHrefLinks(final String html) {
         final Collection<Element> links; // Links to fix
         final Element body;     // Element parsed from the content
-        final String result;    // Fixed html
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -164,18 +146,13 @@ public class SiteUtils {
 
         // Selects links with no href attribute
         links = body.select("a:not([href])");
-        if (links.isEmpty()) {
-            // No links to remove
-            result = body.html();
-        } else {
+        if (!links.isEmpty()) {
             for (final Element link : links) {
                 link.remove();
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**
@@ -195,7 +172,6 @@ public class SiteUtils {
     public final String transformImagesToFigures(final String html) {
         final Collection<Element> images; // Image elements from the <body>
         final Element body;     // Element parsed from the content
-        String result;          // Fixed html
         Element figure;         // <figure> element
         Element caption;        // <figcaption> element
 
@@ -205,9 +181,7 @@ public class SiteUtils {
 
         images = body.select("section > img");
 
-        if (images.isEmpty()) {
-            result = body.html();
-        } else {
+        if (!images.isEmpty()) {
             for (final Element img : images) {
                 figure = new Element(Tag.valueOf("figure"), "");
                 caption = new Element(Tag.valueOf("figcaption"), "");
@@ -221,11 +195,9 @@ public class SiteUtils {
                     figure.appendChild(caption);
                 }
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**
@@ -281,7 +253,6 @@ public class SiteUtils {
     public final String updateSectionDiv(final String html) {
         final Collection<Element> sectionDivs; // Section divisions
         final Element body;     // Element parsed from the content
-        String result;          // Fixed html
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -289,9 +260,7 @@ public class SiteUtils {
 
         sectionDivs = body.select("div.section");
 
-        if (sectionDivs.isEmpty()) {
-            result = body.html();
-        } else {
+        if (!sectionDivs.isEmpty()) {
             for (final Element div : sectionDivs) {
                 div.tagName("section");
                 div.removeClass("section");
@@ -300,11 +269,9 @@ public class SiteUtils {
                     div.removeAttr("class");
                 }
             }
-
-            result = body.html();
         }
 
-        return result;
+        return body.html();
     }
 
     /**
