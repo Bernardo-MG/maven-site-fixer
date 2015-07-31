@@ -65,7 +65,7 @@ public class SiteUtils {
      * @return HTML content, with the links and ids fixes
      */
     public final String fixInternalLinks(final String html) {
-        final Element body;     // Element parsed from the content
+        final Element body;     // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -89,7 +89,7 @@ public class SiteUtils {
      */
     public final String removeExternalLinks(final String html) {
         final Collection<Element> links; // Links to fix
-        final Element body;     // Element parsed from the content
+        final Element body;     // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -121,7 +121,7 @@ public class SiteUtils {
      */
     public final String removeNoHrefLinks(final String html) {
         final Collection<Element> links; // Links to fix
-        final Element body;     // Element parsed from the content
+        final Element body;     // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -154,7 +154,7 @@ public class SiteUtils {
      */
     public final String transformImagesToFigures(final String html) {
         final Collection<Element> images; // Image elements from the <body>
-        final Element body;     // Element parsed from the content
+        final Element body;     // Body of the HTML code
         Element figure;         // <figure> element
         Element caption;        // <figcaption> element
 
@@ -167,13 +167,12 @@ public class SiteUtils {
         if (!images.isEmpty()) {
             for (final Element img : images) {
                 figure = new Element(Tag.valueOf("figure"), "");
-                caption = new Element(Tag.valueOf("figcaption"), "");
 
                 img.replaceWith(figure);
-
                 figure.appendChild(img);
 
                 if (img.hasAttr("alt")) {
+                    caption = new Element(Tag.valueOf("figcaption"), "");
                     caption.text(img.attr("alt"));
                     figure.appendChild(caption);
                 }
@@ -213,14 +212,14 @@ public class SiteUtils {
      * @return HTML content, with the source blocks updated
      */
     public final String updateCodeSections(final String html) {
-        final Element body;     // Element parsed from the content
+        final Element body;     // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parseBodyFragment(html).body();
 
         removeRedundantSourceDivs(body);
-        updateCodeElement(body);
+        updateSourceDivs(body);
 
         return body.html();
     }
@@ -235,7 +234,7 @@ public class SiteUtils {
      */
     public final String updateSectionDiv(final String html) {
         final Collection<Element> sectionDivs; // Section divisions
-        final Element body;     // Element parsed from the content
+        final Element body;     // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -265,7 +264,7 @@ public class SiteUtils {
      * @return HTML content, with the tables cleaned
      */
     public final String updateTables(final String html) {
-        final Element body;     // Element parsed from the content
+        final Element body;     // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -280,22 +279,21 @@ public class SiteUtils {
     }
 
     private final void fixHrefsWithPoints(final Element body) {
-        final Collection<Element> elements; // Elements to fix
-        String id;              // Id attribute contents
+        final Collection<Element> links; // Links to fix
+        String href;    // href attribute contents
 
-        elements = body.select("a[href^=\"#\"]");
-        if (!elements.isEmpty()) {
-            for (final Element element : elements) {
-                id = element.attr("href").replaceAll("\\.", "");
-
-                element.attr("href", id);
+        links = body.select("a[href^=\"#\"]");
+        if (!links.isEmpty()) {
+            for (final Element element : links) {
+                href = element.attr("href").replaceAll("\\.", "");
+                element.attr("href", href);
             }
         }
     }
 
     private final void fixIdsWithPoints(final Element body) {
         final Collection<Element> elements; // Elements to fix
-        String id;              // Id attribute contents
+        String id;      // id attribute contents
 
         elements = body.select("[id]");
         if (!elements.isEmpty()) {
@@ -308,12 +306,12 @@ public class SiteUtils {
     }
 
     private final void removeBodyTable(final Element body) {
-        final Collection<Element> elements;   // Tables and rows to fix
+        final Collection<Element> tables;   // Tables to fix
 
         // Selects tables with the bodyTable class
-        elements = body.select("table.bodyTable");
-        if (!elements.isEmpty()) {
-            for (final Element table : elements) {
+        tables = body.select("table.bodyTable");
+        if (!tables.isEmpty()) {
+            for (final Element table : tables) {
                 table.removeClass("bodyTable");
                 if (table.classNames().isEmpty()) {
                     table.removeAttr("class");
@@ -362,33 +360,40 @@ public class SiteUtils {
     }
 
     private final void removeTableBorder(final Element body) {
-        final Collection<Element> elements;   // Tables and rows to fix
+        final Collection<Element> tables;   // Tables to fix
 
         // Selects tables with border defined
-        elements = body.select("table[border]");
-        if (!elements.isEmpty()) {
-            for (final Element table : elements) {
+        tables = body.select("table[border]");
+        if (!tables.isEmpty()) {
+            for (final Element table : tables) {
                 table.removeAttr("border");
             }
         }
     }
 
-    private final void updateCodeElement(final Element body) {
-        final Collection<Element> codeDivs; // Code divisions
-        Element pre;            // <pre> element
-        Element code;           // <code> element
+    private final void updateSourceDivs(final Element body) {
+        final Collection<Element> divs; // Code divisions
+        Element pre;    // <pre> element
+        String text;    // Preserved text
 
-        codeDivs = body.select(".source:has(pre)");
-        if (!codeDivs.isEmpty()) {
-            for (final Element div : codeDivs) {
+        divs = body.select(".source:has(pre)");
+        if (!divs.isEmpty()) {
+            for (final Element div : divs) {
                 pre = div.getElementsByTag("pre").get(0);
 
-                code = new Element(Tag.valueOf("code"), "");
-                code.text(div.text());
+                text = pre.text();
                 pre.text("");
-                pre.appendChild(code);
 
+                div.tagName("code");
                 div.replaceWith(pre);
+                pre.appendChild(div);
+
+                div.removeClass("source");
+                if (div.classNames().isEmpty()) {
+                    div.removeAttr("class");
+                }
+
+                div.text(text);
             }
         }
     }

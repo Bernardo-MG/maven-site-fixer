@@ -72,6 +72,9 @@ public final class TestUpdateCodeSectionsSiteUtil {
 
         htmlExpected = "<pre><code>Some code</code></pre>";
 
+        System.out.println(result);
+        System.out.println(htmlExpected);
+
         Assert.assertEquals(htmlExpected, result);
     }
 
