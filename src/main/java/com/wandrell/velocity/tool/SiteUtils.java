@@ -179,58 +179,6 @@ public class SiteUtils {
     }
 
     /**
-     * Corrects source divisions by removing redundant apparitions of it.
-     * <p>
-     * It is a problem with Maven sites that code divisions get wrapped by
-     * another code division, so they appear like this:
-     * 
-     * <pre>
-     * {@code <div class="source">
-     *    <div class="source"> 
-     *       <pre>Some code
-    </pre>
-    
-     *    </div>
-     * </div>}
-     * </pre>
-     * This method fixes that, by removing the outer division.
-     * 
-     * @param html
-     *            HTML content to fix
-     * @return HTML content, with the redundant source classes removed
-     */
-    public final String removeRedundantSourceDivs(final String html) {
-        final Collection<Element> codeDivs; // Repeated code divs
-        final Element body;     // Element parsed from the content
-        final String result;    // Fixed html
-        Element validDiv;       // Fixed code block
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parseBodyFragment(html).body();
-
-        codeDivs = body.select(".source:has(.source)");
-
-        if (codeDivs.isEmpty()) {
-            result = body.html();
-        } else {
-            for (final Element div : codeDivs) {
-                if (!div.children().isEmpty()) {
-                    validDiv = div.child(0);
-
-                    validDiv.remove();
-
-                    div.replaceWith(validDiv);
-                }
-            }
-
-            result = body.html();
-        }
-
-        return result;
-    }
-
-    /**
      * Transforms images on the body to figures.
      * <p>
      * This will wrap {@code <img>} elements with a {@code <figure>} element,
@@ -309,37 +257,17 @@ public class SiteUtils {
      *            HTML content to fix
      * @return HTML content, with the source blocks updated
      */
-    public final String updateCodeBlock(final String html) {
-        final Collection<Element> codeDivs; // Code divisions
+    public final String updateCodeSections(final String html) {
         final Element body;     // Element parsed from the content
-        String result;          // Fixed html
-        Element pre;            // <pre> element
-        Element code;           // <code> element
 
         checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parseBodyFragment(html).body();
 
-        codeDivs = body.select(".source:has(pre)");
+        removeRedundantSourceDivs(body);
+        updateCodeElement(body);
 
-        if (codeDivs.isEmpty()) {
-            result = body.html();
-        } else {
-            for (final Element div : codeDivs) {
-                pre = div.getElementsByTag("pre").get(0);
-
-                code = new Element(Tag.valueOf("code"), "");
-                code.text(div.text());
-                pre.text("");
-                pre.appendChild(code);
-
-                div.replaceWith(pre);
-            }
-
-            result = body.html();
-        }
-
-        return result;
+        return body.html();
     }
 
     /**
@@ -416,6 +344,45 @@ public class SiteUtils {
         }
     }
 
+    /**
+     * Corrects source divisions by removing redundant apparitions of it.
+     * <p>
+     * It is a problem with Maven sites that code divisions get wrapped by
+     * another code division, so they appear like this:
+     * 
+     * <pre>
+     * {@code <div class="source">
+     *    <div class="source"> 
+     *       <pre>Some code
+    </pre>
+    
+     *    </div>
+     * </div>}
+     * </pre>
+     * This method fixes that, by removing the outer division.
+     * 
+     * @param html
+     *            HTML content to fix
+     * @return HTML content, with the redundant source classes removed
+     */
+    private final void removeRedundantSourceDivs(final Element body) {
+        final Collection<Element> codeDivs; // Repeated code divs
+        Element validDiv;       // Fixed code block
+
+        codeDivs = body.select(".source:has(.source)");
+        if (!codeDivs.isEmpty()) {
+            for (final Element div : codeDivs) {
+                if (!div.children().isEmpty()) {
+                    validDiv = div.child(0);
+
+                    validDiv.remove();
+
+                    div.replaceWith(validDiv);
+                }
+            }
+        }
+    }
+
     private final void removeTableBorder(final Element body) {
         final Collection<Element> elements;   // Tables and rows to fix
 
@@ -424,6 +391,26 @@ public class SiteUtils {
         if (!elements.isEmpty()) {
             for (final Element table : elements) {
                 table.removeAttr("border");
+            }
+        }
+    }
+
+    private final void updateCodeElement(final Element body) {
+        final Collection<Element> codeDivs; // Code divisions
+        Element pre;            // <pre> element
+        Element code;           // <code> element
+
+        codeDivs = body.select(".source:has(pre)");
+        if (!codeDivs.isEmpty()) {
+            for (final Element div : codeDivs) {
+                pre = div.getElementsByTag("pre").get(0);
+
+                code = new Element(Tag.valueOf("code"), "");
+                code.text(div.text());
+                pre.text("");
+                pre.appendChild(code);
+
+                div.replaceWith(pre);
             }
         }
     }

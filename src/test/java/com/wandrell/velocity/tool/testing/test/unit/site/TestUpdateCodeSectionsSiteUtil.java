@@ -35,14 +35,14 @@ import junit.framework.Assert;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>When trying to fix the redundant source div, if there are divs needing to
- * be removed these are edited out correctly.</li>
+ * <li>When trying to fix the outdated code blocks these are updated correctly.
+ * </li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestRemoveRedundantSourceDivSiteUtil {
+public final class TestUpdateCodeSectionsSiteUtil {
 
     /**
      * Instance of the utils class being tested.
@@ -52,25 +52,25 @@ public final class TestRemoveRedundantSourceDivSiteUtil {
     /**
      * Default constructor.
      */
-    public TestRemoveRedundantSourceDivSiteUtil() {
+    public TestUpdateCodeSectionsSiteUtil() {
         super();
     }
 
     /**
-     * Tests that when trying to fix the redundant source div, if there are divs
-     * needing to be removed these are edited out correctly.
+     * Tests that when trying to fix the outdated code blocks these are updated
+     * correctly.
      */
     @Test
-    public final void testFixRepeatedSourceDiv() {
+    public final void testFixCodeBlock() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<div class=\"source\"><div class=\"source\"><pre>Some code</pre></div></div>";
 
-        result = util.removeRedundantSourceDivs(html);
+        result = util.updateCodeSections(html);
 
-        htmlExpected = "<div class=\"source\">\n <pre>Some code</pre>\n</div>";
+        htmlExpected = "<pre><code>Some code</code></pre>";
 
         Assert.assertEquals(htmlExpected, result);
     }
