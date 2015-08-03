@@ -58,7 +58,6 @@ public class SiteUtils {
     public final String fixReportHeading(final String html,
             final String report) {
         final Element body;     // Body of the HTML code
-        final Element header;   // Header being edited
         final Element element;  // Aditional edited element
 
         body = Jsoup.parse(html).body();
@@ -66,8 +65,27 @@ public class SiteUtils {
         if (report.equals("plugins")) {
             body.prepend("<h1>Plugins Report</h1>");
         } else if (report.equals("plugin-management")) {
-            header = body.getElementsByTag("h2").iterator().next();
-            header.tagName("h1");
+            for (final Element head : body.getElementsByTag("h2")) {
+                head.tagName("h1");
+            }
+
+            element = body.getElementsByTag("section").iterator().next();
+
+            for (final Element child : element.children()) {
+                child.remove();
+                body.appendChild(child);
+            }
+
+            element.remove();
+        } else if (report.equals("changes-report")) {
+            for (final Element head : body.getElementsByTag("h2")) {
+                head.tagName("h1");
+            }
+            for (final Element head : body.getElementsByTag("h3")) {
+                head.tagName("h2");
+            }
+
+            // TODO: Reformat h2 headings: Title (date)
 
             element = body.getElementsByTag("section").iterator().next();
 

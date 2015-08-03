@@ -58,6 +58,23 @@ public final class TestFixReportHeadingSiteUtils {
     }
 
     @Test
+    public final void testFixReportHeading_Changes() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<section><h2>Project Changes</h2><section><h3>Release History</h3></section></section>";
+
+        result = util.fixReportHeading(html, "changes-report");
+
+        htmlExpected = "<h1>Project Changes</h1>\n<section>\n <h2>Release History</h2>\n</section>";
+
+        System.out.println(result);
+
+        Assert.assertEquals(htmlExpected, result);
+    }
+
+    @Test
     public final void testFixReportHeading_PluginManagement() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
