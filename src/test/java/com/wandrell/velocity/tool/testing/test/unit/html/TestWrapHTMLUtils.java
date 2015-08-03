@@ -71,10 +71,6 @@ public final class TestWrapHTMLUtils {
 
         htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
 
-        System.out.println(result);
-        System.out.println("---");
-        System.out.println(htmlExpected);
-
         Assert.assertEquals(result, htmlExpected);
     }
 

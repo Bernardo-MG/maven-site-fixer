@@ -55,19 +55,28 @@ public class SiteUtils {
         super();
     }
 
-    public final String addInitialHeading(final String html,
-            final String heading) {
-        final Collection<Element> sections;     // Sections
-        final Element body;                     // Body of the HTML code
-        final Element main;                     // Main section
+    public final String fixReportHeading(final String html,
+            final String report) {
+        final Element body;     // Body of the HTML code
+        final Element header;   // Header being edited
+        final Element element;  // Aditional edited element
 
         body = Jsoup.parse(html).body();
 
-        sections = body.getElementsByTag("section");
-        if (!sections.isEmpty()) {
-            main = sections.iterator().next();
-            System.out.println(main);
-            main.prepend(String.format("<h1>%s</h1>", heading));
+        if (report.equals("plugins")) {
+            body.prepend("<h1>Plugins Report</h1>");
+        } else if (report.equals("plugin-management")) {
+            header = body.getElementsByTag("h2").iterator().next();
+            header.tagName("h1");
+
+            element = body.getElementsByTag("section").iterator().next();
+
+            for (final Element child : element.children()) {
+                child.remove();
+                body.appendChild(child);
+            }
+
+            element.remove();
         }
 
         return body.html();

@@ -35,13 +35,15 @@ import junit.framework.Assert;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Initial heading is added correctly.</li>
+ * <li>Transforming images to figures works correctly when an {@code alt}
+ * attribute is present.</li>
+ * <li>Images out of a content element are ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestAddInitialHeadingSiteUtils {
+public final class TestFixReportHeadingSiteUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -51,24 +53,36 @@ public final class TestAddInitialHeadingSiteUtils {
     /**
      * Default constructor.
      */
-    public TestAddInitialHeadingSiteUtils() {
+    public TestFixReportHeadingSiteUtils() {
         super();
     }
 
-    /**
-     * Tests that the initial heading is added correctly.
-     */
     @Test
-    public final void testAddInitialHeading_PluginsReport() {
+    public final void testFixReportHeading_PluginManagement() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><section><h2>Project Build Plugins</h2></section><section><h2>Project Report Plugins</h2></section></section>";
+        html = "<section><h2>Plugin Management</h2><p>Data</p></section>";
 
-        result = util.addInitialHeading(html, "Plugins Report");
+        result = util.fixReportHeading(html, "plugin-management");
 
-        htmlExpected = "<section>\n <h1>Plugins Report</h1>\n <section>\n  <h2>Project Build Plugins</h2>\n </section>\n <section>\n  <h2>Project Report Plugins</h2>\n </section>\n</section>";
+        htmlExpected = "<h1>Plugin Management</h1>\n<p>Data</p>";
+
+        Assert.assertEquals(htmlExpected, result);
+    }
+
+    @Test
+    public final void testFixReportHeading_Plugins() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<section><h2>Heading 2</h2></section>";
+
+        result = util.fixReportHeading(html, "plugins");
+
+        htmlExpected = "<h1>Plugins Report</h1>\n<section>\n <h2>Heading 2</h2>\n</section>";
 
         Assert.assertEquals(htmlExpected, result);
     }
