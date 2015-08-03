@@ -322,37 +322,6 @@ public final class HTMLUtils {
     }
 
     /**
-     * Removes selected elements from the HTML content.
-     * <p>
-     * The elements are selected through the use of a CSS selector.
-     * 
-     * @param html
-     *            HTML content to modify
-     * @param selector
-     *            CSS selector for elements to remove
-     * @return HTML content without the removed elements. If no elements are
-     *         found, the original content is returned.
-     */
-    public final String remove(final String html, final String selector) {
-        final Collection<Element> elements; // Elements to remove
-        final Element body;     // Element parsed from the content
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-
-        body = Jsoup.parseBodyFragment(html).body();
-
-        elements = body.select(selector);
-        if (!elements.isEmpty()) {
-            for (final Element element : elements) {
-                element.remove();
-            }
-        }
-
-        return body.html();
-    }
-
-    /**
      * Sets the attribute on a selected element to the specified value.
      * 
      * @param html
