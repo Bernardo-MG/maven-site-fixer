@@ -63,10 +63,6 @@ public class SiteUtils {
 
         body = Jsoup.parse(html).body();
 
-        System.out.println("----");
-        System.out.println(body);
-        System.out.println("----");
-
         sections = body.getElementsByTag("section");
         if (!sections.isEmpty()) {
             main = sections.iterator().next();

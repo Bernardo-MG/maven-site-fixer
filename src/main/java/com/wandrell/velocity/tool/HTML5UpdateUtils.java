@@ -122,7 +122,7 @@ public class HTML5UpdateUtils {
      *            HTML content to transform
      * @return HTML content, with no link not having the href attribute
      */
-    public final String removeHeadingNoHrefLinks(final String html) {
+    public final String removeNoHrefLinks(final String html) {
         final Collection<Element> links; // Links to fix
         final Element body;     // Body of the HTML code
 
@@ -131,8 +131,7 @@ public class HTML5UpdateUtils {
         body = Jsoup.parse(html).body();
 
         // Links in headings which have no href attribute
-        links = body.select(
-                "h1 a:not([href]), h2 a:not([href]), h3 a:not([href]), h4 a:not([href]), h5 a:not([href]), h6 a:not([href])");
+        links = body.select("a:not([href])");
         if (!links.isEmpty()) {
             for (final Element link : links) {
                 link.remove();
@@ -149,15 +148,15 @@ public class HTML5UpdateUtils {
      * 
     
     <pre>
-          * } element,
-          * which will me moved out of the code section.
-          * <p>
-          * Maven sites handle code blocks in an outdated fashion, and look like
-          * this:
-          * 
-          * <pre>
-          * {@code <div class="source">
-          *    <pre>Some code
+            * } element,
+            * which will me moved out of the code section.
+            * <p>
+            * Maven sites handle code blocks in an outdated fashion, and look like
+            * this:
+            * 
+            * <pre>
+            * {@code <div class="source">
+            *    <pre>Some code
     </pre>
     
     * </div>}
