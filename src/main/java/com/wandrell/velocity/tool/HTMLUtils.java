@@ -248,7 +248,7 @@ public final class HTMLUtils {
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(classNames, "Received a null pointer as class names");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         elements = body.select(selector);
         if (!elements.isEmpty()) {
@@ -310,7 +310,7 @@ public final class HTMLUtils {
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attributeKey, "Received a null pointer as attribute key");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         elements = body.select(selector);
         attrs = new ArrayList<String>();
@@ -345,7 +345,7 @@ public final class HTMLUtils {
         checkNotNull(attributeKey, "Received a null pointer as attribute key");
         checkNotNull(value, "Received a null pointer as value");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
         elements = body.select(selector);
 
         if (!elements.isEmpty()) {
@@ -468,7 +468,7 @@ public final class HTMLUtils {
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(wrapper, "Received a null pointer as HTML wrap");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
         elements = body.select(selector);
 
         if (!elements.isEmpty()) {
@@ -504,7 +504,7 @@ public final class HTMLUtils {
         final Collection<Element> separators; // Found separators
         final Element body; // Element parsed from the content
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
         separators = body.select(selector);
 
         if (separators.isEmpty()) {

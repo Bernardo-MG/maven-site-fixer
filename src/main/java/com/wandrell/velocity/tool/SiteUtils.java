@@ -45,7 +45,7 @@ import org.jsoup.parser.Tag;
  * 
  * @author Bernardo Martínez Garrido
  */
-@DefaultKey("html5UpdateTool")
+@DefaultKey("siteTool")
 public class SiteUtils {
 
     /**
@@ -53,6 +53,28 @@ public class SiteUtils {
      */
     public SiteUtils() {
         super();
+    }
+
+    public final String addInitialHeading(final String html,
+            final String heading) {
+        final Collection<Element> sections;     // Sections
+        final Element body;                     // Body of the HTML code
+        final Element main;                     // Main section
+
+        body = Jsoup.parse(html).body();
+
+        System.out.println("----");
+        System.out.println(body);
+        System.out.println("----");
+
+        sections = body.getElementsByTag("section");
+        if (!sections.isEmpty()) {
+            main = sections.iterator().next();
+            System.out.println(main);
+            main.prepend(String.format("<h1>%s</h1>", heading));
+        }
+
+        return body.html();
     }
 
     public final String transformIcons(final String html) {
@@ -103,7 +125,7 @@ public class SiteUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         images = body.select("section > img");
         if (!images.isEmpty()) {
@@ -128,7 +150,7 @@ public class SiteUtils {
         final Collection<Element> tables; // Tables to fix
         final Element body;     // Body of the HTML code
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         // Table rows with <th> tags in a <tbody>
         tables = body.select("table");
@@ -169,7 +191,7 @@ public class SiteUtils {
         checkNotNull(html, "Received a null pointer as html");
         checkNotNull(replacements, "Received a null pointer as replacements");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         for (final Entry<String, String> replacementEntry : replacements
                 .entrySet()) {
@@ -179,8 +201,7 @@ public class SiteUtils {
             elements = body.select(selector);
             if (!elements.isEmpty()) {
                 // Take the first child
-                replacementElem = Jsoup.parseBodyFragment(replacement).body()
-                        .child(0);
+                replacementElem = Jsoup.parse(replacement).body().child(0);
 
                 if (replacementElem != null) {
                     for (final Element element : elements) {

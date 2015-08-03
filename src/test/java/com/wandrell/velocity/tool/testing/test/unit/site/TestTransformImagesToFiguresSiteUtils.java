@@ -45,7 +45,7 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TransformImagesToFiguresSiteUtils {
+public final class TestTransformImagesToFiguresSiteUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -55,7 +55,7 @@ public final class TransformImagesToFiguresSiteUtils {
     /**
      * Default constructor.
      */
-    public TransformImagesToFiguresSiteUtils() {
+    public TestTransformImagesToFiguresSiteUtils() {
         super();
     }
 

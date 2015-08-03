@@ -21,53 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wandrell.velocity.tool.testing.test.unit.html5fix;
+package com.wandrell.velocity.tool.testing.test.unit.site;
 
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTML5UpdateUtils;
+import com.wandrell.velocity.tool.HTMLUtils;
+import com.wandrell.velocity.tool.SiteUtils;
 
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTML5UpdateUtils}.
+ * Unit tests for {@link HTMLUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Points on anchors are correctly removed.</li>
+ * <li>Initial heading is added correctly.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
- * @see HTML5UpdateUtils
+ * @see HTMLUtils
  */
-public final class FixInternalLinksHTML5UpdateUtils {
+public final class TestAddInitialHeadingSiteUtils {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
+    private final SiteUtils util = new SiteUtils();
 
     /**
      * Default constructor.
      */
-    public FixInternalLinksHTML5UpdateUtils() {
+    public TestAddInitialHeadingSiteUtils() {
         super();
     }
 
     /**
-     * Tests that points on anchors are correctly removed.
+     * Tests that the initial heading is added correctly.
      */
     @Test
-    public final void testFixInternalLinks() {
+    public final void testAddInitialHeading_PluginsReport() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
+        html = "<section><section><h2>Project Build Plugins</h2></section><section><h2>Project Report Plugins</h2></section></section>";
 
-        result = util.fixInternalLinks(html);
+        result = util.addInitialHeading(html, "Plugins Report");
 
-        htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
+        htmlExpected = "<section>\n <h1>Plugins Report</h1>\n <section>\n  <h2>Project Build Plugins</h2>\n </section>\n <section>\n  <h2>Project Report Plugins</h2>\n </section>\n</section>";
 
         Assert.assertEquals(htmlExpected, result);
     }

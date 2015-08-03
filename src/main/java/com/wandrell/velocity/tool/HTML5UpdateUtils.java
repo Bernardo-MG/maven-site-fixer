@@ -72,7 +72,7 @@ public class HTML5UpdateUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         removePointsFromIds(body);
         removePointsFromInternalHref(body);
@@ -96,7 +96,7 @@ public class HTML5UpdateUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         // <a> elements with the externalLink class
         links = body.select("a.externalLink");
@@ -128,7 +128,7 @@ public class HTML5UpdateUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         // Links in headings which have no href attribute
         links = body.select(
@@ -149,15 +149,15 @@ public class HTML5UpdateUtils {
      * 
     
     <pre>
-        * } element,
-        * which will me moved out of the code section.
-        * <p>
-        * Maven sites handle code blocks in an outdated fashion, and look like
-        * this:
-        * 
-        * <pre>
-        * {@code <div class="source">
-        *    <pre>Some code
+          * } element,
+          * which will me moved out of the code section.
+          * <p>
+          * Maven sites handle code blocks in an outdated fashion, and look like
+          * this:
+          * 
+          * <pre>
+          * {@code <div class="source">
+          *    <pre>Some code
     </pre>
     
     * </div>}
@@ -182,7 +182,7 @@ public class HTML5UpdateUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         removeRedundantSourceDivs(body);
         takeOutSourceDivPre(body);
@@ -205,7 +205,7 @@ public class HTML5UpdateUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         // divs with the section class
         sectionDivs = body.select("div.section");
@@ -238,7 +238,7 @@ public class HTML5UpdateUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
-        body = Jsoup.parseBodyFragment(html).body();
+        body = Jsoup.parse(html).body();
 
         updateTableClasses(body);
         updateTableHeads(body);
