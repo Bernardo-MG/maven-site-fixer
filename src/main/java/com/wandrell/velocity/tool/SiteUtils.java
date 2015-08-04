@@ -55,10 +55,14 @@ public class SiteUtils {
         super();
     }
 
-    public final String fixReportHeading(final String html,
-            final String report) {
+    public final String fixReport(final String html, final String report) {
         final Element body;     // Body of the HTML code
-        final Element element;  // Aditional edited element
+        final Element element;  // Additional edited element
+        final Collection<Element> elements;  // Additional edited elements
+        Element newElement;     // Additional element
+        Element newElementb;    // Additional element
+        String text;            // Text being edited
+        String[] texts;         // Texts being edited
 
         body = Jsoup.parse(html).body();
 
@@ -81,14 +85,33 @@ public class SiteUtils {
             for (final Element head : body.getElementsByTag("h2")) {
                 head.tagName("h1");
             }
-            for (final Element head : body.getElementsByTag("h3")) {
-                head.tagName("h2");
+
+            elements = body.getElementsByTag("h3");
+            if (!elements.isEmpty()) {
+                elements.iterator().next().tagName("h2");
             }
 
-            // TODO: Reformat h2 headings: Title (date)
+            for (final Element heading : body.getElementsByTag("h3")) {
+                heading.parent().attr("id", heading.id());
+                heading.removeAttr("id");
+
+                text = heading.text();
+                texts = text.split("–", 2);
+                if (texts.length == 2) {
+                    newElement = new Element(Tag.valueOf("time"), "");
+                    newElement.text(texts[1].trim());
+
+                    newElementb = new Element(Tag.valueOf("small"), "");
+                    newElementb.append("(");
+                    newElementb.appendChild(newElement);
+                    newElementb.append(")");
+
+                    heading.text(texts[0]);
+                    heading.appendChild(newElementb);
+                }
+            }
 
             element = body.getElementsByTag("section").iterator().next();
-
             for (final Element child : element.children()) {
                 child.remove();
                 body.appendChild(child);
