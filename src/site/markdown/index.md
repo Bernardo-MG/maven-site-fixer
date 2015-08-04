@@ -1,17 +1,25 @@
-# Velocity Tools
+#A fix for Maven Sites
 
-This is a set of tools for [Apache Velocity][velocity] meant to ease the use of Maven Site templates.
+Maven makes use of [Apache Velocity][velocity] to create web pages. Sadly, the result of this is an outdated XHTML page, which also is hard to customize.
 
-It is based on the tools included on the [Reflow Maven Skin][reflow], which have received heavy refactoring, including removing all the unneeded methods, such as URI modification.
+This became apparent when creating the [Docs Maven Skin][docs-skin], which required a set of helping tools, initially adapted from the [Reflow Maven Skin][reflow], to both create the desired look and a valid HTML5 site.
 
-These tools are meant to be used by the [Docs Maven Skin][docs-skin], and so are not meant to be generic. Still most of their code may be reused on similar projects.
+All the tools created to solve these problems are included in this project, but these are not meant to be currently generic tools, but are prepared to be used on the Docs Maven Skin.
+
+---
+
+## Maven Skin
+
+The tools being offered by this project are not to be used by themselves, instead they are to be integrated in a Maven Skin, such as the already mentioned [Docs Maven Skin][docs-skin], and used in the site.vm file.
 
 ## The tools
 
-Two utilities classes, meant to be the tool classes for Velocity, are offered:
+The following utilities classes are currently part of the project:
 
-- [__SkinConfigTool__][javadoc-skin-config] through the '$config' key it offers methods to access the skin's configuration options in the site.xml file.
-- [__HtmlTool__][javadoc-html] through the '$htmlTool' key it offers methods to query and edit HTML content, and includes method to upgrade the code to HTML5.
+- [HTML5UpdateUtils][javadoc-skin-config], called through the '$html5UpdateTool' key, it is used to update old XHTML code to the new HTML5 one.
+- [SiteUtils][javadoc-skin-config], called through the '$siteTool' key, offers various methods which upgrade a Maven Site, but are meant to be used on my skins, and so may not be considered completely generic.
+- [HTMLUtils][javadoc-skin-config], called through the '$htmlTool' key, contains various helpful methods for extending what a Maven Skin may do.
+- [SkinConfigUtils][javadoc-skin-config], called through the '$config' key, offers methods to handle custom configuration info to be used on any Maven Skin.
 
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin

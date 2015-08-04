@@ -140,7 +140,6 @@ public final class HTMLUtils {
                     // Add child to the new partition
                     newPartition.add(child);
                 }
-
             } else {
                 // The child is not a separator
                 // The child's children will be checked in search of a

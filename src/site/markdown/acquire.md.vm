@@ -1,0 +1,61 @@
+#set( $symbol_pound = '#' )
+${symbol_pound} Acquiring the project
+
+The project files are hosted on a [Bintray repository][bintray-repo], and have been replicated on JCenter and OSS Sonatype, which also replicates into the [Maven Central Repository][maven-repo]. While this means that it should be possible to download the Archetype from any of those repositories, and that most dependency systems will be able to acquire the library without additional configuration, if for some reason one should be picked the recommended one is Bintray.
+
+All the info required to set up the dependency can be found at the [dependency information](./dependency-info.html) section, or the repositories information pages.
+
+${symbol_pound}${symbol_pound} Reducing the dependency scope
+
+Usually these tools are only required to be used by the site plugin, so it is possible to reduce their scope to the Maven Site with the following POM configuration:
+
+```xml
+<build>
+	<plugins>
+		...
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-site-plugin</artifactId>
+			<dependencies>
+				...
+				<dependency>
+					<!-- Wandrell's Velocity Tools -->
+					<groupId>com.wandrell.velocity</groupId>
+					<artifactId>velocity-tools</artifactId>
+					<version>${plugin.site.velocityTools.version}</version>
+				</dependency>
+				<dependency>
+					<!-- Velocity -->
+					<groupId>org.apache.velocity</groupId>
+					<artifactId>velocity</artifactId>
+					<version>${plugin.site.velocity.version}</version>
+				</dependency>
+				...
+			</dependencies>
+			...
+		</plugin>
+		...
+	</plugins>
+</build>
+```
+
+Versions are meant to be kept in the properties section of the POM.
+
+${symbol_pound}${symbol_pound} Snapshots
+
+Snapshot artifacts are stored on OSS Sonatype. They can be accessed by adding the following lines to the POM file:
+
+```xml
+<repositories>
+	...
+	<repository>
+		<id>oss-sonatype-snapshots</id>
+		<name>OSS Sonatype snapshots repository</name>
+		<url>https://oss.sonatype.org/content/groups/staging</url>
+	</repository>
+	...
+</repositories>
+```
+
+[bintray-repo]: ${bintrayURL}
+[maven-repo]: ${mavenURL}

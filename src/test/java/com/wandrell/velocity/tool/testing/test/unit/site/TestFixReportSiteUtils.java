@@ -69,7 +69,6 @@ public final class TestFixReportSiteUtils {
 
         htmlExpected = "<h1>Project Changes</h1>\n<section>\n <h2>Release History</h2>\n</section>\n<section id=\"a010\">\n <h3>Release 0.1.0 <small>(<time>2015-05-17</time>)</small></h3>\n</section>";
 
-        System.out.println(result);
         Assert.assertEquals(htmlExpected, result);
     }
 
