@@ -33,17 +33,23 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
 /**
- * Utilities class for fixing a Maven Site's HTML code, updating it to HTML5.
+ * Utilities class for upgrading a Velocity's XHTML code to HTML5.
  * <p>
- * Maven Sites are created by using Doxia, which supports XHTML, and not HTML5,
- * for this reason, these sites need some fixes and updates, in order to fit
- * into the latest HTML standards.
+ * This was created for Maven Sites, which are built through Doxia. This
+ * supports XHTML, and not HTML5, which has the effect making such pages, by
+ * default, outdated.
  * <p>
- * For this various methods are offered, which will remove old and obsolete
- * patterns being used on the HTML files.
+ * The various methods contained in this class aim to fix this problem, and will
+ * transform several known errors into valid HTML5.
  * <p>
- * Note that these methods will only modify the contents of the {@code 
- * <body>} element if it exists, or all the received code otherwise.
+ * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
+ * editing. This library will process the HTML code received by the methods, so
+ * only the contents of the {@code <body>} tag (or the full HTML if this tag is
+ * missing) will be used.
+ * <p>
+ * Take into account that while the returned HTML will be correct, the validity
+ * of the received HTML won't be checked. That falls fully on the hands of the
+ * user.
  * 
  * @author Bernardo Martínez Garrido
  */
@@ -148,15 +154,15 @@ public class HTML5UpdateUtils {
      * 
     
     <pre>
-                 * } element,
-                 * which will me moved out of the code section.
-                 * <p>
-                 * Maven sites handle code blocks in an outdated fashion, and look like
-                 * this:
-                 * 
-                 * <pre>
-                 * {@code <div class="source">
-                 *    <pre>Some code
+                       * } element,
+                       * which will me moved out of the code section.
+                       * <p>
+                       * Maven sites handle code blocks in an outdated fashion, and look like
+                       * this:
+                       * 
+                       * <pre>
+                       * {@code <div class="source">
+                       *    <pre>Some code
     </pre>
     
     * </div>}

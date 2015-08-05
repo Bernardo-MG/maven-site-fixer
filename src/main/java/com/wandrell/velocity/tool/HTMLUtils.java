@@ -38,45 +38,24 @@ import org.jsoup.parser.Tag;
 import com.google.common.collect.Iterables;
 
 /**
- * Utilities class for manipulating HTML, meant for the Velocity template
- * engine.
+ * Utilities class for manipulating HTML, to be used as an extension of the
+ * Velocity templating engine.
  * <p>
- * It is configured to be used through the {@code htmlTool} key inside a
- * {@code .vm} file, as for example
- * {@code $htmlTool.split( $bodyContent, "hr" )}
+ * The methods offered help enhancing the look of a Maven Site by manipulating
+ * the HTML structure.
  * <p>
- * It makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
- * editing the HTML.
+ * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
+ * editing. This library will process the HTML code received by the methods, so
+ * only the contents of the {@code <body>} tag (or the full HTML if this tag is
+ * missing) will be used.
  * <p>
- * The HTML received is expected to be valid.
+ * Take into account that while the returned HTML will be correct, the validity
+ * of the received HTML won't be checked. That falls fully on the hands of the
+ * user.
  * <p>
- * All the methods will take the HTML out of the {@code <body>} tag before
- * operating with it.
- * <p>
- * So if a method receives:
- * 
- * <pre>
- * {@code <html>
- *   <head></head>
- *   <body>
- *      <h1 class="class_1 class_2">A heading</h1>
- *      <p>Some text</p>
- *      <h2>Subheading</h2>
- *      <p>More text</p>
- *   </body>
- *</html>}
- * </pre>
- * <p>
- * It will return a value created from:
- * 
- * <pre>
- * {@code <h1 class="class_1 class_2">A heading</h1>
- *<p>Some text</p>
- *<h2>Subheading</h2>
- *<p>More text</p>}
- * </pre>
- * <p>
- * It is also valid using just the second HTML code.
+ * This class has been created from the HTML Tool class from the
+ * <a href="http://andriusvelykis.github.io/reflow-maven-skin/">Reflow Maven
+ * Skin</a>.
  * 
  * @author Andrius Velykis
  * @author Bernardo Martínez Garrido

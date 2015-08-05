@@ -22,6 +22,30 @@
  * SOFTWARE.
  */
 /**
- * Provides various tools for Apache Velocity.
+ * Provides various utilities classes for Apache Velocity which update the XHTML
+ * produced by said tool to current HTML5 standards.
+ * <p>
+ * It also offers a few helpful tools, meant to improve the look and structure
+ * of Maven Sites.
+ * <p>
+ * All these classes are prepared to be run through Velocity, and can be called
+ * directly from {@code .vm} files. All of them have default keys assigned,
+ * which are repeated on the {@code tools.xml} file on the resources folder,
+ * which can be used for this.
+ * <p>
+ * For example, to call the {@code HTMLUtils} {@code split} method the following
+ * VTL line can be used:
+ * <p>
+ * {@code #set ( $sections = $htmlTool.split( $bodyContent, "hr" ) )}
+ * <p>
+ * They also share a series of features, first of all the fact that all editing
+ * and querying of HTML is done through the
+ * <a href="http://jsoup.org/">jsoup</a> library.
+ * <p>
+ * Also there are some common limitations. First of all the validity of the
+ * received HTML won't be checked, that falls on the user's hands. Second, the
+ * HTML code received by the methods will be stripped, and only the contents of
+ * the {@code <body>} tag will be kept, unless that tag is missing, in which
+ * case the full HTML code will be used.
  */
 package com.wandrell.velocity.tool;

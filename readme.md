@@ -79,6 +79,7 @@ Issues are managed at the GitHub [project issues tracker][issues], where any Git
 If you wish to fork or modify the code, visit the [GitHub project page][scm], where the latest versions are always kept. Check the 'master' branch for the latest release, and the 'develop' for the current, and stable, development version.
 
 ## License
+
 The project has been released under the [MIT License][license].
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin

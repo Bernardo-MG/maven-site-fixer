@@ -37,48 +37,22 @@ import org.apache.velocity.tools.generic.ValueParser;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
 /**
- * An Apache Velocity tool that simplifies retrieval of custom configuration
- * values for a Maven Site.
+ * Utilities class to ease acquiring custom Maven Site configuration values
+ * through Velocity.
  * <p>
- * The tool is configured to access Maven site configuration of a skin inside
- * {@code <custom>} element of site descriptor. It supports global properties
- * (defined at skin level) and per-page properties (defined in {@code 
- * <page><mypage>} element). The per-page properties override the global ones.
- * </p>
+ * The configuration values should be in the site.xml file, inside a {@code 
+ * <skinConfig>}, itself inside the {@code <custom>} element.
  * <p>
- * A sample configuration would be like that:
- * </p>
- * 
- * <pre>
- * {@code
- * <custom>
- *   <reflowSkin>
- *     <prop1>value1</prop1>
- *     <prop2>
- *       <prop21>value2</prop21>
- *     </prop2>
- *     <pages>
- *       <mypage project="myproject">
- *         <prop1>override value1</prop1>
- *       </mypage>
- *     </pages>
- *   </reflowSkin>
- * </custom>
- * }
- * </pre>
+ * Any value stored there can be acquired through the use of the
+ * {@link #get(String) get} method.
  * <p>
- * To get the value of {@code prop1}, one would simply use {@code $config.prop1}
- * . This would return "override value1". Then {@code $config.prop2} would
- * return "value2" - the global value.
- * </p>
+ * If a {@code <pages>} element is defined, it can contain an element with a
+ * page's id (which is the slugged name of the file) where it can override any
+ * of those values.
  * <p>
- * The tool allows querying the value easily, falling back from page to global
- * configuration to {@code null}, if none is available. It also provides
- * convenience accessors for common values.
- * </p>
- * <p>
- * Note
- * </p>
+ * This class has been created from the Skin Config Tool class from the
+ * <a href="http://andriusvelykis.github.io/reflow-maven-skin/">Reflow Maven
+ * Skin</a>.
  * 
  * @author Andrius Velykis
  * @author Bernardo Martínez Garrido

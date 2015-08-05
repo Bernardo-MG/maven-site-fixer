@@ -38,10 +38,26 @@ import org.jsoup.parser.Tag;
 /**
  * Utilities class for adapting the site to the patterns used on Maven Skins.
  * <p>
- * These skins are meant to be used with Bootstrap 3.
+ * Unlike the other utilities classes, this is not meant to be completely
+ * generic, but applies some very concrete fixes which are meant to work with
+ * concrete technologies, such as for example, transforming the Maven Site icons
+ * to Font Awesome.
  * <p>
- * This is used for customizing the HTML code, transforming the default Maven
- * Site into something that fits into patterns offered by a Maven Skin.
+ * Still a few methods, like {@code fixReport} which will correct headings on
+ * Maven Site reports, are more generic, but still expect the site to follow a
+ * concrete type of structure.
+ * <p>
+ * In general, these fit the patterns I follow for my Maven Skins, but may not
+ * work as well with other skins.
+ * <p>
+ * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
+ * editing. This library will process the HTML code received by the methods, so
+ * only the contents of the {@code <body>} tag (or the full HTML if this tag is
+ * missing) will be used.
+ * <p>
+ * Take into account that while the returned HTML will be correct, the validity
+ * of the received HTML won't be checked. That falls fully on the hands of the
+ * user.
  * 
  * @author Bernardo Martínez Garrido
  */
