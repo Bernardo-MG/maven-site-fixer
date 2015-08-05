@@ -60,7 +60,7 @@ public final class TestUpdateCodeSectionsHTML5UpdateUtils {
      * correctly.
      */
     @Test
-    public final void testFixCodeBlock() {
+    public final void testUpdateCodeSections() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -70,6 +70,8 @@ public final class TestUpdateCodeSectionsHTML5UpdateUtils {
         result = util.updateCodeSections(html);
 
         htmlExpected = "<pre><code>Some code</code></pre>";
+
+        System.out.println(result);
 
         Assert.assertEquals(htmlExpected, result);
     }

@@ -323,21 +323,15 @@ public class HTML5UpdateUtils {
      */
     private final void removeRedundantSourceDivs(final Element body) {
         final Collection<Element> sourceDivs; // Repeated source divs
-        Collection<Element> children;         // Children source divs
-        Element validDiv;                     // Fixed code block
+        Element parent;                       // Parent <div>
 
         // Divs with the source class with another div with the source class as
         // a child
-        sourceDivs = body.select("div.source:has(div.source)");
+        sourceDivs = body.select("div.source > div.source");
         for (final Element div : sourceDivs) {
-            children = div.getElementsByClass(".source");
-            if (!children.isEmpty()) {
-                validDiv = children.iterator().next();
-
-                validDiv.remove();
-
-                div.replaceWith(validDiv);
-            }
+            parent = div.parent();
+            div.remove();
+            parent.replaceWith(div);
         }
     }
 
