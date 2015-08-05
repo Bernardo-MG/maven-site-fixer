@@ -301,12 +301,10 @@ public class SiteUtils {
 
         // Table rows with <th> tags in a <tbody>
         tables = body.select("table");
-        if (!tables.isEmpty()) {
-            for (final Element table : tables) {
-                table.addClass("table");
-                table.addClass("table-striped");
-                table.addClass("table-bordered");
-            }
+        for (final Element table : tables) {
+            table.addClass("table");
+            table.addClass("table-striped");
+            table.addClass("table-bordered");
         }
 
         return body.html();
