@@ -71,6 +71,36 @@ public class SiteUtils {
         super();
     }
 
+    /**
+     * Returns the result from fixing the received Maven Site report.
+     * <p>
+     * This is prepared for the following reports:
+     * <ul>
+     * <li>Changes report</li>
+     * <li>Checkstyle</li>
+     * <li>CPD</li>
+     * <li>Dependencies</li>
+     * <li>Failsafe report</li>
+     * <li>Findbugs</li>
+     * <li>JDepend</li>
+     * <li>License</li>
+     * <li>Plugins</li>
+     * <li>Plugin management</li>
+     * <li>Project summary</li>
+     * <li>PMD</li>
+     * <li>Surefire report</li>
+     * <li>Tags list</li>
+     * <li>Team list</li>
+     * </ul>
+     * Most of the times, the fix consists on correcting the heading levels, and
+     * adding an initial heading if needed.
+     * 
+     * @param html
+     *            the HTML code from the report
+     * @param report
+     *            the report name
+     * @return the fixed HTML report
+     */
     public final String fixReport(final String html, final String report) {
         final Element body;     // Body of the HTML code
         final Element element;  // Additional edited element
@@ -177,6 +207,14 @@ public class SiteUtils {
         return body.html();
     }
 
+    /**
+     * Returns the result from transforming the default icons used by the Maven
+     * Site to Font Awesome icons on the received HTML code.
+     * 
+     * @param html
+     *            HTML code for the page
+     * @return the HTML with all the icons swapped for Font Awesome icons
+     */
     public final String transformIcons(final String html) {
         final Map<String, String> replacements;
 
@@ -204,17 +242,18 @@ public class SiteUtils {
     }
 
     /**
-     * Transforms images on the body to figures.
+     * Returns the result from transforming simple {@code <img>} elements to
+     * {@code <figure>} elements on the received HTML code.
      * <p>
      * This will wrap {@code <img>} elements with a {@code <figure>} element,
      * and add a {@code <figcaption>} with the contents of the image's
-     * {@code alt} attribute, if it has said attribute.
+     * {@code alt} attribute, if said attribute exists.
      * <p>
      * Only {@code <img>} elements inside a {@code <section>} will be
      * transformed.
      * 
      * @param html
-     *            HTML content to transform
+     *            HTML with images to transform
      * @return HTML content, with the body image wrapped in figures.
      */
     public final String transformImagesToFigures(final String html) {
@@ -246,6 +285,14 @@ public class SiteUtils {
         return body.html();
     }
 
+    /**
+     * Returns the result from transforming tables to stripped and bordered
+     * tables on the received HTML code.
+     * 
+     * @param html
+     *            HTML with tables to transform
+     * @return TML content, with the tables transformed
+     */
     public final String transformTables(final String html) {
         final Collection<Element> tables; // Tables to fix
         final Element body;     // Body of the HTML code
@@ -266,7 +313,8 @@ public class SiteUtils {
     }
 
     /**
-     * Replaces a collection of HTML elements.
+     * Returns the result from replacing a collection of HTML elements on the
+     * received HTML code.
      * <p>
      * These elements are received as a {@code Map}, made up of pairs where the
      * key is a CSS selector, and the value is the replacement for the selected
@@ -277,8 +325,7 @@ public class SiteUtils {
      * @param replacements
      *            {@code Map} where the key is a CSS selector and the value the
      *            element's replacement
-     * @return HTML content with replaced elements. If no elements are found,
-     *         the original content is returned.
+     * @return HTML content with replaced elements
      */
     private final String replaceAll(final String html,
             final Map<String, String> replacements) {

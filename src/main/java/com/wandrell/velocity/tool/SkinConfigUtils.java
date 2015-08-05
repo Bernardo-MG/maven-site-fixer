@@ -68,14 +68,14 @@ public final class SkinConfigUtils extends SafeConfig {
      * <p>
      * It will be a node inside the custom node, with the project node at the
      * root, like this:
-     * <p>
      * 
      * <pre>
      * {@code <project>
      *   <custom>
      *      <skinConfig></skinConfig>
      *   </custom>
-     *</project>}
+     * </project>}
+     * </pre>
      * <p>
      * That is, if the default value of skinConfig is kept.
      */
@@ -265,7 +265,7 @@ public final class SkinConfigUtils extends SafeConfig {
     }
 
     /**
-     * Processed the decoration model, acquiring the skin and page
+     * Processes the decoration model, acquiring the skin and page
      * configuration.
      * <p>
      * The decoration model are the contents of the site.xml file.

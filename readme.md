@@ -1,11 +1,11 @@
-# Velocity Tools
+# Maven Site Fixer
 
-A small group of tools for the Velocity templating engine, prepared to be used on the [Docs Maven Skin][docs-skin].
+A small group of tools for the Velocity templating engine, meant to be used for updating Maven Sites to HTML5, and fixing some structure errors and limitations.
 
-This project has been created from the [Reflow Maven Skin][reflow-skin] project, which includes both the Reflow skin and it's own Velocity tools. These tools have been simplified and adapted to be used on custom Maven skins.
+For a project making use of these libraries, showing how they are to be used, check the [Docs Maven Skin][docs-skin].
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.velocity/velocity-tools.svg.svg)][maven-repo]
-[![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/velocity-tools/images/download.svg)][bintray-repo]
+[![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.velocity/maven-site-fixer.svg.svg)][maven-repo]
+[![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/maven-site-fixer/images/download.svg)][bintray-repo]
 
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
 [![Development docs](https://img.shields.io/badge/docs-develop-blue.svg)][site-develop]
@@ -15,10 +15,11 @@ This project has been created from the [Reflow Maven Skin][reflow-skin] project,
 
 ## Features
 
-The project is composed by a small set of tools:
+The project is composed by a small set of tools each offering solutions to a problem or limitation:
 
-- A tool for editing a Maven Site's HTML code.
-- A tool for acquiring configuration data from a custom config group on the site.xml file.
+- Upgrading XHTML to HTML5.
+- Various corrections, such as fixing report headings.
+- Easy access to custom Maven Site configuration info.
 
 ## Documentation
 
@@ -83,7 +84,6 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 The project has been released under the [MIT License][license].
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin
-[reflow-skin]: http://andriusvelykis.github.io/reflow-maven-skin/
 [bintray-repo]: https://bintray.com/bernardo-mg/maven/velocity-tools/view
 [maven-repo]: http://mvnrepository.com/artifact/com.wandrell.velocity/velocity-tools
 [issues]: https://github.com/bernardo-mg/velocity-tools/issues

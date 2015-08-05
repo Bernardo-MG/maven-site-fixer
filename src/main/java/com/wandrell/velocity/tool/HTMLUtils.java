@@ -157,7 +157,8 @@ public final class HTMLUtils {
     }
 
     /**
-     * Transforms a collection of {@code Element} entities to HTML.
+     * Returns the result from transforming a collection of {@code Element}
+     * entities to HTML.
      * 
      * @param elements
      *            the elements from which the HTML code will be created
@@ -204,33 +205,6 @@ public final class HTMLUtils {
      * <p>
      * If splitting an element breaks it, it will be fixed by taking all the
      * children elements out of if.
-     * <p>
-     * For example, if the following is split at the {@code 
-     * 
-    <hr>
-     * }:
-     * 
-     * <pre>
-     * {@code <div>
-     *    <p>First paragraph</p>
-     *    <hr>
-     *    <p>Second paragraph</p>
-     *</div>}
-     * </pre>
-     * 
-     * Then the result will be two groups, one will be:
-     * 
-     * <pre>
-     * {@code <div>
-     *    <p>First paragraph</p>
-     *</div>}
-     * </pre>
-     * 
-     * While the other will be:
-     * 
-     * <pre>
-     * {@code <p>Second paragraph</p>}
-     * </pre>
      * 
      * @param content
      *            HTML content to split
@@ -244,9 +218,9 @@ public final class HTMLUtils {
     }
 
     /**
-     * Splits the given HTML content into partitions, each starting with the
-     * given separator selector. The separators are kept as the first element of
-     * each partition.
+     * Returns the result from splitting the received HTML code into partitions,
+     * each starting with the given separator selector. The separators are kept
+     * as the first element of each partition.
      * <p>
      * Note that if the split is successful the first part will be removed, as
      * it will be before the first selector.
@@ -285,7 +259,7 @@ public final class HTMLUtils {
 
     /**
      * Returns the HTML code with the elements marked by the selector wrapped on
-     * the received element.
+     * the received wrapper element.
      * <p>
      * The method will find all the elements fitting into the selector, and then
      * wrap them with the wrapper element. The HTML code will then be adapted to
