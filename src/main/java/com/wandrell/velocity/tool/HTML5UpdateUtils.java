@@ -148,15 +148,15 @@ public class HTML5UpdateUtils {
      * 
     
     <pre>
-                * } element,
-                * which will me moved out of the code section.
-                * <p>
-                * Maven sites handle code blocks in an outdated fashion, and look like
-                * this:
-                * 
-                * <pre>
-                * {@code <div class="source">
-                *    <pre>Some code
+                 * } element,
+                 * which will me moved out of the code section.
+                 * <p>
+                 * Maven sites handle code blocks in an outdated fashion, and look like
+                 * this:
+                 * 
+                 * <pre>
+                 * {@code <div class="source">
+                 *    <pre>Some code
     </pre>
     
     * </div>}
