@@ -118,6 +118,44 @@ public class SiteUtils {
             }
 
             element.remove();
+        } else if (report.equals("surefire-report")) {
+            body.getElementsByTag("h2").iterator().next().tagName("h1");
+        } else if (report.equals("failsafe-report")) {
+            newElement = body.getElementsByTag("h2").iterator().next();
+            newElement.tagName("h1");
+            newElement.text("Failsafe Report");
+        } else if (report.equals("checkstyle")) {
+            body.getElementsByTag("h2").iterator().next().tagName("h1");
+        } else if (report.equals("findbugs")) {
+            body.getElementsByTag("h2").iterator().next().tagName("h1");
+        } else if (report.equals("pmd")) {
+            body.getElementsByTag("h2").iterator().next().tagName("h1");
+        } else if (report.equals("cpd")) {
+            body.getElementsByTag("h2").iterator().next().tagName("h1");
+        } else if (report.equals("jdepend-report")) {
+            body.getElementsByTag("h2").iterator().next().tagName("h1");
+        } else if (report.equals("taglist")) {
+            body.getElementsByTag("h2").iterator().next().tagName("h1");
+        } else if (report.equals("dependencies")) {
+            body.prepend("<h1>Dependencies Report</h1>");
+        } else if (report.equals("project-summary")) {
+            for (final Element head : body.getElementsByTag("h2")) {
+                head.tagName("h1");
+            }
+
+            for (final Element head : body.getElementsByTag("h3")) {
+                head.tagName("h2");
+            }
+        } else if (report.equals("license")) {
+            body.prepend("<h1>License</h1>");
+        } else if (report.equals("team-list")) {
+            for (final Element head : body.getElementsByTag("h2")) {
+                head.tagName("h1");
+            }
+
+            for (final Element head : body.getElementsByTag("h3")) {
+                head.tagName("h2");
+            }
         }
 
         return body.html();

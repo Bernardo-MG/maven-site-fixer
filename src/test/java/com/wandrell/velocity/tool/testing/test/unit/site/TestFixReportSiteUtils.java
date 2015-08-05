@@ -102,4 +102,19 @@ public final class TestFixReportSiteUtils {
         Assert.assertEquals(htmlExpected, result);
     }
 
+    @Test
+    public final void testFixReportHeading_Surefire() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<section><h2>Surefire Report</h2></section><section><h2>Summary</h2></section><section><h2>Package List</h2></section>";
+
+        result = util.fixReport(html, "surefire-report");
+
+        htmlExpected = "<section>\n <h1>Surefire Report</h1>\n</section>\n<section>\n <h2>Summary</h2>\n</section>\n<section>\n <h2>Package List</h2>\n</section>";
+
+        Assert.assertEquals(htmlExpected, result);
+    }
+
 }

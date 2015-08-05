@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd">
 
 	<skin>
-		<groupId>com.wandrell</groupId>
+		<groupId>com.wandrell.maven</groupId>
 		<artifactId>docs-maven-skin</artifactId>
 		<version>${site.skin.version}</version>
 	</skin>
@@ -60,6 +60,7 @@
 		<menu name="Info and reports" inherit="bottom">
 			<item name="Info" href="./info.html" />
 			<item name="Reports" href="./reports.html" />
+			<item name="JavaDocs" href="./apidocs/" />
 		</menu>
 	</body>
 

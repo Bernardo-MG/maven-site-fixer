@@ -124,6 +124,7 @@
 		<testng.version>6.9.4</testng.version>
 		<velocity.version>1.7</velocity.version>
 		<velocity.tools.version>2.0</velocity.tools.version>
+		<wandrell.velocity.siteFixer.version>0.1.0-SNAPSHOT</wandrell.velocity.siteFixer.version>
 		<!-- Plugins versions -->
 		<plugin.checkstyle.version>2.15</plugin.checkstyle.version>
 		<plugin.changes.version>2.11</plugin.changes.version>
@@ -430,7 +431,7 @@
 					<dependency>
 						<!-- Wandrell's Velocity Tools -->
 						<groupId>com.wandrell.velocity</groupId>
-						<artifactId>velocity-tools</artifactId>
+						<artifactId>maven-site-fixer</artifactId>
 						<version>${plugin.site.siteFix.version}</version>
 					</dependency>
 					<dependency>
