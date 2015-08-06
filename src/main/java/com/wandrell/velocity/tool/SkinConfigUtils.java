@@ -139,12 +139,12 @@ public final class SkinConfigUtils extends SafeConfig {
         checkNotNull(property, "Received a null pointer as property");
 
         // Looks for it in the page properties
-        value = getChild(pageConfig, property);
+        value = pageConfig.getChild(property);
 
         if (value == null) {
             // It was not found in the page properties
             // New attempt with the global properties
-            value = getChild(skinConfig, property);
+            value = skinConfig.getChild(property);
         }
 
         return value;
@@ -203,19 +203,6 @@ public final class SkinConfigUtils extends SafeConfig {
         }
 
         return result;
-    }
-
-    /**
-     * Returns the child node indicated by the received node name.
-     * 
-     * @param root
-     *            the node containing the child
-     * @param childName
-     *            the child's name
-     * @return the child with the received name
-     */
-    private final Xpp3Dom getChild(final Xpp3Dom root, final String childName) {
-        return root.getChild(childName);
     }
 
     /**
@@ -296,11 +283,11 @@ public final class SkinConfigUtils extends SafeConfig {
             skinConfig = skinNode;
 
             // Acquires the <pages> node
-            pagesNode = getChild(skinNode, "pages");
+            pagesNode = skinNode.getChild("pages");
             if (pagesNode != null) {
 
                 // Get the page node for the current file
-                page = getChild(pagesNode, fileId);
+                page = pagesNode.getChild(fileId);
 
                 if (page != null) {
                     pageConfig = page;
