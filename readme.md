@@ -2,7 +2,7 @@
 
 A small group of tools for the Velocity templating engine, meant to be used for updating Maven Sites to HTML5, and fixing some structure errors and limitations.
 
-For a project making use of these libraries, showing how they are to be used, check the [Docs Maven Skin][docs-skin].
+To check a project which makes use of this library take a look at the [Docs Maven Skin][docs-skin].
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.velocity/maven-site-fixer.svg.svg)][maven-repo]
 [![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/maven-site-fixer/images/download.svg)][bintray-repo]
