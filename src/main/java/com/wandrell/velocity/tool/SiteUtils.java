@@ -36,7 +36,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
 /**
- * Utilities class for adapting the site to the patterns used on Maven Skins.
+ * Utilities class for adapting a Doxia generated site to the patterns used on
+ * Maven Skins.
  * <p>
  * Unlike the other utilities classes, this is not meant to be completely
  * generic, but applies some very concrete fixes which are meant to work with

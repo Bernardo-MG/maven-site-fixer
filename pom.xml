@@ -453,10 +453,10 @@
 				<version>${plugin.site.version}</version>
 				<dependencies>
 					<dependency>
-						<!-- Wandrell's Velocity Tools -->
-						<groupId>com.wandrell.velocity</groupId>
-						<artifactId>maven-site-fixer</artifactId>
-						<version>${plugin.site.siteFix.version}</version>
+						<!-- Docs Maven Skin -->
+						<groupId>com.wandrell.maven.skins</groupId>
+						<artifactId>docs-maven-skin</artifactId>
+						<version>${site.skin.version}</version>
 					</dependency>
 					<dependency>
 						<!-- Velocity -->

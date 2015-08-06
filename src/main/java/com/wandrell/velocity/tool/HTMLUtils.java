@@ -59,7 +59,6 @@ import com.google.common.collect.Iterables;
  * 
  * @author Andrius Velykis
  * @author Bernardo Martínez Garrido
- * @see <a href="http://jsoup.org/">jsoup</a>
  */
 @DefaultKey("htmlTool")
 public final class HTMLUtils {

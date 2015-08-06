@@ -37,8 +37,8 @@ import org.apache.velocity.tools.generic.ValueParser;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
 /**
- * Utilities class to ease acquiring custom Maven Site configuration values
- * through Velocity.
+ * Utilities class to ease using custom Maven Site configuration values through
+ * Velocity.
  * <p>
  * The configuration values should be in the site.xml file, inside a {@code 
  * <skinConfig>}, itself inside the {@code <custom>} element.

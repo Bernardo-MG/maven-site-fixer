@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 /**
- * Provides various utilities classes for Apache Velocity which update the XHTML
- * produced by said tool to current HTML5 standards.
+ * Provides various utilities classes for Apache Velocity, used to update the
+ * XHTML produced by Doxia to current HTML5 standards.
  * <p>
  * It also offers a few helpful tools, meant to improve the look and structure
  * of Maven Sites.
