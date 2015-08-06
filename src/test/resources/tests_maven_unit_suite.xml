@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="VelocityToolsUnit" parallel="instances" thread-count="4">
+<suite name="MavenSiteFixerUnit" parallel="instances" thread-count="4">
 
-	<test name="velocity_tools_unit">
+	<test name="maven_site_fixer_unit">
 		<packages>
 			<package name="com.wandrell.velocity.tool.testing.test.unit.*" />
 		</packages>

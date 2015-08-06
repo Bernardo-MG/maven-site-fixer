@@ -83,13 +83,13 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 
 The project has been released under the [MIT License][license].
 
-[docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin
-[bintray-repo]: https://bintray.com/bernardo-mg/maven/velocity-tools/view
-[maven-repo]: http://mvnrepository.com/artifact/com.wandrell.velocity/velocity-tools
-[issues]: https://github.com/bernardo-mg/velocity-tools/issues
-[javadoc-develop]: http://docs.wandrell.com/development/maven/velocity-tools/apidocs
-[javadoc-release]: http://docs.wandrell.com/maven/velocity-tools/apidocs
+[docs-skin]: https://github.com/Bernardo-MG/maven-site-fixer
+[bintray-repo]: https://bintray.com/bernardo-mg/maven/maven-site-fixer/view
+[maven-repo]: http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer
+[issues]: https://github.com/bernardo-mg/maven-site-fixer/issues
+[javadoc-develop]: http://docs.wandrell.com/development/maven/maven-site-fixer/apidocs
+[javadoc-release]: http://docs.wandrell.com/maven/maven-site-fixer/apidocs
 [license]: http://www.opensource.org/licenses/mit-license.php
-[scm]: https://github.com/bernardo-mg/velocity-tools
-[site-develop]: http://docs.wandrell.com/development/maven/velocity-tools
-[site-release]: http://docs.wandrell.com/maven/velocity-tools
+[scm]: https://github.com/bernardo-mg/maven-site-fixer
+[site-develop]: http://docs.wandrell.com/development/maven/maven-site-fixer
+[site-release]: http://docs.wandrell.com/maven/maven-site-fixer
