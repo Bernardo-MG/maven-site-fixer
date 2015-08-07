@@ -2,7 +2,9 @@
 
 A small group of tools for the Velocity templating engine, meant to be used for updating Maven Sites to HTML5, and fixing some structure errors and limitations.
 
-To check a project which makes use of this library take a look at the [Docs Maven Skin][docs-skin].
+These are caused by it depending on the old-fashioned Doxia site creator, which creates outdated XHTML. The classes offered by this project will take such code and patch it into something more fit to the current web standards.
+
+To check these tools on action take a look at the [Docs Maven Skin][docs-skin], a modern and reactive Maven Site skin.
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.velocity/maven-site-fixer.svg.svg)][maven-repo]
 [![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/maven-site-fixer/images/download.svg)][bintray-repo]
@@ -15,7 +17,7 @@ To check a project which makes use of this library take a look at the [Docs Mave
 
 ## Features
 
-The project is composed by a small set of tools each offering solutions to a problem or limitation:
+The project is composed by a small set of tools each offering solutions to a problem or limitation posed by Doxia:
 
 - Upgrading XHTML to HTML5.
 - Various corrections, such as fixing report headings.
