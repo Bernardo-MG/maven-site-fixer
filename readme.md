@@ -6,7 +6,7 @@ These are caused by it depending on the old-fashioned Doxia site creator, which 
 
 To check these tools on action take a look at the [Docs Maven Skin][docs-skin], a modern and reactive Maven Site skin.
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.velocity/maven-site-fixer.svg.svg)][maven-repo]
+[![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.velocity/maven-site-fixer.svg)][maven-repo]
 [![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/maven-site-fixer/images/download.svg)][bintray-repo]
 
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
