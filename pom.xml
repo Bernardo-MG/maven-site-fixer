@@ -6,7 +6,7 @@
 
 	<groupId>com.wandrell.velocity</groupId>
 	<artifactId>maven-site-fixer</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.1</version>
 	<packaging>jar</packaging>
 
 	<name>Maven Site Fixer</name>
