@@ -110,7 +110,7 @@
 		<java.version.source>1.7</java.version.source>
 		<java.version.target>${java.version.source}</java.version.target>
 		<!-- Manifest data -->
-		<manifest.name>com/wandrell/velocity/velocity-tools</manifest.name>
+		<manifest.name>com/wandrell/velocity/maven-site-fixer</manifest.name>
 		<!-- Dependencies versions -->
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<commons.digester.version>2.1</commons.digester.version>
