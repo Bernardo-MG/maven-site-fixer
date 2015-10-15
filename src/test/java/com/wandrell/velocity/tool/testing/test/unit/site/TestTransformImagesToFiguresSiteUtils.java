@@ -69,12 +69,12 @@ public final class TestTransformImagesToFiguresSiteUtils {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><img src=\"imgs/diagram.png\" alt=\"A diagram\"></section>";
+        html = "<section><p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p></section>";
 
         result = util.transformImagesToFigures(html);
 
-        htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n  <figcaption>\n   A diagram\n  </figcaption>\n </figure>\n</section>";
-
+        htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
+        
         Assert.assertEquals(htmlExpected, result);
     }
 

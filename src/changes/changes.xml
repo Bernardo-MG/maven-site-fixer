@@ -16,5 +16,11 @@
 				Site is now working.
 			</action>
 		</release>
+		<release version="0.2.0" date="2015-10-15" description="Fixes to HTML transformation">
+			<action dev="bmg" type="fix">
+				Images are now being correctly
+				transformed to figures.
+			</action>
+		</release>
 	</body>
 </document>
