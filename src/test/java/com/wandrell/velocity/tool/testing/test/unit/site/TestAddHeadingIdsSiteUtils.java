@@ -45,7 +45,7 @@ import junit.framework.Assert;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestTransformImagesToFiguresSiteUtils {
+public final class TestAddHeadingIdsSiteUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -55,62 +55,42 @@ public final class TestTransformImagesToFiguresSiteUtils {
     /**
      * Default constructor.
      */
-    public TestTransformImagesToFiguresSiteUtils() {
+    public TestAddHeadingIdsSiteUtils() {
         super();
     }
 
     /**
-     * Tests that when transforming images to figures works correctly when an
-     * {@code alt} attribute is not present.
+     * Tests that the id is correctly added to headings with points.
      */
     @Test
-    public final void testTransformImagesToFigures_Caption() {
+    public final void testAddHeadingIds_Points() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p></section>";
+        html = "<h1>com.wandrell</h1>";
 
-        result = util.transformImagesToFigures(html);
+        result = util.addHeadingIds(html);
 
-        htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
+        htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>";
 
         Assert.assertEquals(htmlExpected, result);
     }
 
     /**
-     * Tests that when transforming images to figures works correctly when an
-     * {@code alt} attribute is present.
+     * Tests that the id is correctly added to headings with spaces.
      */
     @Test
-    public final void testTransformImagesToFigures_NoCaption() {
+    public final void testAddHeadingIds_Spaces() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><img src=\"imgs/diagram.png\"></section>";
+        html = "<h1>A heading</h1>";
 
-        result = util.transformImagesToFigures(html);
+        result = util.addHeadingIds(html);
 
-        htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
-
-        Assert.assertEquals(htmlExpected, result);
-    }
-
-    /**
-     * Tests that images out of a content element are ignored.
-     */
-    @Test
-    public final void testTransformImagesToFigures_OutOfContent() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><footer><img src=\"imgs/footer.png\" alt=\"Footer image\"></footer></body>";
-
-        result = util.transformImagesToFigures(html);
-
-        htmlExpected = "<header>\n <img src=\"imgs/header.png\" alt=\"Header image\">\n</header>\n<section></section>\n<footer>\n <img src=\"imgs/footer.png\" alt=\"Footer image\">\n</footer>";
+        htmlExpected = "<h1 id=\"aheading\">A heading</h1>";
 
         Assert.assertEquals(htmlExpected, result);
     }
