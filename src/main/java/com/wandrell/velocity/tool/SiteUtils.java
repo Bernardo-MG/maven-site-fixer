@@ -73,17 +73,18 @@ public class SiteUtils {
     }
 
     /**
-     * Returns the result from adding ids to the headings on the received HTML
-     * code.
+     * Returns the result from adding or fixing ids to the headings on the
+     * received HTML code.
      * <p>
      * The id will be the text from the heading, in lower case, and with spaces
-     * and points removed.
+     * and points removed. If it already has an id, then it will be set to lower
+     * case, with spaces and points removed.
      * 
      * @param html
      *            HTML with headings where and id should be added
      * @return HTML content, with the tables transformed
      */
-    public final String addHeadingIds(final String html) {
+    public final String fixHeadingIds(final String html) {
         final Collection<Element> headings; // Headings to fix
         final Element body;     // Body of the HTML code
 
@@ -95,6 +96,9 @@ public class SiteUtils {
             if (!heading.hasAttr("id")) {
                 heading.attr("id",
                         heading.text().toLowerCase().replaceAll("[ _.]", ""));
+            } else {
+                heading.attr("id", heading.attr("id").toLowerCase()
+                        .replaceAll("[ _.]", ""));
             }
         }
 

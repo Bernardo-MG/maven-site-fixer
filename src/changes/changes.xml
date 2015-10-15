@@ -39,6 +39,10 @@
 			<action dev="bmg" type="fix">
 				The section links are fixed.
 			</action>
+			<action dev="bmg" type="fix">
+				If a header already has an id it is now
+				fixed.
+			</action>
 		</release>
 	</body>
 </document>
