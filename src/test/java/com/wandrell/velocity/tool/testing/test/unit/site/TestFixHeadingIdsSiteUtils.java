@@ -31,21 +31,19 @@ import com.wandrell.velocity.tool.SiteUtils;
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link SiteUtils}, testing the {@code fixHeadingIds} method.
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Transforming images to figures works correctly when an {@code alt}
- * attribute is present.</li>
- * <li>Transforming images to figures works correctly when an {@code alt}
- * attribute is not present.</li>
- * <li>Images out of a content element are ignored.</li>
+ * <li>The id is correctly added to headings with points.</li>
+ * <li>The id is correctly added to headings with spaces.</li>
+ * <li>The id is correctly fixed.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestAddHeadingIdsSiteUtils {
+public final class TestFixHeadingIdsSiteUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -55,24 +53,42 @@ public final class TestAddHeadingIdsSiteUtils {
     /**
      * Default constructor.
      */
-    public TestAddHeadingIdsSiteUtils() {
+    public TestFixHeadingIdsSiteUtils() {
         super();
+    }
+
+    /**
+     * Tests that the id is correctly fixed.
+     */
+    @Test
+    public final void testFixHeadingIds_HasId() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<h1 id=\"a.heading\">A heading</h1><h3 id=\"another.heading\">Another heading</h3>";
+
+        result = util.fixHeadingIds(html);
+
+        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
+
+        Assert.assertEquals(htmlExpected, result);
     }
 
     /**
      * Tests that the id is correctly added to headings with points.
      */
     @Test
-    public final void testAddHeadingIds_Points() {
+    public final void testFixHeadingIds_Points() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1>com.wandrell</h1>";
+        html = "<h1>com.wandrell</h1><h3>com.wandrell</h3>";
 
-        result = util.addHeadingIds(html);
+        result = util.fixHeadingIds(html);
 
-        htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>";
+        htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>\n<h3 id=\"comwandrell\">com.wandrell</h3>";
 
         Assert.assertEquals(htmlExpected, result);
     }
@@ -81,16 +97,16 @@ public final class TestAddHeadingIdsSiteUtils {
      * Tests that the id is correctly added to headings with spaces.
      */
     @Test
-    public final void testAddHeadingIds_Spaces() {
+    public final void testFixHeadingIds_Spaces() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1>A heading</h1>";
+        html = "<h1>A heading</h1><h3>Another heading</h3>";
 
-        result = util.addHeadingIds(html);
+        result = util.fixHeadingIds(html);
 
-        htmlExpected = "<h1 id=\"aheading\">A heading</h1>";
+        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
         Assert.assertEquals(htmlExpected, result);
     }

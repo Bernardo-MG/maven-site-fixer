@@ -30,5 +30,22 @@
 				transformed to figures.
 			</action>
 		</release>
+		<release version="0.3.0" date="2015-10-15"
+			description="Fixes and additions to report fixes">
+			<action dev="bmg" type="add">
+				The RSS feed button is removed from the
+				checkstyle report.
+			</action>
+			<action dev="bmg" type="add">
+				Added a method to fix local anchors.
+			</action>
+			<action dev="bmg" type="fix">
+				The section links are fixed.
+			</action>
+			<action dev="bmg" type="fix">
+				If a header already has an id it is now
+				fixed.
+			</action>
+		</release>
 	</body>
 </document>

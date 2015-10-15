@@ -31,7 +31,8 @@ import com.wandrell.velocity.tool.SiteUtils;
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link SiteUtils}, testing the
+ * {@code transformImagesToFigures} method.
  * <p>
  * Checks the following cases:
  * <ol>

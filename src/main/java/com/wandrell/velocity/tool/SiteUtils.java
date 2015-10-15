@@ -73,17 +73,46 @@ public class SiteUtils {
     }
 
     /**
-     * Returns the result from adding ids to the headings on the received HTML
-     * code.
+     * Returns the result from fixing links to anchors in the same page on the
+     * received HTML code.
      * <p>
-     * The id will be the text from the heading, in lower case, and with spaces
-     * and points removed.
+     * The href value will be in lower case, and with spaces and points removed.
      * 
      * @param html
-     *            HTML with headings where and id should be added
+     *            HTML with anchors to fix
+     * @return HTML content, with the anchor href attribute fixed
+     */
+    public final String fixAnchorLinks(final String html) {
+        final Element body;     // Body of the HTML code
+        String ref;             // Value of the href attribute
+
+        body = Jsoup.parse(html).body();
+
+        // Anchors
+        for (final Element child : body.getElementsByTag("a")) {
+            ref = child.attr("href");
+
+            if (ref.substring(0, 1).equals("#")) {
+                child.attr("href", ref.toLowerCase().replaceAll("[ _.]", ""));
+            }
+        }
+
+        return body.html();
+    }
+
+    /**
+     * Returns the result from adding or fixing ids to the headings on the
+     * received HTML code.
+     * <p>
+     * The id will be the text from the heading, in lower case, and with spaces
+     * and points removed. If it already has an id, then it will be set to lower
+     * case, with spaces and points removed.
+     * 
+     * @param html
+     *            HTML with headings where an id should be added
      * @return HTML content, with the tables transformed
      */
-    public final String addHeadingIds(final String html) {
+    public final String fixHeadingIds(final String html) {
         final Collection<Element> headings; // Headings to fix
         final Element body;     // Body of the HTML code
 
@@ -95,6 +124,9 @@ public class SiteUtils {
             if (!heading.hasAttr("id")) {
                 heading.attr("id",
                         heading.text().toLowerCase().replaceAll("[ _.]", ""));
+            } else {
+                heading.attr("id", heading.attr("id").toLowerCase()
+                        .replaceAll("[ _.]", ""));
             }
         }
 
@@ -202,6 +234,7 @@ public class SiteUtils {
             newElement.text("Failsafe Report");
         } else if (report.equals("checkstyle")) {
             body.getElementsByTag("h2").iterator().next().tagName("h1");
+            body.select("img[src=\"images/rss.png\"]").remove();
         } else if (report.equals("findbugs")) {
             body.getElementsByTag("h2").iterator().next().tagName("h1");
         } else if (report.equals("pmd")) {
