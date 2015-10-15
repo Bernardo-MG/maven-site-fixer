@@ -31,15 +31,12 @@ import com.wandrell.velocity.tool.SiteUtils;
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link SiteUtils}, testing the {@code addHeadingIds} method.
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Transforming images to figures works correctly when an {@code alt}
- * attribute is present.</li>
- * <li>Transforming images to figures works correctly when an {@code alt}
- * attribute is not present.</li>
- * <li>Images out of a content element are ignored.</li>
+ * <li>The id is correctly added to headings with points.</li>
+ * <li>The id is correctly added to headings with spaces.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido

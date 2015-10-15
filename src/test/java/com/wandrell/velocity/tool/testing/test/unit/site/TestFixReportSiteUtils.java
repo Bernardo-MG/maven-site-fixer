@@ -31,13 +31,15 @@ import com.wandrell.velocity.tool.SiteUtils;
 import junit.framework.Assert;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link SiteUtils}, testing the {@code fixReport} method.
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Transforming images to figures works correctly when an {@code alt}
- * attribute is present.</li>
- * <li>Images out of a content element are ignored.</li>
+ * <li>The changes report is correctly fixed.</li>
+ * <li>The checkstyle report is correctly fixed.</li>
+ * <li>The plugin management report is correctly fixed.</li>
+ * <li>The plugins report is correctly fixed.</li>
+ * <li>The surefire report is correctly fixed.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -57,8 +59,11 @@ public final class TestFixReportSiteUtils {
         super();
     }
 
+    /**
+     * Tests that the changes report is correctly fixed.
+     */
     @Test
-    public final void testFixReportHeading_Changes() {
+    public final void testFixReport_Changes() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -72,8 +77,29 @@ public final class TestFixReportSiteUtils {
         Assert.assertEquals(htmlExpected, result);
     }
 
+    /**
+     * Tests that the checkstyle report is correctly fixed.
+     */
     @Test
-    public final void testFixReportHeading_PluginManagement() {
+    public final void testFixReport_Checkstyle() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<h2>Checkstyle</h2><section><p><img alt=\"rss feed\" src=\"images/rss.png\"></p></section>";
+
+        result = util.fixReport(html, "checkstyle");
+
+        htmlExpected = "<h1>Checkstyle</h1>\n<section>\n <p></p>\n</section>";
+
+        Assert.assertEquals(htmlExpected, result);
+    }
+
+    /**
+     * Tests that the plugin management report is correctly fixed.
+     */
+    @Test
+    public final void testFixReport_PluginManagement() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -87,8 +113,11 @@ public final class TestFixReportSiteUtils {
         Assert.assertEquals(htmlExpected, result);
     }
 
+    /**
+     * Tests that the plugins report is correctly fixed.
+     */
     @Test
-    public final void testFixReportHeading_Plugins() {
+    public final void testFixReport_Plugins() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -102,8 +131,11 @@ public final class TestFixReportSiteUtils {
         Assert.assertEquals(htmlExpected, result);
     }
 
+    /**
+     * Tests that the surefire report is correctly fixed.
+     */
     @Test
-    public final void testFixReportHeading_Surefire() {
+    public final void testFixReport_Surefire() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

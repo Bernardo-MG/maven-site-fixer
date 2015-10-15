@@ -202,6 +202,7 @@ public class SiteUtils {
             newElement.text("Failsafe Report");
         } else if (report.equals("checkstyle")) {
             body.getElementsByTag("h2").iterator().next().tagName("h1");
+            body.select("img[src=\"images/rss.png\"]").remove();
         } else if (report.equals("findbugs")) {
             body.getElementsByTag("h2").iterator().next().tagName("h1");
         } else if (report.equals("pmd")) {
