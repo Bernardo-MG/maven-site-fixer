@@ -66,11 +66,11 @@ public final class TestFixHeadingIdsSiteUtils {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1 id=\"a.heading\">A heading</h1>";
+        html = "<h1 id=\"a.heading\">A heading</h1><h3 id=\"another.heading\">Another heading</h3>";
 
         result = util.fixHeadingIds(html);
 
-        htmlExpected = "<h1 id=\"aheading\">A heading</h1>";
+        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
         Assert.assertEquals(htmlExpected, result);
     }
@@ -84,11 +84,11 @@ public final class TestFixHeadingIdsSiteUtils {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1>com.wandrell</h1>";
+        html = "<h1>com.wandrell</h1><h3>com.wandrell</h3>";
 
         result = util.fixHeadingIds(html);
 
-        htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>";
+        htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>\n<h3 id=\"comwandrell\">com.wandrell</h3>";
 
         Assert.assertEquals(htmlExpected, result);
     }
@@ -102,11 +102,11 @@ public final class TestFixHeadingIdsSiteUtils {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1>A heading</h1>";
+        html = "<h1>A heading</h1><h3>Another heading</h3>";
 
         result = util.fixHeadingIds(html);
 
-        htmlExpected = "<h1 id=\"aheading\">A heading</h1>";
+        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
         Assert.assertEquals(htmlExpected, result);
     }
