@@ -37,8 +37,7 @@
 				checkstyle report.
 			</action>
 			<action dev="bmg" type="fix">
-				The section header ids on test reports
-				are now corrected.
+				The section links are fixed.
 			</action>
 		</release>
 	</body>

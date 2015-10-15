@@ -196,14 +196,20 @@ public class SiteUtils {
             element.remove();
         } else if (report.equals("surefire-report")) {
             body.getElementsByTag("h2").iterator().next().tagName("h1");
-            body.select("h2[id]").attr("id", body.select("h2[id]").attr("id")
-                    .toLowerCase().replaceAll("[ _.]", ""));
+
+            for (final Element child : body.getElementsByTag("a")) {
+                child.attr("href", child.attr("href").toLowerCase()
+                        .replaceAll("[ _.]", ""));
+            }
         } else if (report.equals("failsafe-report")) {
             newElement = body.getElementsByTag("h2").iterator().next();
             newElement.tagName("h1");
             newElement.text("Failsafe Report");
-            body.select("h2[id]").attr("id", body.select("h2[id]").attr("id")
-                    .toLowerCase().replaceAll("[ _.]", ""));
+
+            for (final Element child : body.getElementsByTag("a")) {
+                child.attr("href", child.attr("href").toLowerCase()
+                        .replaceAll("[ _.]", ""));
+            }
         } else if (report.equals("checkstyle")) {
             body.getElementsByTag("h2").iterator().next().tagName("h1");
             body.select("img[src=\"images/rss.png\"]").remove();
