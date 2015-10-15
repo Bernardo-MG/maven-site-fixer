@@ -74,7 +74,7 @@ public final class TestTransformImagesToFiguresSiteUtils {
         result = util.transformImagesToFigures(html);
 
         htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
-        
+
         Assert.assertEquals(htmlExpected, result);
     }
 

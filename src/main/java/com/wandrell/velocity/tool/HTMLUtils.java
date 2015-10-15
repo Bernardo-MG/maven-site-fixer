@@ -294,6 +294,41 @@ public final class HTMLUtils {
     }
 
     /**
+     * Returns the HTML code with the first element marked by the selector
+     * wrapped on the received wrapper element.
+     * <p>
+     * The method will find the first element fitting into the selector, and
+     * then wrap it with the wrapper element. The HTML code will then be adapted
+     * to this change and returned.
+     * 
+     * @param html
+     *            HTML content to modify
+     * @param selector
+     *            CSS selector for elements to wrap
+     * @param wrapper
+     *            HTML to use for wrapping the selected elements
+     * @return HTML with the selected elements wrapped with the wrapper element
+     */
+    public final String wrapFirst(final String html, final String selector,
+            final String wrapper) {
+        final Collection<Element> elements; // Selected elements
+        final Element body;  // Element parsed from the content
+
+        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(wrapper, "Received a null pointer as HTML wrap");
+
+        body = Jsoup.parse(html).body();
+        elements = body.select(selector);
+
+        if (!elements.isEmpty()) {
+            elements.iterator().next().wrap(wrapper);
+        }
+
+        return body.html();
+    }
+
+    /**
      * Returns the result from splitting the received HTML into partitions,
      * based on the received CSS selector.
      * <p>
