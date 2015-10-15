@@ -36,6 +36,9 @@
 				The RSS feed button is removed from the
 				checkstyle report.
 			</action>
+			<action dev="bmg" type="add">
+				Added a method to fix local anchors.
+			</action>
 			<action dev="bmg" type="fix">
 				The section links are fixed.
 			</action>
