@@ -140,11 +140,11 @@ public final class TestFixReportSiteUtils {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><h2>Surefire Report</h2></section><section><h2>Summary</h2></section><section><h2>Package List</h2></section>";
+        html = "<section><h2>Surefire Report</h2></section><section><h2 id=\"Summary.id\">Summary</h2></section><section><h2>Package List</h2></section>";
 
         result = util.fixReport(html, "surefire-report");
 
-        htmlExpected = "<section>\n <h1>Surefire Report</h1>\n</section>\n<section>\n <h2>Summary</h2>\n</section>\n<section>\n <h2>Package List</h2>\n</section>";
+        htmlExpected = "<section>\n <h1>Surefire Report</h1>\n</section>\n<section>\n <h2 id=\"summaryid\">Summary</h2>\n</section>\n<section>\n <h2>Package List</h2>\n</section>";
 
         Assert.assertEquals(htmlExpected, result);
     }
