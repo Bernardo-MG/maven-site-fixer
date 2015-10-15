@@ -22,6 +22,9 @@
 				Added a method to wrap just the first
 				found element.
 			</action>
+			<action dev="bmg" type="add">
+				Added a method to add ids to headings.
+			</action>
 			<action dev="bmg" type="fix">
 				Images are now being correctly
 				transformed to figures.

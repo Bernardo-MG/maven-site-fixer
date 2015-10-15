@@ -73,6 +73,35 @@ public class SiteUtils {
     }
 
     /**
+     * Returns the result from adding ids to the headings on the received HTML
+     * code.
+     * <p>
+     * The id will be the text from the heading, in lower case, and with spaces
+     * and points removed.
+     * 
+     * @param html
+     *            HTML with headings where and id should be added
+     * @return HTML content, with the tables transformed
+     */
+    public final String addHeadingIds(final String html) {
+        final Collection<Element> headings; // Headings to fix
+        final Element body;     // Body of the HTML code
+
+        body = Jsoup.parse(html).body();
+
+        // Table rows with <th> tags in a <tbody>
+        headings = body.select("h1,h2,h3,h4,h5,h6");
+        for (final Element heading : headings) {
+            if (!heading.hasAttr("id")) {
+                heading.attr("id",
+                        heading.text().toLowerCase().replaceAll("[ _.]", ""));
+            }
+        }
+
+        return body.html();
+    }
+
+    /**
      * Returns the result from fixing the received Maven Site report.
      * <p>
      * This is prepared for the following reports:
@@ -292,7 +321,7 @@ public class SiteUtils {
      * 
      * @param html
      *            HTML with tables to transform
-     * @return TML content, with the tables transformed
+     * @return HTML content, with the tables transformed
      */
     public final String transformTables(final String html) {
         final Collection<Element> tables; // Tables to fix
