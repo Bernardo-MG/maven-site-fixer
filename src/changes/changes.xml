@@ -47,5 +47,10 @@
 				fixed.
 			</action>
 		</release>
+		<release version="0.3.1" date="2015-10-16" description="Mave Site Skin">
+			<action dev="bmg" type="update">
+				Updated Maven Site Skin.
+			</action>
+		</release>
 	</body>
 </document>
