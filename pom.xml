@@ -6,7 +6,7 @@
 
 	<groupId>com.wandrell.velocity</groupId>
 	<artifactId>maven-site-fixer</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.3.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Maven Site Fixer</name>
@@ -154,7 +154,7 @@
 		<!-- Extensions versions -->
 		<extension.wagon.version>2.8</extension.wagon.version>
 		<!-- Maven Site -->
-		<site.skin.version>0.1.0</site.skin.version>
+		<site.skin.version>0.2.0</site.skin.version>
 		<repoDownloadURL>https://dl.bintray.com/bernardo-mg/maven/</repoDownloadURL>
 		<bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
 		<mavenURL>http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer</mavenURL>
