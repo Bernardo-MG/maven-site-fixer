@@ -146,9 +146,6 @@ public final class TestFixReportSiteUtils {
 
         htmlExpected = "<section>\n <h1>Surefire Report</h1>\n</section>\n<section>\n <h2>Summary</h2>\n</section>\n<section>\n <h2>Package List</h2>\n</section>";
 
-        System.out.println(result);
-        System.out.println(htmlExpected);
-
         Assert.assertEquals(htmlExpected, result);
     }
 
