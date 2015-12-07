@@ -146,7 +146,7 @@
 				<site>
 					<id>site</id>
 					<name>Project Documentation Site</name>
-					<url>${urlSiteDeployRelease}/${artifactId}</url>
+					<url>ftp://docs.wandrell.com/maven-site-fixer</url>
 				</site>
 			</distributionManagement>
 		</profile>
@@ -158,7 +158,7 @@
 				<site>
 					<id>site-development</id>
 					<name>Project Development Documentation Site</name>
-					<url>${urlSiteDeployDevelop}/${artifactId}</url>
+					<url>ftp://docs.wandrell.com/maven-site-fixer</url>
 				</site>
 			</distributionManagement>
 		</profile>
