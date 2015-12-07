@@ -19,7 +19,7 @@
 	</Appenders>
 
 	<Loggers>
-		<Logger name="${groupId}" level="debug" additivity="false">
+		<Logger name="com.wandrell" level="debug" additivity="false">
 			<AppenderRef ref="file" />
 		</Logger>
 
