@@ -23,11 +23,10 @@
  */
 package com.wandrell.velocity.tool.testing.test.unit.html5fix;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HTML5UpdateUtils;
-
-import junit.framework.Assert;
 
 /**
  * Unit tests for {@link HTML5UpdateUtils}.
