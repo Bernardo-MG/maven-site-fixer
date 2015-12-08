@@ -208,6 +208,7 @@
         <!-- Manifest data -->
         <manifest.name>com/wandrell/velocity/maven-site-fixer</manifest.name>
         <!-- Dependencies versions -->
+        <commons.collections.version>3.2.1</commons.collections.version>
         <doxia.decoration.version>1.6</doxia.decoration.version>
         <guava.version>18.0</guava.version>
         <jsoup.version>1.8.2</jsoup.version>
@@ -231,6 +232,12 @@
     <!-- ********************************************** -->
 
     <dependencies>
+        <dependency>
+            <!-- Commons Collections -->
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons.collections.version}</version>
+        </dependency>
         <dependency>
             <!-- Doxia Decoration Model -->
             <groupId>org.apache.maven.doxia</groupId>
