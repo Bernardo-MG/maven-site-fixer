@@ -62,5 +62,10 @@
                 Set a parent POM.
             </action>
         </release>
+        <release version="0.3.4" date="2016-3-9" description="Security fix">
+            <action dev="gmlewis" type="fix">
+                Corrected dependencies-related vulnerability.
+            </action>
+        </release>
 	</body>
 </document>
