@@ -63,7 +63,7 @@
             </action>
         </release>
         <release version="0.3.4" date="2016-3-9" description="Security fix">
-            <action dev="gmlewis" type="fix">
+            <action dev="Glenn Lewis" type="fix">
                 Corrected dependencies-related vulnerability.
             </action>
         </release>
