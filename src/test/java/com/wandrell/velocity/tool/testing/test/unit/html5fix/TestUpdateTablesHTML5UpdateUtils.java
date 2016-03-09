@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.wandrell.velocity.tool.testing.test.unit.html5fix;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HTML5UpdateUtils;
 import com.wandrell.velocity.tool.HTMLUtils;
-
-import junit.framework.Assert;
 
 /**
  * Unit tests for {@link HTMLUtils}.
