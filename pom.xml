@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.wandrell.maven</groupId>
         <artifactId>base-pom</artifactId>
-        <version>0.1.0</version>
+        <version>1.0.1</version>
     </parent>
 
     <!-- ********************************************** -->
@@ -20,7 +20,7 @@
 
     <groupId>com.wandrell.velocity</groupId>
     <artifactId>maven-site-fixer</artifactId>
-    <version>0.3.4</version>
+    <version>0.3.5</version>
     <packaging>jar</packaging>
 
     <name>Maven Site Fixer</name>
@@ -80,9 +80,9 @@
     <profiles>
         <profile>
             <!-- Profile for the Eclipse Maven plugin -->
-            <!-- Sets the POM so this plugin does not give the usual unregistered 
+            <!-- Sets the POM so this plugin does not give the usual unregistered
                 goals errors -->
-            <!-- It will be activated automatically on Eclipse if this has the m2e 
+            <!-- It will be activated automatically on Eclipse if this has the m2e
                 plugin, by detecting the version property -->
             <id>eclipse-maven</id>
             <activation>
@@ -96,7 +96,7 @@
                         <plugin>
                             <!-- m2e lifecycle mapping -->
                             <!-- This is used to configure the Maven plugin for Eclipse. -->
-                            <!-- Among other things, it allows registering goals, 
+                            <!-- Among other things, it allows registering goals,
                                 which Eclipse would otherwise reject. -->
                             <!-- It has no real effect on Maven. -->
                             <groupId>org.eclipse.m2e</groupId>
@@ -107,20 +107,20 @@
                                     <pluginExecutions>
                                         <pluginExecution>
                                             <!-- jacoco plugin configuration -->
-                                            <!-- Fixes the errors with Eclipse not 
+                                            <!-- Fixes the errors with Eclipse not
                                                 recognizing the plugin configuration -->
                                             <pluginExecutionFilter>
                                                 <groupId>org.jacoco</groupId>
                                                 <artifactId>jacoco-maven-plugin</artifactId>
                                                 <versionRange>[0.5,)</versionRange>
                                                 <goals>
-                                                    <!-- The 'prepare-agent' goal 
+                                                    <!-- The 'prepare-agent' goal
                                                         is registered to m2e. -->
                                                     <goal>prepare-agent</goal>
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <!-- As m2e doesn't know what to 
+                                                <!-- As m2e doesn't know what to
                                                     do with jacoco, it is ignored to avoid error warnings. -->
                                                 <ignore />
                                             </action>
@@ -215,20 +215,20 @@
         <manifest.name>com/wandrell/velocity/maven-site-fixer</manifest.name>
         <!-- Dependencies versions -->
         <commons.collections.version>3.2.2</commons.collections.version>
-        <doxia.decoration.version>1.6</doxia.decoration.version>
-        <guava.version>18.0</guava.version>
-        <jsoup.version>1.8.2</jsoup.version>
-        <log4j.version>2.4.1</log4j.version>
+        <doxia.decoration.version>1.7.1</doxia.decoration.version>
+        <guava.version>19.0</guava.version>
+        <jsoup.version>1.9.2</jsoup.version>
+        <log4j.version>2.5</log4j.version>
         <maven.project.version>2.2.1</maven.project.version>
         <mockito.version>1.10.19</mockito.version>
-        <plexus.version>3.0.22</plexus.version>
-        <testng.version>6.9.8</testng.version>
+        <plexus.version>3.0.24</plexus.version>
+        <testng.version>6.9.10</testng.version>
         <velocity.tools.version>2.0</velocity.tools.version>
         <!-- Plugins versions -->
-        <plugin.changes.version>2.11</plugin.changes.version>
+        <plugin.changes.version>2.12</plugin.changes.version>
         <plugin.site.velocity.version>1.7</plugin.site.velocity.version>
         <!-- Maven Site -->
-        <site.skin.version>0.2.1</site.skin.version>
+        <site.skin.version>0.2.4</site.skin.version>
         <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
         <mavenURL>http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer</mavenURL>
     </properties>
@@ -414,7 +414,7 @@
             </plugin>
             <plugin>
                 <!-- PMD -->
-                <!-- Checks that the code complies with a series of code quality 
+                <!-- Checks that the code complies with a series of code quality
                     rules -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
