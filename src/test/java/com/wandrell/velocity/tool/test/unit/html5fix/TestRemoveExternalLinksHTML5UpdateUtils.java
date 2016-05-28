@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.testing.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5fix;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -34,13 +34,16 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Points on anchors are correctly removed.</li>
+ * <li>When removing the externalLink class from links, if no more classes are
+ * left then the class attribute is removed too.</li>
+ * <li>When removing the externalLink class from links, if more classes are left
+ * then they are untouched.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils
  */
-public final class TestFixInternalLinksHTML5UpdateUtils {
+public final class TestRemoveExternalLinksHTML5UpdateUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -50,24 +53,44 @@ public final class TestFixInternalLinksHTML5UpdateUtils {
     /**
      * Default constructor.
      */
-    public TestFixInternalLinksHTML5UpdateUtils() {
+    public TestRemoveExternalLinksHTML5UpdateUtils() {
         super();
     }
 
     /**
-     * Tests that points on anchors are correctly removed.
+     * Tests that when removing the externalLink class from links, if more
+     * classes are left then they are untouched.
      */
     @Test
-    public final void testFixInternalLinks() {
+    public final void testCleanExternalLinks_MultipleClasses() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
+        html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
 
-        result = util.fixInternalLinks(html);
+        result = util.removeExternalLinks(html);
 
-        htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
+        htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
+
+        Assert.assertEquals(htmlExpected, result);
+    }
+
+    /**
+     * Tests that when removing the externalLink class from links, if no more
+     * classes are left then the class attribute is removed too.
+     */
+    @Test
+    public final void testCleanExternalLinks_SingleClass() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
+
+        result = util.removeExternalLinks(html);
+
+        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
 
         Assert.assertEquals(htmlExpected, result);
     }

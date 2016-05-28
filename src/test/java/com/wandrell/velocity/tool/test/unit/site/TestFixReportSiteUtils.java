@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.testing.test.unit.site;
+package com.wandrell.velocity.tool.test.unit.site;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

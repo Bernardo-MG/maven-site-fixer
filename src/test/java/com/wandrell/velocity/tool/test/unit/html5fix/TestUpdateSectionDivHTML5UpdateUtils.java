@@ -22,26 +22,26 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.testing.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5fix;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HTML5UpdateUtils;
-import com.wandrell.velocity.tool.HTMLUtils;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link HTML5UpdateUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Outdated tables are correctly cleaned up.</li>
+ * <li>When trying to fix the outdated section divisions these are updated
+ * correctly.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see HTML5UpdateUtils
  */
-public class TestUpdateTablesHTML5UpdateUtils {
+public final class TestUpdateSectionDivHTML5UpdateUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -51,24 +51,25 @@ public class TestUpdateTablesHTML5UpdateUtils {
     /**
      * Default constructor.
      */
-    public TestUpdateTablesHTML5UpdateUtils() {
+    public TestUpdateSectionDivHTML5UpdateUtils() {
         super();
     }
 
     /**
-     * Tests that outdated tables are correctly cleaned up.
+     * Tests that when trying to fix the outdated section divisions these are
+     * updated correctly.
      */
     @Test
-    public final void testCleanTables() {
+    public final void testFixCodeBlock() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<table border=\"0\" class=\"bodyTable\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        html = "<div class=\"section\"><p>Some text</p></div>";
 
-        result = util.updateTables(html);
+        result = util.updateSectionDiv(html);
 
-        htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        htmlExpected = "<section>\n <p>Some text</p>\n</section>";
 
         Assert.assertEquals(htmlExpected, result);
     }
