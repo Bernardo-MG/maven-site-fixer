@@ -75,5 +75,11 @@
                 Updated scripts.
             </action>
         </release>
+        <release version="0.3.6" date="2016-5-28" description="Fixes">
+            <action dev="bmg" type="update">
+                Fixed a bug which caused an exception when fixing headings
+                on a body without headings.
+            </action>
+        </release>
 	</body>
 </document>
