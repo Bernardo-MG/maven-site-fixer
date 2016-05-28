@@ -81,12 +81,14 @@ public final class SkinConfigUtils extends SafeConfig {
      * That is, if the default value of skinConfig is kept.
      */
     private static final String SKIN_KEY   = "skinConfig";
+
     /**
      * Identifier for the current file.
      * <p>
      * This is a slug created from the current file's name.
      */
     private String              fileId;
+
     /**
      * Page configuration node.
      * <p>
@@ -94,12 +96,14 @@ public final class SkinConfigUtils extends SafeConfig {
      * located in the {@code <skinConfig>} node, in the site.xml file.
      */
     private Xpp3Dom             pageConfig = new Xpp3Dom("");
+
     /**
      * Identifier for the project.
      * <p>
      * This is a slug created from the artifact id contained in the POM file.
      */
     private String              projectId;
+
     /**
      * Skin configuration node.
      * <p>
