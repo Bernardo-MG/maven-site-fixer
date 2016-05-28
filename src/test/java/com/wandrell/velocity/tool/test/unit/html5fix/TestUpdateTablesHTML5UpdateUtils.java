@@ -70,7 +70,7 @@ public class TestUpdateTablesHTML5UpdateUtils {
 
         htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

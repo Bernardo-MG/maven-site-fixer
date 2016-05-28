@@ -69,7 +69,7 @@ public final class TestFixInternalLinksHTML5UpdateUtils {
 
         htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

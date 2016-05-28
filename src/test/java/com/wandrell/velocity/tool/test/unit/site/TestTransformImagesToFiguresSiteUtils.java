@@ -76,7 +76,7 @@ public final class TestTransformImagesToFiguresSiteUtils {
 
         htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
@@ -95,7 +95,7 @@ public final class TestTransformImagesToFiguresSiteUtils {
 
         htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
@@ -113,7 +113,7 @@ public final class TestTransformImagesToFiguresSiteUtils {
 
         htmlExpected = "<header>\n <img src=\"imgs/header.png\" alt=\"Header image\">\n</header>\n<section></section>\n<footer>\n <img src=\"imgs/footer.png\" alt=\"Footer image\">\n</footer>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

@@ -71,7 +71,7 @@ public final class TestUpdateCodeSectionsHTML5UpdateUtils {
 
         htmlExpected = "<pre><code>Some code</code></pre>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

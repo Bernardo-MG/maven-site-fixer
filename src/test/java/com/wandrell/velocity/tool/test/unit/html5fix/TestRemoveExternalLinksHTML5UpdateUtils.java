@@ -73,7 +73,7 @@ public final class TestRemoveExternalLinksHTML5UpdateUtils {
 
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
@@ -92,7 +92,7 @@ public final class TestRemoveExternalLinksHTML5UpdateUtils {
 
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

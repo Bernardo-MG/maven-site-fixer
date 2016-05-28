@@ -72,7 +72,7 @@ public final class TestFixHeadingIdsSiteUtils {
 
         htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
@@ -90,7 +90,7 @@ public final class TestFixHeadingIdsSiteUtils {
 
         htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>\n<h3 id=\"comwandrell\">com.wandrell</h3>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
@@ -108,7 +108,7 @@ public final class TestFixHeadingIdsSiteUtils {
 
         htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

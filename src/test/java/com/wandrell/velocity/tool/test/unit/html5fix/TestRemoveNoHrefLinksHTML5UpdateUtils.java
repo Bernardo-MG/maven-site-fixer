@@ -69,7 +69,7 @@ public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

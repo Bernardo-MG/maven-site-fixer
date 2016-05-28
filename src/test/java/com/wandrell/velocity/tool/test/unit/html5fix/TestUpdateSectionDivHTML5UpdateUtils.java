@@ -71,7 +71,7 @@ public final class TestUpdateSectionDivHTML5UpdateUtils {
 
         htmlExpected = "<section>\n <p>Some text</p>\n</section>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }
