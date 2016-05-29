@@ -341,9 +341,9 @@ public final class SkinConfigUtils extends SafeConfig {
 
     @Override
     protected final void configure(final ValueParser values) {
-        final Object velocityContext;
-        final ToolContext ctxt;
-        final Object decorationObj;
+        final Object velocityContext; // Value from the parser
+        final ToolContext ctxt;       // Casted context
+        final Object decorationObj;   // Value of the decoration key
 
         checkNotNull(values, "Received a null pointer as values");
 
