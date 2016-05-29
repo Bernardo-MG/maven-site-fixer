@@ -169,35 +169,35 @@ public class SiteUtils {
 
         body = Jsoup.parse(html).body();
 
-        if (report.equals("plugins")) {
+        if ("plugins".equals(report)) {
             fixReportPlugins(body);
-        } else if (report.equals("plugin-management")) {
+        } else if ("plugin-management".equals(report)) {
             fixReportPluginManagement(body);
-        } else if (report.equals("changes-report")) {
+        } else if ("changes-report".equals(report)) {
             fixReportChanges(body);
-        } else if (report.equals("surefire-report")) {
+        } else if ("surefire-report".equals(report)) {
             fixReportSurefire(body);
-        } else if (report.equals("failsafe-report")) {
+        } else if ("failsafe-report".equals(report)) {
             fixReportFailsafe(body);
-        } else if (report.equals("checkstyle")) {
+        } else if ("checkstyle".equals(report)) {
             fixReportCheckstyle(body);
-        } else if (report.equals("findbugs")) {
+        } else if ("findbugs".equals(report)) {
             fixReportFindbugs(body);
-        } else if (report.equals("pmd")) {
+        } else if ("pmd".equals(report)) {
             fixReportPmd(body);
-        } else if (report.equals("cpd")) {
+        } else if ("cpd".equals(report)) {
             fixReportCpd(body);
-        } else if (report.equals("jdepend-report")) {
+        } else if ("jdepend-report".equals(report)) {
             fixReportJdepend(body);
-        } else if (report.equals("taglist")) {
+        } else if ("taglist".equals(report)) {
             fixReportTaglist(body);
-        } else if (report.equals("dependencies")) {
+        } else if ("dependencies".equals(report)) {
             fixReportDependencies(body);
-        } else if (report.equals("project-summary")) {
+        } else if ("project-summary".equals(report)) {
             fixReportProjectSummary(body);
-        } else if (report.equals("license")) {
+        } else if ("license".equals(report)) {
             fixReportLicense(body);
-        } else if (report.equals("team-list")) {
+        } else if ("team-list".equals(report)) {
             fixReportTeamList(body);
         }
 
