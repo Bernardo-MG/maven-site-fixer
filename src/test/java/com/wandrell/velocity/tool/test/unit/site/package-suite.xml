@@ -6,7 +6,7 @@
 	<test name="all" verbose="2">
 		<packages>
 			<package
-				name="com.wandrell.velocity.tool.testing.test.unit.site" />
+				name="com.wandrell.velocity.tool.test.unit.site" />
 		</packages>
 	</test>
 

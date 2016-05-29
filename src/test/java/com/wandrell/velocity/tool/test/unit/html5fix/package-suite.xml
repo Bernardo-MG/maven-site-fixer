@@ -6,7 +6,7 @@
 	<test name="all" verbose="2">
 		<packages>
 			<package
-				name="com.wandrell.velocity.tool.testing.test.unit.html5fix" />
+				name="com.wandrell.velocity.tool.test.unit.html5fix" />
 		</packages>
 	</test>
 
