@@ -41,6 +41,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * <li>Transforming images to figures works correctly when an {@code alt}
  * attribute is not present.</li>
  * <li>Images out of a content element are ignored.</li>
+ * <li>HTML with no images is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -94,6 +95,24 @@ public final class TestTransformImagesToFiguresSiteUtils {
         result = util.transformImagesToFigures(html);
 
         htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no images is ignored.
+     */
+    @Test
+    public final void testNoImages_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.transformImagesToFigures(html);
+
+        htmlExpected = "<p>Some text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

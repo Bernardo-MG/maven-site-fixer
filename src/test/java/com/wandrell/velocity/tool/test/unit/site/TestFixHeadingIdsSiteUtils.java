@@ -38,6 +38,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * <li>The id is correctly added to headings with points.</li>
  * <li>The id is correctly added to headings with spaces.</li>
  * <li>The id is correctly fixed.</li>
+ * <li>HTML with no headings is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -58,10 +59,28 @@ public final class TestFixHeadingIdsSiteUtils {
     }
 
     /**
+     * Tests that HTML with no headings is ignored.
+     */
+    @Test
+    public final void testNoHeadings_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.fixHeadingIds(html);
+
+        htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
      * Tests that the id is correctly fixed.
      */
     @Test
-    public final void testTextWithId_CorrectId() {
+    public final void testWithId_CorrectId() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -79,7 +98,7 @@ public final class TestFixHeadingIdsSiteUtils {
      * Tests that the id is correctly added to headings with points.
      */
     @Test
-    public final void testTextWithPoints_CorrectId() {
+    public final void testWithPoints_CorrectId() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -97,7 +116,7 @@ public final class TestFixHeadingIdsSiteUtils {
      * Tests that the id is correctly added to headings with spaces.
      */
     @Test
-    public final void testTextWithSpaces_CorrectId() {
+    public final void testWithSpaces_CorrectId() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

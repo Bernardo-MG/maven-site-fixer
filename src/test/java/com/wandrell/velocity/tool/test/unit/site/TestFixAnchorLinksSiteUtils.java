@@ -37,7 +37,8 @@ import com.wandrell.velocity.tool.SiteUtils;
  * <ol>
  * <li>An external link is left untouched.</li>
  * <li>An internal link is formatted.</li>
- * <li>An empty string causes no errors.</li>
+ * <li>An empty link is left untouched.</li>
+ * <li>HTML with no links is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -58,11 +59,20 @@ public final class TestFixAnchorLinksSiteUtils {
     }
 
     /**
-     * Tests that an empty string causes no errors.
+     * Tests that an empty link is left untouched.
      */
     @Test
-    public final void testEmpty_NoError() {
-        util.fixAnchorLinks("");
+    public final void testEmptyLink_NotChanged() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<a href=\"\">A link</a>";
+        htmlExpected = "<a href=\"\">A link</a>";
+
+        result = util.fixAnchorLinks(html);
+
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
@@ -95,6 +105,24 @@ public final class TestFixAnchorLinksSiteUtils {
         htmlExpected = "<a href=\"#aninternallink\">A link</a>";
 
         result = util.fixAnchorLinks(html);
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no links is ignored.
+     */
+    @Test
+    public final void testNoAnchors_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.fixAnchorLinks(html);
+
+        htmlExpected = "<p>Some text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

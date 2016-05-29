@@ -37,6 +37,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * Checks the following cases:
  * <ol>
  * <li>Tables are transformed correctly.</li>
+ * <li>HTML with no tables is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -54,6 +55,24 @@ public final class TestTransformTablesSiteUtils {
      */
     public TestTransformTablesSiteUtils() {
         super();
+    }
+
+    /**
+     * Tests that HTML with no tables is ignored.
+     */
+    @Test
+    public final void testNoTable_Ignores() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.transformTables(html);
+
+        htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
