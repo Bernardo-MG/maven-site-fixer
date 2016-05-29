@@ -38,6 +38,7 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * left then the class attribute is removed too.</li>
  * <li>When removing the externalLink class from links, if more classes are left
  * then they are untouched.</li>
+ * <li>HTML with no external links is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -72,6 +73,24 @@ public final class TestRemoveExternalLinksHTML5UpdateUtils {
         result = util.removeExternalLinks(html);
 
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no external links is ignored.
+     */
+    @Test
+    public final void testNoExternalLinks_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.removeExternalLinks(html);
+
+        htmlExpected = "<p>Some text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

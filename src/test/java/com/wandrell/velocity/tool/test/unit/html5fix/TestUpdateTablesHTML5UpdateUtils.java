@@ -36,6 +36,7 @@ import com.wandrell.velocity.tool.HTMLUtils;
  * Checks the following cases:
  * <ol>
  * <li>Outdated tables are correctly cleaned up.</li>
+ * <li>HTML with no tables is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -53,6 +54,24 @@ public class TestUpdateTablesHTML5UpdateUtils {
      */
     public TestUpdateTablesHTML5UpdateUtils() {
         super();
+    }
+
+    /**
+     * Tests that HTML with no tables is ignored.
+     */
+    @Test
+    public final void testNoTables_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.updateTables(html);
+
+        htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**

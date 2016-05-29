@@ -35,6 +35,7 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * Checks the following cases:
  * <ol>
  * <li>Points on anchors are correctly removed.</li>
+ * <li>HTML with no anchors is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -68,6 +69,24 @@ public final class TestFixInternalLinksHTML5UpdateUtils {
         result = util.fixInternalLinks(html);
 
         htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no anchors is ignored.
+     */
+    @Test
+    public final void testNoAnchors_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.fixInternalLinks(html);
+
+        htmlExpected = "<p>Some text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

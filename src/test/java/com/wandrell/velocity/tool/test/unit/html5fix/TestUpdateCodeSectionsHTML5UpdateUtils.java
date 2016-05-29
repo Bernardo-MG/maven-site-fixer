@@ -36,6 +36,7 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * <ol>
  * <li>When trying to fix the outdated code blocks these are updated correctly.
  * </li>
+ * <li>HTML with no code sections is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -53,6 +54,24 @@ public final class TestUpdateCodeSectionsHTML5UpdateUtils {
      */
     public TestUpdateCodeSectionsHTML5UpdateUtils() {
         super();
+    }
+
+    /**
+     * Tests that HTML with no code sections is ignored.
+     */
+    @Test
+    public final void testNoCode_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.updateCodeSections(html);
+
+        htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**

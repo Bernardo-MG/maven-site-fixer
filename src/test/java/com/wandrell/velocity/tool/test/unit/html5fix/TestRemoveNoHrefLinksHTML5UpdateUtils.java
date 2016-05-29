@@ -35,6 +35,7 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * Checks the following cases:
  * <ol>
  * <li>Links without the {@code href} attribute are removed.</li>
+ * <li>HTML with no links is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -68,6 +69,24 @@ public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
         result = util.removeNoHrefLinks(html);
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no links is ignored.
+     */
+    @Test
+    public final void testNoAnchors_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.removeNoHrefLinks(html);
+
+        htmlExpected = "<p>Some text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }
