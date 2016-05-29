@@ -122,12 +122,12 @@ public class SiteUtils {
         // Table rows with <th> tags in a <tbody>
         headings = body.select("h1,h2,h3,h4,h5,h6");
         for (final Element heading : headings) {
-            if (!heading.hasAttr("id")) {
-                heading.attr("id",
-                        heading.text().toLowerCase().replaceAll("[ _.]", ""));
-            } else {
+            if (heading.hasAttr("id")) {
                 heading.attr("id", heading.attr("id").toLowerCase()
                         .replaceAll("[ _.]", ""));
+            } else {
+                heading.attr("id",
+                        heading.text().toLowerCase().replaceAll("[ _.]", ""));
             }
         }
 
