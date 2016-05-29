@@ -75,7 +75,7 @@
                 Updated scripts.
             </action>
         </release>
-        <release version="0.4.0" date="2016-5-28" description="Removed splitting methods, fixed bugs">
+        <release version="0.4.0" date="2016-5-29" description="Removed splitting methods, fixed bugs">
             <action dev="bmg" type="update">
                 Removed the HTML splitting methods.
             </action>
