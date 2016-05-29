@@ -65,7 +65,7 @@ public final class TestTransformImagesToFiguresSiteUtils {
      * {@code alt} attribute is not present.
      */
     @Test
-    public final void testTransformImagesToFigures_Caption() {
+    public final void testCaption_Transforms() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -84,7 +84,7 @@ public final class TestTransformImagesToFiguresSiteUtils {
      * {@code alt} attribute is present.
      */
     @Test
-    public final void testTransformImagesToFigures_NoCaption() {
+    public final void testNoCaption_Transforms() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -102,7 +102,7 @@ public final class TestTransformImagesToFiguresSiteUtils {
      * Tests that images out of a content element are ignored.
      */
     @Test
-    public final void testTransformImagesToFigures_OutOfContent() {
+    public final void testOutOfContent_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

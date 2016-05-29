@@ -63,7 +63,7 @@ public final class TestFixReportSiteUtils {
      * Tests that the changes report is correctly fixed.
      */
     @Test
-    public final void testFixReport_Changes() {
+    public final void testChangesReport() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -81,7 +81,7 @@ public final class TestFixReportSiteUtils {
      * Tests that the checkstyle report is correctly fixed.
      */
     @Test
-    public final void testFixReport_Checkstyle() {
+    public final void testCheckstyleReport() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -99,7 +99,7 @@ public final class TestFixReportSiteUtils {
      * Tests that the plugin management report is correctly fixed.
      */
     @Test
-    public final void testFixReport_PluginManagement() {
+    public final void testPluginManagementReport() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -117,7 +117,7 @@ public final class TestFixReportSiteUtils {
      * Tests that the plugins report is correctly fixed.
      */
     @Test
-    public final void testFixReport_Plugins() {
+    public final void testPluginsReport() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -135,7 +135,7 @@ public final class TestFixReportSiteUtils {
      * Tests that the surefire report is correctly fixed.
      */
     @Test
-    public final void testFixReport_Surefire() {
+    public final void testSurefireReport() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

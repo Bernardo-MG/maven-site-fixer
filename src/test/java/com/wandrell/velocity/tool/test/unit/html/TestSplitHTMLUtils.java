@@ -87,7 +87,7 @@ public final class TestSplitHTMLUtils {
      * Tests that splitting an HTML tree of height 2 works as expected.
      */
     @Test
-    public final void testSplit_Deep() {
+    public final void testSplitDeep_Splits() {
         final String html;          // HTML code to split
         final Collection<String> result; // Split HTML
         final Iterator<String> itr; // Split HTML iterator
@@ -110,7 +110,7 @@ public final class TestSplitHTMLUtils {
      * expected.
      */
     @Test
-    public final void testSplit_Deep_Multiple() {
+    public final void testSplitDeepMultiple_Splits() {
         final String html;          // HTML code to split
         final Collection<String> result; // Split HTML
         final Iterator<String> itr; // Split HTML iterator
@@ -134,7 +134,7 @@ public final class TestSplitHTMLUtils {
      * works as expected.
      */
     @Test
-    public final void testSplit_Tail() {
+    public final void testSplitTail_Splits() {
         final String html;          // HTML code to split
         final Collection<String> result; // Split HTML
         final Iterator<String> itr; // Split HTML iterator

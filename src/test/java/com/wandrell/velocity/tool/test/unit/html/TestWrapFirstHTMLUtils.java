@@ -61,7 +61,7 @@ public final class TestWrapFirstHTMLUtils {
      * Tests that wrapping an element works as expected.
      */
     @Test
-    public final void testWrap() {
+    public final void testHeadingWithHeader_Wraps() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -79,7 +79,7 @@ public final class TestWrapFirstHTMLUtils {
      * Test that wrapping a not existing element does nothing.
      */
     @Test
-    public final void testWrap_NoElement() {
+    public final void testNoElement_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -98,7 +98,7 @@ public final class TestWrapFirstHTMLUtils {
      * closes the wrap.
      */
     @Test
-    public final void testWrap_NotClosed() {
+    public final void testNotClosed_Closed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

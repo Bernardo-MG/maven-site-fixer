@@ -65,9 +65,9 @@ public final class TestSplitOnStartHTMLUtils {
      */
     @Test
     public final void testSplit() {
-        final String html;          // HTML code to split
+        final String html;               // HTML code to split
         final Collection<String> result; // Split HTML
-        final Iterator<String> itr; // Split HTML iterator
+        final Iterator<String> itr;      // Split HTML iterator
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
@@ -86,10 +86,10 @@ public final class TestSplitOnStartHTMLUtils {
      * Tests that splitting an HTML tree of height 2 works as expected.
      */
     @Test
-    public final void testSplit_Deep() {
-        final String html;          // HTML code to split
+    public final void testSplitDeep_Splits() {
+        final String html;               // HTML code to split
         final Collection<String> result; // Split HTML
-        final Iterator<String> itr; // Split HTML iterator
+        final Iterator<String> itr;      // Split HTML iterator
 
         html = "<body><h1>A heading</h1><p>Some text</p><div><h1>Second heading</h1><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></div></body>";
 
@@ -111,10 +111,10 @@ public final class TestSplitOnStartHTMLUtils {
      * works as expected.
      */
     @Test
-    public final void testSplit_Tail() {
-        final String html;          // HTML code to split
+    public final void testSplitTail_Splits() {
+        final String html;               // HTML code to split
         final Collection<String> result; // Split HTML
-        final Iterator<String> itr; // Split HTML iterator
+        final Iterator<String> itr;      // Split HTML iterator
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body><h1>Extra heading</h1>";
 

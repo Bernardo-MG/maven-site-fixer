@@ -62,7 +62,7 @@ public final class TestRemoveExternalLinksHTML5UpdateUtils {
      * classes are left then they are untouched.
      */
     @Test
-    public final void testCleanExternalLinks_MultipleClasses() {
+    public final void testMultipleClasses() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -81,7 +81,7 @@ public final class TestRemoveExternalLinksHTML5UpdateUtils {
      * classes are left then the class attribute is removed too.
      */
     @Test
-    public final void testCleanExternalLinks_SingleClass() {
+    public final void testSingleClass() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

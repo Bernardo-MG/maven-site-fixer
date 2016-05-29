@@ -59,7 +59,7 @@ public class TestUpdateTablesHTML5UpdateUtils {
      * Tests that outdated tables are correctly cleaned up.
      */
     @Test
-    public final void testCleanTables() {
+    public final void testOutdatedTable_Updated() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

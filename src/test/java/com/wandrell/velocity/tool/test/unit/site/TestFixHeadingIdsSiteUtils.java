@@ -61,7 +61,7 @@ public final class TestFixHeadingIdsSiteUtils {
      * Tests that the id is correctly fixed.
      */
     @Test
-    public final void testFixHeadingIds_HasId() {
+    public final void testTextWithId_CorrectId() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -79,7 +79,7 @@ public final class TestFixHeadingIdsSiteUtils {
      * Tests that the id is correctly added to headings with points.
      */
     @Test
-    public final void testFixHeadingIds_Points() {
+    public final void testTextWithPoints_CorrectId() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -97,7 +97,7 @@ public final class TestFixHeadingIdsSiteUtils {
      * Tests that the id is correctly added to headings with spaces.
      */
     @Test
-    public final void testFixHeadingIds_Spaces() {
+    public final void testTextWithSpaces_CorrectId() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

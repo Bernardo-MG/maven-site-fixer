@@ -58,7 +58,7 @@ public final class TestFixInternalLinksHTML5UpdateUtils {
      * Tests that points on anchors are correctly removed.
      */
     @Test
-    public final void testFixInternalLinks() {
+    public final void testInternalLink_Points_Fixed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

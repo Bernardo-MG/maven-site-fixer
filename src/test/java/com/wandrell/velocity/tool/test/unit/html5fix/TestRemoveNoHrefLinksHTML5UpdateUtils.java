@@ -58,7 +58,7 @@ public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
      * Tests links without the {@code href} attribute are removed.
      */
     @Test
-    public final void testRemoveHeadingNoHrefLinks() {
+    public final void testHeading_NoHref_Removed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

@@ -60,7 +60,7 @@ public final class TestUpdateSectionDivHTML5UpdateUtils {
      * updated correctly.
      */
     @Test
-    public final void testFixCodeBlock() {
+    public final void testOutdatedSection_Updated() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
