@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.testing.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5fix;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -34,13 +34,15 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>Links without the {@code href} attribute are removed.</li>
+ * <li>When trying to fix the outdated code blocks these are updated correctly.
+ * </li>
+ * <li>HTML with no code sections is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils
  */
-public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
+public final class TestUpdateCodeSectionsHTML5UpdateUtils {
 
     /**
      * Instance of the utils class being tested.
@@ -50,26 +52,45 @@ public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
     /**
      * Default constructor.
      */
-    public TestRemoveNoHrefLinksHTML5UpdateUtils() {
+    public TestUpdateCodeSectionsHTML5UpdateUtils() {
         super();
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that HTML with no code sections is ignored.
      */
     @Test
-    public final void testRemoveHeadingNoHrefLinks() {
+    public final void testNoCode_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1><a>a_heading</a>A heading</h1><h3><a>a_heading</a>A heading</h3><a></a>";
+        html = "<p>Some text</p>";
 
-        result = util.removeNoHrefLinks(html);
+        result = util.updateCodeSections(html);
 
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        htmlExpected = "<p>Some text</p>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that when trying to fix the outdated code blocks these are updated
+     * correctly.
+     */
+    @Test
+    public final void testOutdatedCodeSections_Updated() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<div class=\"source\"><div class=\"source\"><pre>Some code</pre></div></div>";
+
+        result = util.updateCodeSections(html);
+
+        htmlExpected = "<pre><code>Some code</code></pre>";
+
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

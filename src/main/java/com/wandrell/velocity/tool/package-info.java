@@ -48,4 +48,5 @@
  * the {@code <body>} tag will be kept, unless that tag is missing, in which
  * case the full HTML code will be used.
  */
+
 package com.wandrell.velocity.tool;

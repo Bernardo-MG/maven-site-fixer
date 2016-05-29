@@ -22,93 +22,94 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.testing.test.unit.site;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HTMLUtils;
-import com.wandrell.velocity.tool.SiteUtils;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code fixHeadingIds} method.
+ * Unit tests for {@link HTMLUtils}.
  * <p>
  * Checks the following cases:
  * <ol>
- * <li>The id is correctly added to headings with points.</li>
- * <li>The id is correctly added to headings with spaces.</li>
- * <li>The id is correctly fixed.</li>
+ * <li>Wrapping an element works as expected.</li>
+ * <li>Wrapping an element, without indicating the closing tag, closes the wrap.
+ * </li>
+ * <li>Wrapping a not existing element does nothing.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestFixHeadingIdsSiteUtils {
+public final class TestWrapFirstHTMLUtils {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final HTMLUtils util = new HTMLUtils();
 
     /**
      * Default constructor.
      */
-    public TestFixHeadingIdsSiteUtils() {
+    public TestWrapFirstHTMLUtils() {
         super();
     }
 
     /**
-     * Tests that the id is correctly fixed.
+     * Tests that wrapping an element works as expected.
      */
     @Test
-    public final void testFixHeadingIds_HasId() {
+    public final void testHeadingWithHeader_Wraps() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1 id=\"a.heading\">A heading</h1><h3 id=\"another.heading\">Another heading</h3>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.fixHeadingIds(html);
+        result = util.wrapFirst(html, "h1", "<header></header>");
 
-        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the id is correctly added to headings with points.
+     * Test that wrapping a not existing element does nothing.
      */
     @Test
-    public final void testFixHeadingIds_Points() {
+    public final void testNoElement_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1>com.wandrell</h1><h3>com.wandrell</h3>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.fixHeadingIds(html);
+        result = util.wrapFirst(html, "h3", "<header></header>");
 
-        htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>\n<h3 id=\"comwandrell\">com.wandrell</h3>";
+        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the id is correctly added to headings with spaces.
+     * Tests that wrapping an element, without indicating the closing tag,
+     * closes the wrap.
      */
     @Test
-    public final void testFixHeadingIds_Spaces() {
+    public final void testNotClosed_Closed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1>A heading</h1><h3>Another heading</h3>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.fixHeadingIds(html);
+        result = util.wrapFirst(html, "h1", "<header>");
 
-        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

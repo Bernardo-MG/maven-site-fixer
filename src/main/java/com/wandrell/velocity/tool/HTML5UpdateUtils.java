@@ -449,6 +449,7 @@ public class HTML5UpdateUtils {
         tableHeadRows = body.select("table > tbody > tr:has(th)");
         for (final Element row : tableHeadRows) {
             // Gets the row's table
+            // The selector ensured the row is inside a tbody
             table = row.parent().parent();
 
             // Removes the row from its original position

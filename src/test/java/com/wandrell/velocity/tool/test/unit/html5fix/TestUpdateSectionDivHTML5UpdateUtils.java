@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.testing.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5fix;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -36,6 +36,7 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * <ol>
  * <li>When trying to fix the outdated section divisions these are updated
  * correctly.</li>
+ * <li>HTML with no outdated sections is ignored.</li>
  * </ol>
  * 
  * @author Bernardo Martínez Garrido
@@ -56,11 +57,29 @@ public final class TestUpdateSectionDivHTML5UpdateUtils {
     }
 
     /**
+     * Tests that HTML with no outdated sections is ignored.
+     */
+    @Test
+    public final void testNoSections_Ignored() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.updateSectionDiv(html);
+
+        htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
      * Tests that when trying to fix the outdated section divisions these are
      * updated correctly.
      */
     @Test
-    public final void testFixCodeBlock() {
+    public final void testOutdatedSection_Updated() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -71,7 +90,7 @@ public final class TestUpdateSectionDivHTML5UpdateUtils {
 
         htmlExpected = "<section>\n <p>Some text</p>\n</section>";
 
-        Assert.assertEquals(htmlExpected, result);
+        Assert.assertEquals(result, htmlExpected);
     }
 
 }

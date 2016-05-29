@@ -93,7 +93,7 @@ public class SiteUtils {
         for (final Element child : body.getElementsByTag("a")) {
             ref = child.attr("href");
 
-            if (ref.substring(0, 1).equals("#")) {
+            if ((!ref.isEmpty()) && (ref.substring(0, 1).equals("#"))) {
                 child.attr("href", ref.toLowerCase().replaceAll("[ _.]", ""));
             }
         }
@@ -122,12 +122,12 @@ public class SiteUtils {
         // Table rows with <th> tags in a <tbody>
         headings = body.select("h1,h2,h3,h4,h5,h6");
         for (final Element heading : headings) {
-            if (!heading.hasAttr("id")) {
-                heading.attr("id",
-                        heading.text().toLowerCase().replaceAll("[ _.]", ""));
-            } else {
+            if (heading.hasAttr("id")) {
                 heading.attr("id", heading.attr("id").toLowerCase()
                         .replaceAll("[ _.]", ""));
+            } else {
+                heading.attr("id",
+                        heading.text().toLowerCase().replaceAll("[ _.]", ""));
             }
         }
 
@@ -165,107 +165,40 @@ public class SiteUtils {
      * @return the fixed HTML report
      */
     public final String fixReport(final String html, final String report) {
-        final Element body;     // Body of the HTML code
-        final Element element;  // Additional edited element
-        final Collection<Element> elements;  // Additional edited elements
-        Element newElement;     // Additional element
-        Element newElementb;    // Additional element
-        String text;            // Text being edited
-        String[] texts;         // Texts being edited
+        final Element body; // Body of the HTML code
 
         body = Jsoup.parse(html).body();
 
-        if (report.equals("plugins")) {
-            body.prepend("<h1>Plugins Report</h1>");
-        } else if (report.equals("plugin-management")) {
-            for (final Element head : body.getElementsByTag("h2")) {
-                head.tagName("h1");
-            }
-
-            element = body.getElementsByTag("section").iterator().next();
-
-            for (final Element child : element.children()) {
-                child.remove();
-                body.appendChild(child);
-            }
-
-            element.remove();
-        } else if (report.equals("changes-report")) {
-            for (final Element head : body.getElementsByTag("h2")) {
-                head.tagName("h1");
-            }
-
-            elements = body.getElementsByTag("h3");
-            if (!elements.isEmpty()) {
-                elements.iterator().next().tagName("h2");
-            }
-
-            for (final Element heading : body.getElementsByTag("h3")) {
-                heading.parent().attr("id", heading.id());
-                heading.removeAttr("id");
-
-                text = heading.text();
-                texts = text.split("–", 2);
-                if (texts.length == 2) {
-                    newElement = new Element(Tag.valueOf("time"), "");
-                    newElement.text(texts[1].trim());
-
-                    newElementb = new Element(Tag.valueOf("small"), "");
-                    newElementb.append("(");
-                    newElementb.appendChild(newElement);
-                    newElementb.append(")");
-
-                    heading.text(texts[0]);
-                    heading.appendChild(newElementb);
-                }
-            }
-
-            element = body.getElementsByTag("section").iterator().next();
-            for (final Element child : element.children()) {
-                child.remove();
-                body.appendChild(child);
-            }
-
-            element.remove();
-        } else if (report.equals("surefire-report")) {
-            body.getElementsByTag("h2").iterator().next().tagName("h1");
-        } else if (report.equals("failsafe-report")) {
-            newElement = body.getElementsByTag("h2").iterator().next();
-            newElement.tagName("h1");
-            newElement.text("Failsafe Report");
-        } else if (report.equals("checkstyle")) {
-            body.getElementsByTag("h2").iterator().next().tagName("h1");
-            body.select("img[src=\"images/rss.png\"]").remove();
-        } else if (report.equals("findbugs")) {
-            body.getElementsByTag("h2").iterator().next().tagName("h1");
-        } else if (report.equals("pmd")) {
-            body.getElementsByTag("h2").iterator().next().tagName("h1");
-        } else if (report.equals("cpd")) {
-            body.getElementsByTag("h2").iterator().next().tagName("h1");
-        } else if (report.equals("jdepend-report")) {
-            body.getElementsByTag("h2").iterator().next().tagName("h1");
-        } else if (report.equals("taglist")) {
-            body.getElementsByTag("h2").iterator().next().tagName("h1");
-        } else if (report.equals("dependencies")) {
-            body.prepend("<h1>Dependencies Report</h1>");
-        } else if (report.equals("project-summary")) {
-            for (final Element head : body.getElementsByTag("h2")) {
-                head.tagName("h1");
-            }
-
-            for (final Element head : body.getElementsByTag("h3")) {
-                head.tagName("h2");
-            }
-        } else if (report.equals("license")) {
-            body.prepend("<h1>License</h1>");
-        } else if (report.equals("team-list")) {
-            for (final Element head : body.getElementsByTag("h2")) {
-                head.tagName("h1");
-            }
-
-            for (final Element head : body.getElementsByTag("h3")) {
-                head.tagName("h2");
-            }
+        if ("plugins".equals(report)) {
+            fixReportPlugins(body);
+        } else if ("plugin-management".equals(report)) {
+            fixReportPluginManagement(body);
+        } else if ("changes-report".equals(report)) {
+            fixReportChanges(body);
+        } else if ("surefire-report".equals(report)) {
+            fixReportSurefire(body);
+        } else if ("failsafe-report".equals(report)) {
+            fixReportFailsafe(body);
+        } else if ("checkstyle".equals(report)) {
+            fixReportCheckstyle(body);
+        } else if ("findbugs".equals(report)) {
+            fixReportFindbugs(body);
+        } else if ("pmd".equals(report)) {
+            fixReportPmd(body);
+        } else if ("cpd".equals(report)) {
+            fixReportCpd(body);
+        } else if ("jdepend-report".equals(report)) {
+            fixReportJdepend(body);
+        } else if ("taglist".equals(report)) {
+            fixReportTaglist(body);
+        } else if ("dependencies".equals(report)) {
+            fixReportDependencies(body);
+        } else if ("project-summary".equals(report)) {
+            fixReportProjectSummary(body);
+        } else if ("license".equals(report)) {
+            fixReportLicense(body);
+        } else if ("team-list".equals(report)) {
+            fixReportTeamList(body);
         }
 
         return body.html();
@@ -372,6 +305,234 @@ public class SiteUtils {
         }
 
         return body.html();
+    }
+
+    /**
+     * Fixes the changes report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportChanges(final Element body) {
+        final Collection<Element> headings;  // Headings in the body
+        final Element section;  // First section
+        Element timeElement;    // Element with the date
+        Element smallElement;   // Element with the small date
+        String text;            // Heading text
+        String[] texts;         // Split heading text
+
+        // Sets all the h2 to h1
+        for (final Element head : body.getElementsByTag("h2")) {
+            head.tagName("h1");
+        }
+
+        headings = body.getElementsByTag("h3");
+        if (!headings.isEmpty()) {
+            // Sets first h3 to h2
+            headings.iterator().next().tagName("h2");
+        }
+
+        // Takes again all the h3 elements, to avoid the new h2
+        for (final Element heading : body.getElementsByTag("h3")) {
+            // Moves the heading id to the parent
+            heading.parent().attr("id", heading.id());
+            heading.removeAttr("id");
+
+            // Transforms the date on the heading
+            text = heading.text();
+            texts = text.split("–", 2);
+            if (texts.length == 2) {
+                timeElement = new Element(Tag.valueOf("time"), "");
+                timeElement.text(texts[1].trim());
+
+                smallElement = new Element(Tag.valueOf("small"), "");
+                smallElement.append("(");
+                smallElement.appendChild(timeElement);
+                smallElement.append(")");
+
+                heading.text(texts[0]);
+                heading.appendChild(smallElement);
+            }
+        }
+
+        // Moves all the elements out of the sections
+        section = body.getElementsByTag("section").iterator().next();
+        for (final Element child : section.children()) {
+            child.remove();
+            body.appendChild(child);
+        }
+
+        section.remove();
+    }
+
+    /**
+     * Fixes the Checkstyle report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportCheckstyle(final Element body) {
+        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        body.select("img[src=\"images/rss.png\"]").remove();
+    }
+
+    /**
+     * Fixes the CPD report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportCpd(final Element body) {
+        body.getElementsByTag("h2").iterator().next().tagName("h1");
+    }
+
+    /**
+     * Fixes the dependencies report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportDependencies(final Element body) {
+        body.prepend("<h1>Dependencies Report</h1>");
+    }
+
+    /**
+     * Fixes the Failsafe report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportFailsafe(final Element body) {
+        final Element heading; // First h2 heading
+
+        heading = body.getElementsByTag("h2").iterator().next();
+        heading.tagName("h1");
+        heading.text("Failsafe Report");
+    }
+
+    /**
+     * Fixes the Findbugs report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportFindbugs(final Element body) {
+        body.getElementsByTag("h2").iterator().next().tagName("h1");
+    }
+
+    /**
+     * Fixes the JDepend report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportJdepend(final Element body) {
+        body.getElementsByTag("h2").iterator().next().tagName("h1");
+    }
+
+    /**
+     * Fixes the License report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportLicense(final Element body) {
+        body.prepend("<h1>License</h1>");
+    }
+
+    /**
+     * Fixes the plugin management report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportPluginManagement(final Element body) {
+        final Element section;  // Section element
+
+        for (final Element head : body.getElementsByTag("h2")) {
+            head.tagName("h1");
+        }
+
+        section = body.getElementsByTag("section").iterator().next();
+
+        for (final Element child : section.children()) {
+            child.remove();
+            body.appendChild(child);
+        }
+
+        section.remove();
+    }
+
+    /**
+     * Fixes the plugins report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportPlugins(final Element body) {
+        body.prepend("<h1>Plugins Report</h1>");
+    }
+
+    /**
+     * Fixes the PMD report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportPmd(final Element body) {
+        body.getElementsByTag("h2").iterator().next().tagName("h1");
+    }
+
+    /**
+     * Fixes the project summary report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportProjectSummary(final Element body) {
+        for (final Element head : body.getElementsByTag("h2")) {
+            head.tagName("h1");
+        }
+
+        for (final Element head : body.getElementsByTag("h3")) {
+            head.tagName("h2");
+        }
+    }
+
+    /**
+     * Fixes the Surefire report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportSurefire(final Element body) {
+        body.getElementsByTag("h2").iterator().next().tagName("h1");
+    }
+
+    /**
+     * Fixes the tag list report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportTaglist(final Element body) {
+        body.getElementsByTag("h2").iterator().next().tagName("h1");
+    }
+
+    /**
+     * Fixes the team list report page.
+     * 
+     * @param body
+     *            element for the body of the report page
+     */
+    private final void fixReportTeamList(final Element body) {
+        for (final Element head : body.getElementsByTag("h2")) {
+            head.tagName("h1");
+        }
+
+        for (final Element head : body.getElementsByTag("h3")) {
+            head.tagName("h2");
+        }
     }
 
     /**

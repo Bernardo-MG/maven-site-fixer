@@ -34,12 +34,14 @@ public enum Position {
     /**
      * Position after the change.
      */
-    AFTER, /**
-            * Position before the change.
-            */
-    BEFORE, /**
-             * No position. It will be ignored.
-             */
+    AFTER,
+    /**
+     * Position before the change.
+     */
+    BEFORE,
+    /**
+     * No position. It will be ignored.
+     */
     NONE
 
 }
