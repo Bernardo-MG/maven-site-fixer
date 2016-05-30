@@ -84,5 +84,10 @@
                 on a body without headings.
             </action>
         </release>
+        <release version="0.4.1" date="2016-5-30" description="No href URLs are now unwrapped">
+            <action dev="bmg" type="update">
+                Anchor elements without an href attribute are now unwrapped, instead of removed.
+            </action>
+        </release>
 	</body>
 </document>
