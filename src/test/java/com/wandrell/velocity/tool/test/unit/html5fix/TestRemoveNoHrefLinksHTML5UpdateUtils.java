@@ -35,6 +35,8 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * Checks the following cases:
  * <ol>
  * <li>Links without the {@code href} attribute are removed.</li>
+ * <li>Links without the {@code href} attribute are removed, and their contents
+ * moved to the parent.</li>
  * <li>HTML with no links is ignored.</li>
  * </ol>
  * 
@@ -64,7 +66,26 @@ public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1><a>a_heading</a>A heading</h1><h3><a>a_heading</a>A heading</h3><a></a>";
+        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
+
+        result = util.removeNoHrefLinks(html);
+
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests links without the {@code href} attribute are removed, and their
+     * contents moved to the parent.
+     */
+    @Test
+    public final void testHeading_NoHref_WithText_TextKept() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
 
         result = util.removeNoHrefLinks(html);
 

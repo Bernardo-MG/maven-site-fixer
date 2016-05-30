@@ -142,7 +142,7 @@ public class HTML5UpdateUtils {
      */
     public final String removeNoHrefLinks(final String html) {
         final Collection<Element> links; // Links to fix
-        final Element body;     // Body of the HTML code
+        final Element body; // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -151,7 +151,7 @@ public class HTML5UpdateUtils {
         // Links missing the href attribute
         links = body.select("a:not([href])");
         for (final Element link : links) {
-            link.remove();
+            link.unwrap();
         }
 
         return body.html();
