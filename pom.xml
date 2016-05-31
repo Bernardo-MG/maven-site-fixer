@@ -20,7 +20,7 @@
 
     <groupId>com.wandrell.velocity</groupId>
     <artifactId>maven-site-fixer</artifactId>
-    <version>0.4.1-SNAPSHOT</version>
+    <version>0.4.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Maven Site Fixer</name>
@@ -218,7 +218,7 @@
         <doxia.decoration.version>1.7.1</doxia.decoration.version>
         <guava.version>19.0</guava.version>
         <jsoup.version>1.9.2</jsoup.version>
-        <log4j.version>2.5</log4j.version>
+        <log4j.version>2.6</log4j.version>
         <maven.project.version>2.2.1</maven.project.version>
         <mockito.version>1.10.19</mockito.version>
         <plexus.version>3.0.24</plexus.version>
@@ -228,7 +228,7 @@
         <plugin.changes.version>2.12</plugin.changes.version>
         <plugin.site.velocity.version>1.7</plugin.site.velocity.version>
         <!-- Maven Site -->
-        <site.skin.version>0.2.4</site.skin.version>
+        <site.skin.version>0.3.0</site.skin.version>
         <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
         <mavenURL>http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer</mavenURL>
     </properties>
