@@ -89,5 +89,10 @@
                 Anchor elements without an href attribute are now unwrapped, instead of removed.
             </action>
         </release>
+        <release version="0.4.2" date="2016-5-31" description="Updated Maven Site Skin">
+            <action dev="bmg" type="update">
+                Updated the Maven Site Skin.
+            </action>
+        </release>
 	</body>
 </document>
