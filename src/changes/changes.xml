@@ -94,5 +94,10 @@
                 Updated the Maven Site Skin.
             </action>
         </release>
+        <release version="0.4.3" date="2016-6-23" description="Tools configuration">
+            <action dev="bmg" type="update">
+                Extended the XML tools configuration.
+            </action>
+        </release>
 	</body>
 </document>

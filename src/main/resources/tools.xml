@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Add custom tools to Velocity tools. The tools.xml file is included in the classpath
-    and Velocity finds it. -->
+   and Velocity finds it. -->
 <tools>
+   <data type="number" key="TOOLS_VERSION" value="2.0" />
+   <data type="boolean" key="GENERIC_TOOLS_AVAILABLE" value="true" />
    <toolbox scope="application">
-       <tool key="config" class="com.wandrell.velocity.tool.SkinConfigUtils" />
-       <tool key="htmlTool" class="com.wandrell.velocity.tool.HTMLUtils" />
-       <tool key="siteTool" class="com.wandrell.velocity.tool.SiteUtils" />
-       <tool key="html5UpdateTool" class="com.wandrell.velocity.tool.HTML5UpdateUtils" />
+      <tool key="config" class="com.wandrell.velocity.tool.SkinConfigUtils" />
+      <tool key="htmlTool" class="com.wandrell.velocity.tool.HTMLUtils" />
+      <tool key="siteTool" class="com.wandrell.velocity.tool.SiteUtils" />
+      <tool key="html5UpdateTool" class="com.wandrell.velocity.tool.HTML5UpdateUtils" />
    </toolbox>
 </tools>
