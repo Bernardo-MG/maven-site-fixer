@@ -1,98 +1,106 @@
-<document xmlns="http://maven.apache.org/changes/1.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
-	<properties>
-		<title>Project Changes</title>
-		<author email="programming@wandrell.com">Bernardo Martínez Garrido</author>
-	</properties>
-	<body>
-		<release version="0.1.0" date="2015-08-06" description="First release">
-			<action dev="bmg" type="update">
-				First release of the library.
-			</action>
-		</release>
-		<release version="0.1.1" date="2015-08-08" description="Maven site">
-			<action dev="bmg" type="update">
-				Site is now working.
-			</action>
-		</release>
-		<release version="0.2.0" date="2015-10-15"
-			description="Fixes and additions to HTML transformation">
-			<action dev="bmg" type="add">
-				Added a method to wrap just the first
-				found element.
-			</action>
-			<action dev="bmg" type="add">
-				Added a method to add ids to headings.
-			</action>
-			<action dev="bmg" type="fix">
-				Images are now being correctly
-				transformed to figures.
-			</action>
-		</release>
-		<release version="0.3.0" date="2015-10-15"
-			description="Fixes and additions to report fixes">
-			<action dev="bmg" type="add">
-				The RSS feed button is removed from the
-				checkstyle report.
-			</action>
-			<action dev="bmg" type="add">
-				Added a method to fix local anchors.
-			</action>
-			<action dev="bmg" type="fix">
-				The section links are fixed.
-			</action>
-			<action dev="bmg" type="fix">
-				If a header already has an id it is now
-				fixed.
-			</action>
-		</release>
-		<release version="0.3.1" date="2015-10-16" description="Maven Site Skin">
-			<action dev="bmg" type="update">
-				Updated Maven Site Skin.
-			</action>
-		</release>
-		<release version="0.3.2" date="2015-11-22" description="Updated configuration">
-			<action dev="bmg" type="update">
-				Updated project configuration.
-			</action>
-		</release>
-        <release version="0.3.3" date="2015-12-7" description="Set parent POM">
-            <action dev="bmg" type="update">
-                Set a parent POM.
-            </action>
-        </release>
-        <release version="0.3.4" date="2016-03-9" description="Security fix">
-            <action dev="Glenn Lewis" type="fix">
-                Corrected dependencies-related vulnerability.
-            </action>
-        </release>
-        <release version="0.3.5" date="2016-5-23" description="Updated dependencies">
-            <action dev="bmg" type="update">
-                Updated dependencies.
-            </action>
-            <action dev="bmg" type="update">
-                Updated scripts.
-            </action>
-        </release>
-        <release version="0.4.0" date="2016-5-29" description="Removed splitting methods, fixed bugs">
-            <action dev="bmg" type="update">
-                Removed the HTML splitting methods.
-            </action>
-            <action dev="bmg" type="update">
-                Fixed a bug which caused an exception when fixing headings
-                on a body without headings.
-            </action>
-        </release>
-        <release version="0.4.1" date="2016-5-30" description="No href URLs are now unwrapped">
-            <action dev="bmg" type="update">
-                Anchor elements without an href attribute are now unwrapped, instead of removed.
-            </action>
-        </release>
-        <release version="0.4.2" date="2016-5-31" description="Updated Maven Site Skin">
-            <action dev="bmg" type="update">
-                Updated the Maven Site Skin.
-            </action>
-        </release>
-	</body>
+<document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+   <properties>
+      <title>Project Changes</title>
+      <author email="programming@wandrell.com">Bernardo Martínez Garrido</author>
+   </properties>
+   <body>
+      <release version="0.1.0" date="2015-08-06" description="First release">
+         <action dev="bmg" type="update">
+            First release of the library.
+         </action>
+      </release>
+      <release version="0.1.1" date="2015-08-08" description="Maven site">
+         <action dev="bmg" type="update">
+            Site is now working.
+         </action>
+      </release>
+      <release version="0.2.0" date="2015-10-15"
+         description="Fixes and additions to HTML transformation">
+         <action dev="bmg" type="add">
+            Added a method to wrap just the first
+            found element.
+         </action>
+         <action dev="bmg" type="add">
+            Added a method to add ids to headings.
+         </action>
+         <action dev="bmg" type="fix">
+            Images are now being correctly
+            transformed to figures.
+         </action>
+      </release>
+      <release version="0.3.0" date="2015-10-15"
+         description="Fixes and additions to report fixes">
+         <action dev="bmg" type="add">
+            The RSS feed button is removed from the
+            checkstyle report.
+         </action>
+         <action dev="bmg" type="add">
+            Added a method to fix local anchors.
+         </action>
+         <action dev="bmg" type="fix">
+            The section links are fixed.
+         </action>
+         <action dev="bmg" type="fix">
+            If a header already has an id it is now
+            fixed.
+         </action>
+      </release>
+      <release version="0.3.1" date="2015-10-16" description="Maven Site Skin">
+         <action dev="bmg" type="update">
+            Updated Maven Site Skin.
+         </action>
+      </release>
+      <release version="0.3.2" date="2015-11-22" description="Updated configuration">
+         <action dev="bmg" type="update">
+            Updated project configuration.
+         </action>
+      </release>
+      <release version="0.3.3" date="2015-12-7" description="Set parent POM">
+         <action dev="bmg" type="update">
+            Set a parent POM.
+         </action>
+      </release>
+      <release version="0.3.4" date="2016-03-9" description="Security fix">
+         <action dev="Glenn Lewis" type="fix">
+            Corrected dependencies-related vulnerability.
+         </action>
+      </release>
+      <release version="0.3.5" date="2016-5-23" description="Updated dependencies">
+         <action dev="bmg" type="update">
+            Updated dependencies.
+         </action>
+         <action dev="bmg" type="update">
+            Updated scripts.
+         </action>
+      </release>
+      <release version="0.4.0" date="2016-5-29"
+         description="Removed splitting methods, fixed bugs">
+         <action dev="bmg" type="update">
+            Removed the HTML splitting methods.
+         </action>
+         <action dev="bmg" type="update">
+            Fixed a bug which caused an exception when fixing headings
+            on a body without headings.
+         </action>
+      </release>
+      <release version="0.4.1" date="2016-5-30" description="No href URLs are now unwrapped">
+         <action dev="bmg" type="update">
+            Anchor elements without an href attribute are now unwrapped, instead of removed.
+         </action>
+      </release>
+      <release version="0.4.2" date="2016-5-31" description="Updated Maven Site Skin">
+         <action dev="bmg" type="update">
+            Updated the Maven Site Skin.
+         </action>
+      </release>
+      <release version="0.4.3" date="2016-09-28" description="Tools configuration">
+         <action dev="bmg" type="update">
+            Extended the XML tools configuration.
+         </action>
+         <action dev="bmg" type="update">
+            Maven site is now deployed through SSH.
+         </action>
+      </release>
+   </body>
 </document>
