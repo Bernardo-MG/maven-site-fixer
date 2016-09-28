@@ -94,10 +94,13 @@
                 Updated the Maven Site Skin.
             </action>
         </release>
-        <release version="0.4.3" date="2016-6-23" description="Tools configuration">
+        <release version="0.4.3" date="2016-09-28" description="Tools configuration">
             <action dev="bmg" type="update">
                 Extended the XML tools configuration.
             </action>
+         <action dev="bmg" type="update">
+            Maven site is now deployed through SSH.
+         </action>
         </release>
 	</body>
 </document>

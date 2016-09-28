@@ -11,7 +11,7 @@
    <parent>
       <groupId>com.wandrell.maven</groupId>
       <artifactId>base-pom</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.5</version>
    </parent>
 
    <!-- ********************************************** -->
@@ -147,7 +147,7 @@
             <site>
                <id>site</id>
                <name>Project Documentation Site</name>
-               <url>ftp://docs.wandrell.com/maven-site-fixer</url>
+               <url>scp://docs.wandrell.com:2222/home1/duenco/www/maven/maven-site-fixer</url>
             </site>
          </distributionManagement>
       </profile>
@@ -159,7 +159,7 @@
             <site>
                <id>site-development</id>
                <name>Project Development Documentation Site</name>
-               <url>ftp://docs.wandrell.com/maven-site-fixer</url>
+               <url>scp://docs.wandrell.com:2222/home1/duenco/www/development/maven/maven-site-fixer</url>
             </site>
          </distributionManagement>
       </profile>
