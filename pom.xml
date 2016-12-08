@@ -215,14 +215,14 @@
       <manifest.name>com/wandrell/velocity/maven-site-fixer</manifest.name>
       <!-- Dependencies versions -->
       <commons.collections.version>3.2.2</commons.collections.version>
-      <doxia.decoration.version>1.7.1</doxia.decoration.version>
-      <guava.version>19.0</guava.version>
-      <jsoup.version>1.9.2</jsoup.version>
-      <log4j.version>2.6.2</log4j.version>
+      <doxia.decoration.version>1.7.4</doxia.decoration.version>
+      <guava.version>20.0</guava.version>
+      <jsoup.version>1.10.1</jsoup.version>
+      <log4j.version>2.7</log4j.version>
       <maven.project.version>2.2.1</maven.project.version>
       <mockito.version>1.10.19</mockito.version>
       <plexus.version>3.0.24</plexus.version>
-      <testng.version>6.9.10</testng.version>
+      <testng.version>6.10</testng.version>
       <velocity.tools.version>2.0</velocity.tools.version>
       <!-- Plugins versions -->
       <plugin.changes.version>2.12</plugin.changes.version>
