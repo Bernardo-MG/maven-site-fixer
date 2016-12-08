@@ -102,5 +102,10 @@
             Maven site is now deployed through SSH.
          </action>
       </release>
+      <release version="0.4.4" date="2016-12-08" description="Configuration file relocation">
+         <action dev="bmg" type="update">
+            Relocated configuration file.
+         </action>
+      </release>
    </body>
 </document>
