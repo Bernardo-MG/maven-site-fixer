@@ -21,6 +21,8 @@ Maven Site will load these tools automatically, they just need added as a depend
 </dependencies>
 ```
 
+Actually it is not just enough adding the dependency, it should include the 'site-tools.xml' settings file, at the path 'META-INF/maven'. Of course, it comes included in the project.
+
 Try to use the latest Maven Site plugin version, as the tools won't work in all the versions due to various compatibility issues.
 
 ## Calling the tools
