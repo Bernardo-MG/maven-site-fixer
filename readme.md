@@ -43,9 +43,21 @@ $ mvn verify site
 
 The verify phase is required, as otherwise some of the reports won't be created.
 
+## Acknowledgement
+
+The code comes from adapting the tools at the [Reflow Maven Skin][reflow-skin]. They were made their own project, instead of being part of a multi-module Maven project, and then heavily modified.
+
 ## Usage
 
 The application is coded in Java, using Maven to manage the project.
+
+The tools are meant to be using through Velocity, by making use of Maven Site autofinder feature. Just include the project as a dependency on any Maven Skin, and then the tools can be used as tags such as this:
+
+```
+#set ( $bodyContent = $html5UpdateTool.updateCodeSections( $bodyContent ) )
+```
+
+More information can be found in the documentation pages.
 
 ### Prerequisites
 
@@ -86,6 +98,7 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 The project has been released under the [MIT License][license].
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin
+[reflow-skin]: https://github.com/andriusvelykis/reflow-maven-skin
 [bintray-repo]: https://bintray.com/bernardo-mg/maven/maven-site-fixer/view
 [maven-repo]: http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer
 [issues]: https://github.com/bernardo-mg/maven-site-fixer/issues
