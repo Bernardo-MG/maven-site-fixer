@@ -227,7 +227,7 @@
       <!-- Plugins versions -->
       <plugin.changes.version>2.12</plugin.changes.version>
       <!-- Maven Site -->
-      <site.skin.version>0.5.2-SNAPSHOT</site.skin.version>
+      <site.skin.version>0.5.0</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer</mavenURL>
    </properties>
