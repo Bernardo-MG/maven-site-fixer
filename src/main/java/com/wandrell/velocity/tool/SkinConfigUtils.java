@@ -252,7 +252,7 @@ public final class SkinConfigUtils extends SafeConfig {
      * 
      * @return the non-latin characters regular expression
      */
-    private final Pattern getNonLatinPatter() {
+    private final Pattern getNonLatinPattern() {
         return nonLatin;
     }
 
@@ -279,7 +279,7 @@ public final class SkinConfigUtils extends SafeConfig {
      * 
      * @return the regular expression for whitespaces
      */
-    private final Pattern getWhitespacePatter() {
+    private final Pattern getWhitespacePattern() {
         return whitespace;
     }
 
@@ -440,9 +440,9 @@ public final class SkinConfigUtils extends SafeConfig {
         separator = "-";
 
         // Removes white spaces
-        corrected = getWhitespacePatter().matcher(text).replaceAll(separator);
+        corrected = getWhitespacePattern().matcher(text).replaceAll(separator);
         // Removes non-latin characters
-        corrected = getNonLatinPatter().matcher(corrected).replaceAll("");
+        corrected = getNonLatinPattern().matcher(corrected).replaceAll("");
 
         return corrected.toLowerCase(Locale.ENGLISH);
     }
