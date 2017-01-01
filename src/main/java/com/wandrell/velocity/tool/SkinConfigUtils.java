@@ -115,6 +115,12 @@ public final class SkinConfigUtils extends SafeConfig {
     private String              fileId;
 
     /**
+     * Regex for non-latin characters.
+     */
+    private final Pattern       nonLatin              = Pattern
+            .compile("[^\\w-]");
+
+    /**
      * Page configuration node.
      * <p>
      * This is the node for the current page inside the {@code <pages>} node,
@@ -136,6 +142,12 @@ public final class SkinConfigUtils extends SafeConfig {
      * {@code <custom>} node.
      */
     private Xpp3Dom             skinConfig            = new Xpp3Dom("");
+
+    /**
+     * Regex for whitespaces.
+     */
+    private final Pattern       whitespace            = Pattern
+            .compile("[\\s]");
 
     /**
      * Constructs an instance of the {@code SkinConfigUtil}.
@@ -236,6 +248,15 @@ public final class SkinConfigUtils extends SafeConfig {
     }
 
     /**
+     * Returns the non-latin characters regular expression.
+     * 
+     * @return the non-latin characters regular expression
+     */
+    private final Pattern getNonLatinPatter() {
+        return nonLatin;
+    }
+
+    /**
      * Returns the page configuration node.
      * 
      * @return the page configuration node
@@ -251,6 +272,15 @@ public final class SkinConfigUtils extends SafeConfig {
      */
     private final Xpp3Dom getSkinConfig() {
         return skinConfig;
+    }
+
+    /**
+     * Returns the regular expression for whitespaces.
+     * 
+     * @return the regular expression for whitespaces
+     */
+    private final Pattern getWhitespacePatter() {
+        return whitespace;
     }
 
     /**
@@ -402,22 +432,17 @@ public final class SkinConfigUtils extends SafeConfig {
      * @return the slug of the given text
      */
     private final String slug(final String text) {
-        final Pattern nonLatin;   // Regex for non-latin chars
-        final Pattern whitespace; // Regex for whitespaces
         final String separator;   // Separator for swapping whitespaces
         String corrected;         // Modified string
 
         checkNotNull(text, "Received a null pointer as the text");
 
-        nonLatin = Pattern.compile("[^\\w-]");
-        whitespace = Pattern.compile("[\\s]");
-
         separator = "-";
 
         // Removes white spaces
-        corrected = whitespace.matcher(text).replaceAll(separator);
+        corrected = getWhitespacePatter().matcher(text).replaceAll(separator);
         // Removes non-latin characters
-        corrected = nonLatin.matcher(corrected).replaceAll("");
+        corrected = getNonLatinPatter().matcher(corrected).replaceAll("");
 
         return corrected.toLowerCase(Locale.ENGLISH);
     }
