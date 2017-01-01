@@ -62,6 +62,26 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
 public final class SkinConfigUtils extends SafeConfig {
 
     /**
+     * The key identifying the current file name in the velocity context.
+     */
+    private static final String CURRENT_FILE_NAME_KEY = "currentFileName";
+
+    /**
+     * The key identifying the decoration in the velocity context.
+     */
+    private static final String DECORATION_KEY        = "decoration";
+
+    /**
+     * The key identifying the Maven project.
+     */
+    private static final String MAVEN_PROJECT_KEY     = "project";
+
+    /**
+     * The key identifying the pages node.
+     */
+    private static final String PAGES_KEY             = "pages";
+
+    /**
      * Key for the skin configuration.
      * <p>
      * This is the name of the node inside the site.xml file where the skin's
@@ -80,7 +100,12 @@ public final class SkinConfigUtils extends SafeConfig {
      * <p>
      * That is, if the default value of skinConfig is kept.
      */
-    private static final String SKIN_KEY   = "skinConfig";
+    private static final String SKIN_KEY              = "skinConfig";
+
+    /**
+     * The key identifying the velocity context.
+     */
+    private static final String VELOCITY_CONTEXT_KEY  = "velocityContext";
 
     /**
      * Identifier for the current file.
@@ -95,7 +120,7 @@ public final class SkinConfigUtils extends SafeConfig {
      * This is the node for the current page inside the {@code <pages>} node,
      * located in the {@code <skinConfig>} node, in the site.xml file.
      */
-    private Xpp3Dom             pageConfig = new Xpp3Dom("");
+    private Xpp3Dom             pageConfig            = new Xpp3Dom("");
 
     /**
      * Identifier for the project.
@@ -110,7 +135,7 @@ public final class SkinConfigUtils extends SafeConfig {
      * This is the {@code <skinConfig>} located in the site.xml file, inside the
      * {@code <custom>} node.
      */
-    private Xpp3Dom             skinConfig = new Xpp3Dom("");
+    private Xpp3Dom             skinConfig            = new Xpp3Dom("");
 
     /**
      * Constructs an instance of the {@code SkinConfigUtil}.
@@ -144,12 +169,12 @@ public final class SkinConfigUtils extends SafeConfig {
         checkNotNull(property, "Received a null pointer as property");
 
         // Looks for it in the page properties
-        value = pageConfig.getChild(property);
+        value = getPageConfig().getChild(property);
 
         if (value == null) {
             // It was not found in the page properties
             // New attempt with the global properties
-            value = skinConfig.getChild(property);
+            value = getSkinConfig().getChild(property);
         }
 
         return value;
@@ -211,6 +236,24 @@ public final class SkinConfigUtils extends SafeConfig {
     }
 
     /**
+     * Returns the page configuration node.
+     * 
+     * @return the page configuration node
+     */
+    private final Xpp3Dom getPageConfig() {
+        return pageConfig;
+    }
+
+    /**
+     * Returns the skin config node.
+     * 
+     * @return the skin config node
+     */
+    private final Xpp3Dom getSkinConfig() {
+        return skinConfig;
+    }
+
+    /**
      * Loads the file identifier from the velocity tools context.
      * <p>
      * This is generated from the file's name.
@@ -222,7 +265,7 @@ public final class SkinConfigUtils extends SafeConfig {
         final Integer lastDot; // Location of the extension dot
         String currentFile;    // File's name
 
-        currentFile = context.get("currentFileName").toString();
+        currentFile = context.get(CURRENT_FILE_NAME_KEY).toString();
 
         // Drops the extension
         lastDot = currentFile.lastIndexOf('.');
@@ -231,7 +274,7 @@ public final class SkinConfigUtils extends SafeConfig {
         }
 
         // File name is slugged
-        fileId = slug(currentFile.replace('/', '-').replace('\\', '-'));
+        setFileId(slug(currentFile.replace('/', '-').replace('\\', '-')));
     }
 
     /**
@@ -247,12 +290,12 @@ public final class SkinConfigUtils extends SafeConfig {
         final MavenProject project; // Casted project info
         final String artifactId;    // Maven artifact id
 
-        projectObj = context.get("project");
+        projectObj = context.get(MAVEN_PROJECT_KEY);
         if (projectObj instanceof MavenProject) {
             project = (MavenProject) projectObj;
             artifactId = project.getArtifactId();
             // The artifact id is slugged for the project id
-            projectId = slug(artifactId);
+            setProjectId(slug(artifactId));
         }
     }
 
@@ -285,20 +328,60 @@ public final class SkinConfigUtils extends SafeConfig {
             checkNotNull(skinNode,
                     "The skin configuration node is missing from the decoration. Make sure it can be found in the <custom> node, inside the site.xml file");
 
-            skinConfig = skinNode;
+            setSkinConfig(skinNode);
 
             // Acquires the <pages> node
-            pagesNode = skinNode.getChild("pages");
+            pagesNode = skinNode.getChild(PAGES_KEY);
             if (pagesNode != null) {
 
                 // Get the page node for the current file
-                page = pagesNode.getChild(fileId);
+                page = pagesNode.getChild(getFileId());
 
                 if (page != null) {
-                    pageConfig = page;
+                    setPageConfig(page);
                 }
             }
         }
+    }
+
+    /**
+     * Sets the identifier for the current file.
+     * 
+     * @param id
+     *            the identifier for the current file
+     */
+    private final void setFileId(final String id) {
+        fileId = id;
+    }
+
+    /**
+     * Sets the page configuration node.
+     * 
+     * @param config
+     *            the page configuration node
+     */
+    private final void setPageConfig(final Xpp3Dom config) {
+        pageConfig = config;
+    }
+
+    /**
+     * Sets the project identifier.
+     * 
+     * @param id
+     *            the project identifier
+     */
+    private final void setProjectId(final String id) {
+        projectId = id;
+    }
+
+    /**
+     * Sets the skin config node.
+     * 
+     * @param config
+     *            the skin config node.
+     */
+    private final void setSkinConfig(final Xpp3Dom config) {
+        skinConfig = config;
     }
 
     /**
@@ -307,9 +390,9 @@ public final class SkinConfigUtils extends SafeConfig {
      * A slug is a human-readable version of the text, where all the special
      * characters have been removed, and spaces have been swapped by dashes.
      * <p>
-     * For example:
-     * <em>This, That & the Other! Various Outré Considerations</em> would
-     * become <em>this-that-the-other-various-outre-considerations</em>
+     * For example: <em>This, That & the Other! Various Outré
+     * Considerations</em> would become
+     * <em>this-that-the-other-various-outre-considerations</em>
      * <p>
      * Of course, this can be applied to any text, not just URLs, but it is
      * usually used in the context of an URL.
@@ -347,7 +430,7 @@ public final class SkinConfigUtils extends SafeConfig {
 
         checkNotNull(values, "Received a null pointer as values");
 
-        velocityContext = values.get("velocityContext");
+        velocityContext = values.get(VELOCITY_CONTEXT_KEY);
 
         if (velocityContext instanceof ToolContext) {
             ctxt = (ToolContext) velocityContext;
@@ -356,7 +439,7 @@ public final class SkinConfigUtils extends SafeConfig {
 
             loadFileId(ctxt);
 
-            decorationObj = ctxt.get("decoration");
+            decorationObj = ctxt.get(DECORATION_KEY);
             if (decorationObj instanceof DecorationModel) {
                 processDecoration((DecorationModel) decorationObj);
             }
