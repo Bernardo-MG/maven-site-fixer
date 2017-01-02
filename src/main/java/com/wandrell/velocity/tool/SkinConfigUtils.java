@@ -26,7 +26,6 @@ package com.wandrell.velocity.tool;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.apache.maven.doxia.site.decoration.DecorationModel;
@@ -447,7 +446,7 @@ public final class SkinConfigUtils extends SafeConfig {
         // Removes non-latin characters
         corrected = getNonLatinPattern().matcher(corrected).replaceAll("");
 
-        return corrected.toLowerCase(Locale.ENGLISH);
+        return corrected.toLowerCase();
     }
 
     @Override
