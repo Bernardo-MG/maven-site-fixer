@@ -56,12 +56,12 @@ import org.jsoup.nodes.Element;
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("htmlTool")
-public final class HTMLUtils {
+public final class HtmlUtils {
 
     /**
      * Constructs an instance of the {@code HTMLUtils}.
      */
-    public HTMLUtils() {
+    public HtmlUtils() {
         super();
     }
 

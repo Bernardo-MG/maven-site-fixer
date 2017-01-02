@@ -55,12 +55,12 @@ import org.jsoup.parser.Tag;
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("html5UpdateTool")
-public class HTML5UpdateUtils {
+public class Html5UpdateUtils {
 
     /**
      * Constructs an instance of the {@code HTML5UpdateUtils}.
      */
-    public HTML5UpdateUtils() {
+    public Html5UpdateUtils() {
         super();
     }
 

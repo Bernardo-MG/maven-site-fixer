@@ -27,7 +27,6 @@ package com.wandrell.velocity.tool.test.unit.site;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
 import com.wandrell.velocity.tool.SiteUtils;
 
 /**
@@ -37,7 +36,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * the utilities class doesn't break with empty inputs.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see SiteUtils
  */
 public final class TestSiteUtilsEmpty {
 

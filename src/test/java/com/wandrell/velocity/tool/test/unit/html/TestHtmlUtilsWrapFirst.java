@@ -27,25 +27,25 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link HtmlUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see HtmlUtils
  */
-public final class TestHTMLUtilsWrap {
+public final class TestHtmlUtilsWrapFirst {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTMLUtils util = new HTMLUtils();
+    private final HtmlUtils util = new HtmlUtils();
 
     /**
      * Default constructor.
      */
-    public TestHTMLUtilsWrap() {
+    public TestHtmlUtilsWrapFirst() {
         super();
     }
 
@@ -60,9 +60,9 @@ public final class TestHTMLUtilsWrap {
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.wrap(html, "h1", "<header></header>");
+        result = util.wrapFirst(html, "h1", "<header></header>");
 
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }
@@ -78,7 +78,7 @@ public final class TestHTMLUtilsWrap {
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.wrap(html, "h3", "<header></header>");
+        result = util.wrapFirst(html, "h3", "<header></header>");
 
         htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
@@ -97,9 +97,9 @@ public final class TestHTMLUtilsWrap {
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.wrap(html, "h1", "<header>");
+        result = util.wrapFirst(html, "h1", "<header>");
 
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

@@ -27,14 +27,13 @@ package com.wandrell.velocity.tool.test.unit.site;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
 import com.wandrell.velocity.tool.SiteUtils;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code fixReport} method.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see SiteUtils
  */
 public final class TestSiteUtilsFixReport {
 

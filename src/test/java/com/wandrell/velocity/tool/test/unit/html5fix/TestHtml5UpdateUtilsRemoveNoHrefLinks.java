@@ -27,25 +27,25 @@ package com.wandrell.velocity.tool.test.unit.html5fix;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTML5UpdateUtils;
+import com.wandrell.velocity.tool.Html5UpdateUtils;
 
 /**
- * Unit tests for {@link HTML5UpdateUtils}.
+ * Unit tests for {@link Html5UpdateUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTML5UpdateUtils
+ * @see Html5UpdateUtils
  */
-public final class TestHTML5UpdateUtilsRemoveNoHrefLinks {
+public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
+    private final Html5UpdateUtils util = new Html5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestHTML5UpdateUtilsRemoveNoHrefLinks() {
+    public TestHtml5UpdateUtilsRemoveNoHrefLinks() {
         super();
     }
 

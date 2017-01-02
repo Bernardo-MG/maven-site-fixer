@@ -22,66 +22,68 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTML5UpdateUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HTML5UpdateUtils}.
+ * Unit tests for {@link HtmlUtils}, testing the methods using empty strings.
+ * <p>
+ * The meaning behind this test is verifying that the initial queries done by
+ * the utilities class doesn't break with empty inputs.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTML5UpdateUtils
+ * @see HtmlUtils
  */
-public final class TestHTML5UpdateUtilsUpdateSectionDiv {
+public final class TestHtmlUtilsEmpty {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
+    private final HtmlUtils util = new HtmlUtils();
 
     /**
      * Default constructor.
      */
-    public TestHTML5UpdateUtilsUpdateSectionDiv() {
+    public TestHtmlUtilsEmpty() {
         super();
     }
 
     /**
-     * Tests that HTML with no outdated sections is ignored.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testNoSections_Ignored() {
+    public final void testWrap_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<p>Some text</p>";
+        html = "";
 
-        result = util.updateSectionDiv(html);
+        result = util.wrap(html, "h1", "<header></header>");
 
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that when trying to fix the outdated section divisions these are
-     * updated correctly.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testOutdatedSection_Updated() {
+    public final void testWrapFirst_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<div class=\"section\"><p>Some text</p></div>";
+        html = "";
 
-        result = util.updateSectionDiv(html);
+        result = util.wrapFirst(html, "h1", "<header></header>");
 
-        htmlExpected = "<section>\n <p>Some text</p>\n</section>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }

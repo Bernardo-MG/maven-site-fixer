@@ -22,98 +22,84 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.site;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code fixAnchorLinks} method.
+ * Unit tests for {@link HtmlUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see SiteUtils
+ * @see HtmlUtils
  */
-public final class TestSiteUtilsFixAnchorLinks {
+public final class TestHtmlUtilsWrap {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final HtmlUtils util = new HtmlUtils();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsFixAnchorLinks() {
+    public TestHtmlUtilsWrap() {
         super();
     }
 
     /**
-     * Tests that an empty link is left untouched.
+     * Tests that wrapping an element works as expected.
      */
     @Test
-    public final void testEmptyLink_NotChanged() {
+    public final void testHeadingWithHeader_Wraps() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a href=\"\">A link</a>";
-        htmlExpected = "<a href=\"\">A link</a>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.fixAnchorLinks(html);
+        result = util.wrap(html, "h1", "<header></header>");
+
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that an external link is left untouched.
+     * Test that wrapping a not existing element does nothing.
      */
     @Test
-    public final void testExternalLink_NotChanged() {
+    public final void testNoElement_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a href=\"www.somewhere.com\">A link</a>";
-        htmlExpected = "<a href=\"www.somewhere.com\">A link</a>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.fixAnchorLinks(html);
+        result = util.wrap(html, "h3", "<header></header>");
+
+        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that an external link is left untouched.
+     * Tests that wrapping an element, without indicating the closing tag,
+     * closes the wrap.
      */
     @Test
-    public final void testInternalLink_Formatted() {
+    public final void testNotClosed_Closed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a href=\"#an_internal_link\">A link</a>";
-        htmlExpected = "<a href=\"#aninternallink\">A link</a>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.fixAnchorLinks(html);
+        result = util.wrap(html, "h1", "<header>");
 
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no links is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<p>Some text</p>";
-
-        result = util.fixAnchorLinks(html);
-
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }
