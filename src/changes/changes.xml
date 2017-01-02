@@ -107,5 +107,10 @@
             Relocated configuration file.
          </action>
       </release>
+      <release version="0.5.0" date="2017-01-02" description="Fixes">
+         <action dev="bmg" type="fix">
+            Corrected possible error cases when iterating elements.
+         </action>
+      </release>
    </body>
 </document>

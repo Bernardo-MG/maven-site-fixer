@@ -331,6 +331,7 @@ public class SiteUtils {
      */
     private final void fixReportChanges(final Element body) {
         final Collection<Element> headings;  // Headings in the body
+        final Collection<Element> sections;  // Sections in the body
         final Element section;  // First section
         Element timeElement;    // Element with the date
         Element smallElement;   // Element with the small date
@@ -372,13 +373,16 @@ public class SiteUtils {
         }
 
         // Moves all the elements out of the sections
-        section = body.getElementsByTag("section").iterator().next();
-        for (final Element child : section.children()) {
-            child.remove();
-            body.appendChild(child);
-        }
+        sections = body.getElementsByTag("section");
+        if (!sections.isEmpty()) {
+            section = sections.iterator().next();
+            for (final Element child : section.children()) {
+                child.remove();
+                body.appendChild(child);
+            }
 
-        section.remove();
+            section.remove();
+        }
     }
 
     /**
@@ -388,7 +392,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportCheckstyle(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
         body.select("img[src=\"images/rss.png\"]").remove();
     }
 
@@ -399,7 +408,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportCpd(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -419,11 +433,15 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportFailsafe(final Element body) {
+        final Collection<Element> elements; // Found elements
         final Element heading; // First h2 heading
 
-        heading = body.getElementsByTag("h2").iterator().next();
-        heading.tagName("h1");
-        heading.text("Failsafe Report");
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            heading = elements.iterator().next();
+            heading.tagName("h1");
+            heading.text("Failsafe Report");
+        }
     }
 
     /**
@@ -433,7 +451,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportFindbugs(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -443,7 +466,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportJdepend(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -463,20 +491,24 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportPluginManagement(final Element body) {
+        final Collection<Element> sections; // Sections in the body
         final Element section;  // Section element
 
         for (final Element head : body.getElementsByTag("h2")) {
             head.tagName("h1");
         }
 
-        section = body.getElementsByTag("section").iterator().next();
+        sections = body.getElementsByTag("section");
+        if (!sections.isEmpty()) {
+            section = sections.iterator().next();
 
-        for (final Element child : section.children()) {
-            child.remove();
-            body.appendChild(child);
+            for (final Element child : section.children()) {
+                child.remove();
+                body.appendChild(child);
+            }
+
+            section.remove();
         }
-
-        section.remove();
     }
 
     /**
@@ -496,7 +528,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportPmd(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -522,7 +559,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportSurefire(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -532,7 +574,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportTaglist(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
