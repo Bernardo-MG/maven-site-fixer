@@ -31,13 +31,6 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
 
 /**
  * Unit tests for {@link HTML5UpdateUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>When trying to fix the outdated section divisions these are updated
- * correctly.</li>
- * <li>HTML with no outdated sections is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils

@@ -31,15 +31,6 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
 
 /**
  * Unit tests for {@link HTML5UpdateUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>When removing the externalLink class from links, if no more classes are
- * left then the class attribute is removed too.</li>
- * <li>When removing the externalLink class from links, if more classes are left
- * then they are untouched.</li>
- * <li>HTML with no external links is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils

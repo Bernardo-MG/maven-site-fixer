@@ -32,12 +32,6 @@ import com.wandrell.velocity.tool.HTMLUtils;
 
 /**
  * Unit tests for {@link HTMLUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Outdated tables are correctly cleaned up.</li>
- * <li>HTML with no tables is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils

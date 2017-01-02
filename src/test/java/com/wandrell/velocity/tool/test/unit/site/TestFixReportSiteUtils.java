@@ -32,15 +32,6 @@ import com.wandrell.velocity.tool.SiteUtils;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code fixReport} method.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>The changes report is correctly fixed.</li>
- * <li>The checkstyle report is correctly fixed.</li>
- * <li>The plugin management report is correctly fixed.</li>
- * <li>The plugins report is correctly fixed.</li>
- * <li>The surefire report is correctly fixed.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils

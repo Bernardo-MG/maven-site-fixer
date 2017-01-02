@@ -31,14 +31,6 @@ import com.wandrell.velocity.tool.HTMLUtils;
 
 /**
  * Unit tests for {@link HTMLUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Wrapping an element works as expected.</li>
- * <li>Wrapping an element, without indicating the closing tag, closes the wrap.
- * </li>
- * <li>Wrapping a not existing element does nothing.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils

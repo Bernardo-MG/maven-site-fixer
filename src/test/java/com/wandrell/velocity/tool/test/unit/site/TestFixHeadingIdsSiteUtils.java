@@ -32,14 +32,6 @@ import com.wandrell.velocity.tool.SiteUtils;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code fixHeadingIds} method.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>The id is correctly added to headings with points.</li>
- * <li>The id is correctly added to headings with spaces.</li>
- * <li>The id is correctly fixed.</li>
- * <li>HTML with no headings is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils

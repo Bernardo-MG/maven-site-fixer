@@ -33,12 +33,6 @@ import com.wandrell.velocity.tool.SiteUtils;
 /**
  * Unit tests for {@link SiteUtils}, testing the
  * {@code transformImagesToFigures} method.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Tables are transformed correctly.</li>
- * <li>HTML with no tables is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils

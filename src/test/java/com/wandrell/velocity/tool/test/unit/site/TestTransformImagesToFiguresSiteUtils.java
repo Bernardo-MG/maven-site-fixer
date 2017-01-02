@@ -33,16 +33,6 @@ import com.wandrell.velocity.tool.SiteUtils;
 /**
  * Unit tests for {@link SiteUtils}, testing the
  * {@code transformImagesToFigures} method.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Transforming images to figures works correctly when an {@code alt}
- * attribute is present.</li>
- * <li>Transforming images to figures works correctly when an {@code alt}
- * attribute is not present.</li>
- * <li>Images out of a content element are ignored.</li>
- * <li>HTML with no images is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils

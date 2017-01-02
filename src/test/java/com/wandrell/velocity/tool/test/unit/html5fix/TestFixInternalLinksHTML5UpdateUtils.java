@@ -31,12 +31,6 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
 
 /**
  * Unit tests for {@link HTML5UpdateUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Points on anchors are correctly removed.</li>
- * <li>HTML with no anchors is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils

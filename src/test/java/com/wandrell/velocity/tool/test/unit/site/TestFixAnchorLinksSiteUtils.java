@@ -32,14 +32,6 @@ import com.wandrell.velocity.tool.SiteUtils;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code fixAnchorLinks} method.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>An external link is left untouched.</li>
- * <li>An internal link is formatted.</li>
- * <li>An empty link is left untouched.</li>
- * <li>HTML with no links is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils

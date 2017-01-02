@@ -31,14 +31,6 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
 
 /**
  * Unit tests for {@link HTML5UpdateUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Links without the {@code href} attribute are removed.</li>
- * <li>Links without the {@code href} attribute are removed, and their contents
- * moved to the parent.</li>
- * <li>HTML with no links is ignored.</li>
- * </ol>
  * 
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils
