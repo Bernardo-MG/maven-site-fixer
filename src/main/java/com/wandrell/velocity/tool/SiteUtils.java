@@ -93,6 +93,8 @@ public class SiteUtils {
 
         // Anchors
         for (final Element child : body.getElementsByTag("a")) {
+            // If the attribute doesn't exist then the ref will be an empty
+            // string
             ref = child.attr("href");
 
             if ((!ref.isEmpty()) && (ref.substring(0, 1).equals("#"))) {
@@ -127,9 +129,13 @@ public class SiteUtils {
         headings = body.select("h1,h2,h3,h4,h5,h6");
         for (final Element heading : headings) {
             if (heading.hasAttr("id")) {
+                // Contains an id
+                // The id is formatted
                 heading.attr("id", heading.attr("id").toLowerCase()
                         .replaceAll("[ _.]", ""));
             } else {
+                // Doesn't contain an id
+                // The id is created from the heading text
                 heading.attr("id",
                         heading.text().toLowerCase().replaceAll("[ _.]", ""));
             }
@@ -633,9 +639,7 @@ public class SiteUtils {
         String replacement;  // Iterated HTML replacement
         Element replacementElem; // Iterated replacement
         Collection<Element> elements; // Selected elements
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(replacements, "Received a null pointer as replacements");
+        Element replacementBody; // Body of the replacement
 
         body = Jsoup.parse(html).body();
 
@@ -646,10 +650,14 @@ public class SiteUtils {
 
             elements = body.select(selector);
             if (!elements.isEmpty()) {
-                // Take the first child
-                replacementElem = Jsoup.parse(replacement).body().child(0);
+                // There are elements to replace
 
-                if (replacementElem != null) {
+                // Processes the replacement
+                replacementBody = Jsoup.parse(replacement).body();
+                if (!replacementBody.children().isEmpty()) {
+                    replacementElem = replacementBody.child(0);
+
+                    // Replaces the elements
                     for (final Element element : elements) {
                         element.replaceWith(replacementElem.clone());
                     }
