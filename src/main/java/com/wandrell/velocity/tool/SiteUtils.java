@@ -169,36 +169,52 @@ public class SiteUtils {
 
         body = Jsoup.parse(html).body();
 
-        if ("plugins".equals(report)) {
-            fixReportPlugins(body);
-        } else if ("plugin-management".equals(report)) {
-            fixReportPluginManagement(body);
-        } else if ("changes-report".equals(report)) {
-            fixReportChanges(body);
-        } else if ("surefire-report".equals(report)) {
-            fixReportSurefire(body);
-        } else if ("failsafe-report".equals(report)) {
-            fixReportFailsafe(body);
-        } else if ("checkstyle".equals(report)) {
-            fixReportCheckstyle(body);
-        } else if ("findbugs".equals(report)) {
-            fixReportFindbugs(body);
-        } else if ("pmd".equals(report)) {
-            fixReportPmd(body);
-        } else if ("cpd".equals(report)) {
-            fixReportCpd(body);
-        } else if ("jdepend-report".equals(report)) {
-            fixReportJdepend(body);
-        } else if ("taglist".equals(report)) {
-            fixReportTaglist(body);
-        } else if ("dependencies".equals(report)) {
-            fixReportDependencies(body);
-        } else if ("project-summary".equals(report)) {
-            fixReportProjectSummary(body);
-        } else if ("license".equals(report)) {
-            fixReportLicense(body);
-        } else if ("team-list".equals(report)) {
-            fixReportTeamList(body);
+        switch (report) {
+            case "plugins":
+                fixReportPlugins(body);
+                break;
+            case "plugin-management":
+                fixReportPluginManagement(body);
+                break;
+            case "changes-report":
+                fixReportChanges(body);
+                break;
+            case "surefire-report":
+                fixReportSurefire(body);
+                break;
+            case "failsafe-report":
+                fixReportFailsafe(body);
+                break;
+            case "checkstyle":
+                fixReportCheckstyle(body);
+                break;
+            case "findbugs":
+                fixReportFindbugs(body);
+                break;
+            case "pmd":
+                fixReportPmd(body);
+                break;
+            case "cpd":
+                fixReportCpd(body);
+                break;
+            case "jdepend-report":
+                fixReportJdepend(body);
+                break;
+            case "taglist":
+                fixReportTaglist(body);
+                break;
+            case "dependencies":
+                fixReportDependencies(body);
+                break;
+            case "project-summary":
+                fixReportProjectSummary(body);
+                break;
+            case "license":
+                fixReportLicense(body);
+                break;
+            case "team-list":
+                fixReportTeamList(body);
+                break;
         }
 
         return body.html();
