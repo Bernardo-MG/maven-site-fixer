@@ -87,6 +87,8 @@ public class SiteUtils {
         final Element body;     // Body of the HTML code
         String ref;             // Value of the href attribute
 
+        checkNotNull(html, "Received a null pointer as html");
+
         body = Jsoup.parse(html).body();
 
         // Anchors
@@ -116,6 +118,8 @@ public class SiteUtils {
     public final String fixHeadingIds(final String html) {
         final Collection<Element> headings; // Headings to fix
         final Element body;     // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parse(html).body();
 
@@ -166,6 +170,9 @@ public class SiteUtils {
      */
     public final String fixReport(final String html, final String report) {
         final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(report, "Received a null pointer as report");
 
         body = Jsoup.parse(html).body();
 
@@ -231,6 +238,8 @@ public class SiteUtils {
     public final String transformIcons(final String html) {
         final Map<String, String> replacements;
 
+        checkNotNull(html, "Received a null pointer as html");
+
         replacements = new LinkedHashMap<>();
         replacements.put("img[src$=images/add.gif]",
                 "<span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span>");
@@ -277,6 +286,8 @@ public class SiteUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
+        checkNotNull(html, "Received a null pointer as html");
+
         body = Jsoup.parse(html).body();
 
         images = body.select("section img");
@@ -309,6 +320,8 @@ public class SiteUtils {
     public final String transformTables(final String html) {
         final Collection<Element> tables; // Tables to fix
         final Element body;     // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parse(html).body();
 
