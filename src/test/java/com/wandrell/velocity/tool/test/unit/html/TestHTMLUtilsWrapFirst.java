@@ -35,7 +35,7 @@ import com.wandrell.velocity.tool.HTMLUtils;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestWrapFirstHTMLUtils {
+public final class TestHTMLUtilsWrapFirst {
 
     /**
      * Instance of the utils class being tested.
@@ -45,7 +45,7 @@ public final class TestWrapFirstHTMLUtils {
     /**
      * Default constructor.
      */
-    public TestWrapFirstHTMLUtils() {
+    public TestHTMLUtilsWrapFirst() {
         super();
     }
 

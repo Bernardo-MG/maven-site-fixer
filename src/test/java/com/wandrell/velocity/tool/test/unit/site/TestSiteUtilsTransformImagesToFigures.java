@@ -37,7 +37,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestTransformImagesToFiguresSiteUtils {
+public final class TestSiteUtilsTransformImagesToFigures {
 
     /**
      * Instance of the utils class being tested.
@@ -47,7 +47,7 @@ public final class TestTransformImagesToFiguresSiteUtils {
     /**
      * Default constructor.
      */
-    public TestTransformImagesToFiguresSiteUtils() {
+    public TestSiteUtilsTransformImagesToFigures() {
         super();
     }
 

@@ -35,7 +35,7 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils
  */
-public final class TestRemoveExternalLinksHTML5UpdateUtils {
+public final class TestHTML5UpdateUtilsFixInternalLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -45,62 +45,42 @@ public final class TestRemoveExternalLinksHTML5UpdateUtils {
     /**
      * Default constructor.
      */
-    public TestRemoveExternalLinksHTML5UpdateUtils() {
+    public TestHTML5UpdateUtilsFixInternalLinks() {
         super();
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if more
-     * classes are left then they are untouched.
+     * Tests that points on anchors are correctly removed.
      */
     @Test
-    public final void testMultipleClasses() {
+    public final void testInternalLink_Points_Fixed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
+        html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
 
-        result = util.removeExternalLinks(html);
+        result = util.fixInternalLinks(html);
 
-        htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that HTML with no external links is ignored.
+     * Tests that HTML with no anchors is ignored.
      */
     @Test
-    public final void testNoExternalLinks_Ignored() {
+    public final void testNoAnchors_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.removeExternalLinks(html);
+        result = util.fixInternalLinks(html);
 
         htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that when removing the externalLink class from links, if no more
-     * classes are left then the class attribute is removed too.
-     */
-    @Test
-    public final void testSingleClass() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
-
-        result = util.removeExternalLinks(html);
-
-        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
 
         Assert.assertEquals(result, htmlExpected);
     }

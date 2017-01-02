@@ -36,7 +36,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestFixHeadingIdsSiteUtils {
+public final class TestSiteUtilsFixHeadingIds {
 
     /**
      * Instance of the utils class being tested.
@@ -46,7 +46,7 @@ public final class TestFixHeadingIdsSiteUtils {
     /**
      * Default constructor.
      */
-    public TestFixHeadingIdsSiteUtils() {
+    public TestSiteUtilsFixHeadingIds() {
         super();
     }
 

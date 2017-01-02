@@ -36,7 +36,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see HTMLUtils
  */
-public final class TestFixReportSiteUtils {
+public final class TestSiteUtilsFixReport {
 
     /**
      * Instance of the utils class being tested.
@@ -46,7 +46,7 @@ public final class TestFixReportSiteUtils {
     /**
      * Default constructor.
      */
-    public TestFixReportSiteUtils() {
+    public TestSiteUtilsFixReport() {
         super();
     }
 

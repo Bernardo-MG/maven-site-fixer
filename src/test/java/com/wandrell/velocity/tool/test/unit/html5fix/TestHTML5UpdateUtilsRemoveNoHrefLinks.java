@@ -35,7 +35,7 @@ import com.wandrell.velocity.tool.HTML5UpdateUtils;
  * @author Bernardo Martínez Garrido
  * @see HTML5UpdateUtils
  */
-public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
+public final class TestHTML5UpdateUtilsRemoveNoHrefLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -45,7 +45,7 @@ public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
     /**
      * Default constructor.
      */
-    public TestRemoveNoHrefLinksHTML5UpdateUtils() {
+    public TestHTML5UpdateUtilsRemoveNoHrefLinks() {
         super();
     }
 

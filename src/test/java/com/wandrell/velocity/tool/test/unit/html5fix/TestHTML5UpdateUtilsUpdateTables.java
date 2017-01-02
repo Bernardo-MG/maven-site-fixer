@@ -28,14 +28,15 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HTML5UpdateUtils;
+import com.wandrell.velocity.tool.HTMLUtils;
 
 /**
- * Unit tests for {@link HTML5UpdateUtils}.
+ * Unit tests for {@link HTMLUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTML5UpdateUtils
+ * @see HTMLUtils
  */
-public final class TestUpdateCodeSectionsHTML5UpdateUtils {
+public class TestHTML5UpdateUtilsUpdateTables {
 
     /**
      * Instance of the utils class being tested.
@@ -45,22 +46,22 @@ public final class TestUpdateCodeSectionsHTML5UpdateUtils {
     /**
      * Default constructor.
      */
-    public TestUpdateCodeSectionsHTML5UpdateUtils() {
+    public TestHTML5UpdateUtilsUpdateTables() {
         super();
     }
 
     /**
-     * Tests that HTML with no code sections is ignored.
+     * Tests that HTML with no tables is ignored.
      */
     @Test
-    public final void testNoCode_Ignored() {
+    public final void testNoTables_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.updateCodeSections(html);
+        result = util.updateTables(html);
 
         htmlExpected = "<p>Some text</p>";
 
@@ -68,20 +69,19 @@ public final class TestUpdateCodeSectionsHTML5UpdateUtils {
     }
 
     /**
-     * Tests that when trying to fix the outdated code blocks these are updated
-     * correctly.
+     * Tests that outdated tables are correctly cleaned up.
      */
     @Test
-    public final void testOutdatedCodeSections_Updated() {
+    public final void testOutdatedTable_Updated() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<div class=\"source\"><div class=\"source\"><pre>Some code</pre></div></div>";
+        html = "<table border=\"0\" class=\"bodyTable\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
 
-        result = util.updateCodeSections(html);
+        result = util.updateTables(html);
 
-        htmlExpected = "<pre><code>Some code</code></pre>";
+        htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         Assert.assertEquals(result, htmlExpected);
     }
