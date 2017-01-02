@@ -125,6 +125,23 @@ public final class TestSiteUtilsFixReportEmpty {
      * Tests that an empty string causes no problem.
      */
     @Test
+    public final void testFailsafeReport_Empty() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+        htmlExpected = "";
+
+        result = util.fixReport(html, "failsafe-report");
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
     public final void testFindbugsReport_Empty() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
