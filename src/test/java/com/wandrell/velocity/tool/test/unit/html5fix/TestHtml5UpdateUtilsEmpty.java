@@ -22,129 +22,141 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.site;
+package com.wandrell.velocity.tool.test.unit.html5fix;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.Html5UpdateUtils;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code fixReport} method.
+ * Unit tests for {@link Html5UpdateUtils}, testing the methods using empty
+ * strings.
  * <p>
- * Checks the following cases:
- * <ol>
- * <li>The changes report is correctly fixed.</li>
- * <li>The checkstyle report is correctly fixed.</li>
- * <li>The plugin management report is correctly fixed.</li>
- * <li>The plugins report is correctly fixed.</li>
- * <li>The surefire report is correctly fixed.</li>
- * </ol>
+ * The meaning behind this test is verifying that the initial queries done by
+ * the utilities class doesn't break with empty inputs.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see Html5UpdateUtils
  */
-public final class TestFixReportSiteUtils {
+public final class TestHtml5UpdateUtilsEmpty {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final Html5UpdateUtils util = new Html5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestFixReportSiteUtils() {
+    public TestHtml5UpdateUtilsEmpty() {
         super();
     }
 
     /**
-     * Tests that the changes report is correctly fixed.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testChangesReport() {
+    public final void testFixInternalLinks_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><h2>Project Changes</h2><section><h3>Release History</h3></section><section><h3 id=\"a010\">Release 0.1.0 – 2015-05-17</h3></section></section>";
+        html = "";
 
-        result = util.fixReport(html, "changes-report");
+        result = util.fixInternalLinks(html);
 
-        htmlExpected = "<h1>Project Changes</h1>\n<section>\n <h2>Release History</h2>\n</section>\n<section id=\"a010\">\n <h3>Release 0.1.0 <small>(<time>2015-05-17</time>)</small></h3>\n</section>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the checkstyle report is correctly fixed.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testCheckstyleReport() {
+    public final void testRemoveExternalLinks_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h2>Checkstyle</h2><section><p><img alt=\"rss feed\" src=\"images/rss.png\"></p></section>";
+        html = "";
 
-        result = util.fixReport(html, "checkstyle");
+        result = util.removeExternalLinks(html);
 
-        htmlExpected = "<h1>Checkstyle</h1>\n<section>\n <p></p>\n</section>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the plugin management report is correctly fixed.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testPluginManagementReport() {
+    public final void testRemoveNoHrefLinks_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><h2>Plugin Management</h2><p>Data</p></section>";
+        html = "";
 
-        result = util.fixReport(html, "plugin-management");
+        result = util.removeNoHrefLinks(html);
 
-        htmlExpected = "<h1>Plugin Management</h1>\n<p>Data</p>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the plugins report is correctly fixed.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testPluginsReport() {
+    public final void testUpdateCodeSections_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><h2>Heading 2</h2></section>";
+        html = "";
 
-        result = util.fixReport(html, "plugins");
+        result = util.updateCodeSections(html);
 
-        htmlExpected = "<h1>Plugins Report</h1>\n<section>\n <h2>Heading 2</h2>\n</section>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the surefire report is correctly fixed.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testSurefireReport() {
+    public final void testUpdateSectionDiv_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<section><h2>Surefire Report</h2></section><section><h2>Summary</h2></section><section><h2>Package List</h2></section>";
+        html = "";
 
-        result = util.fixReport(html, "surefire-report");
+        result = util.updateSectionDiv(html);
 
-        htmlExpected = "<section>\n <h1>Surefire Report</h1>\n</section>\n<section>\n <h2>Summary</h2>\n</section>\n<section>\n <h2>Package List</h2>\n</section>";
+        htmlExpected = "";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
+    public final void testUpdateTables_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+
+        result = util.updateTables(html);
+
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }

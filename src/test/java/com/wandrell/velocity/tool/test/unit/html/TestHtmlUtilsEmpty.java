@@ -22,72 +22,68 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTML5UpdateUtils;
-import com.wandrell.velocity.tool.HTMLUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HTMLUtils}.
+ * Unit tests for {@link HtmlUtils}, testing the methods using empty strings.
  * <p>
- * Checks the following cases:
- * <ol>
- * <li>Outdated tables are correctly cleaned up.</li>
- * <li>HTML with no tables is ignored.</li>
- * </ol>
+ * The meaning behind this test is verifying that the initial queries done by
+ * the utilities class doesn't break with empty inputs.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see HtmlUtils
  */
-public class TestUpdateTablesHTML5UpdateUtils {
+public final class TestHtmlUtilsEmpty {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
+    private final HtmlUtils util = new HtmlUtils();
 
     /**
      * Default constructor.
      */
-    public TestUpdateTablesHTML5UpdateUtils() {
+    public TestHtmlUtilsEmpty() {
         super();
     }
 
     /**
-     * Tests that HTML with no tables is ignored.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testNoTables_Ignored() {
+    public final void testWrap_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<p>Some text</p>";
+        html = "";
 
-        result = util.updateTables(html);
+        result = util.wrap(html, "h1", "<header></header>");
 
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that outdated tables are correctly cleaned up.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testOutdatedTable_Updated() {
+    public final void testWrapFirst_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<table border=\"0\" class=\"bodyTable\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        html = "";
 
-        result = util.updateTables(html);
+        result = util.wrapFirst(html, "h1", "<header></header>");
 
-        htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }

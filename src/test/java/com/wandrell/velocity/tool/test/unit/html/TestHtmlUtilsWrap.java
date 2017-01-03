@@ -22,94 +22,84 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTML5UpdateUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HTML5UpdateUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>When removing the externalLink class from links, if no more classes are
- * left then the class attribute is removed too.</li>
- * <li>When removing the externalLink class from links, if more classes are left
- * then they are untouched.</li>
- * <li>HTML with no external links is ignored.</li>
- * </ol>
+ * Unit tests for {@link HtmlUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTML5UpdateUtils
+ * @see HtmlUtils
  */
-public final class TestRemoveExternalLinksHTML5UpdateUtils {
+public final class TestHtmlUtilsWrap {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
+    private final HtmlUtils util = new HtmlUtils();
 
     /**
      * Default constructor.
      */
-    public TestRemoveExternalLinksHTML5UpdateUtils() {
+    public TestHtmlUtilsWrap() {
         super();
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if more
-     * classes are left then they are untouched.
+     * Tests that wrapping an element works as expected.
      */
     @Test
-    public final void testMultipleClasses() {
+    public final void testHeadingWithHeader_Wraps() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.removeExternalLinks(html);
+        result = util.wrap(html, "h1", "<header></header>");
 
-        htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that HTML with no external links is ignored.
+     * Test that wrapping a not existing element does nothing.
      */
     @Test
-    public final void testNoExternalLinks_Ignored() {
+    public final void testNoElement_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<p>Some text</p>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.removeExternalLinks(html);
+        result = util.wrap(html, "h3", "<header></header>");
 
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if no more
-     * classes are left then the class attribute is removed too.
+     * Tests that wrapping an element, without indicating the closing tag,
+     * closes the wrap.
      */
     @Test
-    public final void testSingleClass() {
+    public final void testNotClosed_Closed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.removeExternalLinks(html);
+        result = util.wrap(html, "h1", "<header>");
 
-        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

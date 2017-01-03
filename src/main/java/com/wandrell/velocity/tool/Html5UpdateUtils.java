@@ -55,12 +55,12 @@ import org.jsoup.parser.Tag;
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("html5UpdateTool")
-public class HTML5UpdateUtils {
+public class Html5UpdateUtils {
 
     /**
      * Constructs an instance of the {@code HTML5UpdateUtils}.
      */
-    public HTML5UpdateUtils() {
+    public Html5UpdateUtils() {
         super();
     }
 
@@ -106,7 +106,7 @@ public class HTML5UpdateUtils {
      * @return HTML content with the {@code externalLink} class removed
      */
     public final String removeExternalLinks(final String html) {
-        final Collection<Element> links; // Links to fix
+        final Iterable<Element> links; // Links to fix
         final Element body;     // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
@@ -141,7 +141,7 @@ public class HTML5UpdateUtils {
      * @return HTML content, with no link missing the {@code href} attribute
      */
     public final String removeNoHrefLinks(final String html) {
-        final Collection<Element> links; // Links to fix
+        final Iterable<Element> links; // Links to fix
         final Element body; // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
@@ -197,7 +197,7 @@ public class HTML5UpdateUtils {
      * @return HTML content, with the section divisions updated
      */
     public final String updateSectionDiv(final String html) {
-        final Collection<Element> sectionDivs; // Section divisions
+        final Iterable<Element> sectionDivs; // Section divisions
         final Element body;     // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
@@ -256,7 +256,7 @@ public class HTML5UpdateUtils {
      *            body element with the table to fix
      */
     private final void removeBodyTable(final Element body) {
-        final Collection<Element> tables;   // Tables to fix
+        final Iterable<Element> tables;   // Tables to fix
 
         // Tables with the bodyTable class
         tables = body.select("table.bodyTable");
@@ -276,7 +276,7 @@ public class HTML5UpdateUtils {
      *            body element with ids to fix
      */
     private final void removePointsFromIds(final Element body) {
-        final Collection<Element> elements; // Elements to fix
+        final Iterable<Element> elements; // Elements to fix
         String id;      // id attribute contents
 
         // Elements with the id attribute
@@ -296,7 +296,7 @@ public class HTML5UpdateUtils {
      *            body element with links to fix
      */
     private final void removePointsFromInternalHref(final Element body) {
-        final Collection<Element> links; // Links to fix
+        final Iterable<Element> links; // Links to fix
         String href;    // href attribute contents
 
         // Elements with an internal href
@@ -323,7 +323,7 @@ public class HTML5UpdateUtils {
      *            body element with source divisions to fix
      */
     private final void removeRedundantSourceDivs(final Element body) {
-        final Collection<Element> sourceDivs; // Repeated source divs
+        final Iterable<Element> sourceDivs; // Repeated source divs
         Element parent;                       // Parent <div>
 
         // Divs with the source class with another div with the source class as
@@ -346,7 +346,7 @@ public class HTML5UpdateUtils {
      *            body element with tables to fix
      */
     private final void removeTableBodyClass(final Element body) {
-        final Collection<Element> tables; // Tables to fix
+        final Iterable<Element> tables; // Tables to fix
 
         // Tables with the bodyTable class
         tables = body.select("table.bodyTable");
@@ -369,7 +369,7 @@ public class HTML5UpdateUtils {
      *            body element with tables to fix
      */
     private final void removeTableBorder(final Element body) {
-        final Collection<Element> tables;   // Tables to fix
+        final Iterable<Element> tables;   // Tables to fix
 
         // Selects tables with border defined
         tables = body.select("table[border]");
@@ -389,22 +389,26 @@ public class HTML5UpdateUtils {
      *            body element with source divisions to upgrade
      */
     private final void takeOutSourceDivPre(final Element body) {
-        final Collection<Element> divs; // Code divisions
-        Element pre;                    // <pre> element
-        String text;                    // Preserved text
+        final Iterable<Element> divs; // Code divisions
+        Collection<Element> pres;     // Code preservations
+        Element pre;                  // <pre> element
+        String text;                  // Preserved text
 
         // Divs with the source class and a pre
         divs = body.select("div.source:has(pre)");
         for (final Element div : divs) {
-            pre = div.getElementsByTag("pre").iterator().next();
+            pres = div.getElementsByTag("pre");
+            if (!pres.isEmpty()) {
+                pre = pres.iterator().next();
 
-            text = pre.text();
-            pre.text("");
+                text = pre.text();
+                pre.text("");
 
-            div.replaceWith(pre);
-            pre.appendChild(div);
+                div.replaceWith(pre);
+                pre.appendChild(div);
 
-            div.text(text);
+                div.text(text);
+            }
         }
     }
 
@@ -416,7 +420,7 @@ public class HTML5UpdateUtils {
      *            body element with source division to upgrade
      */
     private final void updateSourceDivsToCode(final Element body) {
-        final Collection<Element> divs; // Code divisions
+        final Iterable<Element> divs; // Code divisions
 
         // Divs with the source class
         divs = body.select("div.source");
@@ -441,7 +445,7 @@ public class HTML5UpdateUtils {
      *            body element with tables to fix
      */
     private final void updateTableHeads(final Element body) {
-        final Collection<Element> tableHeadRows; // Heads to fix
+        final Iterable<Element> tableHeadRows; // Heads to fix
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
 
@@ -472,7 +476,7 @@ public class HTML5UpdateUtils {
      *            body element with tables to fix
      */
     private final void updateTableRowAlternates(final Element body) {
-        final Collection<Element> elements;   // Tables and rows to fix
+        final Iterable<Element> elements;   // Tables and rows to fix
 
         // Table rows with the class "a" or "b"
         elements = body.select("tr.a, tr.b");

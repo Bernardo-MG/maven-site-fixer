@@ -56,12 +56,12 @@ import org.jsoup.nodes.Element;
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("htmlTool")
-public final class HTMLUtils {
+public final class HtmlUtils {
 
     /**
      * Constructs an instance of the {@code HTMLUtils}.
      */
-    public HTMLUtils() {
+    public HtmlUtils() {
         super();
     }
 
@@ -83,7 +83,7 @@ public final class HTMLUtils {
      */
     public final String wrap(final String html, final String selector,
             final String wrapper) {
-        final Collection<Element> elements; // Selected elements
+        final Iterable<Element> elements; // Selected elements
         final Element body;  // Element parsed from the content
 
         checkNotNull(html, "Received a null pointer as html");
@@ -93,10 +93,8 @@ public final class HTMLUtils {
         body = Jsoup.parse(html).body();
         elements = body.select(selector);
 
-        if (!elements.isEmpty()) {
-            for (final Element element : elements) {
-                element.wrap(wrapper);
-            }
+        for (final Element element : elements) {
+            element.wrap(wrapper);
         }
 
         return body.html();

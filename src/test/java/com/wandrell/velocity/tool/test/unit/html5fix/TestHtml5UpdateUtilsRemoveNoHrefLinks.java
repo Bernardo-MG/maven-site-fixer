@@ -22,92 +22,84 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html;
+package com.wandrell.velocity.tool.test.unit.html5fix;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
+import com.wandrell.velocity.tool.Html5UpdateUtils;
 
 /**
- * Unit tests for {@link HTMLUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Wrapping an element works as expected.</li>
- * <li>Wrapping an element, without indicating the closing tag, closes the wrap.
- * </li>
- * <li>Wrapping a not existing element does nothing.</li>
- * </ol>
+ * Unit tests for {@link Html5UpdateUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see Html5UpdateUtils
  */
-public final class TestWrapFirstHTMLUtils {
+public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTMLUtils util = new HTMLUtils();
+    private final Html5UpdateUtils util = new Html5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestWrapFirstHTMLUtils() {
+    public TestHtml5UpdateUtilsRemoveNoHrefLinks() {
         super();
     }
 
     /**
-     * Tests that wrapping an element works as expected.
+     * Tests links without the {@code href} attribute are removed.
      */
     @Test
-    public final void testHeadingWithHeader_Wraps() {
+    public final void testHeading_NoHref_Removed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
+        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
 
-        result = util.wrapFirst(html, "h1", "<header></header>");
+        result = util.removeNoHrefLinks(html);
 
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Test that wrapping a not existing element does nothing.
+     * Tests links without the {@code href} attribute are removed, and their
+     * contents moved to the parent.
      */
     @Test
-    public final void testNoElement_Ignored() {
+    public final void testHeading_NoHref_WithText_TextKept() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
+        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
 
-        result = util.wrapFirst(html, "h3", "<header></header>");
+        result = util.removeNoHrefLinks(html);
 
-        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that wrapping an element, without indicating the closing tag,
-     * closes the wrap.
+     * Tests that HTML with no links is ignored.
      */
     @Test
-    public final void testNotClosed_Closed() {
+    public final void testNoAnchors_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
+        html = "<p>Some text</p>";
 
-        result = util.wrapFirst(html, "h1", "<header>");
+        result = util.removeNoHrefLinks(html);
 
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
+        htmlExpected = "<p>Some text</p>";
 
         Assert.assertEquals(result, htmlExpected);
     }

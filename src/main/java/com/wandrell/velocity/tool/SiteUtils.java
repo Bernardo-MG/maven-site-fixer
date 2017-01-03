@@ -87,10 +87,14 @@ public class SiteUtils {
         final Element body;     // Body of the HTML code
         String ref;             // Value of the href attribute
 
+        checkNotNull(html, "Received a null pointer as html");
+
         body = Jsoup.parse(html).body();
 
         // Anchors
         for (final Element child : body.getElementsByTag("a")) {
+            // If the attribute doesn't exist then the ref will be an empty
+            // string
             ref = child.attr("href");
 
             if ((!ref.isEmpty()) && (ref.substring(0, 1).equals("#"))) {
@@ -117,15 +121,21 @@ public class SiteUtils {
         final Collection<Element> headings; // Headings to fix
         final Element body;     // Body of the HTML code
 
+        checkNotNull(html, "Received a null pointer as html");
+
         body = Jsoup.parse(html).body();
 
         // Table rows with <th> tags in a <tbody>
         headings = body.select("h1,h2,h3,h4,h5,h6");
         for (final Element heading : headings) {
             if (heading.hasAttr("id")) {
+                // Contains an id
+                // The id is formatted
                 heading.attr("id", heading.attr("id").toLowerCase()
                         .replaceAll("[ _.]", ""));
             } else {
+                // Doesn't contain an id
+                // The id is created from the heading text
                 heading.attr("id",
                         heading.text().toLowerCase().replaceAll("[ _.]", ""));
             }
@@ -167,38 +177,57 @@ public class SiteUtils {
     public final String fixReport(final String html, final String report) {
         final Element body; // Body of the HTML code
 
+        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(report, "Received a null pointer as report");
+
         body = Jsoup.parse(html).body();
 
-        if ("plugins".equals(report)) {
-            fixReportPlugins(body);
-        } else if ("plugin-management".equals(report)) {
-            fixReportPluginManagement(body);
-        } else if ("changes-report".equals(report)) {
-            fixReportChanges(body);
-        } else if ("surefire-report".equals(report)) {
-            fixReportSurefire(body);
-        } else if ("failsafe-report".equals(report)) {
-            fixReportFailsafe(body);
-        } else if ("checkstyle".equals(report)) {
-            fixReportCheckstyle(body);
-        } else if ("findbugs".equals(report)) {
-            fixReportFindbugs(body);
-        } else if ("pmd".equals(report)) {
-            fixReportPmd(body);
-        } else if ("cpd".equals(report)) {
-            fixReportCpd(body);
-        } else if ("jdepend-report".equals(report)) {
-            fixReportJdepend(body);
-        } else if ("taglist".equals(report)) {
-            fixReportTaglist(body);
-        } else if ("dependencies".equals(report)) {
-            fixReportDependencies(body);
-        } else if ("project-summary".equals(report)) {
-            fixReportProjectSummary(body);
-        } else if ("license".equals(report)) {
-            fixReportLicense(body);
-        } else if ("team-list".equals(report)) {
-            fixReportTeamList(body);
+        switch (report) {
+            case "plugins":
+                fixReportPlugins(body);
+                break;
+            case "plugin-management":
+                fixReportPluginManagement(body);
+                break;
+            case "changes-report":
+                fixReportChanges(body);
+                break;
+            case "surefire-report":
+                fixReportSurefire(body);
+                break;
+            case "failsafe-report":
+                fixReportFailsafe(body);
+                break;
+            case "checkstyle":
+                fixReportCheckstyle(body);
+                break;
+            case "findbugs":
+                fixReportFindbugs(body);
+                break;
+            case "pmd":
+                fixReportPmd(body);
+                break;
+            case "cpd":
+                fixReportCpd(body);
+                break;
+            case "jdepend-report":
+                fixReportJdepend(body);
+                break;
+            case "taglist":
+                fixReportTaglist(body);
+                break;
+            case "dependencies":
+                fixReportDependencies(body);
+                break;
+            case "project-summary":
+                fixReportProjectSummary(body);
+                break;
+            case "license":
+                fixReportLicense(body);
+                break;
+            case "team-list":
+                fixReportTeamList(body);
+                break;
         }
 
         return body.html();
@@ -214,6 +243,8 @@ public class SiteUtils {
      */
     public final String transformIcons(final String html) {
         final Map<String, String> replacements;
+
+        checkNotNull(html, "Received a null pointer as html");
 
         replacements = new LinkedHashMap<>();
         replacements.put("img[src$=images/add.gif]",
@@ -261,6 +292,8 @@ public class SiteUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
+        checkNotNull(html, "Received a null pointer as html");
+
         body = Jsoup.parse(html).body();
 
         images = body.select("section img");
@@ -294,6 +327,8 @@ public class SiteUtils {
         final Collection<Element> tables; // Tables to fix
         final Element body;     // Body of the HTML code
 
+        checkNotNull(html, "Received a null pointer as html");
+
         body = Jsoup.parse(html).body();
 
         // Table rows with <th> tags in a <tbody>
@@ -315,6 +350,7 @@ public class SiteUtils {
      */
     private final void fixReportChanges(final Element body) {
         final Collection<Element> headings;  // Headings in the body
+        final Collection<Element> sections;  // Sections in the body
         final Element section;  // First section
         Element timeElement;    // Element with the date
         Element smallElement;   // Element with the small date
@@ -356,13 +392,16 @@ public class SiteUtils {
         }
 
         // Moves all the elements out of the sections
-        section = body.getElementsByTag("section").iterator().next();
-        for (final Element child : section.children()) {
-            child.remove();
-            body.appendChild(child);
-        }
+        sections = body.getElementsByTag("section");
+        if (!sections.isEmpty()) {
+            section = sections.iterator().next();
+            for (final Element child : section.children()) {
+                child.remove();
+                body.appendChild(child);
+            }
 
-        section.remove();
+            section.remove();
+        }
     }
 
     /**
@@ -372,7 +411,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportCheckstyle(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
         body.select("img[src=\"images/rss.png\"]").remove();
     }
 
@@ -383,7 +427,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportCpd(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -403,11 +452,15 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportFailsafe(final Element body) {
+        final Collection<Element> elements; // Found elements
         final Element heading; // First h2 heading
 
-        heading = body.getElementsByTag("h2").iterator().next();
-        heading.tagName("h1");
-        heading.text("Failsafe Report");
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            heading = elements.iterator().next();
+            heading.tagName("h1");
+            heading.text("Failsafe Report");
+        }
     }
 
     /**
@@ -417,7 +470,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportFindbugs(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -427,7 +485,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportJdepend(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -447,20 +510,24 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportPluginManagement(final Element body) {
+        final Collection<Element> sections; // Sections in the body
         final Element section;  // Section element
 
         for (final Element head : body.getElementsByTag("h2")) {
             head.tagName("h1");
         }
 
-        section = body.getElementsByTag("section").iterator().next();
+        sections = body.getElementsByTag("section");
+        if (!sections.isEmpty()) {
+            section = sections.iterator().next();
 
-        for (final Element child : section.children()) {
-            child.remove();
-            body.appendChild(child);
+            for (final Element child : section.children()) {
+                child.remove();
+                body.appendChild(child);
+            }
+
+            section.remove();
         }
-
-        section.remove();
     }
 
     /**
@@ -480,7 +547,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportPmd(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -506,7 +578,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportSurefire(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -516,7 +593,12 @@ public class SiteUtils {
      *            element for the body of the report page
      */
     private final void fixReportTaglist(final Element body) {
-        body.getElementsByTag("h2").iterator().next().tagName("h1");
+        final Collection<Element> elements; // Found elements
+
+        elements = body.getElementsByTag("h2");
+        if (!elements.isEmpty()) {
+            elements.iterator().next().tagName("h1");
+        }
     }
 
     /**
@@ -557,9 +639,7 @@ public class SiteUtils {
         String replacement;  // Iterated HTML replacement
         Element replacementElem; // Iterated replacement
         Collection<Element> elements; // Selected elements
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(replacements, "Received a null pointer as replacements");
+        Element replacementBody; // Body of the replacement
 
         body = Jsoup.parse(html).body();
 
@@ -570,10 +650,14 @@ public class SiteUtils {
 
             elements = body.select(selector);
             if (!elements.isEmpty()) {
-                // Take the first child
-                replacementElem = Jsoup.parse(replacement).body().child(0);
+                // There are elements to replace
 
-                if (replacementElem != null) {
+                // Processes the replacement
+                replacementBody = Jsoup.parse(replacement).body();
+                if (!replacementBody.children().isEmpty()) {
+                    replacementElem = replacementBody.child(0);
+
+                    // Replaces the elements
                     for (final Element element : elements) {
                         element.replaceWith(replacementElem.clone());
                     }

@@ -27,66 +27,61 @@ package com.wandrell.velocity.tool.test.unit.html5fix;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTML5UpdateUtils;
+import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HTML5UpdateUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Points on anchors are correctly removed.</li>
- * <li>HTML with no anchors is ignored.</li>
- * </ol>
+ * Unit tests for {@link HtmlUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTML5UpdateUtils
+ * @see HtmlUtils
  */
-public final class TestFixInternalLinksHTML5UpdateUtils {
+public class TestHtml5UpdateUtilsUpdateTables {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
+    private final Html5UpdateUtils util = new Html5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestFixInternalLinksHTML5UpdateUtils() {
+    public TestHtml5UpdateUtilsUpdateTables() {
         super();
     }
 
     /**
-     * Tests that points on anchors are correctly removed.
+     * Tests that HTML with no tables is ignored.
      */
     @Test
-    public final void testInternalLink_Points_Fixed() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
-
-        result = util.fixInternalLinks(html);
-
-        htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no anchors is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
+    public final void testNoTables_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.fixInternalLinks(html);
+        result = util.updateTables(html);
 
         htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that outdated tables are correctly cleaned up.
+     */
+    @Test
+    public final void testOutdatedTable_Updated() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<table border=\"0\" class=\"bodyTable\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+
+        result = util.updateTables(html);
+
+        htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         Assert.assertEquals(result, htmlExpected);
     }

@@ -27,87 +27,61 @@ package com.wandrell.velocity.tool.test.unit.html5fix;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTML5UpdateUtils;
+import com.wandrell.velocity.tool.Html5UpdateUtils;
 
 /**
- * Unit tests for {@link HTML5UpdateUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>Links without the {@code href} attribute are removed.</li>
- * <li>Links without the {@code href} attribute are removed, and their contents
- * moved to the parent.</li>
- * <li>HTML with no links is ignored.</li>
- * </ol>
+ * Unit tests for {@link Html5UpdateUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTML5UpdateUtils
+ * @see Html5UpdateUtils
  */
-public final class TestRemoveNoHrefLinksHTML5UpdateUtils {
+public final class TestHtml5UpdateUtilsUpdateSectionDiv {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
+    private final Html5UpdateUtils util = new Html5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestRemoveNoHrefLinksHTML5UpdateUtils() {
+    public TestHtml5UpdateUtilsUpdateSectionDiv() {
         super();
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that HTML with no outdated sections is ignored.
      */
     @Test
-    public final void testHeading_NoHref_Removed() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
-
-        result = util.removeNoHrefLinks(html);
-
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests links without the {@code href} attribute are removed, and their
-     * contents moved to the parent.
-     */
-    @Test
-    public final void testHeading_NoHref_WithText_TextKept() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
-
-        result = util.removeNoHrefLinks(html);
-
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no links is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
+    public final void testNoSections_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.removeNoHrefLinks(html);
+        result = util.updateSectionDiv(html);
 
         htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that when trying to fix the outdated section divisions these are
+     * updated correctly.
+     */
+    @Test
+    public final void testOutdatedSection_Updated() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<div class=\"section\"><p>Some text</p></div>";
+
+        result = util.updateSectionDiv(html);
+
+        htmlExpected = "<section>\n <p>Some text</p>\n</section>";
 
         Assert.assertEquals(result, htmlExpected);
     }

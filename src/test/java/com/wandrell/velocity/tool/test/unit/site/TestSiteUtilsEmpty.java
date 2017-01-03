@@ -27,24 +27,18 @@ package com.wandrell.velocity.tool.test.unit.site;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTMLUtils;
 import com.wandrell.velocity.tool.SiteUtils;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code fixHeadingIds} method.
+ * Unit tests for {@link SiteUtils}, testing the methods using empty strings.
  * <p>
- * Checks the following cases:
- * <ol>
- * <li>The id is correctly added to headings with points.</li>
- * <li>The id is correctly added to headings with spaces.</li>
- * <li>The id is correctly fixed.</li>
- * <li>HTML with no headings is ignored.</li>
- * </ol>
+ * The meaning behind this test is verifying that the initial queries done by
+ * the utilities class doesn't break with empty inputs.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTMLUtils
+ * @see SiteUtils
  */
-public final class TestFixHeadingIdsSiteUtils {
+public final class TestSiteUtilsEmpty {
 
     /**
      * Instance of the utils class being tested.
@@ -54,78 +48,108 @@ public final class TestFixHeadingIdsSiteUtils {
     /**
      * Default constructor.
      */
-    public TestFixHeadingIdsSiteUtils() {
+    public TestSiteUtilsEmpty() {
         super();
     }
 
     /**
-     * Tests that HTML with no headings is ignored.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testNoHeadings_Ignored() {
+    public final void testFixAnchorLinks_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<p>Some text</p>";
+        html = "";
+        htmlExpected = "";
 
-        result = util.fixHeadingIds(html);
-
-        htmlExpected = "<p>Some text</p>";
+        result = util.fixAnchorLinks(html);
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the id is correctly fixed.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testWithId_CorrectId() {
+    public final void testFixHeadingIds_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1 id=\"a.heading\">A heading</h1><h3 id=\"another.heading\">Another heading</h3>";
+        html = "";
+        htmlExpected = "";
 
         result = util.fixHeadingIds(html);
-
-        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the id is correctly added to headings with points.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testWithPoints_CorrectId() {
+    public final void testFixReport_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1>com.wandrell</h1><h3>com.wandrell</h3>";
+        html = "";
+        htmlExpected = "";
 
-        result = util.fixHeadingIds(html);
-
-        htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>\n<h3 id=\"comwandrell\">com.wandrell</h3>";
+        result = util.fixReport(html, "");
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that the id is correctly added to headings with spaces.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testWithSpaces_CorrectId() {
+    public final void testTransformIcons_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1>A heading</h1><h3>Another heading</h3>";
+        html = "";
+        htmlExpected = "";
 
-        result = util.fixHeadingIds(html);
+        result = util.transformIcons(html);
 
-        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
+    public final void testTransformImagesToFigures_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+        htmlExpected = "";
+
+        result = util.transformImagesToFigures(html);
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
+    public final void testTransformTables_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+        htmlExpected = "";
+
+        result = util.transformTables(html);
 
         Assert.assertEquals(result, htmlExpected);
     }

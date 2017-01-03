@@ -27,32 +27,25 @@ package com.wandrell.velocity.tool.test.unit.html5fix;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HTML5UpdateUtils;
+import com.wandrell.velocity.tool.Html5UpdateUtils;
 
 /**
- * Unit tests for {@link HTML5UpdateUtils}.
- * <p>
- * Checks the following cases:
- * <ol>
- * <li>When trying to fix the outdated code blocks these are updated correctly.
- * </li>
- * <li>HTML with no code sections is ignored.</li>
- * </ol>
+ * Unit tests for {@link Html5UpdateUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HTML5UpdateUtils
+ * @see Html5UpdateUtils
  */
-public final class TestUpdateCodeSectionsHTML5UpdateUtils {
+public final class TestHtml5UpdateUtilsUpdateCodeSections {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HTML5UpdateUtils util = new HTML5UpdateUtils();
+    private final Html5UpdateUtils util = new Html5UpdateUtils();
 
     /**
      * Default constructor.
      */
-    public TestUpdateCodeSectionsHTML5UpdateUtils() {
+    public TestHtml5UpdateUtilsUpdateCodeSections() {
         super();
     }
 
