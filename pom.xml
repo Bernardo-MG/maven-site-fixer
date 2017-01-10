@@ -103,30 +103,6 @@
                      <artifactId>lifecycle-mapping</artifactId>
                      <version>${plugin.lifecycle.version}</version>
                      <configuration>
-                        <lifecycleMappingMetadata>
-                           <pluginExecutions>
-                              <pluginExecution>
-                                 <!-- jacoco plugin configuration -->
-                                 <!-- Fixes the errors with Eclipse not recognizing 
-                                    the plugin configuration -->
-                                 <pluginExecutionFilter>
-                                    <groupId>org.jacoco</groupId>
-                                    <artifactId>jacoco-maven-plugin</artifactId>
-                                    <versionRange>[0.5,)</versionRange>
-                                    <goals>
-                                       <!-- The 'prepare-agent' goal is registered 
-                                          to m2e. -->
-                                       <goal>prepare-agent</goal>
-                                    </goals>
-                                 </pluginExecutionFilter>
-                                 <action>
-                                    <!-- As m2e doesn't know what to do with jacoco, 
-                                       it is ignored to avoid error warnings. -->
-                                    <ignore />
-                                 </action>
-                              </pluginExecution>
-                           </pluginExecutions>
-                        </lifecycleMappingMetadata>
                         <downloadSources>true</downloadSources>
                         <downloadJavadocs>true</downloadJavadocs>
                      </configuration>
@@ -222,7 +198,7 @@
       <testng.version>6.10</testng.version>
       <velocity.tools.version>2.0</velocity.tools.version>
       <!-- Plugins versions -->
-      <plugin.changes.version>2.12</plugin.changes.version>
+      <plugin.changes.version>2.12.1</plugin.changes.version>
       <!-- Maven Site -->
       <site.skin.version>0.5.3</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
