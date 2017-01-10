@@ -53,19 +53,9 @@ public final class TestSkinConfigUtilsGetFileId {
      */
     @Test
     public final void testGetFileId_EmptyFile_EmptyId() {
-        final SkinConfigUtils util;    // Utilities class to test
-        final Map<Object, Object> map; // Configuration map
-        final ToolContext context;     // Velocity context
+        final SkinConfigUtils util; // Utilities class to test
 
-        util = new SkinConfigUtils();
-
-        context = new ToolContext();
-        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY, "");
-
-        map = new HashMap<>();
-        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
-
-        util.configure(map);
+        util = getSkinConfigUtils("");
 
         Assert.assertEquals(util.getFileId(), "");
     }
@@ -75,20 +65,9 @@ public final class TestSkinConfigUtilsGetFileId {
      */
     @Test
     public final void testGetFileId_MultipleLines_Slugged() {
-        final SkinConfigUtils util;    // Utilities class to test
-        final Map<Object, Object> map; // Configuration map
-        final ToolContext context;     // Velocity context
+        final SkinConfigUtils util; // Utilities class to test
 
-        util = new SkinConfigUtils();
-
-        context = new ToolContext();
-        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY,
-                "path-to\\file_name---something.html");
-
-        map = new HashMap<>();
-        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
-
-        util.configure(map);
+        util = getSkinConfigUtils("path-to\\file_name---something.html");
 
         Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
     }
@@ -98,20 +77,9 @@ public final class TestSkinConfigUtilsGetFileId {
      */
     @Test
     public final void testGetFileId_MultiplePoints_Slugged() {
-        final SkinConfigUtils util;    // Utilities class to test
-        final Map<Object, Object> map; // Configuration map
-        final ToolContext context;     // Velocity context
+        final SkinConfigUtils util; // Utilities class to test
 
-        util = new SkinConfigUtils();
-
-        context = new ToolContext();
-        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY,
-                "path-to\\file_name.something.html");
-
-        map = new HashMap<>();
-        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
-
-        util.configure(map);
+        util = getSkinConfigUtils("path-to\\file_name.something.html");
 
         Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
     }
@@ -121,20 +89,9 @@ public final class TestSkinConfigUtilsGetFileId {
      */
     @Test
     public final void testGetFileId_NoExtension_Slugged() {
-        final SkinConfigUtils util;    // Utilities class to test
-        final Map<Object, Object> map; // Configuration map
-        final ToolContext context;     // Velocity context
+        final SkinConfigUtils util; // Utilities class to test
 
-        util = new SkinConfigUtils();
-
-        context = new ToolContext();
-        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY,
-                "path-to\\file_name");
-
-        map = new HashMap<>();
-        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
-
-        util.configure(map);
+        util = getSkinConfigUtils("path-to\\file_name");
 
         Assert.assertEquals(util.getFileId(), "path-to-file-name");
     }
@@ -144,19 +101,9 @@ public final class TestSkinConfigUtilsGetFileId {
      */
     @Test
     public final void testGetFileId_NullFile_EmptyId() {
-        final SkinConfigUtils util;    // Utilities class to test
-        final Map<Object, Object> map; // Configuration map
-        final ToolContext context;     // Velocity context
+        final SkinConfigUtils util; // Utilities class to test
 
-        util = new SkinConfigUtils();
-
-        context = new ToolContext();
-        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY, null);
-
-        map = new HashMap<>();
-        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
-
-        util.configure(map);
+        util = getSkinConfigUtils(null);
 
         Assert.assertEquals(util.getFileId(), "");
     }
@@ -166,19 +113,9 @@ public final class TestSkinConfigUtilsGetFileId {
      */
     @Test
     public final void testGetFileId_OnlyExtension_Empty() {
-        final SkinConfigUtils util;    // Utilities class to test
-        final Map<Object, Object> map; // Configuration map
-        final ToolContext context;     // Velocity context
+        final SkinConfigUtils util; // Utilities class to test
 
-        util = new SkinConfigUtils();
-
-        context = new ToolContext();
-        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY, ".html");
-
-        map = new HashMap<>();
-        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
-
-        util.configure(map);
+        util = getSkinConfigUtils(".html");
 
         Assert.assertEquals(util.getFileId(), "");
     }
@@ -188,6 +125,19 @@ public final class TestSkinConfigUtilsGetFileId {
      */
     @Test
     public final void testGetFileId_ValidFile_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
+
+        util = getSkinConfigUtils("path-to\\file_name.html");
+
+        Assert.assertEquals(util.getFileId(), "path-to-file-name");
+    }
+
+    /**
+     * Returns the utilities class being tested, setted up for the tests.
+     * 
+     * @return the utilities class to test
+     */
+    private final SkinConfigUtils getSkinConfigUtils(final String fileName) {
         final SkinConfigUtils util;    // Utilities class to test
         final Map<Object, Object> map; // Configuration map
         final ToolContext context;     // Velocity context
@@ -195,15 +145,14 @@ public final class TestSkinConfigUtilsGetFileId {
         util = new SkinConfigUtils();
 
         context = new ToolContext();
-        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY,
-                "path-to\\file_name.html");
+        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY, fileName);
 
         map = new HashMap<>();
         map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
 
         util.configure(map);
 
-        Assert.assertEquals(util.getFileId(), "path-to-file-name");
+        return util;
     }
 
 }
