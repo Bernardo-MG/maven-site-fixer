@@ -228,6 +228,8 @@ public class SiteUtils {
             case "team-list":
                 fixReportTeamList(body);
                 break;
+            default:
+                break;
         }
 
         return body.html();
