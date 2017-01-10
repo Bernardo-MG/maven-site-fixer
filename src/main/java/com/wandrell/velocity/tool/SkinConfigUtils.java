@@ -66,22 +66,22 @@ public final class SkinConfigUtils extends SafeConfig {
     /**
      * The key identifying the current file name in the velocity context.
      */
-    private static final String CURRENT_FILE_NAME_KEY = "currentFileName";
+    public static final String CURRENT_FILE_NAME_KEY = "currentFileName";
 
     /**
      * The key identifying the decoration in the velocity context.
      */
-    private static final String DECORATION_KEY        = "decoration";
+    public static final String DECORATION_KEY        = "decoration";
 
     /**
      * The key identifying the Maven project.
      */
-    private static final String MAVEN_PROJECT_KEY     = "project";
+    public static final String MAVEN_PROJECT_KEY     = "project";
 
     /**
      * The key identifying the pages node.
      */
-    private static final String PAGES_KEY             = "pages";
+    public static final String PAGES_KEY             = "pages";
 
     /**
      * Key for the skin configuration.
@@ -102,24 +102,24 @@ public final class SkinConfigUtils extends SafeConfig {
      * <p>
      * That is, if the default value of skinConfig is kept.
      */
-    private static final String SKIN_KEY              = "skinConfig";
+    public static final String SKIN_KEY              = "skinConfig";
 
     /**
      * The key identifying the velocity context.
      */
-    private static final String VELOCITY_CONTEXT_KEY  = "velocityContext";
+    public static final String VELOCITY_CONTEXT_KEY  = "velocityContext";
 
     /**
      * Identifier for the current file.
      * <p>
      * This is a slug created from the current file's name.
      */
-    private String              fileId;
+    private String             fileId;
 
     /**
      * Regex for non-latin characters.
      */
-    private final Pattern       nonLatin              = Pattern
+    private final Pattern      nonLatin              = Pattern
             .compile("[^\\w-]");
 
     /**
@@ -128,14 +128,14 @@ public final class SkinConfigUtils extends SafeConfig {
      * This is the node for the current page inside the {@code <pages>} node,
      * located in the {@code <skinConfig>} node, in the site.xml file.
      */
-    private Xpp3Dom             pageConfig            = new Xpp3Dom("");
+    private Xpp3Dom            pageConfig            = new Xpp3Dom("");
 
     /**
      * Identifier for the project.
      * <p>
      * This is a slug created from the artifact id contained in the POM file.
      */
-    private String              projectId;
+    private String             projectId;
 
     /**
      * Skin configuration node.
@@ -143,13 +143,17 @@ public final class SkinConfigUtils extends SafeConfig {
      * This is the {@code <skinConfig>} located in the site.xml file, inside the
      * {@code <custom>} node.
      */
-    private Xpp3Dom             skinConfig            = new Xpp3Dom("");
+    private Xpp3Dom            skinConfig            = new Xpp3Dom("");
 
     /**
      * Regex for whitespaces.
      */
-    private final Pattern       whitespace            = Pattern
-            .compile("[\\s]");
+    private final Pattern      whitespace            = Pattern.compile("[\\s]");
+
+    /**
+     * Regex for multiple lines.
+     */
+    private final Pattern      multipleLine          = Pattern.compile("-+");
 
     /**
      * Constructs an instance of the {@code SkinConfigUtil}.
@@ -286,6 +290,15 @@ public final class SkinConfigUtils extends SafeConfig {
     }
 
     /**
+     * Returns the regular expression for multiple lines.
+     * 
+     * @return the regular expression for multiple lines
+     */
+    private final Pattern getMultipleLinePattern() {
+        return multipleLine;
+    }
+
+    /**
      * Loads the file identifier from the velocity tools context.
      * <p>
      * This is generated from the file's name.
@@ -295,18 +308,28 @@ public final class SkinConfigUtils extends SafeConfig {
      */
     private final void loadFileId(final ToolContext context) {
         final Integer lastDot; // Location of the extension dot
+        final Object currentFileObj; // File's name as received
         String currentFile;    // File's name
 
-        currentFile = context.get(CURRENT_FILE_NAME_KEY).toString();
+        if (context.containsKey(CURRENT_FILE_NAME_KEY)) {
+            currentFileObj = context.get(CURRENT_FILE_NAME_KEY);
+            if (currentFileObj == null) {
+                setFileId("");
+            } else {
+                currentFile = String.valueOf(currentFileObj);
 
-        // Drops the extension
-        lastDot = currentFile.lastIndexOf('.');
-        if (lastDot >= 0) {
-            currentFile = currentFile.substring(0, lastDot);
+                // Drops the extension
+                lastDot = currentFile.lastIndexOf('.');
+                if (lastDot >= 0) {
+                    currentFile = currentFile.substring(0, lastDot);
+                }
+
+                // File name is slugged
+                setFileId(slug(currentFile));
+            }
+        } else {
+            setFileId("");
         }
-
-        // File name is slugged
-        setFileId(slug(currentFile.replace('/', '-').replace('\\', '-')));
     }
 
     /**
@@ -434,15 +457,22 @@ public final class SkinConfigUtils extends SafeConfig {
      * @return the slug of the given text
      */
     private final String slug(final String text) {
-        final String separator;   // Separator for swapping whitespaces
-        String corrected;         // Modified string
+        final String separator; // Separator for swapping whitespaces
+        String corrected;       // Modified string
 
         checkNotNull(text, "Received a null pointer as the text");
 
         separator = "-";
 
+        corrected = text.replace('/', '-').replace('\\', '-').replace('.', '-')
+                .replace('_', '-');
+
+        // Removes multiple lines
+        corrected = getMultipleLinePattern().matcher(corrected)
+                .replaceAll(separator);
         // Removes white spaces
-        corrected = getWhitespacePattern().matcher(text).replaceAll(separator);
+        corrected = getWhitespacePattern().matcher(corrected)
+                .replaceAll(separator);
         // Removes non-latin characters
         corrected = getNonLatinPattern().matcher(corrected).replaceAll("");
 
