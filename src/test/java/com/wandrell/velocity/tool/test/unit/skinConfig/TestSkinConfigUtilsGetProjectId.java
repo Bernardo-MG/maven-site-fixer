@@ -44,113 +44,113 @@ import com.wandrell.velocity.tool.SkinConfigUtils;
  */
 public final class TestSkinConfigUtilsGetProjectId {
 
-	/**
-	 * Default constructor.
-	 */
-	public TestSkinConfigUtilsGetProjectId() {
-		super();
-	}
+    /**
+     * Default constructor.
+     */
+    public TestSkinConfigUtilsGetProjectId() {
+        super();
+    }
 
-	/**
-	 * Tests that a name beggining with a point gives a slugged project id.
-	 */
-	@Test
-	public final void testgetProjectId_BeginsWithPoint_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a name beggining with a point gives a slugged project id.
+     */
+    @Test
+    public final void testgetProjectId_BeginsWithPoint_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils(".project");
+        util = getSkinConfigUtils(".project");
 
-		Assert.assertEquals(util.getProjectId(), "-project");
-	}
+        Assert.assertEquals(util.getProjectId(), "-project");
+    }
 
-	/**
-	 * Tests that an empty name gives an empty project id.
-	 */
-	@Test
-	public final void testgetProjectId_EmptyName_EmptyId() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that an empty name gives an empty project id.
+     */
+    @Test
+    public final void testgetProjectId_EmptyName_EmptyId() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("");
+        util = getSkinConfigUtils("");
 
-		Assert.assertEquals(util.getProjectId(), "");
-	}
+        Assert.assertEquals(util.getProjectId(), "");
+    }
 
-	/**
-	 * Tests that a name with multiple points gives a slugged project id.
-	 */
-	@Test
-	public final void testgetProjectId_MultiplePoints_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a name with multiple points gives a slugged project id.
+     */
+    @Test
+    public final void testgetProjectId_MultiplePoints_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("project.something.name");
+        util = getSkinConfigUtils("project.something.name");
 
-		Assert.assertEquals(util.getProjectId(), "project-something-name");
-	}
+        Assert.assertEquals(util.getProjectId(), "project-something-name");
+    }
 
-	/**
-	 * Tests that a name with multiple line separators gives a slugged project
-	 * id.
-	 */
-	@Test
-	public final void testgetProjectId_MultipleSeparators_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a name with multiple line separators gives a slugged project
+     * id.
+     */
+    @Test
+    public final void testgetProjectId_MultipleSeparators_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("project---name");
+        util = getSkinConfigUtils("project---name");
 
-		Assert.assertEquals(util.getProjectId(), "project-name");
-	}
+        Assert.assertEquals(util.getProjectId(), "project-name");
+    }
 
-	/**
-	 * Tests that a null name gives an empty project id.
-	 */
-	@Test
-	public final void testgetProjectId_NullName_EmptyId() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a null name gives an empty project id.
+     */
+    @Test
+    public final void testgetProjectId_NullName_EmptyId() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils(null);
+        util = getSkinConfigUtils(null);
 
-		Assert.assertEquals(util.getProjectId(), "");
-	}
+        Assert.assertEquals(util.getProjectId(), "");
+    }
 
-	/**
-	 * Tests that a valid name gives a slugged project id.
-	 */
-	@Test
-	public final void testgetProjectId_ValidName_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a valid name gives a slugged project id.
+     */
+    @Test
+    public final void testgetProjectId_ValidName_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("project-name");
+        util = getSkinConfigUtils("project-name");
 
-		Assert.assertEquals(util.getProjectId(), "project-name");
-	}
+        Assert.assertEquals(util.getProjectId(), "project-name");
+    }
 
-	/**
-	 * Returns the utilities class being tested, set up for the tests.
-	 * 
-	 * @param projectName
-	 *            name of the project
-	 * @return the utilities class to test
-	 */
-	private final SkinConfigUtils getSkinConfigUtils(final String projectName) {
-		final SkinConfigUtils util; // Utilities class to test
-		final Map<Object, Object> map; // Configuration map
-		final ToolContext context; // Velocity context
-		final MavenProject project; // Maven project data
+    /**
+     * Returns the utilities class being tested, set up for the tests.
+     * 
+     * @param projectName
+     *            name of the project
+     * @return the utilities class to test
+     */
+    private final SkinConfigUtils getSkinConfigUtils(final String projectName) {
+        final SkinConfigUtils util; // Utilities class to test
+        final Map<Object, Object> map; // Configuration map
+        final ToolContext context; // Velocity context
+        final MavenProject project; // Maven project data
 
-		project = Mockito.mock(MavenProject.class);
-		Mockito.when(project.getArtifactId()).thenReturn(projectName);
+        project = Mockito.mock(MavenProject.class);
+        Mockito.when(project.getArtifactId()).thenReturn(projectName);
 
-		util = new SkinConfigUtils();
+        util = new SkinConfigUtils();
 
-		context = new ToolContext();
-		context.put(SkinConfigUtils.MAVEN_PROJECT_KEY, project);
+        context = new ToolContext();
+        context.put(SkinConfigUtils.MAVEN_PROJECT_KEY, project);
 
-		map = new HashMap<>();
-		map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
+        map = new HashMap<>();
+        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
 
-		util.configure(map);
+        util.configure(map);
 
-		return util;
-	}
+        return util;
+    }
 
 }

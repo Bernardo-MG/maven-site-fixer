@@ -41,120 +41,120 @@ import com.wandrell.velocity.tool.SkinConfigUtils;
  */
 public final class TestSkinConfigUtilsGetFileId {
 
-	/**
-	 * Default constructor.
-	 */
-	public TestSkinConfigUtilsGetFileId() {
-		super();
-	}
+    /**
+     * Default constructor.
+     */
+    public TestSkinConfigUtilsGetFileId() {
+        super();
+    }
 
-	/**
-	 * Tests that an empty file gives an empty file id.
-	 */
-	@Test
-	public final void testGetFileId_EmptyFile_EmptyId() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that an empty file gives an empty file id.
+     */
+    @Test
+    public final void testGetFileId_EmptyFile_EmptyId() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("");
+        util = getSkinConfigUtils("");
 
-		Assert.assertEquals(util.getFileId(), "");
-	}
+        Assert.assertEquals(util.getFileId(), "");
+    }
 
-	/**
-	 * Tests that a file with multiple points gives a slugged file id.
-	 */
-	@Test
-	public final void testGetFileId_MultiplePoints_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a file with multiple points gives a slugged file id.
+     */
+    @Test
+    public final void testGetFileId_MultiplePoints_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("path-to\\file_name.something.html");
+        util = getSkinConfigUtils("path-to\\file_name.something.html");
 
-		Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
-	}
+        Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
+    }
 
-	/**
-	 * Tests that a file with multiple line separators gives a slugged file id.
-	 */
-	@Test
-	public final void testGetFileId_MultipleSeparators_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a file with multiple line separators gives a slugged file id.
+     */
+    @Test
+    public final void testGetFileId_MultipleSeparators_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("path-to\\file_name---something.html");
+        util = getSkinConfigUtils("path-to\\file_name---something.html");
 
-		Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
-	}
+        Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
+    }
 
-	/**
-	 * Tests that a file without extension gives a slugged file id.
-	 */
-	@Test
-	public final void testGetFileId_NoExtension_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a file without extension gives a slugged file id.
+     */
+    @Test
+    public final void testGetFileId_NoExtension_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("path-to\\file_name");
+        util = getSkinConfigUtils("path-to\\file_name");
 
-		Assert.assertEquals(util.getFileId(), "path-to-file-name");
-	}
+        Assert.assertEquals(util.getFileId(), "path-to-file-name");
+    }
 
-	/**
-	 * Tests that a null file gives an empty file id.
-	 */
-	@Test
-	public final void testGetFileId_NullFile_EmptyId() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a null file gives an empty file id.
+     */
+    @Test
+    public final void testGetFileId_NullFile_EmptyId() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils(null);
+        util = getSkinConfigUtils(null);
 
-		Assert.assertEquals(util.getFileId(), "");
-	}
+        Assert.assertEquals(util.getFileId(), "");
+    }
 
-	/**
-	 * Tests that a file with only an extension gives an empty id.
-	 */
-	@Test
-	public final void testGetFileId_OnlyExtension_Empty() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a file with only an extension gives an empty id.
+     */
+    @Test
+    public final void testGetFileId_OnlyExtension_Empty() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils(".html");
+        util = getSkinConfigUtils(".html");
 
-		Assert.assertEquals(util.getFileId(), "");
-	}
+        Assert.assertEquals(util.getFileId(), "");
+    }
 
-	/**
-	 * Tests that a valid file gives a slugged file id.
-	 */
-	@Test
-	public final void testGetFileId_ValidFile_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
+    /**
+     * Tests that a valid file gives a slugged file id.
+     */
+    @Test
+    public final void testGetFileId_ValidFile_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("path-to\\file_name.html");
+        util = getSkinConfigUtils("path-to\\file_name.html");
 
-		Assert.assertEquals(util.getFileId(), "path-to-file-name");
-	}
+        Assert.assertEquals(util.getFileId(), "path-to-file-name");
+    }
 
-	/**
-	 * Returns the utilities class being tested, set up for the tests.
-	 * 
-	 * @param fileName
-	 *            name of the current file
-	 * @return the utilities class to test
-	 */
-	private final SkinConfigUtils getSkinConfigUtils(final String fileName) {
-		final SkinConfigUtils util; // Utilities class to test
-		final Map<Object, Object> map; // Configuration map
-		final ToolContext context; // Velocity context
+    /**
+     * Returns the utilities class being tested, set up for the tests.
+     * 
+     * @param fileName
+     *            name of the current file
+     * @return the utilities class to test
+     */
+    private final SkinConfigUtils getSkinConfigUtils(final String fileName) {
+        final SkinConfigUtils util; // Utilities class to test
+        final Map<Object, Object> map; // Configuration map
+        final ToolContext context; // Velocity context
 
-		util = new SkinConfigUtils();
+        util = new SkinConfigUtils();
 
-		context = new ToolContext();
-		context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY, fileName);
+        context = new ToolContext();
+        context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY, fileName);
 
-		map = new HashMap<>();
-		map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
+        map = new HashMap<>();
+        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
 
-		util.configure(map);
+        util.configure(map);
 
-		return util;
-	}
+        return util;
+    }
 
 }
