@@ -374,11 +374,11 @@ public final class SkinConfigUtils extends SafeConfig {
      *            decoration data
      */
     private final void processDecoration(final DecorationModel model) {
-        final Object customObj; // Object for the <custom> node
+        final Object customObj;   // Object for the <custom> node
         final Xpp3Dom customNode; // <custom> node
-        final Xpp3Dom pagesNode; // <pages> node
-        final Xpp3Dom skinNode; // <skinConfig> node
-        final Xpp3Dom page; // Current page node
+        final Xpp3Dom pagesNode;  // <pages> node
+        final Xpp3Dom skinNode;   // <skinConfig> node
+        final Xpp3Dom pageNode;   // Current page node
 
         customObj = model.getCustom();
 
@@ -390,20 +390,26 @@ public final class SkinConfigUtils extends SafeConfig {
             // Acquires <skinConfig> node
             skinNode = customNode.getChild(SKIN_KEY);
 
-            checkNotNull(skinNode,
-                    "The skin configuration node is missing from the decoration. Make sure it can be found in the <custom> node, inside the site.xml file");
+            if (skinNode == null) {
+                setSkinConfig(new Xpp3Dom(""));
+                setPageConfig(new Xpp3Dom(""));
+            } else {
+                setSkinConfig(skinNode);
 
-            setSkinConfig(skinNode);
+                // Acquires the <pages> node
+                pagesNode = skinNode.getChild(PAGES_KEY);
+                if (pagesNode == null) {
+                    setPageConfig(new Xpp3Dom(""));
+                } else {
 
-            // Acquires the <pages> node
-            pagesNode = skinNode.getChild(PAGES_KEY);
-            if (pagesNode != null) {
+                    // Get the page node for the current file
+                    pageNode = pagesNode.getChild(getFileId());
 
-                // Get the page node for the current file
-                page = pagesNode.getChild(getFileId());
-
-                if (page != null) {
-                    setPageConfig(page);
+                    if (pageNode == null) {
+                        setPageConfig(new Xpp3Dom(""));
+                    } else {
+                        setPageConfig(pageNode);
+                    }
                 }
             }
         }
