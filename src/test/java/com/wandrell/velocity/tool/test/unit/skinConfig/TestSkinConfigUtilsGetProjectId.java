@@ -113,6 +113,18 @@ public final class TestSkinConfigUtilsGetProjectId {
     }
 
     /**
+     * Tests that an invalid project data object gives an empty project id.
+     */
+    @Test
+    public final void testgetProjectId_NoMavenProject_EmptyId() {
+        final SkinConfigUtils util; // Utilities class to test
+
+        util = getSkinConfigUtilsNoMavenProject();
+
+        Assert.assertEquals(util.getProjectId(), "");
+    }
+
+    /**
      * Tests that a null name gives an empty project id.
      */
     @Test
@@ -146,11 +158,38 @@ public final class TestSkinConfigUtilsGetProjectId {
     private final SkinConfigUtils getSkinConfigUtils(final String projectName) {
         final SkinConfigUtils util; // Utilities class to test
         final Map<Object, Object> map; // Configuration map
-        final ToolContext context; // Velocity context
+        final ToolContext context;  // Velocity context
         final MavenProject project; // Maven project data
 
         project = Mockito.mock(MavenProject.class);
         Mockito.when(project.getArtifactId()).thenReturn(projectName);
+
+        util = new SkinConfigUtils();
+
+        context = new ToolContext();
+        context.put(SkinConfigUtils.MAVEN_PROJECT_KEY, project);
+
+        map = new HashMap<>();
+        map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
+
+        util.configure(map);
+
+        return util;
+    }
+
+    /**
+     * Returns the utilities class where the project data is not stored in a
+     * Maven project object.
+     * 
+     * @return the utilities class to test
+     */
+    private final SkinConfigUtils getSkinConfigUtilsNoMavenProject() {
+        final SkinConfigUtils util; // Utilities class to test
+        final Map<Object, Object> map; // Configuration map
+        final ToolContext context;  // Velocity context
+        final String project;       // Maven project data
+
+        project = "project";
 
         util = new SkinConfigUtils();
 
