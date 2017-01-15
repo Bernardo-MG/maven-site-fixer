@@ -32,86 +32,99 @@ import org.apache.velocity.tools.config.DefaultKey;
 
 /**
  * Utilities class for generating Doxia menu classes.
+ * <p>
+ * This was created for Maven Sites, which are built through Doxia. With the use
+ * of this class it is possible creating new menus dynamically with ease inside
+ * Velocity macros.
  * 
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("menuTool")
 public final class MenuUtils {
 
-    /**
-     * Constructs an instance of the {@code MenuUtils}.
-     */
-    public MenuUtils() {
-        super();
-    }
+	/**
+	 * Constructs an instance of the {@code MenuUtils}.
+	 */
+	public MenuUtils() {
+		super();
+	}
 
-    /**
-     * Adds a link menu item to a menu.
-     * 
-     * @param menu
-     *            the menu where the item will be added
-     * @param name
-     *            name of the item
-     * @param url
-     *            url for the link
-     * @return the menu with the item added
-     */
-    public final Menu addLinkItem(final Menu menu, final String name,
-            final String url) {
-        final MenuItem item; // Menu item to add
+	/**
+	 * Adds a link menu item to a menu.
+	 * <p>
+	 * This is a menu item with a value set in the href field.
+	 * 
+	 * @param menu
+	 *            the menu where the item will be added
+	 * @param name
+	 *            name of the item
+	 * @param url
+	 *            url for the link
+	 * @return the menu with the item added
+	 */
+	public final Menu addLinkItem(final Menu menu, final String name, final String url) {
+		final MenuItem item; // Menu item to add
 
-        item = new MenuItem();
-        item.setName(name);
-        item.setHref(url);
+		checkNotNull(name, "Received a null pointer as name");
+		checkNotNull(url, "Received a null pointer as url");
 
-        menu.addItem(item);
+		item = new MenuItem();
+		item.setName(name);
+		item.setHref(url);
 
-        return menu;
-    }
+		menu.addItem(item);
 
-    /**
-     * Adds a link menu item to a menu.
-     * 
-     * @param menu
-     *            the menu where the item will be added
-     * @param name
-     *            name of the item
-     * @param url
-     *            url for the link
-     * @param description
-     *            description for the link
-     * @return the menu with the item added
-     */
-    public final Menu addLinkItem(final Menu menu, final String name,
-            final String url, final String description) {
-        final MenuItem item; // Menu item to add
+		return menu;
+	}
 
-        item = new MenuItem();
-        item.setName(name);
-        item.setHref(url);
-        item.setDescription(description);
+	/**
+	 * Adds a link menu item to a menu.
+	 * <p>
+	 * This is a menu item with a value set in the href field.
+	 * 
+	 * @param menu
+	 *            the menu where the item will be added
+	 * @param name
+	 *            name of the item
+	 * @param url
+	 *            url for the link
+	 * @param description
+	 *            description for the link
+	 * @return the menu with the item added
+	 */
+	public final Menu addLinkItem(final Menu menu, final String name, final String url, final String description) {
+		final MenuItem item; // Menu item to add
 
-        menu.addItem(item);
+		checkNotNull(name, "Received a null pointer as name");
+		checkNotNull(url, "Received a null pointer as url");
+		checkNotNull(description, "Received a null pointer as description");
 
-        return menu;
-    }
+		item = new MenuItem();
+		item.setName(name);
+		item.setHref(url);
+		item.setDescription(description);
 
-    /**
-     * Generates a Doxia menu instance with the specified name.
-     * 
-     * @param name
-     *            the name for the menu
-     * @return a menu with the specified name
-     */
-    public final Menu menu(final String name) {
-        final Menu menu; // Generated menu
+		menu.addItem(item);
 
-        checkNotNull(name, "Received a null pointer as name");
+		return menu;
+	}
 
-        menu = new Menu();
-        menu.setName(name);
+	/**
+	 * Generates a Doxia menu instance with the specified name.
+	 * 
+	 * @param name
+	 *            the name for the menu
+	 * @return a menu with the specified name
+	 */
+	public final Menu menu(final String name) {
+		final Menu menu; // Generated menu
 
-        return menu;
-    }
+		checkNotNull(name, "Received a null pointer as name");
+
+		menu = new Menu();
+		menu.setName(name);
+
+		return menu;
+	}
 
 }

@@ -27,127 +27,123 @@ package com.wandrell.velocity.tool.test.unit.skinConfig;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.maven.project.MavenProject;
 import org.apache.velocity.tools.ToolContext;
+import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.SkinConfigUtils;
 
 /**
- * Unit tests for {@link SkinConfigUtils}, testing the {@code getFileId} method.
+ * Unit tests for {@link SkinConfigUtils}, testing the {@code getProjectId}
+ * method.
  * 
  * @author Bernardo Martínez Garrido
  * @see SkinConfigUtils
  */
-public final class TestSkinConfigUtilsGetFileId {
+public final class TestSkinConfigUtilsGetProjectId {
 
 	/**
 	 * Default constructor.
 	 */
-	public TestSkinConfigUtilsGetFileId() {
+	public TestSkinConfigUtilsGetProjectId() {
 		super();
 	}
 
 	/**
-	 * Tests that an empty file gives an empty file id.
+	 * Tests that a name beggining with a point gives a slugged project id.
 	 */
 	@Test
-	public final void testGetFileId_EmptyFile_EmptyId() {
+	public final void testgetProjectId_BeginsWithPoint_Slugged() {
+		final SkinConfigUtils util; // Utilities class to test
+
+		util = getSkinConfigUtils(".project");
+
+		Assert.assertEquals(util.getProjectId(), "-project");
+	}
+
+	/**
+	 * Tests that an empty name gives an empty project id.
+	 */
+	@Test
+	public final void testgetProjectId_EmptyName_EmptyId() {
 		final SkinConfigUtils util; // Utilities class to test
 
 		util = getSkinConfigUtils("");
 
-		Assert.assertEquals(util.getFileId(), "");
+		Assert.assertEquals(util.getProjectId(), "");
 	}
 
 	/**
-	 * Tests that a file with multiple points gives a slugged file id.
+	 * Tests that a name with multiple points gives a slugged project id.
 	 */
 	@Test
-	public final void testGetFileId_MultiplePoints_Slugged() {
+	public final void testgetProjectId_MultiplePoints_Slugged() {
 		final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("path-to\\file_name.something.html");
+		util = getSkinConfigUtils("project.something.name");
 
-		Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
+		Assert.assertEquals(util.getProjectId(), "project-something-name");
 	}
 
 	/**
-	 * Tests that a file with multiple line separators gives a slugged file id.
+	 * Tests that a name with multiple line separators gives a slugged project
+	 * id.
 	 */
 	@Test
-	public final void testGetFileId_MultipleSeparators_Slugged() {
+	public final void testgetProjectId_MultipleSeparators_Slugged() {
 		final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils("path-to\\file_name---something.html");
+		util = getSkinConfigUtils("project---name");
 
-		Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
+		Assert.assertEquals(util.getProjectId(), "project-name");
 	}
 
 	/**
-	 * Tests that a file without extension gives a slugged file id.
+	 * Tests that a null name gives an empty project id.
 	 */
 	@Test
-	public final void testGetFileId_NoExtension_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
-
-		util = getSkinConfigUtils("path-to\\file_name");
-
-		Assert.assertEquals(util.getFileId(), "path-to-file-name");
-	}
-
-	/**
-	 * Tests that a null file gives an empty file id.
-	 */
-	@Test
-	public final void testGetFileId_NullFile_EmptyId() {
+	public final void testgetProjectId_NullName_EmptyId() {
 		final SkinConfigUtils util; // Utilities class to test
 
 		util = getSkinConfigUtils(null);
 
-		Assert.assertEquals(util.getFileId(), "");
+		Assert.assertEquals(util.getProjectId(), "");
 	}
 
 	/**
-	 * Tests that a file with only an extension gives an empty id.
+	 * Tests that a valid name gives a slugged project id.
 	 */
 	@Test
-	public final void testGetFileId_OnlyExtension_Empty() {
+	public final void testgetProjectId_ValidName_Slugged() {
 		final SkinConfigUtils util; // Utilities class to test
 
-		util = getSkinConfigUtils(".html");
+		util = getSkinConfigUtils("project-name");
 
-		Assert.assertEquals(util.getFileId(), "");
-	}
-
-	/**
-	 * Tests that a valid file gives a slugged file id.
-	 */
-	@Test
-	public final void testGetFileId_ValidFile_Slugged() {
-		final SkinConfigUtils util; // Utilities class to test
-
-		util = getSkinConfigUtils("path-to\\file_name.html");
-
-		Assert.assertEquals(util.getFileId(), "path-to-file-name");
+		Assert.assertEquals(util.getProjectId(), "project-name");
 	}
 
 	/**
 	 * Returns the utilities class being tested, set up for the tests.
 	 * 
-	 * @param fileName
-	 *            name of the current file
+	 * @param projectName
+	 *            name of the project
 	 * @return the utilities class to test
 	 */
-	private final SkinConfigUtils getSkinConfigUtils(final String fileName) {
+	private final SkinConfigUtils getSkinConfigUtils(final String projectName) {
 		final SkinConfigUtils util; // Utilities class to test
 		final Map<Object, Object> map; // Configuration map
 		final ToolContext context; // Velocity context
+		final MavenProject project; // Maven project data
+
+		project = Mockito.mock(MavenProject.class);
+		Mockito.when(project.getArtifactId()).thenReturn(projectName);
 
 		util = new SkinConfigUtils();
 
 		context = new ToolContext();
-		context.put(SkinConfigUtils.CURRENT_FILE_NAME_KEY, fileName);
+		context.put(SkinConfigUtils.MAVEN_PROJECT_KEY, project);
 
 		map = new HashMap<>();
 		map.put(SkinConfigUtils.VELOCITY_CONTEXT_KEY, context);
