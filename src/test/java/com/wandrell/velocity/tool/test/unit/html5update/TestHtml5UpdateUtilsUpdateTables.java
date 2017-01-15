@@ -69,6 +69,24 @@ public class TestHtml5UpdateUtilsUpdateTables {
     }
 
     /**
+     * Tests that outdated tables with additional classes keep these.
+     */
+    @Test
+    public final void testOutdatedTable_KeepsTableClasses() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+
+        result = util.updateTables(html);
+
+        htmlExpected = "<table class=\"testClass\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
      * Tests that outdated tables are correctly cleaned up.
      */
     @Test
