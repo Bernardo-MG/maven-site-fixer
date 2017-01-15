@@ -117,9 +117,9 @@ public final class SkinConfigUtils extends SafeConfig {
     private String             fileId;
 
     /**
-     * Regex for multiple lines.
+     * Regex for multiple line separators.
      */
-    private final Pattern      multipleLine          = Pattern.compile("-+");
+    private final Pattern      multipleLineSeparator = Pattern.compile("-+");
 
     /**
      * Regex for non-latin characters.
@@ -237,7 +237,7 @@ public final class SkinConfigUtils extends SafeConfig {
      * @return the property's value transformed to a boolean
      */
     public final Boolean isTrue(final String property) {
-        final Xpp3Dom value; // Node with the property's value
+        final Xpp3Dom value;  // Node with the property's value
         final Boolean result; // Value transformed to a boolean
 
         checkNotNull(property, "Received a null pointer as property");
@@ -254,12 +254,12 @@ public final class SkinConfigUtils extends SafeConfig {
     }
 
     /**
-     * Returns the regular expression for multiple lines.
+     * Returns the regular expression for multiple line separators.
      * 
-     * @return the regular expression for multiple lines
+     * @return the regular expression for multiple line separators
      */
-    private final Pattern getMultipleLinePattern() {
-        return multipleLine;
+    private final Pattern getMultipleLineSeparatorPattern() {
+        return multipleLineSeparator;
     }
 
     /**
@@ -307,9 +307,9 @@ public final class SkinConfigUtils extends SafeConfig {
      *            the Velocity tools context
      */
     private final void loadFileId(final ToolContext context) {
-        final Integer lastDot; // Location of the extension dot
+        final Integer lastDot;       // Location of the extension dot
         final Object currentFileObj; // File's name as received
-        String currentFile; // File's name
+        String currentFile;          // File's name
 
         if (context.containsKey(CURRENT_FILE_NAME_KEY)) {
             currentFileObj = context.get(CURRENT_FILE_NAME_KEY);
@@ -341,9 +341,9 @@ public final class SkinConfigUtils extends SafeConfig {
      *            the Velocity tools context
      */
     private final void loadProjectId(final ToolContext context) {
-        final Object projectObj; // Object with the project info
+        final Object projectObj;    // Object with the project info
         final MavenProject project; // Casted project info
-        final String artifactId; // Maven artifact id
+        final String artifactId;    // Maven artifact id
 
         if (context.containsKey(MAVEN_PROJECT_KEY)) {
             projectObj = context.get(MAVEN_PROJECT_KEY);
@@ -474,7 +474,7 @@ public final class SkinConfigUtils extends SafeConfig {
      */
     private final String slug(final String text) {
         final String separator; // Separator for swapping whitespaces
-        String corrected; // Modified string
+        String corrected;       // Modified string
 
         checkNotNull(text, "Received a null pointer as the text");
 
@@ -484,7 +484,7 @@ public final class SkinConfigUtils extends SafeConfig {
                 .replace('_', '-');
 
         // Removes multiple lines
-        corrected = getMultipleLinePattern().matcher(corrected)
+        corrected = getMultipleLineSeparatorPattern().matcher(corrected)
                 .replaceAll(separator);
         // Removes white spaces
         corrected = getWhitespacePattern().matcher(corrected)
@@ -498,8 +498,8 @@ public final class SkinConfigUtils extends SafeConfig {
     @Override
     protected final void configure(final ValueParser values) {
         final Object velocityContext; // Value from the parser
-        final ToolContext ctxt; // Casted context
-        final Object decorationObj; // Value of the decoration key
+        final ToolContext ctxt;       // Casted context
+        final Object decorationObj;   // Value of the decoration key
 
         checkNotNull(values, "Received a null pointer as values");
 

@@ -84,8 +84,8 @@ public class SiteUtils {
      * @return HTML content, with the anchor href attribute fixed
      */
     public final String fixAnchorLinks(final String html) {
-        final Element body;     // Body of the HTML code
-        String ref;             // Value of the href attribute
+        final Element body; // Body of the HTML code
+        String ref;         // Value of the href attribute
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -244,7 +244,8 @@ public class SiteUtils {
      * @return the HTML with all the icons swapped for Font Awesome icons
      */
     public final String transformIcons(final String html) {
-        final Map<String, String> replacements;
+        final Map<String, String> replacements; // Texts to replace and
+                                                // replacements
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -288,9 +289,9 @@ public class SiteUtils {
      */
     public final String transformImagesToFigures(final String html) {
         final Collection<Element> images; // Image elements from the <body>
-        final Element body;     // Body of the HTML code
-        Element figure;         // <figure> element
-        Element caption;        // <figcaption> element
+        final Element body; // Body of the HTML code
+        Element figure;     // <figure> element
+        Element caption;    // <figcaption> element
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -327,7 +328,7 @@ public class SiteUtils {
      */
     public final String transformTables(final String html) {
         final Collection<Element> tables; // Tables to fix
-        final Element body;     // Body of the HTML code
+        final Element body; // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -455,7 +456,7 @@ public class SiteUtils {
      */
     private final void fixReportFailsafe(final Element body) {
         final Collection<Element> elements; // Found elements
-        final Element heading; // First h2 heading
+        final Element heading;              // First h2 heading
 
         elements = body.getElementsByTag("h2");
         if (!elements.isEmpty()) {
@@ -636,9 +637,9 @@ public class SiteUtils {
      */
     private final String replaceAll(final String html,
             final Map<String, String> replacements) {
-        final Element body;  // Element parsed from the content
-        String selector;     // Iterated selector
-        String replacement;  // Iterated HTML replacement
+        final Element body; // Element parsed from the content
+        String selector;    // Iterated selector
+        String replacement; // Iterated HTML replacement
         Element replacementElem; // Iterated replacement
         Collection<Element> elements; // Selected elements
         Element replacementBody; // Body of the replacement

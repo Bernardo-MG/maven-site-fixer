@@ -64,6 +64,18 @@ public final class TestSkinConfigUtilsGetProjectId {
     }
 
     /**
+     * Tests that a name with consecutive points gives a slugged project id.
+     */
+    @Test
+    public final void testgetProjectId_ConsecutivePoints_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
+
+        util = getSkinConfigUtils("project..something.name");
+
+        Assert.assertEquals(util.getProjectId(), "project-something-name");
+    }
+
+    /**
      * Tests that an empty name gives an empty project id.
      */
     @Test

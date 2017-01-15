@@ -49,6 +49,18 @@ public final class TestSkinConfigUtilsGetFileId {
     }
 
     /**
+     * Tests that a file with consecutive points gives a slugged file id.
+     */
+    @Test
+    public final void testGetFileId_ConsecutivePoints_Slugged() {
+        final SkinConfigUtils util; // Utilities class to test
+
+        util = getSkinConfigUtils("path-to\\file_name..something.html");
+
+        Assert.assertEquals(util.getFileId(), "path-to-file-name-something");
+    }
+
+    /**
      * Tests that an empty file gives an empty file id.
      */
     @Test
