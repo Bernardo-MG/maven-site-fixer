@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -30,12 +30,16 @@ import org.testng.annotations.Test;
 import com.wandrell.velocity.tool.Html5UpdateUtils;
 
 /**
- * Unit tests for {@link Html5UpdateUtils}.
+ * Unit tests for {@link Html5UpdateUtils}, testing the methods using empty
+ * strings.
+ * <p>
+ * The meaning behind this test is verifying that the initial queries done by
+ * the utilities class doesn't break with empty inputs.
  * 
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
+public final class TestHtml5UpdateUtilsEmpty {
 
     /**
      * Instance of the utils class being tested.
@@ -45,61 +49,114 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsRemoveNoHrefLinks() {
+    public TestHtml5UpdateUtilsEmpty() {
         super();
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testHeading_NoHref_Removed() {
+    public final void testFixInternalLinks_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
+        html = "";
 
-        result = util.removeNoHrefLinks(html);
+        result = util.fixInternalLinks(html);
 
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed, and their
-     * contents moved to the parent.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testHeading_NoHref_WithText_TextKept() {
+    public final void testRemoveExternalLinks_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
+        html = "";
 
-        result = util.removeNoHrefLinks(html);
+        result = util.removeExternalLinks(html);
 
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests that HTML with no links is ignored.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testNoAnchors_Ignored() {
+    public final void testRemoveNoHrefLinks_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<p>Some text</p>";
+        html = "";
 
         result = util.removeNoHrefLinks(html);
 
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = "";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
+    public final void testUpdateCodeSections_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+
+        result = util.updateCodeSections(html);
+
+        htmlExpected = "";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
+    public final void testUpdateSectionDiv_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+
+        result = util.updateSectionDiv(html);
+
+        htmlExpected = "";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
+    public final void testUpdateTables_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+
+        result = util.updateTables(html);
+
+        htmlExpected = "";
 
         Assert.assertEquals(result, htmlExpected);
     }

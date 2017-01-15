@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

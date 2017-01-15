@@ -22,21 +22,20 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link Html5UpdateUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HtmlUtils
+ * @see Html5UpdateUtils
  */
-public class TestHtml5UpdateUtilsUpdateTables {
+public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -46,42 +45,61 @@ public class TestHtml5UpdateUtilsUpdateTables {
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsUpdateTables() {
+    public TestHtml5UpdateUtilsRemoveNoHrefLinks() {
         super();
     }
 
     /**
-     * Tests that HTML with no tables is ignored.
+     * Tests links without the {@code href} attribute are removed.
      */
     @Test
-    public final void testNoTables_Ignored() {
+    public final void testHeading_NoHref_Removed() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
+
+        result = util.removeNoHrefLinks(html);
+
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests links without the {@code href} attribute are removed, and their
+     * contents moved to the parent.
+     */
+    @Test
+    public final void testHeading_NoHref_WithText_TextKept() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
+
+        result = util.removeNoHrefLinks(html);
+
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no links is ignored.
+     */
+    @Test
+    public final void testNoAnchors_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.updateTables(html);
+        result = util.removeNoHrefLinks(html);
 
         htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that outdated tables are correctly cleaned up.
-     */
-    @Test
-    public final void testOutdatedTable_Updated() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<table border=\"0\" class=\"bodyTable\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-
-        result = util.updateTables(html);
-
-        htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         Assert.assertEquals(result, htmlExpected);
     }

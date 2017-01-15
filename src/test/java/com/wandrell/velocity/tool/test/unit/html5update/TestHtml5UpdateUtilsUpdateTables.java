@@ -22,20 +22,21 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link Html5UpdateUtils}.
+ * Unit tests for {@link HtmlUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see Html5UpdateUtils
+ * @see HtmlUtils
  */
-public final class TestHtml5UpdateUtilsRemoveExternalLinks {
+public class TestHtml5UpdateUtilsUpdateTables {
 
     /**
      * Instance of the utils class being tested.
@@ -45,41 +46,22 @@ public final class TestHtml5UpdateUtilsRemoveExternalLinks {
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsRemoveExternalLinks() {
+    public TestHtml5UpdateUtilsUpdateTables() {
         super();
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if more
-     * classes are left then they are untouched.
+     * Tests that HTML with no tables is ignored.
      */
     @Test
-    public final void testMultipleClasses() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
-
-        result = util.removeExternalLinks(html);
-
-        htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no external links is ignored.
-     */
-    @Test
-    public final void testNoExternalLinks_Ignored() {
+    public final void testNoTables_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.removeExternalLinks(html);
+        result = util.updateTables(html);
 
         htmlExpected = "<p>Some text</p>";
 
@@ -87,20 +69,19 @@ public final class TestHtml5UpdateUtilsRemoveExternalLinks {
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if no more
-     * classes are left then the class attribute is removed too.
+     * Tests that outdated tables are correctly cleaned up.
      */
     @Test
-    public final void testSingleClass() {
+    public final void testOutdatedTable_Updated() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
+        html = "<table border=\"0\" class=\"bodyTable\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
 
-        result = util.removeExternalLinks(html);
+        result = util.updateTables(html);
 
-        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         Assert.assertEquals(result, htmlExpected);
     }
