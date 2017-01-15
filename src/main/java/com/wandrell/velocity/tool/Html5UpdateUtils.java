@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015 the original author or authors.
+ * Copyright (c) 2015-2017 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -107,7 +107,7 @@ public class Html5UpdateUtils {
      */
     public final String removeExternalLinks(final String html) {
         final Iterable<Element> links; // Links to fix
-        final Element body;     // Body of the HTML code
+        final Element body;            // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -142,7 +142,7 @@ public class Html5UpdateUtils {
      */
     public final String removeNoHrefLinks(final String html) {
         final Iterable<Element> links; // Links to fix
-        final Element body; // Body of the HTML code
+        final Element body;            // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -174,7 +174,7 @@ public class Html5UpdateUtils {
      * @return HTML content, with the source sections updated
      */
     public final String updateCodeSections(final String html) {
-        final Element body;     // Body of the HTML code
+        final Element body; // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -198,7 +198,7 @@ public class Html5UpdateUtils {
      */
     public final String updateSectionDiv(final String html) {
         final Iterable<Element> sectionDivs; // Section divisions
-        final Element body;     // Body of the HTML code
+        final Element body;                  // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -234,7 +234,7 @@ public class Html5UpdateUtils {
      * @return HTML content, with the tables updated
      */
     public final String updateTables(final String html) {
-        final Element body;     // Body of the HTML code
+        final Element body; // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -277,7 +277,7 @@ public class Html5UpdateUtils {
      */
     private final void removePointsFromIds(final Element body) {
         final Iterable<Element> elements; // Elements to fix
-        String id;      // id attribute contents
+        String id;                        // id attribute contents
 
         // Elements with the id attribute
         elements = body.select("[id]");
@@ -297,7 +297,7 @@ public class Html5UpdateUtils {
      */
     private final void removePointsFromInternalHref(final Element body) {
         final Iterable<Element> links; // Links to fix
-        String href;    // href attribute contents
+        String href;                   // href attribute contents
 
         // Elements with an internal href
         links = body.select("[href^=\"#\"]");
@@ -324,7 +324,7 @@ public class Html5UpdateUtils {
      */
     private final void removeRedundantSourceDivs(final Element body) {
         final Iterable<Element> sourceDivs; // Repeated source divs
-        Element parent;                       // Parent <div>
+        Element parent;                     // Parent <div>
 
         // Divs with the source class with another div with the source class as
         // a child
@@ -369,7 +369,7 @@ public class Html5UpdateUtils {
      *            body element with tables to fix
      */
     private final void removeTableBorder(final Element body) {
-        final Iterable<Element> tables;   // Tables to fix
+        final Iterable<Element> tables; // Tables to fix
 
         // Selects tables with border defined
         tables = body.select("table[border]");
@@ -476,7 +476,7 @@ public class Html5UpdateUtils {
      *            body element with tables to fix
      */
     private final void updateTableRowAlternates(final Element body) {
-        final Iterable<Element> elements;   // Tables and rows to fix
+        final Iterable<Element> elements; // Tables and rows to fix
 
         // Table rows with the class "a" or "b"
         elements = body.select("tr.a, tr.b");

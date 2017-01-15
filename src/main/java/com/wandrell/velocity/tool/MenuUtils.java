@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015 the original author or authors.
+ * Copyright (c) 2015-2017 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,10 @@ import org.apache.velocity.tools.config.DefaultKey;
 
 /**
  * Utilities class for generating Doxia menu classes.
+ * <p>
+ * This was created for Maven Sites, which are built through Doxia. With the use
+ * of this class it is possible creating new menus dynamically with ease inside
+ * Velocity macros.
  * 
  * @author Bernardo Martínez Garrido
  */
@@ -47,6 +51,8 @@ public final class MenuUtils {
 
     /**
      * Adds a link menu item to a menu.
+     * <p>
+     * This is a menu item with a value set in the href field.
      * 
      * @param menu
      *            the menu where the item will be added
@@ -60,6 +66,9 @@ public final class MenuUtils {
             final String url) {
         final MenuItem item; // Menu item to add
 
+        checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(url, "Received a null pointer as url");
+
         item = new MenuItem();
         item.setName(name);
         item.setHref(url);
@@ -71,6 +80,8 @@ public final class MenuUtils {
 
     /**
      * Adds a link menu item to a menu.
+     * <p>
+     * This is a menu item with a value set in the href field.
      * 
      * @param menu
      *            the menu where the item will be added
@@ -85,6 +96,10 @@ public final class MenuUtils {
     public final Menu addLinkItem(final Menu menu, final String name,
             final String url, final String description) {
         final MenuItem item; // Menu item to add
+
+        checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(url, "Received a null pointer as url");
+        checkNotNull(description, "Received a null pointer as description");
 
         item = new MenuItem();
         item.setName(name);

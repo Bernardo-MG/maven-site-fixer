@@ -1,4 +1,5 @@
-<document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
    <properties>
       <title>Project Changes</title>
@@ -84,9 +85,11 @@
             on a body without headings.
          </action>
       </release>
-      <release version="0.4.1" date="2016-5-30" description="No href URLs are now unwrapped">
+      <release version="0.4.1" date="2016-5-30"
+         description="No href URLs are now unwrapped">
          <action dev="bmg" type="update">
-            Anchor elements without an href attribute are now unwrapped, instead of removed.
+            Anchor elements without an href attribute are now unwrapped, instead of
+            removed.
          </action>
       </release>
       <release version="0.4.2" date="2016-5-31" description="Updated Maven Site Skin">
@@ -102,17 +105,26 @@
             Maven site is now deployed through SSH.
          </action>
       </release>
-      <release version="0.4.4" date="2016-12-08" description="Configuration file relocation">
+      <release version="0.4.4" date="2016-12-08"
+         description="Configuration file relocation">
          <action dev="bmg" type="update">
             Relocated configuration file.
          </action>
       </release>
-      <release version="0.5.0" date="2017-01-03" description="Fixes">
+      <release version="0.5.0" date="2017-01-03" description="Added menu tools">
          <action dev="bmg" type="add">
             Added tools for generating menus.
          </action>
          <action dev="bmg" type="fix">
             Corrected possible error cases when iterating elements.
+         </action>
+      </release>
+      <release version="0.5.1" date="2017-01-15" description="Fixes">
+         <action dev="bmg" type="update">
+            Improved the slugiffication of file names and project name.
+         </action>
+         <action dev="bmg" type="fix">
+            Corrected the image replacement, which was not adding the reader text.
          </action>
       </release>
    </body>

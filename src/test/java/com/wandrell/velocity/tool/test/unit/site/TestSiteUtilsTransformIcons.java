@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015 the original author or authors.
+ * Copyright (c) 2015-2017 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,65 +22,47 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.site;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.SiteUtils;
 
 /**
- * Unit tests for {@link Html5UpdateUtils}.
+ * Unit tests for {@link SiteUtils}, testing the {@code transformIcons} method.
  * 
  * @author Bernardo Martínez Garrido
- * @see Html5UpdateUtils
+ * @see SiteUtils
  */
-public final class TestHtml5UpdateUtilsFixInternalLinks {
+public final class TestSiteUtilsTransformIcons {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final Html5UpdateUtils util = new Html5UpdateUtils();
+    private final SiteUtils util = new SiteUtils();
 
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsFixInternalLinks() {
+    public TestSiteUtilsTransformIcons() {
         super();
     }
 
     /**
-     * Tests that points on anchors are correctly removed.
+     * Tests that when finding an expected icon it is transformed correctly.
      */
     @Test
-    public final void testInternalLink_Points_Fixed() {
+    public final void testIcon_Transforms() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
+        html = "<img src=\"images/add.gif\" alt=\"An image\">";
 
-        result = util.fixInternalLinks(html);
+        result = util.transformIcons(html);
 
-        htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no anchors is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<p>Some text</p>";
-
-        result = util.fixInternalLinks(html);
-
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
 
         Assert.assertEquals(result, htmlExpected);
     }

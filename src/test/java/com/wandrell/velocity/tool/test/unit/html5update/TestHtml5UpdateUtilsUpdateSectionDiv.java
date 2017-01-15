@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015 the original author or authors.
+ * Copyright (c) 2015-2017 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,21 +22,20 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link Html5UpdateUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HtmlUtils
+ * @see Html5UpdateUtils
  */
-public class TestHtml5UpdateUtilsUpdateTables {
+public final class TestHtml5UpdateUtilsUpdateSectionDiv {
 
     /**
      * Instance of the utils class being tested.
@@ -46,22 +45,22 @@ public class TestHtml5UpdateUtilsUpdateTables {
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsUpdateTables() {
+    public TestHtml5UpdateUtilsUpdateSectionDiv() {
         super();
     }
 
     /**
-     * Tests that HTML with no tables is ignored.
+     * Tests that HTML with no outdated sections is ignored.
      */
     @Test
-    public final void testNoTables_Ignored() {
+    public final void testNoSections_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.updateTables(html);
+        result = util.updateSectionDiv(html);
 
         htmlExpected = "<p>Some text</p>";
 
@@ -69,19 +68,20 @@ public class TestHtml5UpdateUtilsUpdateTables {
     }
 
     /**
-     * Tests that outdated tables are correctly cleaned up.
+     * Tests that when trying to fix the outdated section divisions these are
+     * updated correctly.
      */
     @Test
-    public final void testOutdatedTable_Updated() {
+    public final void testOutdatedSection_Updated() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<table border=\"0\" class=\"bodyTable\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        html = "<div class=\"section\"><p>Some text</p></div>";
 
-        result = util.updateTables(html);
+        result = util.updateSectionDiv(html);
 
-        htmlExpected = "<table>\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        htmlExpected = "<section>\n <p>Some text</p>\n</section>";
 
         Assert.assertEquals(result, htmlExpected);
     }

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015 the original author or authors.
+ * Copyright (c) 2015-2017 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -35,7 +35,7 @@ import com.wandrell.velocity.tool.Html5UpdateUtils;
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsUpdateSectionDiv {
+public final class TestHtml5UpdateUtilsFixInternalLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -45,43 +45,42 @@ public final class TestHtml5UpdateUtilsUpdateSectionDiv {
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsUpdateSectionDiv() {
+    public TestHtml5UpdateUtilsFixInternalLinks() {
         super();
     }
 
     /**
-     * Tests that HTML with no outdated sections is ignored.
+     * Tests that points on anchors are correctly removed.
      */
     @Test
-    public final void testNoSections_Ignored() {
+    public final void testInternalLink_Points_Fixed() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
+
+        result = util.fixInternalLinks(html);
+
+        htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no anchors is ignored.
+     */
+    @Test
+    public final void testNoAnchors_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.updateSectionDiv(html);
+        result = util.fixInternalLinks(html);
 
         htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that when trying to fix the outdated section divisions these are
-     * updated correctly.
-     */
-    @Test
-    public final void testOutdatedSection_Updated() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<div class=\"section\"><p>Some text</p></div>";
-
-        result = util.updateSectionDiv(html);
-
-        htmlExpected = "<section>\n <p>Some text</p>\n</section>";
 
         Assert.assertEquals(result, htmlExpected);
     }

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015 the original author or authors.
+ * Copyright (c) 2015-2017 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5fix;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -35,7 +35,7 @@ import com.wandrell.velocity.tool.Html5UpdateUtils;
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
+public final class TestHtml5UpdateUtilsRemoveExternalLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -45,61 +45,62 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsRemoveNoHrefLinks() {
+    public TestHtml5UpdateUtilsRemoveExternalLinks() {
         super();
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that when removing the externalLink class from links, if more
+     * classes are left then they are untouched.
      */
     @Test
-    public final void testHeading_NoHref_Removed() {
+    public final void testMultipleClasses() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
+        html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
 
-        result = util.removeNoHrefLinks(html);
+        result = util.removeExternalLinks(html);
 
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
 
         Assert.assertEquals(result, htmlExpected);
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed, and their
-     * contents moved to the parent.
+     * Tests that HTML with no external links is ignored.
      */
     @Test
-    public final void testHeading_NoHref_WithText_TextKept() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
-
-        result = util.removeNoHrefLinks(html);
-
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no links is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
+    public final void testNoExternalLinks_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.removeNoHrefLinks(html);
+        result = util.removeExternalLinks(html);
 
         htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that when removing the externalLink class from links, if no more
+     * classes are left then the class attribute is removed too.
+     */
+    @Test
+    public final void testSingleClass() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
+
+        result = util.removeExternalLinks(html);
+
+        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
 
         Assert.assertEquals(result, htmlExpected);
     }

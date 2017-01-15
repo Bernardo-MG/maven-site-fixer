@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Add custom tools to Velocity tools. The tools.xml file is included in the classpath
-   and Velocity finds it. -->
+<!-- Add custom tools to Velocity tools. The tools.xml file is included in 
+   the classpath and Velocity finds it. -->
 <tools>
    <toolbox scope="request">
       <tool class="com.wandrell.velocity.tool.Html5UpdateUtils" />

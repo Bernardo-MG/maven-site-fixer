@@ -44,6 +44,7 @@ Each class has the following key assigned:
 |---|---|
 |[HTML5UpdateUtils][html5-update-javadoc]|$html5UpdateTool|
 |[HTMLUtils][html-utils-javadoc]|$htmlTool|
+|[MenuUtils][menu-utils-javadoc]|$menuTool|
 |[SiteUtils][site-utils-javadoc]|$siteTool|
 |[SkinConfigUtils][skin-config-javadoc]|$config|
 
@@ -52,8 +53,9 @@ Each class has the following key assigned:
 The [Docs Maven Skin][docs-skin] makes use of these tools, and can be a good example for them.
 
 [html5-update-javadoc]: ./apidocs/com/wandrell/velocity/tool/HTML5UpdateUtils.html
-[site-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/SiteUtils.html
 [html-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/HTMLUtils.html
+[menu-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/MenuUtils.html
+[site-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/SiteUtils.html
 [skin-config-javadoc]: ./apidocs/com/wandrell/velocity/tool/SkinConfigUtils.html
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin
