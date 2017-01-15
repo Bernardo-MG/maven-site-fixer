@@ -123,6 +123,9 @@
          <action dev="bmg" type="update">
             Improved the slugiffication of file names.
          </action>
+         <action dev="bmg" type="fix">
+            Corrected the image replacement, which was not adding the reader text.
+         </action>
       </release>
    </body>
 </document>
