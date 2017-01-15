@@ -119,9 +119,9 @@
             Corrected possible error cases when iterating elements.
          </action>
       </release>
-      <release version="0.5.1" date="2017-01-03" description="Fixes">
+      <release version="0.5.1" date="2017-01-15" description="Fixes">
          <action dev="bmg" type="update">
-            Improved the slugiffication of file names.
+            Improved the slugiffication of file names and project name.
          </action>
          <action dev="bmg" type="fix">
             Corrected the image replacement, which was not adding the reader text.
