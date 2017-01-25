@@ -261,22 +261,51 @@ public class Html5UpdateUtils {
     }
 
     /**
+     * Removes the points from the contents of the specified attribute.
+     * 
+     * @param element
+     *            element with the attribute to clean
+     * @param attr
+     *            attribute to clean
+     */
+    private final void removePointsFromAttr(final Element element,
+            final String attr) {
+        final String value; // Content of the attribute
+
+        value = element.attr(attr).replaceAll("\\.", "");
+
+        element.attr(attr, value);
+    }
+
+    /**
+     * Removes the points from the contents of the specified attribute.
+     * 
+     * @param body
+     *            body element with attributes to fix
+     * @param selector
+     *            CSS selector for the elements
+     * @param attr
+     *            attribute to clean
+     */
+    private final void removePointsFromAttr(final Element body,
+            final String selector, final String attr) {
+        final Iterable<Element> elements; // Elements to fix
+
+        // Elements with the id attribute
+        elements = body.select(selector);
+        for (final Element element : elements) {
+            removePointsFromAttr(element, attr);
+        }
+    }
+
+    /**
      * Removes points from the {@code id} attributes.
      * 
      * @param body
      *            body element with ids to fix
      */
     private final void removePointsFromIds(final Element body) {
-        final Iterable<Element> elements; // Elements to fix
-        String id;                        // id attribute contents
-
-        // Elements with the id attribute
-        elements = body.select("[id]");
-        for (final Element element : elements) {
-            id = element.attr("id").replaceAll("\\.", "");
-
-            element.attr("id", id);
-        }
+        removePointsFromAttr(body, "[id]", "id");
     }
 
     /**
@@ -287,16 +316,7 @@ public class Html5UpdateUtils {
      *            body element with links to fix
      */
     private final void removePointsFromInternalHref(final Element body) {
-        final Iterable<Element> links; // Links to fix
-        String href;                   // href attribute contents
-
-        // Elements with an internal href
-        links = body.select("[href^=\"#\"]");
-        for (final Element element : links) {
-            href = element.attr("href").replaceAll("\\.", "");
-
-            element.attr("href", href);
-        }
+        removePointsFromAttr(body, "[href^=\"#\"]", "href");
     }
 
     /**
