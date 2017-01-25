@@ -106,7 +106,6 @@ public class Html5UpdateUtils {
      * @return HTML content with the {@code externalLink} class removed
      */
     public final String removeExternalLinks(final String html) {
-        final Iterable<Element> links; // Links to fix
         final Element body;            // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
@@ -114,14 +113,7 @@ public class Html5UpdateUtils {
         body = Jsoup.parse(html).body();
 
         // <a> elements with the externalLink class
-        links = body.select("a.externalLink");
-        for (final Element link : links) {
-            link.removeClass("externalLink");
-
-            if (link.classNames().isEmpty()) {
-                link.removeAttr("class");
-            }
-        }
+        removeClass(body, "a.externalLink", "externalLink");
 
         return body.html();
     }
@@ -197,7 +189,6 @@ public class Html5UpdateUtils {
      * @return HTML content, with the section divisions updated
      */
     public final String updateSectionDiv(final String html) {
-        final Iterable<Element> sectionDivs; // Section divisions
         final Element body;                  // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
@@ -205,15 +196,7 @@ public class Html5UpdateUtils {
         body = Jsoup.parse(html).body();
 
         // divs with the section class
-        sectionDivs = body.select("div.section");
-        for (final Element div : sectionDivs) {
-            div.tagName("section");
-            div.removeClass("section");
-
-            if (div.classNames().isEmpty()) {
-                div.removeAttr("class");
-            }
-        }
+        retag(body, "div.section", "section", "section");
 
         return body.html();
     }
@@ -246,6 +229,35 @@ public class Html5UpdateUtils {
         updateTableRowAlternates(body);
 
         return body.html();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * class from them.
+     * <p>
+     * If the elements end without classes then the class attribute is also
+     * removed.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param select
+     *            CSS selector for the elements
+     * @param className
+     *            class to remove
+     */
+    private final void removeClass(final Element body, final String select,
+            final String className) {
+        final Iterable<Element> elements; // Elements selected
+
+        // Tables with the bodyTable class
+        elements = body.select(select);
+        for (final Element element : elements) {
+            element.removeClass(className);
+
+            if (element.classNames().isEmpty()) {
+                element.removeAttr("class");
+            }
+        }
     }
 
     /**
@@ -325,17 +337,7 @@ public class Html5UpdateUtils {
      *            body element with tables to fix
      */
     private final void removeTableBodyClass(final Element body) {
-        final Iterable<Element> tables; // Tables to fix
-
-        // Tables with the bodyTable class
-        tables = body.select("table.bodyTable");
-        for (final Element table : tables) {
-            table.removeClass("bodyTable");
-
-            if (table.attr("class").isEmpty()) {
-                table.removeAttr("class");
-            }
-        }
+        removeClass(body, "table.bodyTable", "bodyTable");
     }
 
     /**
@@ -354,6 +356,39 @@ public class Html5UpdateUtils {
         tables = body.select("table[border]");
         for (final Element table : tables) {
             table.removeAttr("border");
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and changes their tags,
+     * also removes the received class from them.
+     * <p>
+     * If the elements end without classes then the class attribute is also
+     * removed.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param select
+     *            CSS selector for the elements
+     * @param tag
+     *            new tag for the elements
+     * @param className
+     *            class to remove
+     */
+    private final void retag(final Element body, final String select,
+            final String tag, final String className) {
+        final Iterable<Element> elements; // Elements selected
+
+        // Tables with the bodyTable class
+        elements = body.select(select);
+        for (final Element element : elements) {
+            element.tagName(tag);
+
+            element.removeClass(className);
+
+            if (element.classNames().isEmpty()) {
+                element.removeAttr("class");
+            }
         }
     }
 
@@ -399,18 +434,8 @@ public class Html5UpdateUtils {
      *            body element with source division to upgrade
      */
     private final void updateSourceDivsToCode(final Element body) {
-        final Iterable<Element> divs; // Code divisions
-
         // Divs with the source class
-        divs = body.select("div.source");
-        for (final Element div : divs) {
-            div.tagName("code");
-
-            div.removeClass("source");
-            if (div.classNames().isEmpty()) {
-                div.removeAttr("class");
-            }
-        }
+        retag(body, "div.source", "code", "source");
     }
 
     /**
@@ -455,21 +480,9 @@ public class Html5UpdateUtils {
      *            body element with tables to fix
      */
     private final void updateTableRowAlternates(final Element body) {
-        final Iterable<Element> elements; // Tables and rows to fix
-
         // Table rows with the class "a" or "b"
-        elements = body.select("tr.a, tr.b");
-        for (final Element row : elements) {
-            if (row.hasClass("a")) {
-                row.removeClass("a");
-            } else {
-                row.removeClass("b");
-            }
-
-            if (row.classNames().isEmpty()) {
-                row.removeAttr("class");
-            }
-        }
+        removeClass(body, "tr.a", "a");
+        removeClass(body, "tr.b", "b");
     }
 
 }
