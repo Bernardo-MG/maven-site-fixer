@@ -243,30 +243,9 @@ public class Html5UpdateUtils {
         removeTableBodyClass(body);
         updateTableHeads(body);
         removeTableBorder(body);
-        removeBodyTable(body);
         updateTableRowAlternates(body);
 
         return body.html();
-    }
-
-    /**
-     * Removes the {@code bodyTable} class from tables.
-     * 
-     * @param body
-     *            body element with the table to fix
-     */
-    private final void removeBodyTable(final Element body) {
-        final Iterable<Element> tables;   // Tables to fix
-
-        // Tables with the bodyTable class
-        tables = body.select("table.bodyTable");
-        for (final Element table : tables) {
-            table.removeClass("bodyTable");
-
-            if (table.classNames().isEmpty()) {
-                table.removeAttr("class");
-            }
-        }
     }
 
     /**
