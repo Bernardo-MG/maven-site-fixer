@@ -233,6 +233,28 @@ public class Html5UpdateUtils {
 
     /**
      * Finds a set of elements through a CSS selector and removes the received
+     * attribute from them.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param select
+     *            CSS selector for the elements
+     * @param attribute
+     *            attribute to remove
+     */
+    private final void removeAttribute(final Element body, final String select,
+            final String attribute) {
+        final Iterable<Element> elements; // Elements selected
+
+        // Tables with the bodyTable class
+        elements = body.select(select);
+        for (final Element element : elements) {
+            element.removeAttr(attribute);
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
      * class from them.
      * <p>
      * If the elements end without classes then the class attribute is also
@@ -370,13 +392,7 @@ public class Html5UpdateUtils {
      *            body element with tables to fix
      */
     private final void removeTableBorder(final Element body) {
-        final Iterable<Element> tables; // Tables to fix
-
-        // Selects tables with border defined
-        tables = body.select("table[border]");
-        for (final Element table : tables) {
-            table.removeAttr("border");
-        }
+        removeAttribute(body, "table[border]", "border");
     }
 
     /**
