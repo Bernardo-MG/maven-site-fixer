@@ -448,17 +448,16 @@ public class Html5UpdateUtils {
         divs = body.select("div.source:has(pre)");
         for (final Element div : divs) {
             pres = div.getElementsByTag("pre");
-            if (!pres.isEmpty()) {
-                pre = pres.iterator().next();
+            // The selector ensures there is always at least one element
+            pre = pres.iterator().next();
 
-                text = pre.text();
-                pre.text("");
+            text = pre.text();
+            pre.text("");
 
-                div.replaceWith(pre);
-                pre.appendChild(div);
+            div.replaceWith(pre);
+            pre.appendChild(div);
 
-                div.text(text);
-            }
+            div.text(text);
         }
     }
 
