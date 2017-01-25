@@ -68,6 +68,24 @@ public final class TestHtml5UpdateUtilsUpdateSectionDiv {
     }
 
     /**
+     * Tests that outdated sections with additional classes keep these.
+     */
+    @Test
+    public final void testOutdatedSection_KeepsAdditionalClasses() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<div class=\"section testClass\"><p>Some text</p></div>";
+
+        result = util.updateSectionDiv(html);
+
+        htmlExpected = "<section class=\"testClass\">\n <p>Some text</p>\n</section>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
      * Tests that when trying to fix the outdated section divisions these are
      * updated correctly.
      */

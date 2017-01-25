@@ -72,7 +72,7 @@ public class TestHtml5UpdateUtilsUpdateTables {
      * Tests that outdated tables with additional classes keep these.
      */
     @Test
-    public final void testOutdatedTable_KeepsTableClasses() {
+    public final void testOutdatedTable_KeepsAdditionalClasses() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
