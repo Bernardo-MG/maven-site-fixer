@@ -175,12 +175,13 @@ public class Html5UpdateUtils {
 
         body = Jsoup.parse(html).body();
 
-        // Removes redundant tags
-        getHtmlUtils().unwrap(body, "div.source > div.source");
-        reverseSourceDivPre(body);
-
         // Source divs are transformed to code tags
         getHtmlUtils().retag(body, "div.source", "code");
+        // Removes redundant tags
+        getHtmlUtils().unwrap(body, "code > code");
+
+        reverseCodePre(body);
+
         // Removes source class from code tags
         getHtmlUtils().removeClass(body, "code.source", "source");
 
@@ -301,13 +302,13 @@ public class Html5UpdateUtils {
      * @param body
      *            body element with source divisions to upgrade
      */
-    private final void reverseSourceDivPre(final Element body) {
+    private final void reverseCodePre(final Element body) {
         final Iterable<Element> divs; // Code divisions
         Element div;                  // Parent <div> element
         String text;                  // Preserved text
 
         // Divs with the source class and a pre
-        divs = body.select("div.source > pre");
+        divs = body.select("code > pre");
         for (final Element pre : divs) {
             div = pre.parent();
 
