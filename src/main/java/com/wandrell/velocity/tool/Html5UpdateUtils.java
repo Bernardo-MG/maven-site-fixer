@@ -26,8 +26,6 @@ package com.wandrell.velocity.tool;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Collection;
-
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -36,21 +34,22 @@ import org.jsoup.parser.Tag;
 /**
  * Utilities class for upgrading a Velocity's XHTML code to HTML5.
  * <p>
- * This was created for Maven Sites, which are built through Doxia. This
- * supports XHTML, and not HTML5, which has the effect making such pages, by
- * default, outdated.
+ * This was created for Maven Sites. These are built through Doxia which
+ * supports XHTML, and not HTML5, and so this library generates outdated pages.
  * <p>
  * The various methods contained in this class aim to fix this problem, and will
- * transform several known errors into valid HTML5.
+ * transform several known mistakes into valid HTML5, but they won't transform
+ * the full page. The end user should make sure that the template being used,
+ * probably a Maven Skin, matches expectations.
+ * <p>
+ * There is a problem with this class. It was developed for the Docs Maven Skin,
+ * and is tailored for the needs of that project, which makes use of Bootstrap
+ * for the UI.
  * <p>
  * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
  * editing. This library will process the HTML code received by the methods, so
  * only the contents of the {@code <body>} tag (or the full HTML if this tag is
  * missing) will be used.
- * <p>
- * Take into account that while the returned HTML will be correct, the validity
- * of the received HTML won't be checked. That falls fully on the hands of the
- * user.
  * 
  * @author Bernardo Martínez Garrido
  */
@@ -65,22 +64,19 @@ public class Html5UpdateUtils {
     }
 
     /**
-     * Returns the result from fixing internal links, and ids, which are using
-     * point separators from the received HTML code. This fix consists just on
-     * removing said points.
+     * Returns the result from fixing internal links which are using point
+     * separators. It also takes care of removing the points from the internal
+     * ids. Using points for internal anchors can break navigation.
      * <p>
-     * Some internal links on Doxia sites use points on the anchor ids, and this
-     * stops such links from working correctly.
-     * <p>
-     * This method will transform any id, or internal href, such as
-     * "id.with.points" to "idwithpoints".
+     * The fix consists on just removing all points from all the ids. For
+     * example "id.with.points" will become "idwithpoints".
      * 
      * @param html
-     *            HTML where points are to be removed from internal lins and ids
+     *            HTML to fix internal links
      * @return HTML content, with the points removed from internal links and ids
      */
     public final String fixInternalLinks(final String html) {
-        final Element body;     // Body of the HTML code
+        final Element body; // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -96,7 +92,8 @@ public class Html5UpdateUtils {
      * Returns the result from removing the {@code externalLink} class from
      * links from the received HTML code.
      * <p>
-     * These are used by Doxia but are meaningless.
+     * These are used by Doxia but are meaningless for most modern UI
+     * frameworks, such as Bootstrap.
      * <p>
      * If a after removing the class any link ends without classes, then the
      * {@code class} attribute will be removed too.
@@ -120,16 +117,18 @@ public class Html5UpdateUtils {
 
     /**
      * Returns the result from removing links with no {@code href} attribute
-     * from the received HTML code.
+     * defined from the received HTML code.
      * <p>
      * These links are added by Doxia mainly to the headings. The idea seems to
      * allow getting an internal anchor by clicking on a heading, but it does
-     * not work correctly on all skins, or maybe it is just missing something,
+     * not work correctly on all skins (or maybe it is just missing something)
      * making it invalid HTML code.
+     * <p>
+     * Instead of just removing the links these will be actually unwrapped,
+     * keeping any text they may contain.
      * 
      * @param html
-     *            HTML where links with no {@code href} attribute are to be
-     *            removed
+     *            HTML to clear of any empty {@code href} link
      * @return HTML content, with no link missing the {@code href} attribute
      */
     public final String removeNoHrefLinks(final String html) {
@@ -143,6 +142,7 @@ public class Html5UpdateUtils {
         // Links missing the href attribute
         links = body.select("a:not([href])");
         for (final Element link : links) {
+            // Unwrapped to avoid losing texts
             link.unwrap();
         }
 
@@ -153,10 +153,10 @@ public class Html5UpdateUtils {
      * Returns the result from updating and correcting source divisions on the
      * received HTML code.
      * <p>
-     * Outdated source divisions, which look as {@code 
-     * <div class="source">}, are transformed to the new {@code <code>} elements
+     * Outdated source divisions such as {@code 
+     * <div class="source">} are transformed to the new {@code <code>} elements.
      * Additionally, it will correct the position of the {@code pre} element,
-     * will me moved out of the code section.
+     * moving it out of the code section.
      * <p>
      * It also fixes a Doxia error where the source division is wrapped by a
      * second source division.
@@ -202,15 +202,14 @@ public class Html5UpdateUtils {
     }
 
     /**
-     * Returns the result from updating the tables, by applying various fixes
-     * and removing unneeded code, on the received HTML code.
+     * Returns the result from updating the tables on the received HTML code.
      * <p>
      * This method will add the missing {@code <thead>} element to table, remove
-     * the unneeded border attribute and the {@code bodyTable} class.
+     * the unneeded border attribute and remove the {@code bodyTable} class.
      * <p>
-     * It also removes the alternating rows attributes, which marks them as the
-     * {@code a} and {@code b} classes. This seems to be an outdated method to
-     * get alternating colored rows.
+     * It also removes the alternating rows attributes. Doxia marks them with
+     * the {@code a} and {@code b} classes. This seems to be an outdated method
+     * to get alternating colored rows.
      * 
      * @param html
      *            HTML with tables to update
@@ -440,16 +439,13 @@ public class Html5UpdateUtils {
      */
     private final void takeOutSourceDivPre(final Element body) {
         final Iterable<Element> divs; // Code divisions
-        Collection<Element> pres;     // Code preservations
-        Element pre;                  // <pre> element
+        Element div;                  // Parent <div> element
         String text;                  // Preserved text
 
         // Divs with the source class and a pre
-        divs = body.select("div.source:has(pre)");
-        for (final Element div : divs) {
-            pres = div.getElementsByTag("pre");
-            // The selector ensures there is always at least one element
-            pre = pres.iterator().next();
+        divs = body.select("div.source > pre");
+        for (final Element pre : divs) {
+            div = pre.parent();
 
             text = pre.text();
             pre.text("");

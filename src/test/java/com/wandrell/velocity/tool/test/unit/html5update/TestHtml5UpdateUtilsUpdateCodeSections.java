@@ -68,6 +68,44 @@ public final class TestHtml5UpdateUtilsUpdateCodeSections {
     }
 
     /**
+     * Tests that when trying to fix the outdated code blocks, when they are
+     * nested inside another tag, these are updated correctly.
+     */
+    @Test
+    public final void testOutdatedCodeSections_Deep_Updated() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
+
+        result = util.updateCodeSections(html);
+
+        htmlExpected = "<code>\n <div>\n  <pre><code>Some code</code></pre>\n </div></code>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that when trying to fix the outdated code blocks, when they are
+     * nested, these are updated correctly.
+     */
+    @Test
+    public final void testOutdatedCodeSections_Nested_Updated() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<div class=\"source\"><div class=\"source\"><pre>Some code</pre></div></div>";
+
+        result = util.updateCodeSections(html);
+
+        htmlExpected = "<pre><code>Some code</code></pre>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
      * Tests that when trying to fix the outdated code blocks these are updated
      * correctly.
      */
@@ -77,7 +115,7 @@ public final class TestHtml5UpdateUtilsUpdateCodeSections {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<div class=\"source\"><div class=\"source\"><pre>Some code</pre></div></div>";
+        html = "<div class=\"source\"><pre>Some code</pre></div>";
 
         result = util.updateCodeSections(html);
 
