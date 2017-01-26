@@ -235,7 +235,7 @@ public class Html5UpdateUtils {
         getHtmlUtils().removeClass(body, "table.bodyTable", "bodyTable");
         updateTableHeads(body);
         // Removes border attribute
-        removeAttribute(body, "table[border]", "border");
+        getHtmlUtils().removeAttribute(body, "table[border]", "border");
         // Removes alternating rows classes
         getHtmlUtils().removeClass(body, "tr.a", "a");
         getHtmlUtils().removeClass(body, "tr.b", "b");
@@ -250,28 +250,6 @@ public class Html5UpdateUtils {
      */
     private final HtmlUtils getHtmlUtils() {
         return htmlUtils;
-    }
-
-    /**
-     * Finds a set of elements through a CSS selector and removes the received
-     * attribute from them.
-     * 
-     * @param body
-     *            body where the elements will be searched for
-     * @param select
-     *            CSS selector for the elements
-     * @param attribute
-     *            attribute to remove
-     */
-    private final void removeAttribute(final Element body, final String select,
-            final String attribute) {
-        final Iterable<Element> elements; // Elements selected
-
-        // Tables with the bodyTable class
-        elements = body.select(select);
-        for (final Element element : elements) {
-            element.removeAttr(attribute);
-        }
     }
 
     /**

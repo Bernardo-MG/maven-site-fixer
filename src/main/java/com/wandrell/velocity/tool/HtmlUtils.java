@@ -62,6 +62,54 @@ public final class HtmlUtils {
 
     /**
      * Finds a set of elements through a CSS selector and removes the received
+     * attribute from them.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @param attribute
+     *            attribute to remove
+     */
+    public final void removeAttribute(final Element body, final String selector,
+            final String attribute) {
+        final Iterable<Element> elements; // Elements selected
+
+        // Tables with the bodyTable class
+        elements = body.select(selector);
+        for (final Element element : elements) {
+            element.removeAttr(attribute);
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * attribute from them.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @param attribute
+     *            attribute to remove
+     * @return HTML content with the class removed from the elements
+     */
+    public final String removeAttribute(final String html,
+            final String selector, final String attribute) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        // <a> elements with the externalLink class
+        removeAttribute(body, selector, attribute);
+
+        return body.html();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
      * class from them.
      * <p>
      * If the elements end without classes then the class attribute is also

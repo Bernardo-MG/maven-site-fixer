@@ -35,7 +35,7 @@ import com.wandrell.velocity.tool.HtmlUtils;
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
  */
-public final class TestHtmlUtilsRemoveClass {
+public class TestHtmlUtilsRemoveAttribute {
 
     /**
      * Instance of the utils class being tested.
@@ -45,62 +45,24 @@ public final class TestHtmlUtilsRemoveClass {
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsRemoveClass() {
+    public TestHtmlUtilsRemoveAttribute() {
         super();
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if more
-     * classes are left then they are untouched.
+     * Tests that attributes are removed.
      */
     @Test
-    public final void testMultipleClasses() {
+    public final void testTable_RemovesAttribute() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
+        html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
 
-        result = util.removeClass(html, "a.externalLink", "externalLink");
+        result = util.removeAttribute(html, "table[border]", "border");
 
-        htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no external links is ignored.
-     */
-    @Test
-    public final void testNoExternalLinks_Ignored() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<p>Some text</p>";
-
-        result = util.removeClass(html, "a.externalLink", "externalLink");
-
-        htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that when removing the externalLink class from links, if no more
-     * classes are left then the class attribute is removed too.
-     */
-    @Test
-    public final void testSingleClass() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
-
-        result = util.removeClass(html, "a.externalLink", "externalLink");
-
-        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<table class=\"testClass\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>] but found [<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         Assert.assertEquals(result, htmlExpected);
     }

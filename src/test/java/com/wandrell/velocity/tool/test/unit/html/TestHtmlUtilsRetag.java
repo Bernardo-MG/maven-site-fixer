@@ -27,14 +27,13 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.Html5UpdateUtils;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link Html5UpdateUtils}.
+ * Unit tests for {@link HtmlUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see Html5UpdateUtils
+ * @see HtmlUtils
  */
 public final class TestHtmlUtilsRetag {
 
