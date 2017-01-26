@@ -62,7 +62,7 @@ public class TestHtmlUtilsRemoveAttribute {
 
         result = util.removeAttribute(html, "table[border]", "border");
 
-        htmlExpected = "<table class=\"testClass\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>] but found [<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         Assert.assertEquals(result, htmlExpected);
     }
