@@ -119,6 +119,52 @@ public final class HtmlUtils {
     }
 
     /**
+     * Finds a set of elements through a CSS selector and changes their tags.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param select
+     *            CSS selector for the elements
+     * @param tag
+     *            new tag for the elements
+     */
+    public final void retag(final Element body, final String select,
+            final String tag) {
+        final Iterable<Element> elements; // Elements selected
+
+        // Tables with the bodyTable class
+        elements = body.select(select);
+        for (final Element element : elements) {
+            element.tagName(tag);
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and changes their tags.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param select
+     *            CSS selector for the elements
+     * @param tag
+     *            new tag for the elements
+     * @return HTML content with the class removed from the elements
+     */
+    public final String retag(final String html, final String select,
+            final String tag) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        // <a> elements with the externalLink class
+        retag(body, select, tag);
+
+        return body.html();
+    }
+
+    /**
      * Returns the HTML code with the elements marked by the selector wrapped on
      * the received wrapper element.
      * <p>

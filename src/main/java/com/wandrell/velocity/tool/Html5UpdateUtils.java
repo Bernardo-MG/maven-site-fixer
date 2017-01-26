@@ -183,7 +183,7 @@ public class Html5UpdateUtils {
         reverseSourceDivPre(body);
 
         // Source divs are transformed to code tags
-        retag(body, "div.source", "code");
+        getHtmlUtils().retag(body, "div.source", "code");
         // Removes source class from code tags
         getHtmlUtils().removeClass(body, "code.source", "source");
 
@@ -207,7 +207,7 @@ public class Html5UpdateUtils {
         body = Jsoup.parse(html).body();
 
         // Section divs are transformed to section tags
-        retag(body, "div.section", "section");
+        getHtmlUtils().retag(body, "div.section", "section");
         // Removes section class from section tags
         getHtmlUtils().removeClass(body, "section.section", "section");
 
@@ -341,27 +341,6 @@ public class Html5UpdateUtils {
             parent = div.parent();
             div.remove();
             parent.replaceWith(div);
-        }
-    }
-
-    /**
-     * Finds a set of elements through a CSS selector and changes their tags.
-     * 
-     * @param body
-     *            body where the elements will be searched for
-     * @param select
-     *            CSS selector for the elements
-     * @param tag
-     *            new tag for the elements
-     */
-    private final void retag(final Element body, final String select,
-            final String tag) {
-        final Iterable<Element> elements; // Elements selected
-
-        // Tables with the bodyTable class
-        elements = body.select(select);
-        for (final Element element : elements) {
-            element.tagName(tag);
         }
     }
 

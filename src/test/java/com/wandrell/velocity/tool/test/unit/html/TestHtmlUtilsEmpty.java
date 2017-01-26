@@ -56,6 +56,42 @@ public final class TestHtmlUtilsEmpty {
      * Tests that an empty string causes no problem.
      */
     @Test
+    public final void testRemoveClass_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+
+        result = util.removeClass(html, "a.externalLink", "externalLink");
+
+        htmlExpected = "";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
+    public final void testRetag_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "";
+
+        result = util.retag(html, "a.externalLink", "externalLink");
+
+        htmlExpected = "";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem.
+     */
+    @Test
     public final void testWrap_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
