@@ -180,7 +180,7 @@ public class Html5UpdateUtils {
         // Removes redundant tags
         getHtmlUtils().unwrap(body, "code > code");
 
-        reverseCodePre(body);
+        reverseTags(body, "code > pre");
 
         // Removes source class from code tags
         getHtmlUtils().removeClass(body, "code.source", "source");
@@ -293,32 +293,30 @@ public class Html5UpdateUtils {
     }
 
     /**
-     * Moves the {@code pre} element out of source divisions, so it wraps said
-     * division, and not the other way around.
-     * <p>
-     * Note that these source divisions are expected to have only one children
-     * with the {@code pre} tag.
+     * Finds an element through a selector and swaps its tag with that from its
+     * parent.
      * 
      * @param body
      *            body element with source divisions to upgrade
+     * @param selector
+     *            selector for finding the element to operate with
      */
-    private final void reverseCodePre(final Element body) {
-        final Iterable<Element> divs; // Code divisions
-        Element div;                  // Parent <div> element
-        String text;                  // Preserved text
+    private final void reverseTags(final Element body, final String selector) {
+        final Iterable<Element> elements; // Selected elements
+        Element parent;                   // Parent element
+        String text;                      // Preserved text
 
-        // Divs with the source class and a pre
-        divs = body.select("code > pre");
-        for (final Element pre : divs) {
-            div = pre.parent();
+        elements = body.select(selector);
+        for (final Element pre : elements) {
+            parent = pre.parent();
 
             text = pre.text();
             pre.text("");
 
-            div.replaceWith(pre);
-            pre.appendChild(div);
+            parent.replaceWith(pre);
+            pre.appendChild(parent);
 
-            div.text(text);
+            parent.text(text);
         }
     }
 
