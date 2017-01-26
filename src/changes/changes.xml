@@ -127,5 +127,10 @@
             Corrected the image replacement, which was not adding the reader text.
          </action>
       </release>
+      <release version="0.5.2" date="2017-01-26" description="New generic HTML utilities">
+         <action dev="bmg" type="update">
+            Added more generic HTML edition methods in preparation to remove the HTML5 upgrade tool.
+         </action>
+      </release>
    </body>
 </document>
