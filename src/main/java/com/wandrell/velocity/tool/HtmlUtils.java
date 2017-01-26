@@ -75,6 +75,10 @@ public final class HtmlUtils {
             final String attribute) {
         final Iterable<Element> elements; // Elements selected
 
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(attribute, "Received a null pointer as attribute");
+
         // Tables with the bodyTable class
         elements = body.select(selector);
         for (final Element element : elements) {
@@ -97,6 +101,10 @@ public final class HtmlUtils {
     public final String removeAttribute(final String html,
             final String selector, final String attribute) {
         final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(attribute, "Received a null pointer as attribute");
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -125,6 +133,10 @@ public final class HtmlUtils {
     public final void removeClass(final Element body, final String selector,
             final String className) {
         final Iterable<Element> elements; // Elements selected
+
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(className, "Received a null pointer as className");
 
         // Tables with the bodyTable class
         elements = body.select(selector);
@@ -157,6 +169,10 @@ public final class HtmlUtils {
         final Element body; // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(className, "Received a null pointer as className");
+
+        checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parse(html).body();
 
@@ -179,6 +195,10 @@ public final class HtmlUtils {
     public final void retag(final Element body, final String selector,
             final String tag) {
         final Iterable<Element> elements; // Elements selected
+
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(tag, "Received a null pointer as tag");
 
         // Tables with the bodyTable class
         elements = body.select(selector);
@@ -203,6 +223,10 @@ public final class HtmlUtils {
         final Element body; // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(tag, "Received a null pointer as tag");
+
+        checkNotNull(html, "Received a null pointer as html");
 
         body = Jsoup.parse(html).body();
 
@@ -225,6 +249,9 @@ public final class HtmlUtils {
         final Iterable<Element> elements; // Selected elements
         Element parent;                   // Parent element
         String text;                      // Preserved text
+
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
 
         elements = body.select(selector);
         for (final Element pre : elements) {
@@ -254,7 +281,8 @@ public final class HtmlUtils {
             final String selector) {
         final Element body; // Body of the HTML code
 
-        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(html, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
 
         body = Jsoup.parse(html).body();
 
@@ -276,6 +304,9 @@ public final class HtmlUtils {
     public final void unwrap(final Element body, final String selector) {
         final Iterable<Element> elements; // Elements to unwrap
 
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+
         elements = body.select(selector);
         for (final Element link : elements) {
             link.unwrap();
@@ -296,7 +327,8 @@ public final class HtmlUtils {
     public final String unwrap(final String html, final String selector) {
         final Element body; // Body of the HTML code
 
-        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(html, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
 
         body = Jsoup.parse(html).body();
 
