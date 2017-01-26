@@ -175,7 +175,8 @@ public class Html5UpdateUtils {
 
         body = Jsoup.parse(html).body();
 
-        removeRedundantSourceDivs(body);
+        // Removes redundant tags
+        getHtmlUtils().unwrap(body, "div.source > div.source");
         reverseSourceDivPre(body);
 
         // Source divs are transformed to code tags
@@ -287,34 +288,6 @@ public class Html5UpdateUtils {
         elements = body.select(selector);
         for (final Element element : elements) {
             removePointsFromAttr(element, attr);
-        }
-    }
-
-    /**
-     * Removes redundant source divisions. This serves as a cleanup step before
-     * updating the code sections.
-     * <p>
-     * Sites created with Doxia for some reason wrap a source code division with
-     * another source code division, and this needs to be fixed before applying
-     * other fixes to such divisions.
-     * <p>
-     * Due to the way this method works, if those divisions were to have more
-     * than a code division, those additional elements will be lost.
-     * 
-     * @param body
-     *            body element with source divisions to fix
-     */
-    private final void removeRedundantSourceDivs(final Element body) {
-        final Iterable<Element> sourceDivs; // Repeated source divs
-        Element parent;                     // Parent <div>
-
-        // Divs with the source class with another div with the source class as
-        // a child
-        sourceDivs = body.select("div.source > div.source");
-        for (final Element div : sourceDivs) {
-            parent = div.parent();
-            div.remove();
-            parent.replaceWith(div);
         }
     }
 
