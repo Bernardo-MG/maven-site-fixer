@@ -82,8 +82,10 @@ public class Html5UpdateUtils {
 
         body = Jsoup.parse(html).body();
 
-        removePointsFromIds(body);
-        removePointsFromInternalHref(body);
+        // Removes points from the id attributes
+        removePointsFromAttr(body, "[id]", "id");
+        // Removes points from the href attributes for internal links
+        removePointsFromAttr(body, "[href^=\"#\"]", "href");
 
         return body.html();
     }
@@ -174,7 +176,7 @@ public class Html5UpdateUtils {
 
         removeRedundantSourceDivs(body);
         takeOutSourceDivPre(body);
-        updateSourceDivsToCode(body);
+        retag(body, "div.source", "code", "source");
 
         return body.html();
     }
@@ -222,10 +224,14 @@ public class Html5UpdateUtils {
 
         body = Jsoup.parse(html).body();
 
-        removeTableBodyClass(body);
+        // Removes bodyTable from tables
+        removeClass(body, "table.bodyTable", "bodyTable");
         updateTableHeads(body);
-        removeTableBorder(body);
-        updateTableRowAlternates(body);
+        // Removes border attribute
+        removeAttribute(body, "table[border]", "border");
+        // Removes alternating rows classes
+        removeClass(body, "tr.a", "a");
+        removeClass(body, "tr.b", "b");
 
         return body.html();
     }
@@ -320,27 +326,6 @@ public class Html5UpdateUtils {
     }
 
     /**
-     * Removes points from the {@code id} attributes.
-     * 
-     * @param body
-     *            body element with ids to fix
-     */
-    private final void removePointsFromIds(final Element body) {
-        removePointsFromAttr(body, "[id]", "id");
-    }
-
-    /**
-     * Removes points from the {@code href} attributes, if these are using
-     * internal anchors.
-     * 
-     * @param body
-     *            body element with links to fix
-     */
-    private final void removePointsFromInternalHref(final Element body) {
-        removePointsFromAttr(body, "[href^=\"#\"]", "href");
-    }
-
-    /**
      * Removes redundant source divisions. This serves as a cleanup step before
      * updating the code sections.
      * <p>
@@ -366,32 +351,6 @@ public class Html5UpdateUtils {
             div.remove();
             parent.replaceWith(div);
         }
-    }
-
-    /**
-     * Removes the {@code bodyTable} from tables.
-     * <p>
-     * If the table ends without classes, then the {@code class} attribute is
-     * removed.
-     * 
-     * @param body
-     *            body element with tables to fix
-     */
-    private final void removeTableBodyClass(final Element body) {
-        removeClass(body, "table.bodyTable", "bodyTable");
-    }
-
-    /**
-     * Removes the {@code border} attribute from {@code <table} elements.
-     * <p>
-     * This attribute, which should be defined in CSS files, is added by Doxia
-     * to tables.
-     * 
-     * @param body
-     *            body element with tables to fix
-     */
-    private final void removeTableBorder(final Element body) {
-        removeAttribute(body, "table[border]", "border");
     }
 
     /**
@@ -458,18 +417,6 @@ public class Html5UpdateUtils {
     }
 
     /**
-     * Transforms {@code <div>} elements with the {@code source} class into
-     * {@code <code>} elements.
-     * 
-     * @param body
-     *            body element with source division to upgrade
-     */
-    private final void updateSourceDivsToCode(final Element body) {
-        // Divs with the source class
-        retag(body, "div.source", "code", "source");
-    }
-
-    /**
      * Corrects table headers by adding a {@code <thead>} section where missing.
      * <p>
      * This serves to fix an error with tables created by Doxia, which will add
@@ -500,20 +447,6 @@ public class Html5UpdateUtils {
             // Adds the head at the beginning of the table
             table.prependChild(thead);
         }
-    }
-
-    /**
-     * Removes the alternating {@code a} and {@code b} classes from table rows.
-     * <p>
-     * This seems to be an obsolete way to get alternate colored rows.
-     * 
-     * @param body
-     *            body element with tables to fix
-     */
-    private final void updateTableRowAlternates(final Element body) {
-        // Table rows with the class "a" or "b"
-        removeClass(body, "tr.a", "a");
-        removeClass(body, "tr.b", "b");
     }
 
 }
