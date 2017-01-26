@@ -166,11 +166,41 @@ public class Html5UpdateUtils {
             final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(attr, "Received a null pointer as attribute");
+
         // Elements with the id attribute
         elements = body.select(selector);
         for (final Element element : elements) {
             removePointsFromAttr(element, attr);
         }
+    }
+
+    /**
+     * Removes the points from the contents of the specified attribute.
+     * 
+     * @param html
+     *            html element with attributes to fix
+     * @param selector
+     *            CSS selector for the elements
+     * @param attr
+     *            attribute to clean
+     * @return HTML content, with the points removed from the attributes
+     */
+    public final String removePointsFromAttr(final String html,
+            final String selector, final String attr) {
+        final Element body;            // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(attr, "Received a null pointer as attribute");
+
+        body = Jsoup.parse(html).body();
+
+        removePointsFromAttr(body, selector, attr);
+
+        return body.html();
     }
 
     /**
@@ -234,6 +264,64 @@ public class Html5UpdateUtils {
     }
 
     /**
+     * Corrects table headers by adding a {@code <thead>} section where missing.
+     * <p>
+     * This serves to fix an error with tables created by Doxia, which will add
+     * the header rows into the {@code <tbody>} element, instead on a {@code 
+     * <thead>} element.
+     * 
+     * @param body
+     *            body element with tables to fix
+     */
+    public final void updateTableHeads(final Element body) {
+        final Iterable<Element> tableHeadRows; // Heads to fix
+        Element table;  // HTML table
+        Element thead;  // Table's head for wrapping
+
+        checkNotNull(body, "Received a null pointer as body");
+
+        // Table rows with <th> tags in a <tbody>
+        tableHeadRows = body.select("table > tbody > tr:has(th)");
+        for (final Element row : tableHeadRows) {
+            // Gets the row's table
+            // The selector ensured the row is inside a tbody
+            table = row.parent().parent();
+
+            // Removes the row from its original position
+            row.remove();
+
+            // Creates a table header element with the row
+            thead = new Element(Tag.valueOf("thead"), "");
+            thead.appendChild(row);
+            // Adds the head at the beginning of the table
+            table.prependChild(thead);
+        }
+    }
+
+    /**
+     * Corrects table headers by adding a {@code <thead>} section where missing.
+     * <p>
+     * This serves to fix an error with tables created by Doxia, which will add
+     * the header rows into the {@code <tbody>} element, instead on a {@code 
+     * <thead>} element.
+     * 
+     * @param html
+     *            HTML with tables to update
+     * @return HTML content, with the tables updated
+     */
+    public final String updateTableHeads(final String html) {
+        final Element body;                  // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        updateTableHeads(body);
+
+        return body.html();
+    }
+
+    /**
      * Returns the result from updating the tables on the received HTML code.
      * <p>
      * This method will add the missing {@code <thead>} element to table, remove
@@ -290,39 +378,6 @@ public class Html5UpdateUtils {
         value = element.attr(attr).replaceAll("\\.", "");
 
         element.attr(attr, value);
-    }
-
-    /**
-     * Corrects table headers by adding a {@code <thead>} section where missing.
-     * <p>
-     * This serves to fix an error with tables created by Doxia, which will add
-     * the header rows into the {@code <tbody>} element, instead on a {@code 
-     * <thead>} element.
-     * 
-     * @param body
-     *            body element with tables to fix
-     */
-    private final void updateTableHeads(final Element body) {
-        final Iterable<Element> tableHeadRows; // Heads to fix
-        Element table;  // HTML table
-        Element thead;  // Table's head for wrapping
-
-        // Table rows with <th> tags in a <tbody>
-        tableHeadRows = body.select("table > tbody > tr:has(th)");
-        for (final Element row : tableHeadRows) {
-            // Gets the row's table
-            // The selector ensured the row is inside a tbody
-            table = row.parent().parent();
-
-            // Removes the row from its original position
-            row.remove();
-
-            // Creates a table header element with the row
-            thead = new Element(Tag.valueOf("thead"), "");
-            thead.appendChild(row);
-            // Adds the head at the beginning of the table
-            table.prependChild(thead);
-        }
     }
 
 }
