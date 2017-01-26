@@ -176,7 +176,11 @@ public class Html5UpdateUtils {
 
         removeRedundantSourceDivs(body);
         takeOutSourceDivPre(body);
-        retag(body, "div.source", "code", "source");
+
+        // Source divs are transformed to code tags
+        retag(body, "div.source", "code");
+        // Removes source class from code tags
+        removeClass(body, "code.source", "source");
 
         return body.html();
     }
@@ -197,8 +201,10 @@ public class Html5UpdateUtils {
 
         body = Jsoup.parse(html).body();
 
-        // divs with the section class
-        retag(body, "div.section", "section", "section");
+        // Section divs are transformed to section tags
+        retag(body, "div.section", "section");
+        // Removes section class from section tags
+        removeClass(body, "section.section", "section");
 
         return body.html();
     }
@@ -354,11 +360,7 @@ public class Html5UpdateUtils {
     }
 
     /**
-     * Finds a set of elements through a CSS selector and changes their tags,
-     * also removes the received class from them.
-     * <p>
-     * If the elements end without classes then the class attribute is also
-     * removed.
+     * Finds a set of elements through a CSS selector and changes their tags.
      * 
      * @param body
      *            body where the elements will be searched for
@@ -366,23 +368,15 @@ public class Html5UpdateUtils {
      *            CSS selector for the elements
      * @param tag
      *            new tag for the elements
-     * @param className
-     *            class to remove
      */
     private final void retag(final Element body, final String select,
-            final String tag, final String className) {
+            final String tag) {
         final Iterable<Element> elements; // Elements selected
 
         // Tables with the bodyTable class
         elements = body.select(select);
         for (final Element element : elements) {
             element.tagName(tag);
-
-            element.removeClass(className);
-
-            if (element.classNames().isEmpty()) {
-                element.removeAttr("class");
-            }
         }
     }
 
