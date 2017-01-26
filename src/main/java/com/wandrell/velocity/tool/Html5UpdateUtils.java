@@ -153,6 +153,27 @@ public class Html5UpdateUtils {
     }
 
     /**
+     * Removes the points from the contents of the specified attribute.
+     * 
+     * @param body
+     *            body element with attributes to fix
+     * @param selector
+     *            CSS selector for the elements
+     * @param attr
+     *            attribute to clean
+     */
+    public final void removePointsFromAttr(final Element body,
+            final String selector, final String attr) {
+        final Iterable<Element> elements; // Elements to fix
+
+        // Elements with the id attribute
+        elements = body.select(selector);
+        for (final Element element : elements) {
+            removePointsFromAttr(element, attr);
+        }
+    }
+
+    /**
      * Returns the result from updating and correcting source divisions on the
      * received HTML code.
      * <p>
@@ -269,27 +290,6 @@ public class Html5UpdateUtils {
         value = element.attr(attr).replaceAll("\\.", "");
 
         element.attr(attr, value);
-    }
-
-    /**
-     * Removes the points from the contents of the specified attribute.
-     * 
-     * @param body
-     *            body element with attributes to fix
-     * @param selector
-     *            CSS selector for the elements
-     * @param attr
-     *            attribute to clean
-     */
-    private final void removePointsFromAttr(final Element body,
-            final String selector, final String attr) {
-        final Iterable<Element> elements; // Elements to fix
-
-        // Elements with the id attribute
-        elements = body.select(selector);
-        for (final Element element : elements) {
-            removePointsFromAttr(element, attr);
-        }
     }
 
     /**
