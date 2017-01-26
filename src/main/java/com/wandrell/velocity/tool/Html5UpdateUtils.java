@@ -139,7 +139,6 @@ public class Html5UpdateUtils {
      * @return HTML content, with no link missing the {@code href} attribute
      */
     public final String removeNoHrefLinks(final String html) {
-        final Iterable<Element> links; // Links to fix
         final Element body;            // Body of the HTML code
 
         checkNotNull(html, "Received a null pointer as html");
@@ -147,11 +146,8 @@ public class Html5UpdateUtils {
         body = Jsoup.parse(html).body();
 
         // Links missing the href attribute
-        links = body.select("a:not([href])");
-        for (final Element link : links) {
-            // Unwrapped to avoid losing texts
-            link.unwrap();
-        }
+        // Unwrapped to avoid losing texts
+        getHtmlUtils().unwrap(body, "a:not([href])");
 
         return body.html();
     }

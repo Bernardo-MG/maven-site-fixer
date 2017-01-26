@@ -69,17 +69,17 @@ public final class HtmlUtils {
      * 
      * @param body
      *            body where the elements will be searched for
-     * @param select
+     * @param selector
      *            CSS selector for the elements
      * @param className
      *            class to remove
      */
-    public final void removeClass(final Element body, final String select,
+    public final void removeClass(final Element body, final String selector,
             final String className) {
         final Iterable<Element> elements; // Elements selected
 
         // Tables with the bodyTable class
-        elements = body.select(select);
+        elements = body.select(selector);
         for (final Element element : elements) {
             element.removeClass(className);
 
@@ -98,13 +98,13 @@ public final class HtmlUtils {
      * 
      * @param html
      *            HTML where the elements will be searched for
-     * @param select
+     * @param selector
      *            CSS selector for the elements
      * @param className
      *            class to remove
      * @return HTML content with the class removed from the elements
      */
-    public final String removeClass(final String html, final String select,
+    public final String removeClass(final String html, final String selector,
             final String className) {
         final Element body; // Body of the HTML code
 
@@ -113,7 +113,7 @@ public final class HtmlUtils {
         body = Jsoup.parse(html).body();
 
         // <a> elements with the externalLink class
-        removeClass(body, select, className);
+        removeClass(body, selector, className);
 
         return body.html();
     }
@@ -123,17 +123,17 @@ public final class HtmlUtils {
      * 
      * @param body
      *            body where the elements will be searched for
-     * @param select
+     * @param selector
      *            CSS selector for the elements
      * @param tag
      *            new tag for the elements
      */
-    public final void retag(final Element body, final String select,
+    public final void retag(final Element body, final String selector,
             final String tag) {
         final Iterable<Element> elements; // Elements selected
 
         // Tables with the bodyTable class
-        elements = body.select(select);
+        elements = body.select(selector);
         for (final Element element : elements) {
             element.tagName(tag);
         }
@@ -144,13 +144,13 @@ public final class HtmlUtils {
      * 
      * @param html
      *            HTML where the elements will be searched for
-     * @param select
+     * @param selector
      *            CSS selector for the elements
      * @param tag
      *            new tag for the elements
      * @return HTML content with the class removed from the elements
      */
-    public final String retag(final String html, final String select,
+    public final String retag(final String html, final String selector,
             final String tag) {
         final Element body; // Body of the HTML code
 
@@ -158,8 +158,49 @@ public final class HtmlUtils {
 
         body = Jsoup.parse(html).body();
 
-        // <a> elements with the externalLink class
-        retag(body, select, tag);
+        retag(body, selector, tag);
+
+        return body.html();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and unwraps them.
+     * <p>
+     * This allows removing elements without losing their contents.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     */
+    public final void unwrap(final Element body, final String selector) {
+        final Iterable<Element> elements; // Elements to unwrap
+
+        elements = body.select(selector);
+        for (final Element link : elements) {
+            link.unwrap();
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and unwraps them.
+     * <p>
+     * This allows removing elements without losing their contents.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @return HTML content with the class removed from the elements
+     */
+    public final String unwrap(final String html, final String selector) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        unwrap(body, selector);
 
         return body.html();
     }
