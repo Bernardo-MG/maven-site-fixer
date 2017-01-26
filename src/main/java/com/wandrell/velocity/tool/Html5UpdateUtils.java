@@ -57,6 +57,11 @@ import org.jsoup.parser.Tag;
 public class Html5UpdateUtils {
 
     /**
+     * HTML utils class to allow reusing its methods.
+     */
+    private final HtmlUtils htmlUtils = new HtmlUtils();
+
+    /**
      * Constructs an instance of the {@code HTML5UpdateUtils}.
      */
     public Html5UpdateUtils() {
@@ -112,7 +117,7 @@ public class Html5UpdateUtils {
         body = Jsoup.parse(html).body();
 
         // <a> elements with the externalLink class
-        removeClass(body, "a.externalLink", "externalLink");
+        getHtmlUtils().removeClass(body, "a.externalLink", "externalLink");
 
         return body.html();
     }
@@ -175,12 +180,12 @@ public class Html5UpdateUtils {
         body = Jsoup.parse(html).body();
 
         removeRedundantSourceDivs(body);
-        takeOutSourceDivPre(body);
+        reverseSourceDivPre(body);
 
         // Source divs are transformed to code tags
         retag(body, "div.source", "code");
         // Removes source class from code tags
-        removeClass(body, "code.source", "source");
+        getHtmlUtils().removeClass(body, "code.source", "source");
 
         return body.html();
     }
@@ -204,7 +209,7 @@ public class Html5UpdateUtils {
         // Section divs are transformed to section tags
         retag(body, "div.section", "section");
         // Removes section class from section tags
-        removeClass(body, "section.section", "section");
+        getHtmlUtils().removeClass(body, "section.section", "section");
 
         return body.html();
     }
@@ -231,15 +236,24 @@ public class Html5UpdateUtils {
         body = Jsoup.parse(html).body();
 
         // Removes bodyTable from tables
-        removeClass(body, "table.bodyTable", "bodyTable");
+        getHtmlUtils().removeClass(body, "table.bodyTable", "bodyTable");
         updateTableHeads(body);
         // Removes border attribute
         removeAttribute(body, "table[border]", "border");
         // Removes alternating rows classes
-        removeClass(body, "tr.a", "a");
-        removeClass(body, "tr.b", "b");
+        getHtmlUtils().removeClass(body, "tr.a", "a");
+        getHtmlUtils().removeClass(body, "tr.b", "b");
 
         return body.html();
+    }
+
+    /**
+     * Returns the HTML utils class.
+     * 
+     * @return the HTML utils class
+     */
+    private final HtmlUtils getHtmlUtils() {
+        return htmlUtils;
     }
 
     /**
@@ -261,35 +275,6 @@ public class Html5UpdateUtils {
         elements = body.select(select);
         for (final Element element : elements) {
             element.removeAttr(attribute);
-        }
-    }
-
-    /**
-     * Finds a set of elements through a CSS selector and removes the received
-     * class from them.
-     * <p>
-     * If the elements end without classes then the class attribute is also
-     * removed.
-     * 
-     * @param body
-     *            body where the elements will be searched for
-     * @param select
-     *            CSS selector for the elements
-     * @param className
-     *            class to remove
-     */
-    private final void removeClass(final Element body, final String select,
-            final String className) {
-        final Iterable<Element> elements; // Elements selected
-
-        // Tables with the bodyTable class
-        elements = body.select(select);
-        for (final Element element : elements) {
-            element.removeClass(className);
-
-            if (element.classNames().isEmpty()) {
-                element.removeAttr("class");
-            }
         }
     }
 
@@ -390,7 +375,7 @@ public class Html5UpdateUtils {
      * @param body
      *            body element with source divisions to upgrade
      */
-    private final void takeOutSourceDivPre(final Element body) {
+    private final void reverseSourceDivPre(final Element body) {
         final Iterable<Element> divs; // Code divisions
         Element div;                  // Parent <div> element
         String text;                  // Preserved text

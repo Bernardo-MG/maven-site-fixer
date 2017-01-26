@@ -47,12 +47,7 @@ import org.jsoup.nodes.Element;
  * Take into account that while the returned HTML will be correct, the validity
  * of the received HTML won't be checked. That falls fully on the hands of the
  * user.
- * <p>
- * This class has been created from the HTML Tool class from the
- * <a href="http://andriusvelykis.github.io/reflow-maven-skin/">Reflow Maven
- * Skin</a>.
  * 
- * @author Andrius Velykis
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("htmlTool")
@@ -63,6 +58,64 @@ public final class HtmlUtils {
      */
     public HtmlUtils() {
         super();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * class from them.
+     * <p>
+     * If the elements end without classes then the class attribute is also
+     * removed.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param select
+     *            CSS selector for the elements
+     * @param className
+     *            class to remove
+     */
+    public final void removeClass(final Element body, final String select,
+            final String className) {
+        final Iterable<Element> elements; // Elements selected
+
+        // Tables with the bodyTable class
+        elements = body.select(select);
+        for (final Element element : elements) {
+            element.removeClass(className);
+
+            if (element.classNames().isEmpty()) {
+                element.removeAttr("class");
+            }
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * class from them.
+     * <p>
+     * If the elements end without classes then the class attribute is also
+     * removed.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param select
+     *            CSS selector for the elements
+     * @param className
+     *            class to remove
+     * @return HTML content with the class removed from the elements
+     */
+    public final String removeClass(final String html, final String select,
+            final String className) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        // <a> elements with the externalLink class
+        removeClass(body, select, className);
+
+        return body.html();
     }
 
     /**
