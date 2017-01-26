@@ -1,4 +1,4 @@
-#Usage
+# Usage
 
 These tools are meant to be used by a Maven Skin through Velocity, and will be put into action when generating a Maven Site. For this first they have to be added as a dependency, and then called inside any file processed by Velocity.
 
@@ -38,15 +38,7 @@ For example, updating the code sections to HTML5 just requires using the followi
 
 ### Keys
 
-Each class has the following key assigned:
-
-|Class|Key|
-|---|---|
-|[HTML5UpdateUtils][html5-update-javadoc]|$html5UpdateTool|
-|[HTMLUtils][html-utils-javadoc]|$htmlTool|
-|[MenuUtils][menu-utils-javadoc]|$menuTool|
-|[SiteUtils][site-utils-javadoc]|$siteTool|
-|[SkinConfigUtils][skin-config-javadoc]|$config|
+Check the [tools page][tools] for finding the key for each utilities class.
 
 ## Usage examples
 
@@ -57,5 +49,7 @@ The [Docs Maven Skin][docs-skin] makes use of these tools, and can be a good exa
 [menu-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/MenuUtils.html
 [site-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/SiteUtils.html
 [skin-config-javadoc]: ./apidocs/com/wandrell/velocity/tool/SkinConfigUtils.html
+
+[tools]: ./tools.html
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin

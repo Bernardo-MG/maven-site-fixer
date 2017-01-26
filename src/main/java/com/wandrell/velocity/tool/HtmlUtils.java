@@ -47,12 +47,7 @@ import org.jsoup.nodes.Element;
  * Take into account that while the returned HTML will be correct, the validity
  * of the received HTML won't be checked. That falls fully on the hands of the
  * user.
- * <p>
- * This class has been created from the HTML Tool class from the
- * <a href="http://andriusvelykis.github.io/reflow-maven-skin/">Reflow Maven
- * Skin</a>.
  * 
- * @author Andrius Velykis
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("htmlTool")
@@ -63,6 +58,283 @@ public final class HtmlUtils {
      */
     public HtmlUtils() {
         super();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * attribute from them.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @param attribute
+     *            attribute to remove
+     */
+    public final void removeAttribute(final Element body, final String selector,
+            final String attribute) {
+        final Iterable<Element> elements; // Elements selected
+
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(attribute, "Received a null pointer as attribute");
+
+        // Tables with the bodyTable class
+        elements = body.select(selector);
+        for (final Element element : elements) {
+            element.removeAttr(attribute);
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * attribute from them.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @param attribute
+     *            attribute to remove
+     * @return HTML content with the class removed from the elements
+     */
+    public final String removeAttribute(final String html,
+            final String selector, final String attribute) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(attribute, "Received a null pointer as attribute");
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        // <a> elements with the externalLink class
+        removeAttribute(body, selector, attribute);
+
+        return body.html();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * class from them.
+     * <p>
+     * If the elements end without classes then the class attribute is also
+     * removed.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @param className
+     *            class to remove
+     */
+    public final void removeClass(final Element body, final String selector,
+            final String className) {
+        final Iterable<Element> elements; // Elements selected
+
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(className, "Received a null pointer as className");
+
+        // Tables with the bodyTable class
+        elements = body.select(selector);
+        for (final Element element : elements) {
+            element.removeClass(className);
+
+            if (element.classNames().isEmpty()) {
+                element.removeAttr("class");
+            }
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * class from them.
+     * <p>
+     * If the elements end without classes then the class attribute is also
+     * removed.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @param className
+     *            class to remove
+     * @return HTML content with the class removed from the elements
+     */
+    public final String removeClass(final String html, final String selector,
+            final String className) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(className, "Received a null pointer as className");
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        // <a> elements with the externalLink class
+        removeClass(body, selector, className);
+
+        return body.html();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and changes their tags.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @param tag
+     *            new tag for the elements
+     */
+    public final void retag(final Element body, final String selector,
+            final String tag) {
+        final Iterable<Element> elements; // Elements selected
+
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(tag, "Received a null pointer as tag");
+
+        // Tables with the bodyTable class
+        elements = body.select(selector);
+        for (final Element element : elements) {
+            element.tagName(tag);
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and changes their tags.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @param tag
+     *            new tag for the elements
+     * @return HTML content with the class removed from the elements
+     */
+    public final String retag(final String html, final String selector,
+            final String tag) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(tag, "Received a null pointer as tag");
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        retag(body, selector, tag);
+
+        return body.html();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and swaps its tag with
+     * that from its parent.
+     * 
+     * @param body
+     *            body element with source divisions to upgrade
+     * @param selector
+     *            selector for finding the element to operate with
+     */
+    public final void swapTagWithParent(final Element body,
+            final String selector) {
+        final Iterable<Element> elements; // Selected elements
+        Element parent;                   // Parent element
+        String text;                      // Preserved text
+
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+
+        elements = body.select(selector);
+        for (final Element pre : elements) {
+            parent = pre.parent();
+
+            text = pre.text();
+            pre.text("");
+
+            parent.replaceWith(pre);
+            pre.appendChild(parent);
+
+            parent.text(text);
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and swaps its tag with
+     * that from its parent.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param selector
+     *            selector for finding the element to operate with
+     * @return HTML content with the class removed from the elements
+     */
+    public final String swapTagWithParent(final String html,
+            final String selector) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+
+        body = Jsoup.parse(html).body();
+
+        swapTagWithParent(body, selector);
+
+        return body.html();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and unwraps them.
+     * <p>
+     * This allows removing elements without losing their contents.
+     * 
+     * @param body
+     *            body where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     */
+    public final void unwrap(final Element body, final String selector) {
+        final Iterable<Element> elements; // Elements to unwrap
+
+        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+
+        elements = body.select(selector);
+        for (final Element link : elements) {
+            link.unwrap();
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and unwraps them.
+     * <p>
+     * This allows removing elements without losing their contents.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param selector
+     *            CSS selector for the elements
+     * @return HTML content with the class removed from the elements
+     */
+    public final String unwrap(final String html, final String selector) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as body");
+        checkNotNull(selector, "Received a null pointer as selector");
+
+        body = Jsoup.parse(html).body();
+
+        unwrap(body, selector);
+
+        return body.html();
     }
 
     /**

@@ -22,45 +22,64 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5update;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link Html5UpdateUtils}.
+ * Unit tests for {@link HtmlUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see Html5UpdateUtils
+ * @see HtmlUtils
  */
-public final class TestHtml5UpdateUtilsUpdateSectionDiv {
+public final class TestHtmlUtilsRemoveClass {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final Html5UpdateUtils util = new Html5UpdateUtils();
+    private final HtmlUtils util = new HtmlUtils();
 
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsUpdateSectionDiv() {
+    public TestHtmlUtilsRemoveClass() {
         super();
     }
 
     /**
-     * Tests that HTML with no outdated sections is ignored.
+     * Tests that when removing the externalLink class from links, if more
+     * classes are left then they are untouched.
      */
     @Test
-    public final void testNoSections_Ignored() {
+    public final void testMultipleClasses() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
+
+        result = util.removeClass(html, "a.externalLink", "externalLink");
+
+        htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no external links is ignored.
+     */
+    @Test
+    public final void testNoExternalLinks_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<p>Some text</p>";
 
-        result = util.updateSectionDiv(html);
+        result = util.removeClass(html, "a.externalLink", "externalLink");
 
         htmlExpected = "<p>Some text</p>";
 
@@ -68,38 +87,20 @@ public final class TestHtml5UpdateUtilsUpdateSectionDiv {
     }
 
     /**
-     * Tests that outdated sections with additional classes keep these.
+     * Tests that when removing the externalLink class from links, if no more
+     * classes are left then the class attribute is removed too.
      */
     @Test
-    public final void testOutdatedSection_KeepsAdditionalClasses() {
+    public final void testSingleClass() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<div class=\"section testClass\"><p>Some text</p></div>";
+        html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
 
-        result = util.updateSectionDiv(html);
+        result = util.removeClass(html, "a.externalLink", "externalLink");
 
-        htmlExpected = "<section class=\"testClass\">\n <p>Some text</p>\n</section>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that when trying to fix the outdated section divisions these are
-     * updated correctly.
-     */
-    @Test
-    public final void testOutdatedSection_Updated() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<div class=\"section\"><p>Some text</p></div>";
-
-        result = util.updateSectionDiv(html);
-
-        htmlExpected = "<section>\n <p>Some text</p>\n</section>";
+        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
 
         Assert.assertEquals(result, htmlExpected);
     }

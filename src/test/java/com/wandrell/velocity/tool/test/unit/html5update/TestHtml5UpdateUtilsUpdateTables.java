@@ -28,13 +28,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link Html5UpdateUtils}.
  * 
  * @author Bernardo Martínez Garrido
- * @see HtmlUtils
+ * @see Html5UpdateUtils
  */
 public class TestHtml5UpdateUtilsUpdateTables {
 
@@ -72,7 +71,7 @@ public class TestHtml5UpdateUtilsUpdateTables {
      * Tests that outdated tables with additional classes keep these.
      */
     @Test
-    public final void testOutdatedTable_KeepsTableClasses() {
+    public final void testOutdatedTable_KeepsAdditionalClasses() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final String result;       // Actual result

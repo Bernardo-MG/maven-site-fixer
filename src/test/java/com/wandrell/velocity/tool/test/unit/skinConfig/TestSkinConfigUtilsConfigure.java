@@ -36,6 +36,8 @@ import com.wandrell.velocity.tool.SkinConfigUtils;
 /**
  * Unit tests for {@link SkinConfigUtils}, testing the {@code configure} method
  * to make sure it can support various mostly invalid configurations.
+ * <p>
+ * These are just smoke tests to verify the class does not break in these cases.
  * 
  * @author Bernardo Martínez Garrido
  * @see SkinConfigUtils

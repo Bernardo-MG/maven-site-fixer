@@ -22,26 +22,49 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool;
+package com.wandrell.velocity.tool.test.unit.html;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Enum indicating a relative position during an edition.
+ * Unit tests for {@link HtmlUtils}.
  * 
- * @author Andrius Velykis
  * @author Bernardo Martínez Garrido
+ * @see HtmlUtils
  */
-public enum Position {
+public class TestHtmlUtilsSwapTagWithParent {
+
     /**
-     * Position after the change.
+     * Instance of the utils class being tested.
      */
-    AFTER,
+    private final HtmlUtils util = new HtmlUtils();
+
     /**
-     * Position before the change.
+     * Default constructor.
      */
-    BEFORE,
+    public TestHtmlUtilsSwapTagWithParent() {
+        super();
+    }
+
     /**
-     * No position. It will be ignored.
+     * Tests that attributes are removed.
      */
-    NONE
+    @Test
+    public final void testCodeSection_Swaps() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<code><pre>Some code</pre></code>";
+
+        result = util.swapTagWithParent(html, "code > pre");
+
+        htmlExpected = "<pre><code>Some code</code></pre>";
+
+        Assert.assertEquals(result, htmlExpected);
+    }
 
 }

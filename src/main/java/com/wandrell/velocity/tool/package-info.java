@@ -33,10 +33,10 @@
  * which are repeated on the {@code tools.xml} file on the resources folder,
  * which can be used for this.
  * <p>
- * For example, to call the {@code HTMLUtils} {@code split} method the following
- * VTL line can be used:
+ * For example, to call the {@code HTMLUtils} {@code unwrap} method the
+ * following VTL line can be used:
  * <p>
- * {@code #set ( $sections = $htmlTool.split( $bodyContent, "hr" ) )}
+ * {@code #set ( $sections = $htmlTool.unwrap( $bodyContent, "a:not([href])" ) )}
  * <p>
  * They also share a series of features, first of all the fact that all editing
  * and querying of HTML is done through the
