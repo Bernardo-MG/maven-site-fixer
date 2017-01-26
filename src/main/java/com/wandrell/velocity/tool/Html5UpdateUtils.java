@@ -180,7 +180,7 @@ public class Html5UpdateUtils {
         // Removes redundant tags
         getHtmlUtils().unwrap(body, "code > code");
 
-        reverseTags(body, "code > pre");
+        getHtmlUtils().swapTagWithParent(body, "code > pre");
 
         // Removes source class from code tags
         getHtmlUtils().removeClass(body, "code.source", "source");
@@ -289,34 +289,6 @@ public class Html5UpdateUtils {
         elements = body.select(selector);
         for (final Element element : elements) {
             removePointsFromAttr(element, attr);
-        }
-    }
-
-    /**
-     * Finds an element through a selector and swaps its tag with that from its
-     * parent.
-     * 
-     * @param body
-     *            body element with source divisions to upgrade
-     * @param selector
-     *            selector for finding the element to operate with
-     */
-    private final void reverseTags(final Element body, final String selector) {
-        final Iterable<Element> elements; // Selected elements
-        Element parent;                   // Parent element
-        String text;                      // Preserved text
-
-        elements = body.select(selector);
-        for (final Element pre : elements) {
-            parent = pre.parent();
-
-            text = pre.text();
-            pre.text("");
-
-            parent.replaceWith(pre);
-            pre.appendChild(parent);
-
-            parent.text(text);
         }
     }
 

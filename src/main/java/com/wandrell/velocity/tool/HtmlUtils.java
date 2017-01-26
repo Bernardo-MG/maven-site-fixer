@@ -212,6 +212,58 @@ public final class HtmlUtils {
     }
 
     /**
+     * Finds a set of elements through a CSS selector and swaps its tag with
+     * that from its parent.
+     * 
+     * @param body
+     *            body element with source divisions to upgrade
+     * @param selector
+     *            selector for finding the element to operate with
+     */
+    public final void swapTagWithParent(final Element body,
+            final String selector) {
+        final Iterable<Element> elements; // Selected elements
+        Element parent;                   // Parent element
+        String text;                      // Preserved text
+
+        elements = body.select(selector);
+        for (final Element pre : elements) {
+            parent = pre.parent();
+
+            text = pre.text();
+            pre.text("");
+
+            parent.replaceWith(pre);
+            pre.appendChild(parent);
+
+            parent.text(text);
+        }
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and swaps its tag with
+     * that from its parent.
+     * 
+     * @param html
+     *            HTML where the elements will be searched for
+     * @param selector
+     *            selector for finding the element to operate with
+     * @return HTML content with the class removed from the elements
+     */
+    public final String swapTagWithParent(final String html,
+            final String selector) {
+        final Element body; // Body of the HTML code
+
+        checkNotNull(html, "Received a null pointer as html");
+
+        body = Jsoup.parse(html).body();
+
+        swapTagWithParent(body, selector);
+
+        return body.html();
+    }
+
+    /**
      * Finds a set of elements through a CSS selector and unwraps them.
      * <p>
      * This allows removing elements without losing their contents.
