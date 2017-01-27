@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -56,15 +57,16 @@ public final class TestHtmlUtilsWrapFirst {
     public final void testHeadingWithHeader_Wraps() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.wrapFirst(html, "h1", "<header></header>");
+        element = new HtmlUtils().parse(html);
+        util.wrapFirst(element, "h1", "<header></header>");
 
         htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -74,15 +76,16 @@ public final class TestHtmlUtilsWrapFirst {
     public final void testNoElement_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.wrapFirst(html, "h3", "<header></header>");
+        element = new HtmlUtils().parse(html);
+        util.wrapFirst(element, "h3", "<header></header>");
 
         htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -93,15 +96,16 @@ public final class TestHtmlUtilsWrapFirst {
     public final void testNotClosed_Closed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        result = util.wrapFirst(html, "h1", "<header>");
+        element = new HtmlUtils().parse(html);
+        util.wrapFirst(element, "h1", "<header>");
 
         htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

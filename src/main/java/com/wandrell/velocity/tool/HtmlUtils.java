@@ -219,31 +219,26 @@ public final class HtmlUtils {
      * wrap them with the wrapper element. The HTML code will then be adapted to
      * this change and returned.
      * 
-     * @param html
-     *            HTML content to modify
+     * @param element
+     *            root element for the selection
      * @param selector
      *            CSS selector for elements to wrap
      * @param wrapper
      *            HTML to use for wrapping the selected elements
-     * @return HTML with the selected elements wrapped with the wrapper element
      */
-    public final String wrap(final String html, final String selector,
+    public final void wrap(final Element element, final String selector,
             final String wrapper) {
         final Iterable<Element> elements; // Selected elements
-        final Element body;  // Element parsed from the content
 
-        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(element, "Received a null pointer as element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(wrapper, "Received a null pointer as HTML wrap");
 
-        body = Jsoup.parse(html).body();
-        elements = body.select(selector);
+        elements = element.select(selector);
 
         for (final Element selected : elements) {
             selected.wrap(wrapper);
         }
-
-        return body.html();
     }
 
     /**
@@ -254,31 +249,26 @@ public final class HtmlUtils {
      * then wrap it with the wrapper element. The HTML code will then be adapted
      * to this change and returned.
      * 
-     * @param html
-     *            HTML content to modify
+     * @param element
+     *            root element for the selection
      * @param selector
      *            CSS selector for elements to wrap
      * @param wrapper
      *            HTML to use for wrapping the selected elements
-     * @return HTML with the selected elements wrapped with the wrapper element
      */
-    public final String wrapFirst(final String html, final String selector,
+    public final void wrapFirst(final Element element, final String selector,
             final String wrapper) {
         final Collection<Element> elements; // Selected elements
-        final Element body;  // Element parsed from the content
 
-        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(element, "Received a null pointer as element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(wrapper, "Received a null pointer as HTML wrap");
 
-        body = Jsoup.parse(html).body();
-        elements = body.select(selector);
+        elements = element.select(selector);
 
         if (!elements.isEmpty()) {
             elements.iterator().next().wrap(wrapper);
         }
-
-        return body.html();
     }
 
 }

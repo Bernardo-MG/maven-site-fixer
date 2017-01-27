@@ -98,15 +98,16 @@ public final class TestHtmlUtilsEmpty {
     public final void testWrap_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
 
-        result = util.wrap(html, "h1", "<header></header>");
+        element = new HtmlUtils().parse(html);
+        util.wrap(element, "h1", "<header></header>");
 
         htmlExpected = "";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -116,15 +117,16 @@ public final class TestHtmlUtilsEmpty {
     public final void testWrapFirst_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
 
-        result = util.wrapFirst(html, "h1", "<header></header>");
+        element = new HtmlUtils().parse(html);
+        util.wrapFirst(element, "h1", "<header></header>");
 
         htmlExpected = "";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }
