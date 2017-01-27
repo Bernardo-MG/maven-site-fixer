@@ -10,8 +10,8 @@ Each tool uses the following configuration:
 |[SiteUtils][site-utils-javadoc]|$siteTool|Various methods for upgrading a Maven Site, may not be completely generic.|
 |[SkinConfigUtils][skin-config-javadoc]|$config|Allows custom configuration info to be used on any Maven Skin.|
 
-[html5-update-javadoc]: ./apidocs/com/wandrell/velocity/tool/HTML5UpdateUtils.html
-[html-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/HTMLUtils.html
+[html5-update-javadoc]: ./apidocs/com/wandrell/velocity/tool/Html5UpdateUtils.html
+[html-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/HtmlUtils.html
 [menu-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/MenuUtils.html
 [site-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/SiteUtils.html
 [skin-config-javadoc]: ./apidocs/com/wandrell/velocity/tool/SkinConfigUtils.html
