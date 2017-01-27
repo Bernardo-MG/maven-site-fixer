@@ -77,25 +77,25 @@ public final class HtmlUtils {
      * Finds a set of elements through a CSS selector and removes the received
      * attribute from them.
      * 
-     * @param body
-     *            body where the elements will be searched for
+     * @param element
+     *            root element for the selection
      * @param selector
      *            CSS selector for the elements
      * @param attribute
      *            attribute to remove
      */
-    public final void removeAttribute(final Element body, final String selector,
-            final String attribute) {
+    public final void removeAttribute(final Element element,
+            final String selector, final String attribute) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(element, "Received a null pointer as element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attribute, "Received a null pointer as attribute");
 
         // Tables with the bodyTable class
-        elements = body.select(selector);
-        for (final Element element : elements) {
-            element.removeAttr(attribute);
+        elements = element.select(selector);
+        for (final Element selected : elements) {
+            selected.removeAttr(attribute);
         }
     }
 
@@ -106,28 +106,28 @@ public final class HtmlUtils {
      * If the elements end without classes then the class attribute is also
      * removed.
      * 
-     * @param body
-     *            body where the elements will be searched for
+     * @param element
+     *            root element for the selection
      * @param selector
      *            CSS selector for the elements
      * @param className
      *            class to remove
      */
-    public final void removeClass(final Element body, final String selector,
+    public final void removeClass(final Element element, final String selector,
             final String className) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(element, "Received a null pointer as element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(className, "Received a null pointer as className");
 
         // Tables with the bodyTable class
-        elements = body.select(selector);
-        for (final Element element : elements) {
-            element.removeClass(className);
+        elements = element.select(selector);
+        for (final Element selected : elements) {
+            selected.removeClass(className);
 
-            if (element.classNames().isEmpty()) {
-                element.removeAttr("class");
+            if (selected.classNames().isEmpty()) {
+                selected.removeAttr("class");
             }
         }
     }
@@ -135,25 +135,25 @@ public final class HtmlUtils {
     /**
      * Finds a set of elements through a CSS selector and changes their tags.
      * 
-     * @param body
-     *            body where the elements will be searched for
+     * @param element
+     *            root element for the selection
      * @param selector
      *            CSS selector for the elements
      * @param tag
      *            new tag for the elements
      */
-    public final void retag(final Element body, final String selector,
+    public final void retag(final Element element, final String selector,
             final String tag) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(element, "Received a null pointer as element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(tag, "Received a null pointer as tag");
 
         // Tables with the bodyTable class
-        elements = body.select(selector);
-        for (final Element element : elements) {
-            element.tagName(tag);
+        elements = element.select(selector);
+        for (final Element selected : elements) {
+            selected.tagName(tag);
         }
     }
 
@@ -161,29 +161,29 @@ public final class HtmlUtils {
      * Finds a set of elements through a CSS selector and swaps its tag with
      * that from its parent.
      * 
-     * @param body
+     * @param element
      *            body element with source divisions to upgrade
      * @param selector
      *            selector for finding the element to operate with
      */
-    public final void swapTagWithParent(final Element body,
+    public final void swapTagWithParent(final Element element,
             final String selector) {
         final Iterable<Element> elements; // Selected elements
         Element parent;                   // Parent element
         String text;                      // Preserved text
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(element, "Received a null pointer as element");
         checkNotNull(selector, "Received a null pointer as selector");
 
-        elements = body.select(selector);
-        for (final Element pre : elements) {
-            parent = pre.parent();
+        elements = element.select(selector);
+        for (final Element selected : elements) {
+            parent = selected.parent();
 
-            text = pre.text();
-            pre.text("");
+            text = selected.text();
+            selected.text("");
 
-            parent.replaceWith(pre);
-            pre.appendChild(parent);
+            parent.replaceWith(selected);
+            selected.appendChild(parent);
 
             parent.text(text);
         }
@@ -194,20 +194,20 @@ public final class HtmlUtils {
      * <p>
      * This allows removing elements without losing their contents.
      * 
-     * @param body
-     *            body where the elements will be searched for
+     * @param element
+     *            root element for the selection
      * @param selector
      *            CSS selector for the elements
      */
-    public final void unwrap(final Element body, final String selector) {
+    public final void unwrap(final Element element, final String selector) {
         final Iterable<Element> elements; // Elements to unwrap
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(element, "Received a null pointer as element");
         checkNotNull(selector, "Received a null pointer as selector");
 
-        elements = body.select(selector);
-        for (final Element link : elements) {
-            link.unwrap();
+        elements = element.select(selector);
+        for (final Element selected : elements) {
+            selected.unwrap();
         }
     }
 
@@ -239,8 +239,8 @@ public final class HtmlUtils {
         body = Jsoup.parse(html).body();
         elements = body.select(selector);
 
-        for (final Element element : elements) {
-            element.wrap(wrapper);
+        for (final Element selected : elements) {
+            selected.wrap(wrapper);
         }
 
         return body.html();
