@@ -94,25 +94,25 @@ public class Html5UpdateUtils {
     /**
      * Removes the points from the contents of the specified attribute.
      * 
-     * @param body
-     *            body element with attributes to fix
+     * @param element
+     *            root element for the selection
      * @param selector
      *            CSS selector for the elements
      * @param attr
      *            attribute to clean
      */
-    public final void removePointsFromAttr(final Element body,
+    public final void removePointsFromAttr(final Element element,
             final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(element, "Received a null pointer as element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attr, "Received a null pointer as attribute");
 
         // Elements with the id attribute
-        elements = body.select(selector);
-        for (final Element element : elements) {
-            removePointsFromAttr(element, attr);
+        elements = element.select(selector);
+        for (final Element selected : elements) {
+            removePointsFromAttr(selected, attr);
         }
     }
 
@@ -123,18 +123,18 @@ public class Html5UpdateUtils {
      * the header rows into the {@code <tbody>} element, instead on a {@code 
      * <thead>} element.
      * 
-     * @param body
-     *            body element with tables to fix
+     * @param element
+     *            element with tables to fix
      */
-    public final void updateTableHeads(final Element body) {
+    public final void updateTableHeads(final Element element) {
         final Iterable<Element> tableHeadRows; // Heads to fix
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(element, "Received a null pointer as element");
 
         // Table rows with <th> tags in a <tbody>
-        tableHeadRows = body.select("table > tbody > tr:has(th)");
+        tableHeadRows = element.select("table > tbody > tr:has(th)");
         for (final Element row : tableHeadRows) {
             // Gets the row's table
             // The selector ensured the row is inside a tbody

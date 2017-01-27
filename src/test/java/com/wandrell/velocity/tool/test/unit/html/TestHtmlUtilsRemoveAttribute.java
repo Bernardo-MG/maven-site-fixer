@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -56,15 +57,16 @@ public class TestHtmlUtilsRemoveAttribute {
     public final void testTable_RemovesAttribute() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
 
-        result = util.removeAttribute(html, "table[border]", "border");
+        element = new HtmlUtils().parse(html);
+        util.removeAttribute(element, "table[border]", "border");
 
         htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

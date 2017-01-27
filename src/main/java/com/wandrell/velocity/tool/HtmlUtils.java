@@ -101,36 +101,6 @@ public final class HtmlUtils {
 
     /**
      * Finds a set of elements through a CSS selector and removes the received
-     * attribute from them.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            CSS selector for the elements
-     * @param attribute
-     *            attribute to remove
-     * @return HTML content with the class removed from the elements
-     */
-    public final String removeAttribute(final String html,
-            final String selector, final String attribute) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(attribute, "Received a null pointer as attribute");
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // <a> elements with the externalLink class
-        removeAttribute(body, selector, attribute);
-
-        return body.html();
-    }
-
-    /**
-     * Finds a set of elements through a CSS selector and removes the received
      * class from them.
      * <p>
      * If the elements end without classes then the class attribute is also
@@ -163,39 +133,6 @@ public final class HtmlUtils {
     }
 
     /**
-     * Finds a set of elements through a CSS selector and removes the received
-     * class from them.
-     * <p>
-     * If the elements end without classes then the class attribute is also
-     * removed.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            CSS selector for the elements
-     * @param className
-     *            class to remove
-     * @return HTML content with the class removed from the elements
-     */
-    public final String removeClass(final String html, final String selector,
-            final String className) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(className, "Received a null pointer as className");
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // <a> elements with the externalLink class
-        removeClass(body, selector, className);
-
-        return body.html();
-    }
-
-    /**
      * Finds a set of elements through a CSS selector and changes their tags.
      * 
      * @param body
@@ -218,34 +155,6 @@ public final class HtmlUtils {
         for (final Element element : elements) {
             element.tagName(tag);
         }
-    }
-
-    /**
-     * Finds a set of elements through a CSS selector and changes their tags.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            CSS selector for the elements
-     * @param tag
-     *            new tag for the elements
-     * @return HTML content with the class removed from the elements
-     */
-    public final String retag(final String html, final String selector,
-            final String tag) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(tag, "Received a null pointer as tag");
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        retag(body, selector, tag);
-
-        return body.html();
     }
 
     /**
@@ -281,30 +190,6 @@ public final class HtmlUtils {
     }
 
     /**
-     * Finds a set of elements through a CSS selector and swaps its tag with
-     * that from its parent.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            selector for finding the element to operate with
-     * @return HTML content with the class removed from the elements
-     */
-    public final String swapTagWithParent(final String html,
-            final String selector) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as body");
-        checkNotNull(selector, "Received a null pointer as selector");
-
-        body = Jsoup.parse(html).body();
-
-        swapTagWithParent(body, selector);
-
-        return body.html();
-    }
-
-    /**
      * Finds a set of elements through a CSS selector and unwraps them.
      * <p>
      * This allows removing elements without losing their contents.
@@ -324,30 +209,6 @@ public final class HtmlUtils {
         for (final Element link : elements) {
             link.unwrap();
         }
-    }
-
-    /**
-     * Finds a set of elements through a CSS selector and unwraps them.
-     * <p>
-     * This allows removing elements without losing their contents.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            CSS selector for the elements
-     * @return HTML content with the class removed from the elements
-     */
-    public final String unwrap(final String html, final String selector) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as body");
-        checkNotNull(selector, "Received a null pointer as selector");
-
-        body = Jsoup.parse(html).body();
-
-        unwrap(body, selector);
-
-        return body.html();
     }
 
     /**

@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -59,15 +60,16 @@ public final class TestHtmlUtilsEmpty {
     public final void testRemoveClass_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
 
-        result = util.removeClass(html, "a.externalLink", "externalLink");
+        element = new HtmlUtils().parse(html);
+        util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -77,15 +79,16 @@ public final class TestHtmlUtilsEmpty {
     public final void testRetag_EmptyString() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
 
-        result = util.retag(html, "a.externalLink", "externalLink");
+        element = new HtmlUtils().parse(html);
+        util.retag(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
