@@ -27,7 +27,6 @@ package com.wandrell.velocity.tool;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.apache.velocity.tools.config.DefaultKey;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
@@ -70,7 +69,7 @@ public class Html5UpdateUtils {
 
     /**
      * Returns the result from removing links with no {@code href} attribute
-     * defined from the received HTML code.
+     * defined from the received element contents.
      * <p>
      * These links are added by Doxia mainly to the headings. The idea seems to
      * allow getting an internal anchor by clicking on a heading, but it does
@@ -80,22 +79,16 @@ public class Html5UpdateUtils {
      * Instead of just removing the links these will be actually unwrapped,
      * keeping any text they may contain.
      * 
-     * @param html
-     *            HTML to clear of any empty {@code href} link
-     * @return HTML content, with no link missing the {@code href} attribute
+     * @param element
+     *            element to clear of any empty {@code href} link
      */
-    public final String removeNoHrefLinks(final String html) {
-        final Element body;            // Body of the HTML code
+    public final void removeNoHrefLinks(final Element element) {
 
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
+        checkNotNull(element, "Received a null pointer as element");
 
         // Links missing the href attribute
         // Unwrapped to avoid losing texts
-        getHtmlUtils().unwrap(body, "a:not([href])");
-
-        return body.html();
+        getHtmlUtils().unwrap(element, "a:not([href])");
     }
 
     /**
@@ -121,32 +114,6 @@ public class Html5UpdateUtils {
         for (final Element element : elements) {
             removePointsFromAttr(element, attr);
         }
-    }
-
-    /**
-     * Removes the points from the contents of the specified attribute.
-     * 
-     * @param html
-     *            html element with attributes to fix
-     * @param selector
-     *            CSS selector for the elements
-     * @param attr
-     *            attribute to clean
-     * @return HTML content, with the points removed from the attributes
-     */
-    public final String removePointsFromAttr(final String html,
-            final String selector, final String attr) {
-        final Element body;            // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(attr, "Received a null pointer as attribute");
-
-        body = Jsoup.parse(html).body();
-
-        removePointsFromAttr(body, selector, attr);
-
-        return body.html();
     }
 
     /**
@@ -182,29 +149,6 @@ public class Html5UpdateUtils {
             // Adds the head at the beginning of the table
             table.prependChild(thead);
         }
-    }
-
-    /**
-     * Corrects table headers by adding a {@code <thead>} section where missing.
-     * <p>
-     * This serves to fix an error with tables created by Doxia, which will add
-     * the header rows into the {@code <tbody>} element, instead on a {@code 
-     * <thead>} element.
-     * 
-     * @param html
-     *            HTML with tables to update
-     * @return HTML content, with the tables updated
-     */
-    public final String updateTableHeads(final String html) {
-        final Element body;                  // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        updateTableHeads(body);
-
-        return body.html();
     }
 
     /**

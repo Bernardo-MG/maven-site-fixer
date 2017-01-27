@@ -61,6 +61,19 @@ public final class HtmlUtils {
     }
 
     /**
+     * Parses the received HTML code.
+     * 
+     * @param html
+     *            HTML to parse
+     * @return the parsed HTML
+     */
+    public final Element parse(final String html) {
+        checkNotNull(html, "Received a null pointer as body");
+
+        return Jsoup.parse(html).body();
+    }
+
+    /**
      * Finds a set of elements through a CSS selector and removes the received
      * attribute from them.
      * 

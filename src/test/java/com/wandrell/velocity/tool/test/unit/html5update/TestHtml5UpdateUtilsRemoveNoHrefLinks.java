@@ -24,10 +24,12 @@
 
 package com.wandrell.velocity.tool.test.unit.html5update;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
  * Unit tests for {@link Html5UpdateUtils}.
@@ -56,15 +58,16 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
     public final void testHeading_NoHref_Removed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
 
-        result = util.removeNoHrefLinks(html);
+        element = new HtmlUtils().parse(html);
+        util.removeNoHrefLinks(element);
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -75,15 +78,16 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
     public final void testHeading_NoHref_WithText_TextKept() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
 
-        result = util.removeNoHrefLinks(html);
+        element = new HtmlUtils().parse(html);
+        util.removeNoHrefLinks(element);
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -93,15 +97,16 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
     public final void testNoAnchors_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
 
-        result = util.removeNoHrefLinks(html);
+        element = new HtmlUtils().parse(html);
+        util.removeNoHrefLinks(element);
 
         htmlExpected = "<p>Some text</p>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }
