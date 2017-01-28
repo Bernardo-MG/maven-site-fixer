@@ -116,7 +116,6 @@ public final class TestSkinConfigUtilsIsTrue {
         final DecorationModel deco;    // Decoration model
         final Xpp3Dom customNode;      // <custom> node
         final Xpp3Dom skinNode;        // <skinConfig> node
-        final Xpp3Dom pagesNode;       // <pages> node
         final Xpp3Dom pageNode;        // Current page node
         final Xpp3Dom valueNode;       // Node with the test value
         final String currentFile;      // Current page
@@ -131,13 +130,8 @@ public final class TestSkinConfigUtilsIsTrue {
         pageNode = new Xpp3Dom(currentFile);
         pageNode.addChild(valueNode);
 
-        // Creates all pages node
-        pagesNode = new Xpp3Dom(SkinConfigUtils.PAGES_KEY);
-        pagesNode.addChild(pageNode);
-
         // Creates skin node
         skinNode = new Xpp3Dom(SkinConfigUtils.SKIN_KEY);
-        skinNode.addChild(pagesNode);
 
         // Creates custom data node
         customNode = new Xpp3Dom("custom");
