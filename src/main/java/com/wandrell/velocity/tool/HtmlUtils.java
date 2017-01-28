@@ -36,17 +36,13 @@ import org.jsoup.nodes.Element;
  * Utilities class for manipulating HTML, to be used as an extension of the
  * Velocity templating engine.
  * <p>
- * The methods offered help enhancing the look of a Maven Site by manipulating
- * the HTML structure.
+ * The methods will make small and well defined operations into HTML code. The
+ * edition is handled through <a href="http://jsoup.org/">jsoup</a>, and the
+ * HTML should have been parsed with it before handling it to the modification
+ * methods.
  * <p>
- * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
- * editing. This library will process the HTML code received by the methods, so
- * only the contents of the {@code <body>} tag (or the full HTML if this tag is
- * missing) will be used.
- * <p>
- * Take into account that while the returned HTML will be correct, the validity
- * of the received HTML won't be checked. That falls fully on the hands of the
- * user.
+ * To ease parsing HTML the {@link parse} method can be used. It receives HTML
+ * code and returns a jsoup element.
  * 
  * @author Bernardo Martínez Garrido
  */
@@ -62,10 +58,13 @@ public final class HtmlUtils {
 
     /**
      * Parses the received HTML code.
+     * <p>
+     * The resulting object can be used on the other methods. Only the content
+     * of the {@code <body>} tag will be parsed.
      * 
      * @param html
      *            HTML to parse
-     * @return the parsed HTML
+     * @return the parsed HTML body
      */
     public final Element parse(final String html) {
         checkNotNull(html, "Received a null pointer as body");
@@ -75,59 +74,59 @@ public final class HtmlUtils {
 
     /**
      * Finds a set of elements through a CSS selector and removes the received
-     * attribute from them.
+     * attribute from them, if they have it.
      * 
-     * @param element
+     * @param root
      *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
+     *            CSS selector for the elements with the attribute to remove
      * @param attribute
      *            attribute to remove
      */
-    public final void removeAttribute(final Element element,
-            final String selector, final String attribute) {
+    public final void removeAttribute(final Element root, final String selector,
+            final String attribute) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attribute, "Received a null pointer as attribute");
 
-        // Tables with the bodyTable class
-        elements = element.select(selector);
-        for (final Element selected : elements) {
-            selected.removeAttr(attribute);
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            element.removeAttr(attribute);
         }
     }
 
     /**
      * Finds a set of elements through a CSS selector and removes the received
-     * class from them.
+     * class from them, if they have it.
      * <p>
      * If the elements end without classes then the class attribute is also
      * removed.
      * 
-     * @param element
+     * @param root
      *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
+     *            CSS selector for the elements with the class to remove
      * @param className
      *            class to remove
      */
-    public final void removeClass(final Element element, final String selector,
+    public final void removeClass(final Element root, final String selector,
             final String className) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(className, "Received a null pointer as className");
 
-        // Tables with the bodyTable class
-        elements = element.select(selector);
-        for (final Element selected : elements) {
-            selected.removeClass(className);
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            element.removeClass(className);
 
-            if (selected.classNames().isEmpty()) {
-                selected.removeAttr("class");
+            if (element.classNames().isEmpty()) {
+                element.removeAttr("class");
             }
         }
     }
@@ -135,25 +134,25 @@ public final class HtmlUtils {
     /**
      * Finds a set of elements through a CSS selector and changes their tags.
      * 
-     * @param element
+     * @param root
      *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
+     *            CSS selector for the elements to retag
      * @param tag
      *            new tag for the elements
      */
-    public final void retag(final Element element, final String selector,
+    public final void retag(final Element root, final String selector,
             final String tag) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(tag, "Received a null pointer as tag");
 
-        // Tables with the bodyTable class
-        elements = element.select(selector);
-        for (final Element selected : elements) {
-            selected.tagName(tag);
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            element.tagName(tag);
         }
     }
 
@@ -161,30 +160,34 @@ public final class HtmlUtils {
      * Finds a set of elements through a CSS selector and swaps its tag with
      * that from its parent.
      * 
-     * @param element
+     * @param root
      *            body element with source divisions to upgrade
      * @param selector
-     *            selector for finding the element to operate with
+     *            CSS selector for the elements to swap with its parent
      */
-    public final void swapTagWithParent(final Element element,
+    public final void swapTagWithParent(final Element root,
             final String selector) {
         final Iterable<Element> elements; // Selected elements
         Element parent;                   // Parent element
         String text;                      // Preserved text
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
 
-        elements = element.select(selector);
-        for (final Element selected : elements) {
-            parent = selected.parent();
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            parent = element.parent();
 
-            text = selected.text();
-            selected.text("");
+            // Takes the text out of the element
+            text = element.text();
+            element.text("");
 
-            parent.replaceWith(selected);
-            selected.appendChild(parent);
+            // Swaps elements
+            parent.replaceWith(element);
+            element.appendChild(parent);
 
+            // Sets the text into what was the parent element
             parent.text(text);
         }
     }
@@ -194,78 +197,74 @@ public final class HtmlUtils {
      * <p>
      * This allows removing elements without losing their contents.
      * 
-     * @param element
+     * @param root
      *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
+     *            CSS selector for the elements to unwrap
      */
-    public final void unwrap(final Element element, final String selector) {
+    public final void unwrap(final Element root, final String selector) {
         final Iterable<Element> elements; // Elements to unwrap
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
 
-        elements = element.select(selector);
-        for (final Element selected : elements) {
-            selected.unwrap();
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            element.unwrap();
         }
     }
 
     /**
-     * Returns the HTML code with the elements marked by the selector wrapped on
-     * the received wrapper element.
-     * <p>
-     * The method will find all the elements fitting into the selector, and then
-     * wrap them with the wrapper element. The HTML code will then be adapted to
-     * this change and returned.
+     * Finds a set of elements through a CSS selector and wraps them with the
+     * received wrapper element.
      * 
-     * @param element
+     * @param root
      *            root element for the selection
      * @param selector
-     *            CSS selector for elements to wrap
+     *            CSS selector for the elements to wrap
      * @param wrapper
      *            HTML to use for wrapping the selected elements
      */
-    public final void wrap(final Element element, final String selector,
+    public final void wrap(final Element root, final String selector,
             final String wrapper) {
         final Iterable<Element> elements; // Selected elements
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(wrapper, "Received a null pointer as HTML wrap");
 
-        elements = element.select(selector);
-
-        for (final Element selected : elements) {
-            selected.wrap(wrapper);
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            element.wrap(wrapper);
         }
     }
 
     /**
-     * Returns the HTML code with the first element marked by the selector
-     * wrapped on the received wrapper element.
-     * <p>
-     * The method will find the first element fitting into the selector, and
-     * then wrap it with the wrapper element. The HTML code will then be adapted
-     * to this change and returned.
+     * Finds the first element matching a CSS selector and wraps it with the
+     * received wrapper element.
      * 
-     * @param element
+     * @param root
      *            root element for the selection
      * @param selector
-     *            CSS selector for elements to wrap
+     *            CSS selector for the element to wrap
      * @param wrapper
      *            HTML to use for wrapping the selected elements
      */
-    public final void wrapFirst(final Element element, final String selector,
+    public final void wrapFirst(final Element root, final String selector,
             final String wrapper) {
         final Collection<Element> elements; // Selected elements
 
-        checkNotNull(element, "Received a null pointer as element");
+        // TODO: I think this can be done with the wrapper method and CSS
+        // selectors
+
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(wrapper, "Received a null pointer as HTML wrap");
 
-        elements = element.select(selector);
-
+        // Selects and iterates over the elements
+        elements = root.select(selector);
         if (!elements.isEmpty()) {
             elements.iterator().next().wrap(wrapper);
         }

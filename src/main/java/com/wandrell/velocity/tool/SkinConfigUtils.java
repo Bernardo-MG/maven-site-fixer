@@ -41,14 +41,18 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
  * Velocity.
  * <p>
  * The configuration values should be in the site.xml file, inside a {@code 
- * <skinConfig>}, itself inside the {@code <custom>} element.
+ * <skinConfig>}, itself inside the {@code <custom>} element, like this:
+ * 
+ * <pre>
+ * {@code <project>
+ *   <custom>
+ *      <skinConfig></skinConfig>
+ *   </custom>
+ * </project>}
+ * </pre>
  * <p>
  * Any value stored there can be acquired through the use of the
  * {@link #get(String) get} method.
- * <p>
- * If a {@code <pages>} element is defined, it can contain an element with a
- * page's id (which is the slugged name of the file) where it can override any
- * of those values.
  * <p>
  * Unlike other utilities classes in the project, this one is stateful, as it
  * binds itself to the context and data of the page being rendered.

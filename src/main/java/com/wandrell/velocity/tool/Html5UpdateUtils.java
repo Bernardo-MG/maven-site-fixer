@@ -31,7 +31,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
 /**
- * Utilities class for upgrading a Velocity's XHTML code to HTML5.
+ * Utilities class for upgrading XHTML code to HTML5.
  * <p>
  * This was created for Maven Sites. These are built through Doxia which
  * supports XHTML, and not HTML5, and so this library generates outdated pages.
@@ -41,9 +41,10 @@ import org.jsoup.parser.Tag;
  * the full page. The end user should make sure that the template being used,
  * probably a Maven Skin, matches expectations.
  * <p>
- * There is a problem with this class. It was developed for the Docs Maven Skin,
- * and is tailored for the needs of that project, which makes use of Bootstrap
- * for the UI.
+ * The <a href="https://github.com/Bernardo-MG/docs-maven-skin">Docs Maven
+ * Skin</a> and its requirements have dictated the development of this class.
+ * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlUtils
+ * HtmlUtils}.
  * <p>
  * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
  * editing. This library will process the HTML code received by the methods, so
@@ -56,7 +57,7 @@ import org.jsoup.parser.Tag;
 public class Html5UpdateUtils {
 
     /**
-     * HTML utils class to allow reusing its methods.
+     * HTML utils class to allow reusing its methods through composition.
      */
     private final HtmlUtils htmlUtils = new HtmlUtils();
 
@@ -79,40 +80,40 @@ public class Html5UpdateUtils {
      * Instead of just removing the links these will be actually unwrapped,
      * keeping any text they may contain.
      * 
-     * @param element
-     *            element to clear of any empty {@code href} link
+     * @param root
+     *            root element to clear of any empty {@code href} link
      */
-    public final void removeNoHrefLinks(final Element element) {
+    public final void removeNoHrefLinks(final Element root) {
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
 
         // Links missing the href attribute
         // Unwrapped to avoid losing texts
-        getHtmlUtils().unwrap(element, "a:not([href])");
+        getHtmlUtils().unwrap(root, "a:not([href])");
     }
 
     /**
      * Removes the points from the contents of the specified attribute.
      * 
-     * @param element
+     * @param root
      *            root element for the selection
      * @param selector
      *            CSS selector for the elements
      * @param attr
      *            attribute to clean
      */
-    public final void removePointsFromAttr(final Element element,
+    public final void removePointsFromAttr(final Element root,
             final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attr, "Received a null pointer as attribute");
 
         // TODO: The selector can be generated from the attribute
 
-        // Elements with the id attribute
-        elements = element.select(selector);
+        // Selects and iterates over the elements
+        elements = root.select(selector);
         for (final Element selected : elements) {
             removePointsFromAttr(selected, attr);
         }
@@ -125,18 +126,18 @@ public class Html5UpdateUtils {
      * the header rows into the {@code <tbody>} element, instead on a {@code 
      * <thead>} element.
      * 
-     * @param element
-     *            element with tables to fix
+     * @param root
+     *            root element with tables to fix
      */
-    public final void updateTableHeads(final Element element) {
+    public final void updateTableHeads(final Element root) {
         final Iterable<Element> tableHeadRows; // Heads to fix
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
 
-        checkNotNull(element, "Received a null pointer as element");
+        checkNotNull(root, "Received a null pointer as root element");
 
         // Table rows with <th> tags in a <tbody>
-        tableHeadRows = element.select("table > tbody > tr:has(th)");
+        tableHeadRows = root.select("table > tbody > tr:has(th)");
         for (final Element row : tableHeadRows) {
             // Gets the row's table
             // The selector ensured the row is inside a tbody
@@ -174,8 +175,10 @@ public class Html5UpdateUtils {
             final String attr) {
         final String value; // Content of the attribute
 
+        // Takes and clean the old attribute value
         value = element.attr(attr).replaceAll("\\.", "");
 
+        // Sets the cleaned value
         element.attr(attr, value);
     }
 
