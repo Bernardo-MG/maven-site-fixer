@@ -42,61 +42,49 @@ import com.wandrell.velocity.tool.SkinConfigUtils;
  * @author Bernardo Martínez Garrido
  * @see SkinConfigUtils
  */
-public final class TestSkinConfigUtilsIsTrue {
+public final class TestSkinConfigUtilsGet {
 
     /**
      * Default constructor.
      */
-    public TestSkinConfigUtilsIsTrue() {
+    public TestSkinConfigUtilsGet() {
         super();
     }
 
     /**
-     * Tests that a false value returns {@code true}.
+     * Tests that the get method returns a node with the the expected key.
      */
     @Test
-    public final void testIsTrue_False_False() {
+    public final void testGet_ExpectedKey() {
         final SkinConfigUtils util; // Utilities class to test
 
-        util = getSkinConfigUtils("key", "false");
+        util = getSkinConfigUtils("key", "value");
 
-        Assert.assertTrue(!util.isTrue("key"));
+        Assert.assertEquals(util.get("key").getName(), "key");
     }
 
     /**
-     * Tests that a not existing key returns {@code false}.
+     * Tests that the get method returns a node with the the expected value.
      */
     @Test
-    public final void testIsTrue_NotExisting_False() {
+    public final void testGet_ExpectedValue() {
+        final SkinConfigUtils util; // Utilities class to test
+
+        util = getSkinConfigUtils("key", "value");
+
+        Assert.assertEquals(util.get("key").getValue(), "value");
+    }
+
+    /**
+     * Tests that the get method returns a null for not existing values.
+     */
+    @Test
+    public final void testGet_NotExisting_ReturnsNull() {
         final SkinConfigUtils util; // Utilities class to test
 
         util = getSkinConfigUtils("", "");
 
-        Assert.assertTrue(!util.isTrue("ABC"));
-    }
-
-    /**
-     * Tests that a not null value returns {@code false}.
-     */
-    @Test
-    public final void testIsTrue_Null_False() {
-        final SkinConfigUtils util; // Utilities class to test
-
-        util = getSkinConfigUtils("key", null);
-
-        Assert.assertTrue(!util.isTrue("key"));
-    }
-
-    /**
-     * Tests that a true value returns {@code true}.
-     */
-    @Test
-    public final void testIsTrue_True_True() {
-        final SkinConfigUtils util; // Utilities class to test
-
-        util = getSkinConfigUtils("key", "true");
-
-        Assert.assertTrue(util.isTrue("key"));
+        Assert.assertEquals(util.get("key"), null);
     }
 
     /**

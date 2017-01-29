@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -57,15 +58,16 @@ public final class TestHtmlUtilsRemoveClass {
     public final void testMultipleClasses() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
 
-        result = util.removeClass(html, "a.externalLink", "externalLink");
+        element = new HtmlUtils().parse(html);
+        util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -75,15 +77,16 @@ public final class TestHtmlUtilsRemoveClass {
     public final void testNoExternalLinks_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
 
-        result = util.removeClass(html, "a.externalLink", "externalLink");
+        element = new HtmlUtils().parse(html);
+        util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "<p>Some text</p>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -94,15 +97,16 @@ public final class TestHtmlUtilsRemoveClass {
     public final void testSingleClass() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
 
-        result = util.removeClass(html, "a.externalLink", "externalLink");
+        element = new HtmlUtils().parse(html);
+        util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

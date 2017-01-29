@@ -132,5 +132,13 @@
             Added more generic HTML edition methods in preparation to remove the HTML5 upgrade tool.
          </action>
       </release>
+      <release version="0.6.0" date="2017-01-26" description="Removed old methods">
+         <action dev="bmg" type="update">
+            Removed complex methods from the HTML5 updater, now the HTML utils should be used.
+         </action>
+         <action dev="bmg" type="remove">
+            The configuration tool no longer gives support to page specific configurations.
+         </action>
+      </release>
    </body>
 </document>

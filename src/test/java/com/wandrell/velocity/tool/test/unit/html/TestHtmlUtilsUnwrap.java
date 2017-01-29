@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -56,15 +57,16 @@ public final class TestHtmlUtilsUnwrap {
     public final void testHeading_NoHref_Removed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
 
-        result = util.unwrap(html, "a:not([href])");
+        element = new HtmlUtils().parse(html);
+        util.unwrap(element, "a:not([href])");
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -75,15 +77,16 @@ public final class TestHtmlUtilsUnwrap {
     public final void testHeading_NoHref_WithText_TextKept() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
 
-        result = util.unwrap(html, "a:not([href])");
+        element = new HtmlUtils().parse(html);
+        util.unwrap(element, "a:not([href])");
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -93,15 +96,16 @@ public final class TestHtmlUtilsUnwrap {
     public final void testNoAnchors_Ignored() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
 
-        result = util.unwrap(html, "a:not([href])");
+        element = new HtmlUtils().parse(html);
+        util.unwrap(element, "a:not([href])");
 
         htmlExpected = "<p>Some text</p>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

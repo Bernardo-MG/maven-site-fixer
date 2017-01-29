@@ -37,29 +37,24 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
 /**
- * Utilities class for adapting a Doxia generated site to the patterns used on
- * Maven Skins.
+ * Utilities class for fixing several issues in Doxia generated sites, updating
+ * and homogenising their layouts.
  * <p>
- * Unlike the other utilities classes, this is not meant to be completely
- * generic, but applies some very concrete fixes which are meant to work with
- * concrete technologies, such as for example, transforming the Maven Site icons
- * to Font Awesome.
+ * This was created for Maven Sites. These are built through Doxia which
+ * supports XHTML, and not HTML5, and so this library generates outdated pages.
+ * Also some of the reports which can be generated through Maven plugins suffer
+ * from similar issues and add another problem, that their layouts may not match
+ * at all.
  * <p>
- * Still a few methods, like {@code fixReport} which will correct headings on
- * Maven Site reports, are more generic, but still expect the site to follow a
- * concrete type of structure.
- * <p>
- * In general, these fit the patterns I follow for my Maven Skins, but may not
- * work as well with other skins.
+ * The <a href="https://github.com/Bernardo-MG/docs-maven-skin">Docs Maven
+ * Skin</a> and its requirements have dictated the development of this class.
+ * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlUtils
+ * HtmlUtils}.
  * <p>
  * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
  * editing. This library will process the HTML code received by the methods, so
  * only the contents of the {@code <body>} tag (or the full HTML if this tag is
  * missing) will be used.
- * <p>
- * Take into account that while the returned HTML will be correct, the validity
- * of the received HTML won't be checked. That falls fully on the hands of the
- * user.
  * 
  * @author Bernardo Martínez Garrido
  */
@@ -295,8 +290,6 @@ public class SiteUtils {
 
         checkNotNull(html, "Received a null pointer as html");
 
-        checkNotNull(html, "Received a null pointer as html");
-
         body = Jsoup.parse(html).body();
 
         images = body.select("section img");
@@ -321,6 +314,8 @@ public class SiteUtils {
     /**
      * Returns the result from transforming tables to stripped and bordered
      * tables on the received HTML code.
+     * <p>
+     * This will apply Bootstrap classes to the table.
      * 
      * @param html
      *            HTML with tables to transform
@@ -348,10 +343,10 @@ public class SiteUtils {
     /**
      * Fixes the changes report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportChanges(final Element body) {
+    private final void fixReportChanges(final Element root) {
         final Collection<Element> headings;  // Headings in the body
         final Collection<Element> sections;  // Sections in the body
         final Element section;  // First section
@@ -361,18 +356,18 @@ public class SiteUtils {
         String[] texts;         // Split heading text
 
         // Sets all the h2 to h1
-        for (final Element head : body.getElementsByTag("h2")) {
+        for (final Element head : root.getElementsByTag("h2")) {
             head.tagName("h1");
         }
 
-        headings = body.getElementsByTag("h3");
+        headings = root.getElementsByTag("h3");
         if (!headings.isEmpty()) {
             // Sets first h3 to h2
             headings.iterator().next().tagName("h2");
         }
 
         // Takes again all the h3 elements, to avoid the new h2
-        for (final Element heading : body.getElementsByTag("h3")) {
+        for (final Element heading : root.getElementsByTag("h3")) {
             // Moves the heading id to the parent
             heading.parent().attr("id", heading.id());
             heading.removeAttr("id");
@@ -395,12 +390,12 @@ public class SiteUtils {
         }
 
         // Moves all the elements out of the sections
-        sections = body.getElementsByTag("section");
+        sections = root.getElementsByTag("section");
         if (!sections.isEmpty()) {
             section = sections.iterator().next();
             for (final Element child : section.children()) {
                 child.remove();
-                body.appendChild(child);
+                root.appendChild(child);
             }
 
             section.remove();
@@ -410,29 +405,29 @@ public class SiteUtils {
     /**
      * Fixes the Checkstyle report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportCheckstyle(final Element body) {
+    private final void fixReportCheckstyle(final Element root) {
         final Collection<Element> elements; // Found elements
 
-        elements = body.getElementsByTag("h2");
+        elements = root.getElementsByTag("h2");
         if (!elements.isEmpty()) {
             elements.iterator().next().tagName("h1");
         }
-        body.select("img[src=\"images/rss.png\"]").remove();
+        root.select("img[src=\"images/rss.png\"]").remove();
     }
 
     /**
      * Fixes the CPD report page.
      * 
-     * @param body
+     * @param root
      *            element for the body of the report page
      */
-    private final void fixReportCpd(final Element body) {
+    private final void fixReportCpd(final Element root) {
         final Collection<Element> elements; // Found elements
 
-        elements = body.getElementsByTag("h2");
+        elements = root.getElementsByTag("h2");
         if (!elements.isEmpty()) {
             elements.iterator().next().tagName("h1");
         }
@@ -441,24 +436,24 @@ public class SiteUtils {
     /**
      * Fixes the dependencies report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportDependencies(final Element body) {
-        body.prepend("<h1>Dependencies Report</h1>");
+    private final void fixReportDependencies(final Element root) {
+        root.prepend("<h1>Dependencies Report</h1>");
     }
 
     /**
      * Fixes the Failsafe report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportFailsafe(final Element body) {
+    private final void fixReportFailsafe(final Element root) {
         final Collection<Element> elements; // Found elements
         final Element heading;              // First h2 heading
 
-        elements = body.getElementsByTag("h2");
+        elements = root.getElementsByTag("h2");
         if (!elements.isEmpty()) {
             heading = elements.iterator().next();
             heading.tagName("h1");
@@ -469,13 +464,13 @@ public class SiteUtils {
     /**
      * Fixes the Findbugs report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportFindbugs(final Element body) {
+    private final void fixReportFindbugs(final Element root) {
         final Collection<Element> elements; // Found elements
 
-        elements = body.getElementsByTag("h2");
+        elements = root.getElementsByTag("h2");
         if (!elements.isEmpty()) {
             elements.iterator().next().tagName("h1");
         }
@@ -484,13 +479,13 @@ public class SiteUtils {
     /**
      * Fixes the JDepend report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportJdepend(final Element body) {
+    private final void fixReportJdepend(final Element root) {
         final Collection<Element> elements; // Found elements
 
-        elements = body.getElementsByTag("h2");
+        elements = root.getElementsByTag("h2");
         if (!elements.isEmpty()) {
             elements.iterator().next().tagName("h1");
         }
@@ -499,34 +494,34 @@ public class SiteUtils {
     /**
      * Fixes the License report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportLicense(final Element body) {
-        body.prepend("<h1>License</h1>");
+    private final void fixReportLicense(final Element root) {
+        root.prepend("<h1>License</h1>");
     }
 
     /**
      * Fixes the plugin management report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportPluginManagement(final Element body) {
+    private final void fixReportPluginManagement(final Element root) {
         final Collection<Element> sections; // Sections in the body
         final Element section;  // Section element
 
-        for (final Element head : body.getElementsByTag("h2")) {
+        for (final Element head : root.getElementsByTag("h2")) {
             head.tagName("h1");
         }
 
-        sections = body.getElementsByTag("section");
+        sections = root.getElementsByTag("section");
         if (!sections.isEmpty()) {
             section = sections.iterator().next();
 
             for (final Element child : section.children()) {
                 child.remove();
-                body.appendChild(child);
+                root.appendChild(child);
             }
 
             section.remove();
@@ -536,23 +531,23 @@ public class SiteUtils {
     /**
      * Fixes the plugins report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportPlugins(final Element body) {
-        body.prepend("<h1>Plugins Report</h1>");
+    private final void fixReportPlugins(final Element root) {
+        root.prepend("<h1>Plugins Report</h1>");
     }
 
     /**
      * Fixes the PMD report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportPmd(final Element body) {
+    private final void fixReportPmd(final Element root) {
         final Collection<Element> elements; // Found elements
 
-        elements = body.getElementsByTag("h2");
+        elements = root.getElementsByTag("h2");
         if (!elements.isEmpty()) {
             elements.iterator().next().tagName("h1");
         }
@@ -561,15 +556,15 @@ public class SiteUtils {
     /**
      * Fixes the project summary report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportProjectSummary(final Element body) {
-        for (final Element head : body.getElementsByTag("h2")) {
+    private final void fixReportProjectSummary(final Element root) {
+        for (final Element head : root.getElementsByTag("h2")) {
             head.tagName("h1");
         }
 
-        for (final Element head : body.getElementsByTag("h3")) {
+        for (final Element head : root.getElementsByTag("h3")) {
             head.tagName("h2");
         }
     }
@@ -577,13 +572,13 @@ public class SiteUtils {
     /**
      * Fixes the Surefire report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportSurefire(final Element body) {
+    private final void fixReportSurefire(final Element root) {
         final Collection<Element> elements; // Found elements
 
-        elements = body.getElementsByTag("h2");
+        elements = root.getElementsByTag("h2");
         if (!elements.isEmpty()) {
             elements.iterator().next().tagName("h1");
         }
@@ -592,13 +587,13 @@ public class SiteUtils {
     /**
      * Fixes the tag list report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportTaglist(final Element body) {
+    private final void fixReportTaglist(final Element root) {
         final Collection<Element> elements; // Found elements
 
-        elements = body.getElementsByTag("h2");
+        elements = root.getElementsByTag("h2");
         if (!elements.isEmpty()) {
             elements.iterator().next().tagName("h1");
         }
@@ -607,15 +602,15 @@ public class SiteUtils {
     /**
      * Fixes the team list report page.
      * 
-     * @param body
-     *            element for the body of the report page
+     * @param root
+     *            root element for the report page to fix
      */
-    private final void fixReportTeamList(final Element body) {
-        for (final Element head : body.getElementsByTag("h2")) {
+    private final void fixReportTeamList(final Element root) {
+        for (final Element head : root.getElementsByTag("h2")) {
             head.tagName("h1");
         }
 
-        for (final Element head : body.getElementsByTag("h3")) {
+        for (final Element head : root.getElementsByTag("h3")) {
             head.tagName("h2");
         }
     }

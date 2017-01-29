@@ -41,14 +41,18 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
  * Velocity.
  * <p>
  * The configuration values should be in the site.xml file, inside a {@code 
- * <skinConfig>}, itself inside the {@code <custom>} element.
+ * <skinConfig>}, itself inside the {@code <custom>} element, like this:
+ * 
+ * <pre>
+ * {@code <project>
+ *   <custom>
+ *      <skinConfig></skinConfig>
+ *   </custom>
+ * </project>}
+ * </pre>
  * <p>
  * Any value stored there can be acquired through the use of the
  * {@link #get(String) get} method.
- * <p>
- * If a {@code <pages>} element is defined, it can contain an element with a
- * page's id (which is the slugged name of the file) where it can override any
- * of those values.
  * <p>
  * Unlike other utilities classes in the project, this one is stateful, as it
  * binds itself to the context and data of the page being rendered.
@@ -77,11 +81,6 @@ public final class SkinConfigUtils extends SafeConfig {
      * The key identifying the Maven project.
      */
     public static final String MAVEN_PROJECT_KEY     = "project";
-
-    /**
-     * The key identifying the pages node.
-     */
-    public static final String PAGES_KEY             = "pages";
 
     /**
      * Key for the skin configuration.
@@ -126,14 +125,6 @@ public final class SkinConfigUtils extends SafeConfig {
      */
     private final Pattern      nonLatin              = Pattern
             .compile("[^\\w-]");
-
-    /**
-     * Page configuration node.
-     * <p>
-     * This is the node for the current page inside the {@code <pages>} node,
-     * located in the {@code <skinConfig>} node, in the site.xml file.
-     */
-    private Xpp3Dom            pageConfig            = new Xpp3Dom("");
 
     /**
      * Identifier for the project.
@@ -186,14 +177,8 @@ public final class SkinConfigUtils extends SafeConfig {
 
         checkNotNull(property, "Received a null pointer as property");
 
-        // Looks for it in the page properties
-        value = getPageConfig().getChild(property);
-
-        if (value == null) {
-            // It was not found in the page properties
-            // New attempt with the global properties
-            value = getSkinConfig().getChild(property);
-        }
+        // Looks for it in the global properties
+        value = getSkinConfig().getChild(property);
 
         return value;
     }
@@ -269,15 +254,6 @@ public final class SkinConfigUtils extends SafeConfig {
      */
     private final Pattern getNonLatinPattern() {
         return nonLatin;
-    }
-
-    /**
-     * Returns the page configuration node.
-     * 
-     * @return the page configuration node
-     */
-    private final Xpp3Dom getPageConfig() {
-        return pageConfig;
     }
 
     /**
@@ -376,9 +352,7 @@ public final class SkinConfigUtils extends SafeConfig {
     private final void processDecoration(final DecorationModel model) {
         final Object customObj;   // Object for the <custom> node
         final Xpp3Dom customNode; // <custom> node
-        final Xpp3Dom pagesNode;  // <pages> node
         final Xpp3Dom skinNode;   // <skinConfig> node
-        final Xpp3Dom pageNode;   // Current page node
 
         customObj = model.getCustom();
 
@@ -392,25 +366,8 @@ public final class SkinConfigUtils extends SafeConfig {
 
             if (skinNode == null) {
                 setSkinConfig(new Xpp3Dom(""));
-                setPageConfig(new Xpp3Dom(""));
             } else {
                 setSkinConfig(skinNode);
-
-                // Acquires the <pages> node
-                pagesNode = skinNode.getChild(PAGES_KEY);
-                if (pagesNode == null) {
-                    setPageConfig(new Xpp3Dom(""));
-                } else {
-
-                    // Get the page node for the current file
-                    pageNode = pagesNode.getChild(getFileId());
-
-                    if (pageNode == null) {
-                        setPageConfig(new Xpp3Dom(""));
-                    } else {
-                        setPageConfig(pageNode);
-                    }
-                }
             }
         }
     }
@@ -423,16 +380,6 @@ public final class SkinConfigUtils extends SafeConfig {
      */
     private final void setFileId(final String id) {
         fileId = id;
-    }
-
-    /**
-     * Sets the page configuration node.
-     * 
-     * @param config
-     *            the page configuration node
-     */
-    private final void setPageConfig(final Xpp3Dom config) {
-        pageConfig = config;
     }
 
     /**

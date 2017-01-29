@@ -25,28 +25,21 @@
  * Provides various utilities classes for Apache Velocity, used to update the
  * XHTML produced by Doxia to current HTML5 standards.
  * <p>
- * It also offers a few helpful tools, meant to improve the look and structure
- * of Maven Sites.
+ * They also improve the look and structure of Maven Sites.
  * <p>
- * All these classes are prepared to be run through Velocity, and can be called
- * directly from {@code .vm} files. All of them have default keys assigned,
- * which are repeated on the {@code tools.xml} file on the resources folder,
- * which can be used for this.
+ * All these classes are prepared to be run through Velocity. To allow calling
+ * them from Velocity templates each class is annotated with a default key, and
+ * a {@code tools.xml} file is included.
  * <p>
- * For example, to call the {@code HTMLUtils} {@code unwrap} method the
- * following VTL line can be used:
+ * Using the tools just requires calling its key. For example, to call the
+ * {@link com.wandrell.velocity.tool.HTMLUtils HTMLUtils} {@code unwrap} method
+ * the following VTL line can be used:
  * <p>
  * {@code #set ( $sections = $htmlTool.unwrap( $bodyContent, "a:not([href])" ) )}
  * <p>
- * They also share a series of features, first of all the fact that all editing
- * and querying of HTML is done through the
- * <a href="http://jsoup.org/">jsoup</a> library.
- * <p>
- * Also there are some common limitations. First of all the validity of the
- * received HTML won't be checked, that falls on the user's hands. Second, the
- * HTML code received by the methods will be stripped, and only the contents of
- * the {@code <body>} tag will be kept, unless that tag is missing, in which
- * case the full HTML code will be used.
+ * HTML is edited with the use of <a href="http://jsoup.org/">jsoup</a>, and the
+ * methods expect a jsoup element to work with, but it is not validated in any
+ * way. Validation of the end result is the programmer's responsibility.
  */
 
 package com.wandrell.velocity.tool;

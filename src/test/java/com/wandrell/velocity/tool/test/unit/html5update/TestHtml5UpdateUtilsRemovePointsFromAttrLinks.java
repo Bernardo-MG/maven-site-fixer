@@ -24,10 +24,12 @@
 
 package com.wandrell.velocity.tool.test.unit.html5update;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
  * Unit tests for {@link Html5UpdateUtils}.
@@ -35,7 +37,7 @@ import com.wandrell.velocity.tool.Html5UpdateUtils;
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsFixInternalLinks {
+public final class TestHtml5UpdateUtilsRemovePointsFromAttrLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -45,44 +47,27 @@ public final class TestHtml5UpdateUtilsFixInternalLinks {
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsFixInternalLinks() {
+    public TestHtml5UpdateUtilsRemovePointsFromAttrLinks() {
         super();
     }
 
     /**
-     * Tests that points on anchors are correctly removed.
+     * Tests links without the {@code href} attribute are removed.
      */
     @Test
-    public final void testInternalLink_Points_Fixed() {
+    public final void testSimple_Removed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
-        html = "<h1 id=\"1.2.3\">Header</h1><a href=\"#1.2.3\">To the header</a><a href=\"1.2.3\">Not to be modified</a>";
+        html = "<a name=\"a_heading\" href=\"a.b.c\">Text</a>";
 
-        result = util.fixInternalLinks(html);
+        element = new HtmlUtils().parse(html);
+        util.removePointsFromAttr(element, "[href]", "href");
 
-        htmlExpected = "<h1 id=\"123\">Header</h1>\n<a href=\"#123\">To the header</a>\n<a href=\"1.2.3\">Not to be modified</a>";
+        htmlExpected = "<a name=\"a_heading\" href=\"abc\">Text</a>";
 
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no anchors is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<p>Some text</p>";
-
-        result = util.fixInternalLinks(html);
-
-        htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

@@ -36,17 +36,13 @@ import org.jsoup.nodes.Element;
  * Utilities class for manipulating HTML, to be used as an extension of the
  * Velocity templating engine.
  * <p>
- * The methods offered help enhancing the look of a Maven Site by manipulating
- * the HTML structure.
+ * The methods will make small and well defined operations into HTML code. The
+ * edition is handled through <a href="http://jsoup.org/">jsoup</a>, and the
+ * HTML should have been parsed with it before handling it to the modification
+ * methods.
  * <p>
- * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
- * editing. This library will process the HTML code received by the methods, so
- * only the contents of the {@code <body>} tag (or the full HTML if this tag is
- * missing) will be used.
- * <p>
- * Take into account that while the returned HTML will be correct, the validity
- * of the received HTML won't be checked. That falls fully on the hands of the
- * user.
+ * To ease parsing HTML the {@link parse} method can be used. It receives HTML
+ * code and returns a jsoup element.
  * 
  * @author Bernardo Martínez Garrido
  */
@@ -61,26 +57,42 @@ public final class HtmlUtils {
     }
 
     /**
-     * Finds a set of elements through a CSS selector and removes the received
-     * attribute from them.
+     * Parses the received HTML code.
+     * <p>
+     * The resulting object can be used on the other methods. Only the content
+     * of the {@code <body>} tag will be parsed.
      * 
-     * @param body
-     *            body where the elements will be searched for
+     * @param html
+     *            HTML to parse
+     * @return the parsed HTML body
+     */
+    public final Element parse(final String html) {
+        checkNotNull(html, "Received a null pointer as body");
+
+        return Jsoup.parse(html).body();
+    }
+
+    /**
+     * Finds a set of elements through a CSS selector and removes the received
+     * attribute from them, if they have it.
+     * 
+     * @param root
+     *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
+     *            CSS selector for the elements with the attribute to remove
      * @param attribute
      *            attribute to remove
      */
-    public final void removeAttribute(final Element body, final String selector,
+    public final void removeAttribute(final Element root, final String selector,
             final String attribute) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attribute, "Received a null pointer as attribute");
 
-        // Tables with the bodyTable class
-        elements = body.select(selector);
+        // Selects and iterates over the elements
+        elements = root.select(selector);
         for (final Element element : elements) {
             element.removeAttr(attribute);
         }
@@ -88,58 +100,28 @@ public final class HtmlUtils {
 
     /**
      * Finds a set of elements through a CSS selector and removes the received
-     * attribute from them.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            CSS selector for the elements
-     * @param attribute
-     *            attribute to remove
-     * @return HTML content with the class removed from the elements
-     */
-    public final String removeAttribute(final String html,
-            final String selector, final String attribute) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(attribute, "Received a null pointer as attribute");
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // <a> elements with the externalLink class
-        removeAttribute(body, selector, attribute);
-
-        return body.html();
-    }
-
-    /**
-     * Finds a set of elements through a CSS selector and removes the received
-     * class from them.
+     * class from them, if they have it.
      * <p>
      * If the elements end without classes then the class attribute is also
      * removed.
      * 
-     * @param body
-     *            body where the elements will be searched for
+     * @param root
+     *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
+     *            CSS selector for the elements with the class to remove
      * @param className
      *            class to remove
      */
-    public final void removeClass(final Element body, final String selector,
+    public final void removeClass(final Element root, final String selector,
             final String className) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(className, "Received a null pointer as className");
 
-        // Tables with the bodyTable class
-        elements = body.select(selector);
+        // Selects and iterates over the elements
+        elements = root.select(selector);
         for (final Element element : elements) {
             element.removeClass(className);
 
@@ -150,261 +132,142 @@ public final class HtmlUtils {
     }
 
     /**
-     * Finds a set of elements through a CSS selector and removes the received
-     * class from them.
-     * <p>
-     * If the elements end without classes then the class attribute is also
-     * removed.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            CSS selector for the elements
-     * @param className
-     *            class to remove
-     * @return HTML content with the class removed from the elements
-     */
-    public final String removeClass(final String html, final String selector,
-            final String className) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(className, "Received a null pointer as className");
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // <a> elements with the externalLink class
-        removeClass(body, selector, className);
-
-        return body.html();
-    }
-
-    /**
      * Finds a set of elements through a CSS selector and changes their tags.
      * 
-     * @param body
-     *            body where the elements will be searched for
+     * @param root
+     *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
+     *            CSS selector for the elements to retag
      * @param tag
      *            new tag for the elements
      */
-    public final void retag(final Element body, final String selector,
+    public final void retag(final Element root, final String selector,
             final String tag) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(tag, "Received a null pointer as tag");
 
-        // Tables with the bodyTable class
-        elements = body.select(selector);
+        // Selects and iterates over the elements
+        elements = root.select(selector);
         for (final Element element : elements) {
             element.tagName(tag);
         }
     }
 
     /**
-     * Finds a set of elements through a CSS selector and changes their tags.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            CSS selector for the elements
-     * @param tag
-     *            new tag for the elements
-     * @return HTML content with the class removed from the elements
-     */
-    public final String retag(final String html, final String selector,
-            final String tag) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(tag, "Received a null pointer as tag");
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        retag(body, selector, tag);
-
-        return body.html();
-    }
-
-    /**
      * Finds a set of elements through a CSS selector and swaps its tag with
      * that from its parent.
      * 
-     * @param body
+     * @param root
      *            body element with source divisions to upgrade
      * @param selector
-     *            selector for finding the element to operate with
+     *            CSS selector for the elements to swap with its parent
      */
-    public final void swapTagWithParent(final Element body,
+    public final void swapTagWithParent(final Element root,
             final String selector) {
         final Iterable<Element> elements; // Selected elements
         Element parent;                   // Parent element
         String text;                      // Preserved text
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
 
-        elements = body.select(selector);
-        for (final Element pre : elements) {
-            parent = pre.parent();
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            parent = element.parent();
 
-            text = pre.text();
-            pre.text("");
+            // Takes the text out of the element
+            text = element.text();
+            element.text("");
 
-            parent.replaceWith(pre);
-            pre.appendChild(parent);
+            // Swaps elements
+            parent.replaceWith(element);
+            element.appendChild(parent);
 
+            // Sets the text into what was the parent element
             parent.text(text);
         }
     }
 
     /**
-     * Finds a set of elements through a CSS selector and swaps its tag with
-     * that from its parent.
-     * 
-     * @param html
-     *            HTML where the elements will be searched for
-     * @param selector
-     *            selector for finding the element to operate with
-     * @return HTML content with the class removed from the elements
-     */
-    public final String swapTagWithParent(final String html,
-            final String selector) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as body");
-        checkNotNull(selector, "Received a null pointer as selector");
-
-        body = Jsoup.parse(html).body();
-
-        swapTagWithParent(body, selector);
-
-        return body.html();
-    }
-
-    /**
      * Finds a set of elements through a CSS selector and unwraps them.
      * <p>
      * This allows removing elements without losing their contents.
      * 
-     * @param body
-     *            body where the elements will be searched for
+     * @param root
+     *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
+     *            CSS selector for the elements to unwrap
      */
-    public final void unwrap(final Element body, final String selector) {
+    public final void unwrap(final Element root, final String selector) {
         final Iterable<Element> elements; // Elements to unwrap
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
 
-        elements = body.select(selector);
-        for (final Element link : elements) {
-            link.unwrap();
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            element.unwrap();
         }
     }
 
     /**
-     * Finds a set of elements through a CSS selector and unwraps them.
-     * <p>
-     * This allows removing elements without losing their contents.
+     * Finds a set of elements through a CSS selector and wraps them with the
+     * received wrapper element.
      * 
-     * @param html
-     *            HTML where the elements will be searched for
+     * @param root
+     *            root element for the selection
      * @param selector
-     *            CSS selector for the elements
-     * @return HTML content with the class removed from the elements
-     */
-    public final String unwrap(final String html, final String selector) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as body");
-        checkNotNull(selector, "Received a null pointer as selector");
-
-        body = Jsoup.parse(html).body();
-
-        unwrap(body, selector);
-
-        return body.html();
-    }
-
-    /**
-     * Returns the HTML code with the elements marked by the selector wrapped on
-     * the received wrapper element.
-     * <p>
-     * The method will find all the elements fitting into the selector, and then
-     * wrap them with the wrapper element. The HTML code will then be adapted to
-     * this change and returned.
-     * 
-     * @param html
-     *            HTML content to modify
-     * @param selector
-     *            CSS selector for elements to wrap
+     *            CSS selector for the elements to wrap
      * @param wrapper
      *            HTML to use for wrapping the selected elements
-     * @return HTML with the selected elements wrapped with the wrapper element
      */
-    public final String wrap(final String html, final String selector,
+    public final void wrap(final Element root, final String selector,
             final String wrapper) {
         final Iterable<Element> elements; // Selected elements
-        final Element body;  // Element parsed from the content
 
-        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(wrapper, "Received a null pointer as HTML wrap");
 
-        body = Jsoup.parse(html).body();
-        elements = body.select(selector);
-
+        // Selects and iterates over the elements
+        elements = root.select(selector);
         for (final Element element : elements) {
             element.wrap(wrapper);
         }
-
-        return body.html();
     }
 
     /**
-     * Returns the HTML code with the first element marked by the selector
-     * wrapped on the received wrapper element.
-     * <p>
-     * The method will find the first element fitting into the selector, and
-     * then wrap it with the wrapper element. The HTML code will then be adapted
-     * to this change and returned.
+     * Finds the first element matching a CSS selector and wraps it with the
+     * received wrapper element.
      * 
-     * @param html
-     *            HTML content to modify
+     * @param root
+     *            root element for the selection
      * @param selector
-     *            CSS selector for elements to wrap
+     *            CSS selector for the element to wrap
      * @param wrapper
      *            HTML to use for wrapping the selected elements
-     * @return HTML with the selected elements wrapped with the wrapper element
      */
-    public final String wrapFirst(final String html, final String selector,
+    public final void wrapFirst(final Element root, final String selector,
             final String wrapper) {
         final Collection<Element> elements; // Selected elements
-        final Element body;  // Element parsed from the content
 
-        checkNotNull(html, "Received a null pointer as html");
+        // TODO: I think this can be done with the wrapper method and CSS
+        // selectors
+
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(wrapper, "Received a null pointer as HTML wrap");
 
-        body = Jsoup.parse(html).body();
-        elements = body.select(selector);
-
+        // Selects and iterates over the elements
+        elements = root.select(selector);
         if (!elements.isEmpty()) {
             elements.iterator().next().wrap(wrapper);
         }
-
-        return body.html();
     }
 
 }

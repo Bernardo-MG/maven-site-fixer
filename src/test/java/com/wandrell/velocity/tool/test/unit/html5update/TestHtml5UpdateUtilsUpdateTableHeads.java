@@ -24,10 +24,12 @@
 
 package com.wandrell.velocity.tool.test.unit.html5update;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
  * Unit tests for {@link Html5UpdateUtils}.
@@ -35,7 +37,7 @@ import com.wandrell.velocity.tool.Html5UpdateUtils;
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsUpdateSectionDiv {
+public final class TestHtml5UpdateUtilsUpdateTableHeads {
 
     /**
      * Instance of the utils class being tested.
@@ -45,63 +47,27 @@ public final class TestHtml5UpdateUtilsUpdateSectionDiv {
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsUpdateSectionDiv() {
+    public TestHtml5UpdateUtilsUpdateTableHeads() {
         super();
     }
 
     /**
-     * Tests that HTML with no outdated sections is ignored.
+     * Tests that a table's head is updated.
      */
     @Test
-    public final void testNoSections_Ignored() {
+    public final void testFullTable_UpdatesHeader() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
-        html = "<p>Some text</p>";
+        html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
 
-        result = util.updateSectionDiv(html);
+        element = new HtmlUtils().parse(html);
+        util.updateTableHeads(element);
 
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = "<table border=\"0\" class=\"bodyTable testClass\">\n <thead>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that outdated sections with additional classes keep these.
-     */
-    @Test
-    public final void testOutdatedSection_KeepsAdditionalClasses() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<div class=\"section testClass\"><p>Some text</p></div>";
-
-        result = util.updateSectionDiv(html);
-
-        htmlExpected = "<section class=\"testClass\">\n <p>Some text</p>\n</section>";
-
-        Assert.assertEquals(result, htmlExpected);
-    }
-
-    /**
-     * Tests that when trying to fix the outdated section divisions these are
-     * updated correctly.
-     */
-    @Test
-    public final void testOutdatedSection_Updated() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final String result;       // Actual result
-
-        html = "<div class=\"section\"><p>Some text</p></div>";
-
-        result = util.updateSectionDiv(html);
-
-        htmlExpected = "<section>\n <p>Some text</p>\n</section>";
-
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

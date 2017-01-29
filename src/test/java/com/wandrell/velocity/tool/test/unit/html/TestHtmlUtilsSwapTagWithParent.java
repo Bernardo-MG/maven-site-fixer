@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -56,15 +57,16 @@ public class TestHtmlUtilsSwapTagWithParent {
     public final void testCodeSection_Swaps() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<code><pre>Some code</pre></code>";
 
-        result = util.swapTagWithParent(html, "code > pre");
+        element = new HtmlUtils().parse(html);
+        util.swapTagWithParent(element, "code > pre");
 
         htmlExpected = "<pre><code>Some code</code></pre>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

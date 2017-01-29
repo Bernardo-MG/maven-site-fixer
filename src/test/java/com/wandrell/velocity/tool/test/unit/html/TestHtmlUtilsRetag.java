@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -57,15 +58,16 @@ public final class TestHtmlUtilsRetag {
     public final void testSimple() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
 
-        result = util.retag(html, "div.source", "code");
+        element = new HtmlUtils().parse(html);
+        util.retag(element, "div.source", "code");
 
         htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

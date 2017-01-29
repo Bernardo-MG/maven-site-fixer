@@ -66,6 +66,7 @@ public final class MenuUtils {
             final String url) {
         final MenuItem item; // Menu item to add
 
+        checkNotNull(menu, "Received a null pointer as menu");
         checkNotNull(name, "Received a null pointer as name");
         checkNotNull(url, "Received a null pointer as url");
 
@@ -97,6 +98,7 @@ public final class MenuUtils {
             final String url, final String description) {
         final MenuItem item; // Menu item to add
 
+        checkNotNull(menu, "Received a null pointer as menu");
         checkNotNull(name, "Received a null pointer as name");
         checkNotNull(url, "Received a null pointer as url");
         checkNotNull(description, "Received a null pointer as description");

@@ -27,12 +27,11 @@ package com.wandrell.velocity.tool;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.apache.velocity.tools.config.DefaultKey;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
 /**
- * Utilities class for upgrading a Velocity's XHTML code to HTML5.
+ * Utilities class for upgrading XHTML code to HTML5.
  * <p>
  * This was created for Maven Sites. These are built through Doxia which
  * supports XHTML, and not HTML5, and so this library generates outdated pages.
@@ -42,9 +41,10 @@ import org.jsoup.parser.Tag;
  * the full page. The end user should make sure that the template being used,
  * probably a Maven Skin, matches expectations.
  * <p>
- * There is a problem with this class. It was developed for the Docs Maven Skin,
- * and is tailored for the needs of that project, which makes use of Bootstrap
- * for the UI.
+ * The <a href="https://github.com/Bernardo-MG/docs-maven-skin">Docs Maven
+ * Skin</a> and its requirements have dictated the development of this class.
+ * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlUtils
+ * HtmlUtils}.
  * <p>
  * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
  * editing. This library will process the HTML code received by the methods, so
@@ -57,7 +57,7 @@ import org.jsoup.parser.Tag;
 public class Html5UpdateUtils {
 
     /**
-     * HTML utils class to allow reusing its methods.
+     * HTML utils class to allow reusing its methods through composition.
      */
     private final HtmlUtils htmlUtils = new HtmlUtils();
 
@@ -69,62 +69,8 @@ public class Html5UpdateUtils {
     }
 
     /**
-     * Returns the result from fixing internal links which are using point
-     * separators. It also takes care of removing the points from the internal
-     * ids. Using points for internal anchors can break navigation.
-     * <p>
-     * The fix consists on just removing all points from all the ids. For
-     * example "id.with.points" will become "idwithpoints".
-     * 
-     * @param html
-     *            HTML to fix internal links
-     * @return HTML content, with the points removed from internal links and ids
-     */
-    public final String fixInternalLinks(final String html) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // Removes points from the id attributes
-        removePointsFromAttr(body, "[id]", "id");
-        // Removes points from the href attributes for internal links
-        removePointsFromAttr(body, "[href^=\"#\"]", "href");
-
-        return body.html();
-    }
-
-    /**
-     * Returns the result from removing the {@code externalLink} class from
-     * links from the received HTML code.
-     * <p>
-     * These are used by Doxia but are meaningless for most modern UI
-     * frameworks, such as Bootstrap.
-     * <p>
-     * If a after removing the class any link ends without classes, then the
-     * {@code class} attribute will be removed too.
-     * 
-     * @param html
-     *            HTML where the {@code externalLink} class is to be removed
-     * @return HTML content with the {@code externalLink} class removed
-     */
-    public final String removeExternalLinks(final String html) {
-        final Element body;            // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // <a> elements with the externalLink class
-        getHtmlUtils().removeClass(body, "a.externalLink", "externalLink");
-
-        return body.html();
-    }
-
-    /**
      * Returns the result from removing links with no {@code href} attribute
-     * defined from the received HTML code.
+     * defined from the received element contents.
      * <p>
      * These links are added by Doxia mainly to the headings. The idea seems to
      * allow getting an internal anchor by clicking on a heading, but it does
@@ -134,133 +80,43 @@ public class Html5UpdateUtils {
      * Instead of just removing the links these will be actually unwrapped,
      * keeping any text they may contain.
      * 
-     * @param html
-     *            HTML to clear of any empty {@code href} link
-     * @return HTML content, with no link missing the {@code href} attribute
+     * @param root
+     *            root element to clear of any empty {@code href} link
      */
-    public final String removeNoHrefLinks(final String html) {
-        final Element body;            // Body of the HTML code
+    public final void removeNoHrefLinks(final Element root) {
 
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
+        checkNotNull(root, "Received a null pointer as root element");
 
         // Links missing the href attribute
         // Unwrapped to avoid losing texts
-        getHtmlUtils().unwrap(body, "a:not([href])");
-
-        return body.html();
+        getHtmlUtils().unwrap(root, "a:not([href])");
     }
 
     /**
      * Removes the points from the contents of the specified attribute.
      * 
-     * @param body
-     *            body element with attributes to fix
+     * @param root
+     *            root element for the selection
      * @param selector
      *            CSS selector for the elements
      * @param attr
      *            attribute to clean
      */
-    public final void removePointsFromAttr(final Element body,
+    public final void removePointsFromAttr(final Element root,
             final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attr, "Received a null pointer as attribute");
 
-        // Elements with the id attribute
-        elements = body.select(selector);
-        for (final Element element : elements) {
-            removePointsFromAttr(element, attr);
+        // TODO: The selector can be generated from the attribute
+
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element selected : elements) {
+            removePointsFromAttr(selected, attr);
         }
-    }
-
-    /**
-     * Removes the points from the contents of the specified attribute.
-     * 
-     * @param html
-     *            html element with attributes to fix
-     * @param selector
-     *            CSS selector for the elements
-     * @param attr
-     *            attribute to clean
-     * @return HTML content, with the points removed from the attributes
-     */
-    public final String removePointsFromAttr(final String html,
-            final String selector, final String attr) {
-        final Element body;            // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(attr, "Received a null pointer as attribute");
-
-        body = Jsoup.parse(html).body();
-
-        removePointsFromAttr(body, selector, attr);
-
-        return body.html();
-    }
-
-    /**
-     * Returns the result from updating and correcting source divisions on the
-     * received HTML code.
-     * <p>
-     * Outdated source divisions such as {@code 
-     * <div class="source">} are transformed to the new {@code <code>} elements.
-     * Additionally, it will correct the position of the {@code pre} element,
-     * moving it out of the code section.
-     * <p>
-     * It also fixes a Doxia error where the source division is wrapped by a
-     * second source division.
-     * 
-     * @param html
-     *            HTML where the source sections are to be updated
-     * @return HTML content, with the source sections updated
-     */
-    public final String updateCodeSections(final String html) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // Source divs are transformed to code tags
-        getHtmlUtils().retag(body, "div.source", "code");
-        // Removes redundant tags
-        getHtmlUtils().unwrap(body, "code > code");
-
-        getHtmlUtils().swapTagWithParent(body, "code > pre");
-
-        // Removes source class from code tags
-        getHtmlUtils().removeClass(body, "code.source", "source");
-
-        return body.html();
-    }
-
-    /**
-     * Returns the result from updating section divisions, such as {@code 
-     * <div class="section">}, to the new {@code <section>} element on the
-     * received HTML code.
-     * 
-     * @param html
-     *            HTML where the section divisions are to be updated
-     * @return HTML content, with the section divisions updated
-     */
-    public final String updateSectionDiv(final String html) {
-        final Element body;                  // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // Section divs are transformed to section tags
-        getHtmlUtils().retag(body, "div.section", "section");
-        // Removes section class from section tags
-        getHtmlUtils().removeClass(body, "section.section", "section");
-
-        return body.html();
     }
 
     /**
@@ -270,18 +126,18 @@ public class Html5UpdateUtils {
      * the header rows into the {@code <tbody>} element, instead on a {@code 
      * <thead>} element.
      * 
-     * @param body
-     *            body element with tables to fix
+     * @param root
+     *            root element with tables to fix
      */
-    public final void updateTableHeads(final Element body) {
+    public final void updateTableHeads(final Element root) {
         final Iterable<Element> tableHeadRows; // Heads to fix
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
 
-        checkNotNull(body, "Received a null pointer as body");
+        checkNotNull(root, "Received a null pointer as root element");
 
         // Table rows with <th> tags in a <tbody>
-        tableHeadRows = body.select("table > tbody > tr:has(th)");
+        tableHeadRows = root.select("table > tbody > tr:has(th)");
         for (final Element row : tableHeadRows) {
             // Gets the row's table
             // The selector ensured the row is inside a tbody
@@ -296,62 +152,6 @@ public class Html5UpdateUtils {
             // Adds the head at the beginning of the table
             table.prependChild(thead);
         }
-    }
-
-    /**
-     * Corrects table headers by adding a {@code <thead>} section where missing.
-     * <p>
-     * This serves to fix an error with tables created by Doxia, which will add
-     * the header rows into the {@code <tbody>} element, instead on a {@code 
-     * <thead>} element.
-     * 
-     * @param html
-     *            HTML with tables to update
-     * @return HTML content, with the tables updated
-     */
-    public final String updateTableHeads(final String html) {
-        final Element body;                  // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        updateTableHeads(body);
-
-        return body.html();
-    }
-
-    /**
-     * Returns the result from updating the tables on the received HTML code.
-     * <p>
-     * This method will add the missing {@code <thead>} element to table, remove
-     * the unneeded border attribute and remove the {@code bodyTable} class.
-     * <p>
-     * It also removes the alternating rows attributes. Doxia marks them with
-     * the {@code a} and {@code b} classes. This seems to be an outdated method
-     * to get alternating colored rows.
-     * 
-     * @param html
-     *            HTML with tables to update
-     * @return HTML content, with the tables updated
-     */
-    public final String updateTables(final String html) {
-        final Element body; // Body of the HTML code
-
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
-
-        // Removes bodyTable from tables
-        getHtmlUtils().removeClass(body, "table.bodyTable", "bodyTable");
-        updateTableHeads(body);
-        // Removes border attribute
-        getHtmlUtils().removeAttribute(body, "table[border]", "border");
-        // Removes alternating rows classes
-        getHtmlUtils().removeClass(body, "tr.a", "a");
-        getHtmlUtils().removeClass(body, "tr.b", "b");
-
-        return body.html();
     }
 
     /**
@@ -375,8 +175,10 @@ public class Html5UpdateUtils {
             final String attr) {
         final String value; // Content of the attribute
 
+        // Takes and clean the old attribute value
         value = element.attr(attr).replaceAll("\\.", "");
 
+        // Sets the cleaned value
         element.attr(attr, value);
     }
 
