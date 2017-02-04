@@ -84,7 +84,7 @@ public final class TestSiteUtilsFixAnchorLinks {
     }
 
     /**
-     * Tests that an external link is left untouched.
+     * Tests that an internal link is correctly formatted.
      */
     @Test
     public final void testInternalLink_Formatted() {
@@ -92,7 +92,7 @@ public final class TestSiteUtilsFixAnchorLinks {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<a href=\"#an_internal_link\">A link</a>";
+        html = "<a href=\"#An_Internal. Link\">A link</a>";
         htmlExpected = "<a href=\"#aninternallink\">A link</a>";
 
         result = util.fixAnchorLinks(html);

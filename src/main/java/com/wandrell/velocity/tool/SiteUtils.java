@@ -62,6 +62,11 @@ import org.jsoup.parser.Tag;
 public class SiteUtils {
 
     /**
+     * Regular expresion indicating invalid values for ids and internal links.
+     */
+    private static final String ID_INVALID_REGEX = "[ _.]";
+
+    /**
      * Constructs an instance of the {@code SiteUtil}.
      */
     public SiteUtils() {
@@ -72,7 +77,17 @@ public class SiteUtils {
      * Returns the result from fixing links to anchors in the same page on the
      * received HTML code.
      * <p>
-     * The href value will be in lower case, and with spaces and points removed.
+     * Any link such as {@code <a href=\"#An_Internal.Link\">A link</a>} will be
+     * transformed into {@code <a href=\"#aninternallink\">A link</a>}.
+     * <p>
+     * The href value will receive the following modifications, only if it is an
+     * internal link:
+     * <ul>
+     * <li>Text will be set to lower case</li>
+     * <li>Underscores will be removed</li>
+     * <li>Points will be removed</li>
+     * <li>Empty spaces will be removed</li>
+     * </ul>
      * 
      * @param html
      *            HTML with anchors to fix
@@ -87,13 +102,14 @@ public class SiteUtils {
         body = Jsoup.parse(html).body();
 
         // Anchors
-        for (final Element child : body.getElementsByTag("a")) {
+        for (final Element anchor : body.getElementsByTag("a")) {
             // If the attribute doesn't exist then the ref will be an empty
             // string
-            ref = child.attr("href");
+            ref = anchor.attr("href");
 
             if ((!ref.isEmpty()) && (ref.substring(0, 1).equals("#"))) {
-                child.attr("href", ref.toLowerCase().replaceAll("[ _.]", ""));
+                anchor.attr("href",
+                        ref.toLowerCase().replaceAll(ID_INVALID_REGEX, ""));
             }
         }
 
@@ -104,17 +120,28 @@ public class SiteUtils {
      * Returns the result from adding or fixing ids to the headings on the
      * received HTML code.
      * <p>
-     * The id will be the text from the heading, in lower case, and with spaces
-     * and points removed. If it already has an id, then it will be set to lower
-     * case, with spaces and points removed.
+     * If a heading has an id it will be corrected if needed, otherwise it will
+     * be created from the heading text.
+     * <p>
+     * The following operations are applied during this process:
+     * <ul>
+     * <li>Text will be set to lower case</li>
+     * <li>Underscores will be removed</li>
+     * <li>Points will be removed</li>
+     * <li>Empty spaces will be removed</li>
+     * </ul>
+     * <p>
+     * With this headings will end looking like
+     * {@code <h1 id=\"aheading\">A heading</h1>}.
      * 
      * @param html
      *            HTML with headings where an id should be added
-     * @return HTML content, with the tables transformed
+     * @return HTML content, with the heading ids fixed
      */
     public final String fixHeadingIds(final String html) {
         final Collection<Element> headings; // Headings to fix
-        final Element body;     // Body of the HTML code
+        final Element body; // Body of the HTML code
+        String idText;      // Text to generate the id
 
         checkNotNull(html, "Received a null pointer as html");
 
@@ -125,15 +152,15 @@ public class SiteUtils {
         for (final Element heading : headings) {
             if (heading.hasAttr("id")) {
                 // Contains an id
-                // The id is formatted
-                heading.attr("id", heading.attr("id").toLowerCase()
-                        .replaceAll("[ _.]", ""));
+                // The id text is taken from the attribute
+                idText = heading.attr("id");
             } else {
                 // Doesn't contain an id
-                // The id is created from the heading text
-                heading.attr("id",
-                        heading.text().toLowerCase().replaceAll("[ _.]", ""));
+                // The id text is taken from the heading text
+                idText = heading.text();
             }
+            heading.attr("id",
+                    idText.toLowerCase().replaceAll(ID_INVALID_REGEX, ""));
         }
 
         return body.html();

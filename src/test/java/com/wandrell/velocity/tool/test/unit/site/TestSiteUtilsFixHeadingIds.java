@@ -76,7 +76,7 @@ public final class TestSiteUtilsFixHeadingIds {
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
-        html = "<h1 id=\"a.heading\">A heading</h1><h3 id=\"another.heading\">Another heading</h3>";
+        html = "<h1 id=\"A.Heading\">A heading</h1><h3 id=\"another_heading\">Another heading</h3>";
 
         result = util.fixHeadingIds(html);
 
