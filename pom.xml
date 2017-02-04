@@ -349,6 +349,7 @@
             <!-- PMD -->
             <!-- Checks that the code complies with a series of code quality 
                rules -->
+            <!-- It is using a customized rules file -->
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
             <configuration>
