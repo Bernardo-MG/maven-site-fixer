@@ -54,7 +54,7 @@ public final class TestSiteUtilsFixHeadingIds {
      */
     @Test
     public final void testNoHeadings_Ignored() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -72,7 +72,7 @@ public final class TestSiteUtilsFixHeadingIds {
      */
     @Test
     public final void testWithId_CorrectId() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -90,7 +90,7 @@ public final class TestSiteUtilsFixHeadingIds {
      */
     @Test
     public final void testWithPoints_CorrectId() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -108,7 +108,7 @@ public final class TestSiteUtilsFixHeadingIds {
      */
     @Test
     public final void testWithSpaces_CorrectId() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 

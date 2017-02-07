@@ -56,7 +56,7 @@ public class TestHtmlUtilsSwapTagWithParent {
      */
     @Test
     public final void testNotExistingNothing() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -75,7 +75,7 @@ public class TestHtmlUtilsSwapTagWithParent {
      */
     @Test
     public final void testSwapCodePre() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

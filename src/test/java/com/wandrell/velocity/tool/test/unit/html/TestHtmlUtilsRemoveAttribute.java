@@ -55,7 +55,7 @@ public class TestHtmlUtilsRemoveAttribute {
      */
     @Test
     public final void testNotExistingAttribute_Untouched() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -74,7 +74,7 @@ public class TestHtmlUtilsRemoveAttribute {
      */
     @Test
     public final void testRemovesAttribute() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

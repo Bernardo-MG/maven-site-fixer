@@ -55,7 +55,7 @@ public final class TestHtmlUtilsUnwrap {
      */
     @Test
     public final void testEmpty_Removed() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -74,7 +74,7 @@ public final class TestHtmlUtilsUnwrap {
      */
     @Test
     public final void testNotExisting_Nothing() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -93,7 +93,7 @@ public final class TestHtmlUtilsUnwrap {
      */
     @Test
     public final void testWithText_TextKept() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

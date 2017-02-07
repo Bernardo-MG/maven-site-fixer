@@ -56,7 +56,7 @@ public final class TestHtmlUtilsRemoveClass {
      */
     @Test
     public final void testMultipleClasses() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -76,7 +76,7 @@ public final class TestHtmlUtilsRemoveClass {
      */
     @Test
     public final void testNoClassLeft() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -95,7 +95,7 @@ public final class TestHtmlUtilsRemoveClass {
      */
     @Test
     public final void testNotExistingClass_Untouched() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

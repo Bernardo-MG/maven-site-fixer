@@ -56,7 +56,7 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
      */
     @Test
     public final void testHeading_NoHref_Removed() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -76,7 +76,7 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
      */
     @Test
     public final void testHeading_NoHref_WithText_TextKept() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -95,7 +95,7 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
      */
     @Test
     public final void testNoAnchors_Ignored() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

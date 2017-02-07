@@ -54,7 +54,7 @@ public final class TestSiteUtilsFixAnchorLinks {
      */
     @Test
     public final void testEmptyLink_NotChanged() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -71,7 +71,7 @@ public final class TestSiteUtilsFixAnchorLinks {
      */
     @Test
     public final void testExternalLink_NotChanged() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -88,7 +88,7 @@ public final class TestSiteUtilsFixAnchorLinks {
      */
     @Test
     public final void testInternalLink_Formatted() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -105,7 +105,7 @@ public final class TestSiteUtilsFixAnchorLinks {
      */
     @Test
     public final void testNoAnchors_Ignored() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 

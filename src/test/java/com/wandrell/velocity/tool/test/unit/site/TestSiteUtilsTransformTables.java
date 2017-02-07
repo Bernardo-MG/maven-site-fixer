@@ -55,7 +55,7 @@ public final class TestSiteUtilsTransformTables {
      */
     @Test
     public final void testNoTable_Ignores() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -73,7 +73,7 @@ public final class TestSiteUtilsTransformTables {
      */
     @Test
     public final void testTable_Transforms() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 

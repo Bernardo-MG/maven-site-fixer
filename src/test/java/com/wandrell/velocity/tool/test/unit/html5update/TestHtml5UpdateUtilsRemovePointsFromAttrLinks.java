@@ -56,7 +56,7 @@ public final class TestHtml5UpdateUtilsRemovePointsFromAttrLinks {
      */
     @Test
     public final void testSimple_Removed() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

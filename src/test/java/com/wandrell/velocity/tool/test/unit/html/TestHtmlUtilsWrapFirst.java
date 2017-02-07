@@ -56,7 +56,7 @@ public final class TestHtmlUtilsWrapFirst {
      */
     @Test
     public final void testNotClosed_Closed() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -75,7 +75,7 @@ public final class TestHtmlUtilsWrapFirst {
      */
     @Test
     public final void testNotExisting_Nothing() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -94,7 +94,7 @@ public final class TestHtmlUtilsWrapFirst {
      */
     @Test
     public final void testWrap() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

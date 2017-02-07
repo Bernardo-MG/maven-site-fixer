@@ -55,7 +55,7 @@ public final class TestHtmlUtilsRetag {
      */
     @Test
     public final void testDivToCode() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -74,7 +74,7 @@ public final class TestHtmlUtilsRetag {
      */
     @Test
     public final void testNotExisting_Nothing() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

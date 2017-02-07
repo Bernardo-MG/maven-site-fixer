@@ -59,7 +59,7 @@ public final class TestHtmlUtilsEmpty {
      */
     @Test
     public final void testRemoveAttribute_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -79,7 +79,7 @@ public final class TestHtmlUtilsEmpty {
      */
     @Test
     public final void testRemoveClass_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -98,7 +98,7 @@ public final class TestHtmlUtilsEmpty {
      */
     @Test
     public final void testRetag_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -118,7 +118,7 @@ public final class TestHtmlUtilsEmpty {
      */
     @Test
     public final void testSwapTagWithParent_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -138,7 +138,7 @@ public final class TestHtmlUtilsEmpty {
      */
     @Test
     public final void testUnwrap_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -157,7 +157,7 @@ public final class TestHtmlUtilsEmpty {
      */
     @Test
     public final void testWrap_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
@@ -177,7 +177,7 @@ public final class TestHtmlUtilsEmpty {
      */
     @Test
     public final void testWrapFirst_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 

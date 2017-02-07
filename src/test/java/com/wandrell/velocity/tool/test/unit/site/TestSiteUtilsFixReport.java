@@ -54,7 +54,7 @@ public final class TestSiteUtilsFixReport {
      */
     @Test
     public final void testChangesReport() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -72,7 +72,7 @@ public final class TestSiteUtilsFixReport {
      */
     @Test
     public final void testCheckstyleReport() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -90,7 +90,7 @@ public final class TestSiteUtilsFixReport {
      */
     @Test
     public final void testPluginManagementReport() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -108,7 +108,7 @@ public final class TestSiteUtilsFixReport {
      */
     @Test
     public final void testPluginsReport() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -126,7 +126,7 @@ public final class TestSiteUtilsFixReport {
      */
     @Test
     public final void testSurefireReport() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 

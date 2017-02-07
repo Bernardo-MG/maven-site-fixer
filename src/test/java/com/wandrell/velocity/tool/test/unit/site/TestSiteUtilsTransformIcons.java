@@ -54,7 +54,7 @@ public final class TestSiteUtilsTransformIcons {
      */
     @Test
     public final void testIcon_Transforms() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 

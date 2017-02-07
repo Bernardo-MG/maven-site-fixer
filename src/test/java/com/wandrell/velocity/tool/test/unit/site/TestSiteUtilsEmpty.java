@@ -57,7 +57,7 @@ public final class TestSiteUtilsEmpty {
      */
     @Test
     public final void testFixAnchorLinks_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -74,7 +74,7 @@ public final class TestSiteUtilsEmpty {
      */
     @Test
     public final void testFixHeadingIds_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -91,7 +91,7 @@ public final class TestSiteUtilsEmpty {
      */
     @Test
     public final void testFixReport_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -108,7 +108,7 @@ public final class TestSiteUtilsEmpty {
      */
     @Test
     public final void testTransformIcons_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -125,7 +125,7 @@ public final class TestSiteUtilsEmpty {
      */
     @Test
     public final void testTransformImagesToFigures_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -142,7 +142,7 @@ public final class TestSiteUtilsEmpty {
      */
     @Test
     public final void testTransformTables_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 

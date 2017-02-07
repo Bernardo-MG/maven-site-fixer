@@ -58,7 +58,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testChangesReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -75,7 +75,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testCheckstyleReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -92,7 +92,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testCpdReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -109,7 +109,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testDependenciesReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -126,7 +126,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testFailsafeReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -143,7 +143,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testFindbugsReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -160,7 +160,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testJdependReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -177,7 +177,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testLicenseReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -194,7 +194,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testPluginManagementReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -211,7 +211,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testPluginsReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -228,7 +228,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testPmdReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -245,7 +245,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testProjectSummaryReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -262,7 +262,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testSurefireReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -279,7 +279,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testTaglistReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -296,7 +296,7 @@ public final class TestSiteUtilsFixReportEmpty {
      */
     @Test
     public final void testTeamListReport_Empty() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 

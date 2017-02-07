@@ -56,7 +56,7 @@ public final class TestSiteUtilsTransformImagesToFigures {
      */
     @Test
     public final void testCaption_Transforms() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -75,7 +75,7 @@ public final class TestSiteUtilsTransformImagesToFigures {
      */
     @Test
     public final void testNoCaption_Transforms() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -93,7 +93,7 @@ public final class TestSiteUtilsTransformImagesToFigures {
      */
     @Test
     public final void testNoImages_Ignored() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
@@ -111,7 +111,7 @@ public final class TestSiteUtilsTransformImagesToFigures {
      */
     @Test
     public final void testOutOfContent_Ignored() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
