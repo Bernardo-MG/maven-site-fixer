@@ -54,7 +54,28 @@ public final class TestHtmlUtilsEmpty {
     }
 
     /**
-     * Tests that an empty string causes no problem.
+     * Tests that an empty string causes no problem to the
+     * {@code removeAttribute} method.
+     */
+    @Test
+    public final void testRemoveAttribute_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = util.parse(html);
+        util.removeAttribute(element, "a.externalLink", "externalLink");
+
+        htmlExpected = "";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem to the {@code removeClass}
+     * method.
      */
     @Test
     public final void testRemoveClass_EmptyString() {
@@ -64,7 +85,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -73,7 +94,7 @@ public final class TestHtmlUtilsEmpty {
     }
 
     /**
-     * Tests that an empty string causes no problem.
+     * Tests that an empty string causes no problem to the {@code retag} method.
      */
     @Test
     public final void testRetag_EmptyString() {
@@ -83,7 +104,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.retag(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -92,7 +113,47 @@ public final class TestHtmlUtilsEmpty {
     }
 
     /**
-     * Tests that an empty string causes no problem.
+     * Tests that an empty string causes no problem to the
+     * {@code swapTagWithParent} method.
+     */
+    @Test
+    public final void testSwapTagWithParent_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = util.parse(html);
+        util.swapTagWithParent(element, "code > pre");
+
+        htmlExpected = "";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem to the {@code unwrap}
+     * method.
+     */
+    @Test
+    public final void testUnwrap_EmptyString() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = util.parse(html);
+        util.unwrap(element, "a:not([href])");
+
+        htmlExpected = "";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem to the {@code wrap} method.
      */
     @Test
     public final void testWrap_EmptyString() {
@@ -102,7 +163,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.wrap(element, "h1", "<header></header>");
 
         htmlExpected = "";
@@ -111,7 +172,8 @@ public final class TestHtmlUtilsEmpty {
     }
 
     /**
-     * Tests that an empty string causes no problem.
+     * Tests that an empty string causes no problem to the {@code wrapFirst}
+     * method.
      */
     @Test
     public final void testWrapFirst_EmptyString() {
@@ -121,7 +183,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.wrapFirst(element, "h1", "<header></header>");
 
         htmlExpected = "";
