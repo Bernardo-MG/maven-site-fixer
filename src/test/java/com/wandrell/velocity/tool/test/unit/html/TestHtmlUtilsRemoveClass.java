@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code removeClass} method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
@@ -51,8 +51,8 @@ public final class TestHtmlUtilsRemoveClass {
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if more
-     * classes are left then they are untouched.
+     * Tests that when removing a class, if there are multiple classes in the
+     * element then they are left untouched.
      */
     @Test
     public final void testMultipleClasses() {
@@ -62,7 +62,7 @@ public final class TestHtmlUtilsRemoveClass {
 
         html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
@@ -71,40 +71,40 @@ public final class TestHtmlUtilsRemoveClass {
     }
 
     /**
-     * Tests that HTML with no external links is ignored.
+     * Tests that when removing a class, if no more classes are left in the
+     * element then the class attribute is removed too.
      */
     @Test
-    public final void testNoExternalLinks_Ignored() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<p>Some text</p>";
-
-        element = new HtmlUtils().parse(html);
-        util.removeClass(element, "a.externalLink", "externalLink");
-
-        htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
-    /**
-     * Tests that when removing the externalLink class from links, if no more
-     * classes are left then the class attribute is removed too.
-     */
-    @Test
-    public final void testSingleClass() {
+    public final void testNoClassLeft() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that removing a not existing class does nothing.
+     */
+    @Test
+    public final void testNotExistingClass_Untouched() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<p>Some text</p>";
+
+        element = util.parse(html);
+        util.removeClass(element, "a.externalLink", "externalLink");
+
+        htmlExpected = "<p>Some text</p>";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }

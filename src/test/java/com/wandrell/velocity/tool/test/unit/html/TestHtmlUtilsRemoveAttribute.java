@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code removeAttribute} method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
@@ -51,10 +51,29 @@ public class TestHtmlUtilsRemoveAttribute {
     }
 
     /**
+     * Tests that removing not existing attributes does nothing.
+     */
+    @Test
+    public final void testNotExistingAttribute_Untouched() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<table class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+
+        element = new HtmlUtils().parse(html);
+        util.removeAttribute(element, "table[border]", "border");
+
+        htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
      * Tests that attributes are removed.
      */
     @Test
-    public final void testTable_RemovesAttribute() {
+    public final void testRemovesAttribute() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML

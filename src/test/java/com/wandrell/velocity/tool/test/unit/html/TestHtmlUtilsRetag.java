@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code retag} method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
@@ -51,21 +51,39 @@ public final class TestHtmlUtilsRetag {
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if more
-     * classes are left then they are untouched.
+     * Tests that retagging an element works as expected.
      */
     @Test
-    public final void testSimple() {
+    public final void testDivToCode() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.retag(element, "div.source", "code");
 
         htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that retagging a not existing element does nothing.
+     */
+    @Test
+    public final void testNotExisting_Nothing() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
+
+        element = util.parse(html);
+        util.retag(element, "div.abc", "code");
+
+        htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }

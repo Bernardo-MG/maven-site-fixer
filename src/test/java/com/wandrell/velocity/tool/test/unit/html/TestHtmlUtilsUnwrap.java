@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code unwrap} method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
@@ -51,17 +51,17 @@ public final class TestHtmlUtilsUnwrap {
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that unwrapping an empty element removes it.
      */
     @Test
-    public final void testHeading_NoHref_Removed() {
+    public final void testEmpty_Removed() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.unwrap(element, "a:not([href])");
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
@@ -70,40 +70,39 @@ public final class TestHtmlUtilsUnwrap {
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed, and their
-     * contents moved to the parent.
+     * Tests that unwrapping a not existing element does nothing.
      */
     @Test
-    public final void testHeading_NoHref_WithText_TextKept() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
-
-        element = new HtmlUtils().parse(html);
-        util.unwrap(element, "a:not([href])");
-
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no links is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
+    public final void testNotExisting_Nothing() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.unwrap(element, "a:not([href])");
 
         htmlExpected = "<p>Some text</p>";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that unwrapping an element with text keeps this text.
+     */
+    @Test
+    public final void testWithText_TextKept() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
+
+        element = util.parse(html);
+        util.unwrap(element, "a:not([href])");
+
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }

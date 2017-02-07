@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code wrapFirst} method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
@@ -51,44 +51,6 @@ public final class TestHtmlUtilsWrapFirst {
     }
 
     /**
-     * Tests that wrapping an element works as expected.
-     */
-    @Test
-    public final void testHeadingWithHeader_Wraps() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
-
-        element = new HtmlUtils().parse(html);
-        util.wrapFirst(element, "h1", "<header></header>");
-
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
-    /**
-     * Test that wrapping a not existing element does nothing.
-     */
-    @Test
-    public final void testNoElement_Ignored() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
-
-        element = new HtmlUtils().parse(html);
-        util.wrapFirst(element, "h3", "<header></header>");
-
-        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
-    /**
      * Tests that wrapping an element, without indicating the closing tag,
      * closes the wrap.
      */
@@ -100,8 +62,46 @@ public final class TestHtmlUtilsWrapFirst {
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
         util.wrapFirst(element, "h1", "<header>");
+
+        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Test that wrapping a not existing element does nothing.
+     */
+    @Test
+    public final void testNotExisting_Nothing() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
+
+        element = util.parse(html);
+        util.wrapFirst(element, "h3", "<header></header>");
+
+        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that wrapping an element works as expected.
+     */
+    @Test
+    public final void testWrap() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
+
+        element = util.parse(html);
+        util.wrapFirst(element, "h1", "<header></header>");
 
         htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
 

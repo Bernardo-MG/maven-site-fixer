@@ -31,7 +31,8 @@ import org.testng.annotations.Test;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code swapTagWithParent}
+ * method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
@@ -51,17 +52,36 @@ public class TestHtmlUtilsSwapTagWithParent {
     }
 
     /**
-     * Tests that attributes are removed.
+     * Tests that swapping a not existing element does nothing.
      */
     @Test
-    public final void testCodeSection_Swaps() {
+    public final void testNotExistingNothing() {
         final String html;         // HTML code to fix
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "<code><pre>Some code</pre></code>";
 
-        element = new HtmlUtils().parse(html);
+        element = util.parse(html);
+        util.swapTagWithParent(element, "code > abc");
+
+        htmlExpected = html;
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that swapping elements works as expected.
+     */
+    @Test
+    public final void testSwapCodePre() {
+        final String html;         // HTML code to fix
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<code><pre>Some code</pre></code>";
+
+        element = util.parse(html);
         util.swapTagWithParent(element, "code > pre");
 
         htmlExpected = "<pre><code>Some code</code></pre>";
