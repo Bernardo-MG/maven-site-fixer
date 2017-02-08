@@ -32,7 +32,8 @@ import com.wandrell.velocity.tool.Html5UpdateUtils;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link Html5UpdateUtils}.
+ * Unit tests for {@link Html5UpdateUtils} testing the {@code removeNoHrefLinks}
+ * method.
  * 
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
@@ -52,10 +53,29 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that HTML with no links is not edited.
      */
     @Test
-    public final void testHeading_NoHref_Removed() {
+    public final void testNoAnchors_Nothing() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<p>Some text</p>";
+
+        element = new HtmlUtils().parse(html);
+        util.removeNoHrefLinks(element);
+
+        htmlExpected = html;
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that links without the {@code href} attribute are removed.
+     */
+    @Test
+    public final void testNoHref_Empty_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
@@ -71,11 +91,11 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed, and their
-     * contents moved to the parent.
+     * Tests that links without the {@code href} attribute are removed, and
+     * their contents moved to the parent.
      */
     @Test
-    public final void testHeading_NoHref_WithText_TextKept() {
+    public final void testNoHref_WithText_TextKept() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
@@ -86,25 +106,6 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
         util.removeNoHrefLinks(element);
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no links is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<p>Some text</p>";
-
-        element = new HtmlUtils().parse(html);
-        util.removeNoHrefLinks(element);
-
-        htmlExpected = "<p>Some text</p>";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }

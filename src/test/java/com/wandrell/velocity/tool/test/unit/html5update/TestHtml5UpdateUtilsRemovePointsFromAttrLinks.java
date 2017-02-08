@@ -32,7 +32,8 @@ import com.wandrell.velocity.tool.Html5UpdateUtils;
 import com.wandrell.velocity.tool.HtmlUtils;
 
 /**
- * Unit tests for {@link Html5UpdateUtils}.
+ * Unit tests for {@link Html5UpdateUtils} testing the
+ * {@code removePointsFromAttr} method.
  * 
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
