@@ -51,10 +51,10 @@ public final class TestSiteUtilsTransformTables {
     }
 
     /**
-     * Tests that HTML with no tables is ignored.
+     * Tests that HTML with no tables is left untouched
      */
     @Test
-    public final void testNoTable_Ignores() {
+    public final void testNoTable_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result

@@ -67,4 +67,22 @@ public final class TestSiteUtilsTransformIcons {
         Assert.assertEquals(result, htmlExpected);
     }
 
+    /**
+     * Tests that HTML with no icons is left untouched
+     */
+    @Test
+    public final void testNoIcons_Untouched() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String result;       // Actual result
+
+        html = "<p>Some text</p>";
+
+        result = util.transformIcons(html);
+
+        htmlExpected = html;
+
+        Assert.assertEquals(result, htmlExpected);
+    }
+
 }

@@ -50,10 +50,10 @@ public final class TestSiteUtilsFixHeadingIds {
     }
 
     /**
-     * Tests that HTML with no headings is ignored.
+     * Tests that HTML with no headings is left untouched
      */
     @Test
-    public final void testNoHeadings_Ignored() {
+    public final void testNoHeadings_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -62,7 +62,7 @@ public final class TestSiteUtilsFixHeadingIds {
 
         result = util.fixHeadingIds(html);
 
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = html;
 
         Assert.assertEquals(result, htmlExpected);
     }

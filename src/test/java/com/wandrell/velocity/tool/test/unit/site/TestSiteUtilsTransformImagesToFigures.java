@@ -89,10 +89,10 @@ public final class TestSiteUtilsTransformImagesToFigures {
     }
 
     /**
-     * Tests that HTML with no images is ignored.
+     * Tests that HTML with no images is left untouched
      */
     @Test
-    public final void testNoImages_Ignored() {
+    public final void testNoImages_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -110,7 +110,7 @@ public final class TestSiteUtilsTransformImagesToFigures {
      * Tests that images out of a content element are ignored.
      */
     @Test
-    public final void testOutOfContent_Ignored() {
+    public final void testOutOfContent_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result

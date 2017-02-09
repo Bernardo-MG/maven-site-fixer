@@ -53,13 +53,13 @@ public final class TestSiteUtilsFixAnchorLinks {
      * Tests that an empty link is left untouched.
      */
     @Test
-    public final void testEmptyLink_NotChanged() {
+    public final void testEmptyLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<a href=\"\">A link</a>";
-        htmlExpected = "<a href=\"\">A link</a>";
+        htmlExpected = html;
 
         result = util.fixAnchorLinks(html);
 
@@ -70,13 +70,13 @@ public final class TestSiteUtilsFixAnchorLinks {
      * Tests that an external link is left untouched.
      */
     @Test
-    public final void testExternalLink_NotChanged() {
+    public final void testExternalLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
 
         html = "<a href=\"www.somewhere.com\">A link</a>";
-        htmlExpected = "<a href=\"www.somewhere.com\">A link</a>";
+        htmlExpected = html;
 
         result = util.fixAnchorLinks(html);
 
@@ -101,10 +101,10 @@ public final class TestSiteUtilsFixAnchorLinks {
     }
 
     /**
-     * Tests that HTML with no links is ignored.
+     * Tests that HTML with no links is left untouched.
      */
     @Test
-    public final void testNoAnchors_Ignored() {
+    public final void testNoAnchors_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String result;       // Actual result
@@ -113,7 +113,7 @@ public final class TestSiteUtilsFixAnchorLinks {
 
         result = util.fixAnchorLinks(html);
 
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = html;
 
         Assert.assertEquals(result, htmlExpected);
     }
