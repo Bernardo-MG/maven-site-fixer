@@ -108,4 +108,24 @@ public final class TestHtmlUtilsWrapFirst {
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
+    /**
+     * Tests that wrapping an element works as expected and keeps the wrapper
+     * class.
+     */
+    @Test
+    public final void testWrap_WithClass_KeepsClass() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
+
+        element = util.parse(html);
+        util.wrapFirst(element, "h1", "<header class=\"class-name\"></header>");
+
+        htmlExpected = "<header class=\"class-name\">\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
 }
