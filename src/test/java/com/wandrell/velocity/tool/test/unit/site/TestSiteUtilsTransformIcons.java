@@ -24,6 +24,8 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -56,15 +58,16 @@ public final class TestSiteUtilsTransformIcons {
     public final void testIcon_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<img src=\"images/add.gif\" alt=\"An image\">";
 
-        result = util.transformIcons(html);
+        element = Jsoup.parse(html).body();
+        util.transformIcons(element);
 
         htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -74,15 +77,16 @@ public final class TestSiteUtilsTransformIcons {
     public final void testNoIcons_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
 
-        result = util.transformIcons(html);
+        element = Jsoup.parse(html).body();
+        util.transformIcons(element);
 
         htmlExpected = html;
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

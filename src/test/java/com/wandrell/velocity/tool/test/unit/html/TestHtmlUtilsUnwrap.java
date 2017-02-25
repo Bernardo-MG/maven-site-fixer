@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -61,7 +62,7 @@ public final class TestHtmlUtilsUnwrap {
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.unwrap(element, "a:not([href])");
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
@@ -80,7 +81,7 @@ public final class TestHtmlUtilsUnwrap {
 
         html = "<p>Some text</p>";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.unwrap(element, "a:not([href])");
 
         htmlExpected = "<p>Some text</p>";
@@ -99,7 +100,7 @@ public final class TestHtmlUtilsUnwrap {
 
         html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.unwrap(element, "a:not([href])");
 
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";

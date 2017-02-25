@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -65,7 +66,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.removeAttribute(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -85,7 +86,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -104,7 +105,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.retag(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -124,7 +125,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.swapTagWithParent(element, "code > pre");
 
         htmlExpected = "";
@@ -144,7 +145,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.unwrap(element, "a:not([href])");
 
         htmlExpected = "";
@@ -163,7 +164,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.wrap(element, "h1", "<header></header>");
 
         htmlExpected = "";
@@ -183,7 +184,7 @@ public final class TestHtmlUtilsEmpty {
 
         html = "";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.wrapFirst(element, "h1", "<header></header>");
 
         htmlExpected = "";

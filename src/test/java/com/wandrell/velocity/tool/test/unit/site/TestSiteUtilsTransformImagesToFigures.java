@@ -24,6 +24,8 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -58,15 +60,16 @@ public final class TestSiteUtilsTransformImagesToFigures {
     public final void testCaption_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<section><p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p></section>";
 
-        result = util.transformImagesToFigures(html);
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
 
         htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -77,15 +80,16 @@ public final class TestSiteUtilsTransformImagesToFigures {
     public final void testNoCaption_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<section><img src=\"imgs/diagram.png\"></section>";
 
-        result = util.transformImagesToFigures(html);
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
 
         htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -95,15 +99,16 @@ public final class TestSiteUtilsTransformImagesToFigures {
     public final void testNoImages_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
 
-        result = util.transformImagesToFigures(html);
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
 
         htmlExpected = "<p>Some text</p>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -113,15 +118,16 @@ public final class TestSiteUtilsTransformImagesToFigures {
     public final void testOutOfContent_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><footer><img src=\"imgs/footer.png\" alt=\"Footer image\"></footer></body>";
 
-        result = util.transformImagesToFigures(html);
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
 
         htmlExpected = "<header>\n <img src=\"imgs/header.png\" alt=\"Header image\">\n</header>\n<section></section>\n<footer>\n <img src=\"imgs/footer.png\" alt=\"Footer image\">\n</footer>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

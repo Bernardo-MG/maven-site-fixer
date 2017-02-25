@@ -24,6 +24,8 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -60,14 +62,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testChangesReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "changes-report");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "changes-report");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -77,14 +80,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testCheckstyleReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "checkstyle");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "checkstyle");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -94,14 +98,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testCpdReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "cpd");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "cpd");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -111,14 +116,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testDependenciesReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "<h1>Dependencies Report</h1>";
 
-        result = util.fixReport(html, "dependencies");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "dependencies");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -128,14 +134,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testFailsafeReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "failsafe-report");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "failsafe-report");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -145,14 +152,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testFindbugsReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "findbugs");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "findbugs");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -162,14 +170,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testJdependReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "jdepend-report");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "jdepend-report");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -179,14 +188,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testLicenseReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "<h1>License</h1>";
 
-        result = util.fixReport(html, "license");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "license");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -196,14 +206,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testPluginManagementReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "plugin-management");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "plugin-management");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -213,14 +224,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testPluginsReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "<h1>Plugins Report</h1>";
 
-        result = util.fixReport(html, "plugins");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "plugins");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -230,14 +242,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testPmdReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "pmd");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "pmd");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -247,14 +260,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testProjectSummaryReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "project-summary");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "project-summary");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -264,14 +278,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testSurefireReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "surefire-report");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "surefire-report");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -281,14 +296,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testTaglistReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "taglist");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "taglist");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -298,14 +314,15 @@ public final class TestSiteUtilsFixReportEmpty {
     public final void testTeamListReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "team-list");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "team-list");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -62,7 +63,7 @@ public final class TestHtmlUtilsRemoveClass {
 
         html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
@@ -82,7 +83,7 @@ public final class TestHtmlUtilsRemoveClass {
 
         html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
@@ -101,7 +102,7 @@ public final class TestHtmlUtilsRemoveClass {
 
         html = "<p>Some text</p>";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "<p>Some text</p>";

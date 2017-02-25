@@ -24,6 +24,8 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -56,15 +58,16 @@ public final class TestSiteUtilsFixHeadingIds {
     public final void testNoHeadings_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
 
-        result = util.fixHeadingIds(html);
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
 
         htmlExpected = html;
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -74,15 +77,16 @@ public final class TestSiteUtilsFixHeadingIds {
     public final void testWithId_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<h1 id=\"A.Heading\">A heading</h1><h3 id=\"another_heading\">Another heading</h3>";
 
-        result = util.fixHeadingIds(html);
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
 
         htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -92,15 +96,16 @@ public final class TestSiteUtilsFixHeadingIds {
     public final void testWithPoints_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<h1>com.wandrell</h1><h3>com.wandrell</h3>";
 
-        result = util.fixHeadingIds(html);
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
 
         htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>\n<h3 id=\"comwandrell\">com.wandrell</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -110,15 +115,16 @@ public final class TestSiteUtilsFixHeadingIds {
     public final void testWithSpaces_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<h1>A heading</h1><h3>Another heading</h3>";
 
-        result = util.fixHeadingIds(html);
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
 
         htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

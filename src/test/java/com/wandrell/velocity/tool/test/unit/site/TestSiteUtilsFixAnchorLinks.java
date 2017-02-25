@@ -24,6 +24,8 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -56,14 +58,15 @@ public final class TestSiteUtilsFixAnchorLinks {
     public final void testEmptyLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<a href=\"\">A link</a>";
         htmlExpected = html;
 
-        result = util.fixAnchorLinks(html);
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -73,14 +76,15 @@ public final class TestSiteUtilsFixAnchorLinks {
     public final void testExternalLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<a href=\"www.somewhere.com\">A link</a>";
         htmlExpected = html;
 
-        result = util.fixAnchorLinks(html);
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -90,14 +94,15 @@ public final class TestSiteUtilsFixAnchorLinks {
     public final void testInternalLink_Formatted() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<a href=\"#An_Internal. Link\">A link</a>";
         htmlExpected = "<a href=\"#aninternallink\">A link</a>";
 
-        result = util.fixAnchorLinks(html);
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -107,15 +112,16 @@ public final class TestSiteUtilsFixAnchorLinks {
     public final void testNoAnchors_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
 
-        result = util.fixAnchorLinks(html);
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
 
         htmlExpected = html;
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

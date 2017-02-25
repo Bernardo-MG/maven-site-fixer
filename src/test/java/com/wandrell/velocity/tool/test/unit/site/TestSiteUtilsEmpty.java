@@ -24,6 +24,8 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -59,14 +61,15 @@ public final class TestSiteUtilsEmpty {
     public final void testFixAnchorLinks_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixAnchorLinks(html);
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -76,14 +79,15 @@ public final class TestSiteUtilsEmpty {
     public final void testFixHeadingIds_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixHeadingIds(html);
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -93,14 +97,15 @@ public final class TestSiteUtilsEmpty {
     public final void testFixReport_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.fixReport(html, "");
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "");
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -110,14 +115,15 @@ public final class TestSiteUtilsEmpty {
     public final void testTransformIcons_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.transformIcons(html);
+        element = Jsoup.parse(html).body();
+        util.transformIcons(element);
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -127,14 +133,15 @@ public final class TestSiteUtilsEmpty {
     public final void testTransformImagesToFigures_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.transformImagesToFigures(html);
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
@@ -144,14 +151,15 @@ public final class TestSiteUtilsEmpty {
     public final void testTransformTables_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
+        final Element element;     // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        result = util.transformTables(html);
+        element = Jsoup.parse(html).body();
+        util.transformTables(element);
 
-        Assert.assertEquals(result, htmlExpected);
+        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

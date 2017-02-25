@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -61,7 +62,7 @@ public final class TestHtmlUtilsRetag {
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.retag(element, "div.source", "code");
 
         htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
@@ -80,7 +81,7 @@ public final class TestHtmlUtilsRetag {
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
 
-        element = util.parse(html);
+        element = Jsoup.parse(html).body();
         util.retag(element, "div.abc", "code");
 
         htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
