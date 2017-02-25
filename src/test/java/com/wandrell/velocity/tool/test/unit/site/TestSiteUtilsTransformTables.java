@@ -24,12 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the
@@ -38,7 +37,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see SiteUtils
  */
-public final class TestSiteUtilsTransformTables {
+public final class TestSiteUtilsTransformTables extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -59,16 +58,11 @@ public final class TestSiteUtilsTransformTables {
     public final void testNoTable_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
-
-        element = Jsoup.parse(html).body();
-        util.transformTables(element);
-
         htmlExpected = "<p>Some text</p>";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
@@ -78,16 +72,16 @@ public final class TestSiteUtilsTransformTables {
     public final void testTable_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
 
         html = "<table class=\"bodyTable\"><thead><tr><th>Header 1</th><th>Header 2</th></tr></thead><tbody><tr><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-
-        element = Jsoup.parse(html).body();
-        util.transformTables(element);
-
         htmlExpected = "<table class=\"bodyTable table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element) {
+        util.transformTables(element);
     }
 
 }

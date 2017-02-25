@@ -24,12 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code transformIcons} method.
@@ -37,7 +36,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see SiteUtils
  */
-public final class TestSiteUtilsTransformIcons {
+public final class TestSiteUtilsTransformIcons extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -58,16 +57,11 @@ public final class TestSiteUtilsTransformIcons {
     public final void testIcon_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
 
         html = "<img src=\"images/add.gif\" alt=\"An image\">";
-
-        element = Jsoup.parse(html).body();
-        util.transformIcons(element);
-
         htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
@@ -77,16 +71,16 @@ public final class TestSiteUtilsTransformIcons {
     public final void testNoIcons_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
-
-        element = Jsoup.parse(html).body();
-        util.transformIcons(element);
-
         htmlExpected = html;
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element) {
+        util.transformIcons(element);
     }
 
 }
