@@ -25,11 +25,10 @@
 package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link Html5UpdateUtils} testing the
@@ -38,7 +37,8 @@ import com.wandrell.velocity.tool.HtmlUtils;
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsRemovePointsFromAttrLinks {
+public final class TestHtml5UpdateUtilsRemovePointsFromAttrLinks
+        extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -59,16 +59,16 @@ public final class TestHtml5UpdateUtilsRemovePointsFromAttrLinks {
     public final void testSimple_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
 
         html = "<a name=\"a_heading\" href=\"a.b.c\">Text</a>";
-
-        element = new HtmlUtils().parse(html);
-        util.removePointsFromAttr(element, "[href]", "href");
-
         htmlExpected = "<a name=\"a_heading\" href=\"abc\">Text</a>";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element) {
+        util.removePointsFromAttr(element, "[href]", "href");
     }
 
 }

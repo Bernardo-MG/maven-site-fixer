@@ -25,11 +25,10 @@
 package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link Html5UpdateUtils} testing the {@code updateTableHeads}
@@ -38,7 +37,8 @@ import com.wandrell.velocity.tool.HtmlUtils;
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsUpdateTableHeads {
+public final class TestHtml5UpdateUtilsUpdateTableHeads
+        extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -59,16 +59,16 @@ public final class TestHtml5UpdateUtilsUpdateTableHeads {
     public final void testFullTable_UpdatesHeader() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
 
         html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-
-        element = new HtmlUtils().parse(html);
-        util.updateTableHeads(element);
-
         htmlExpected = "<table border=\"0\" class=\"bodyTable testClass\">\n <thead>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element) {
+        util.updateTableHeads(element);
     }
 
 }
