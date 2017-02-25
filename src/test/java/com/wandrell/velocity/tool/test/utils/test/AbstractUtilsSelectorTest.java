@@ -32,20 +32,24 @@ import org.testng.Assert;
  * Base class for HTML modification tests. It simplifies the test methods by
  * encapsulating the repetitive code, so each test just contains the meaningful
  * variables.
+ * <p>
+ * This variant of the base test is meant for those tests which require a CSS
+ * selector.
  * 
  * @author Bernardo Martínez Garrido
  */
-public abstract class AbstractUtilsTest {
+public abstract class AbstractUtilsSelectorTest {
 
     /**
      * Default constructor.
      */
-    public AbstractUtilsTest() {
+    public AbstractUtilsSelectorTest() {
         super();
     }
 
     /**
-     * Runs the test with the specified HTML values.
+     * Runs the test with the specified HTML values and using the specified CSS
+     * selector.
      * </p>
      * This will call the tested method, after creating an {@code Element} from
      * the received HTML code, and will compare the result with the specified
@@ -58,12 +62,15 @@ public abstract class AbstractUtilsTest {
      *            initial HTML
      * @param result
      *            final HTML
+     * @param selector
+     *            CSS selector
      */
-    public final void runTest(final String html, final String result) {
+    public final void runTest(final String html, final String result,
+            final String selector) {
         final Element element; // Parsed HTML
 
         element = Jsoup.parse(html).body();
-        callTestedMethod(element);
+        callTestedMethod(element, selector);
 
         Assert.assertEquals(element.html(), result);
     }
@@ -75,7 +82,10 @@ public abstract class AbstractUtilsTest {
      * 
      * @param element
      *            element with the HTML being tested
+     * @param selector
+     *            CSS selector
      */
-    protected abstract void callTestedMethod(final Element element);
+    protected abstract void callTestedMethod(final Element element,
+            final String selector);
 
 }

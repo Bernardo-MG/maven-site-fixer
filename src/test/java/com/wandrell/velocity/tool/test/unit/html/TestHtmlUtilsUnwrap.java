@@ -24,12 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
  * Unit tests for {@link HtmlUtils} testing the {@code unwrap} method.
@@ -37,7 +36,7 @@ import com.wandrell.velocity.tool.HtmlUtils;
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
  */
-public final class TestHtmlUtilsUnwrap {
+public final class TestHtmlUtilsUnwrap extends AbstractUtilsSelectorTest {
 
     /**
      * Instance of the utils class being tested.
@@ -58,16 +57,13 @@ public final class TestHtmlUtilsUnwrap {
     public final void testEmpty_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
-
-        element = Jsoup.parse(html).body();
-        util.unwrap(element, "a:not([href])");
-
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        selector = "a:not([href])";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector);
     }
 
     /**
@@ -77,16 +73,13 @@ public final class TestHtmlUtilsUnwrap {
     public final void testNotExisting_Nothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
 
         html = "<p>Some text</p>";
-
-        element = Jsoup.parse(html).body();
-        util.unwrap(element, "a:not([href])");
-
         htmlExpected = "<p>Some text</p>";
+        selector = "a:not([href])";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector);
     }
 
     /**
@@ -96,16 +89,19 @@ public final class TestHtmlUtilsUnwrap {
     public final void testWithText_TextKept() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
 
         html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
-
-        element = Jsoup.parse(html).body();
-        util.unwrap(element, "a:not([href])");
-
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        selector = "a:not([href])";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element,
+            final String selector) {
+        util.unwrap(element, selector);
     }
 
 }
