@@ -24,10 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
-import org.testng.Assert;
+import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code fixHeadingIds} method.
@@ -35,7 +36,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see SiteUtils
  */
-public final class TestSiteUtilsFixHeadingIds {
+public final class TestSiteUtilsFixHeadingIds extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -50,21 +51,17 @@ public final class TestSiteUtilsFixHeadingIds {
     }
 
     /**
-     * Tests that HTML with no headings is ignored.
+     * Tests that HTML with no headings is left untouched
      */
     @Test
-    public final void testNoHeadings_Ignored() {
-        final String html;         // HTML code to fix
+    public final void testNoHeadings_Untouched() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<p>Some text</p>";
+        htmlExpected = html;
 
-        result = util.fixHeadingIds(html);
-
-        htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
@@ -72,17 +69,13 @@ public final class TestSiteUtilsFixHeadingIds {
      */
     @Test
     public final void testWithId_CorrectId() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
-        html = "<h1 id=\"a.heading\">A heading</h1><h3 id=\"another.heading\">Another heading</h3>";
-
-        result = util.fixHeadingIds(html);
-
+        html = "<h1 id=\"A.Heading\">A heading</h1><h3 id=\"another_heading\">Another heading</h3>";
         htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
@@ -90,17 +83,13 @@ public final class TestSiteUtilsFixHeadingIds {
      */
     @Test
     public final void testWithPoints_CorrectId() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<h1>com.wandrell</h1><h3>com.wandrell</h3>";
-
-        result = util.fixHeadingIds(html);
-
         htmlExpected = "<h1 id=\"comwandrell\">com.wandrell</h1>\n<h3 id=\"comwandrell\">com.wandrell</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
@@ -108,17 +97,18 @@ public final class TestSiteUtilsFixHeadingIds {
      */
     @Test
     public final void testWithSpaces_CorrectId() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<h1>A heading</h1><h3>Another heading</h3>";
-
-        result = util.fixHeadingIds(html);
-
         htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element) {
+        util.fixHeadingIds(element);
     }
 
 }

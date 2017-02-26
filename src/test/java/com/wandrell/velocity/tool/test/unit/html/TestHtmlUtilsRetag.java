@@ -25,18 +25,19 @@
 package com.wandrell.velocity.tool.test.unit.html;
 
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code retag} method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
  */
-public final class TestHtmlUtilsRetag {
+public final class TestHtmlUtilsRetag
+        extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
@@ -51,23 +52,45 @@ public final class TestHtmlUtilsRetag {
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if more
-     * classes are left then they are untouched.
+     * Tests that retagging an element works as expected.
      */
     @Test
-    public final void testSimple() {
-        final String html;         // HTML code to fix
+    public final void testDivToCode() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
+        final String tag;          // New tag
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-
-        element = new HtmlUtils().parse(html);
-        util.retag(element, "div.source", "code");
-
         htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
+        selector = "div.source";
+        tag = "code";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector, tag);
+    }
+
+    /**
+     * Tests that retagging a not existing element does nothing.
+     */
+    @Test
+    public final void testNotExisting_Nothing() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+        final String tag;          // New tag
+
+        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
+        htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
+        selector = "div.abc";
+        tag = "code";
+
+        runTest(html, htmlExpected, selector, tag);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element,
+            final String selector, final String argument) {
+        util.retag(element, selector, argument);
     }
 
 }

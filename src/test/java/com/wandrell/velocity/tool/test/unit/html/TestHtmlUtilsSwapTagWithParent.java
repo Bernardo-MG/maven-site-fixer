@@ -25,18 +25,19 @@
 package com.wandrell.velocity.tool.test.unit.html;
 
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code swapTagWithParent}
+ * method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
  */
-public class TestHtmlUtilsSwapTagWithParent {
+public class TestHtmlUtilsSwapTagWithParent extends AbstractUtilsSelectorTest {
 
     /**
      * Instance of the utils class being tested.
@@ -51,22 +52,41 @@ public class TestHtmlUtilsSwapTagWithParent {
     }
 
     /**
-     * Tests that attributes are removed.
+     * Tests that swapping a not existing element does nothing.
      */
     @Test
-    public final void testCodeSection_Swaps() {
-        final String html;         // HTML code to fix
+    public final void testNotExistingNothing() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
 
         html = "<code><pre>Some code</pre></code>";
+        htmlExpected = html;
+        selector = "code > abc";
 
-        element = new HtmlUtils().parse(html);
-        util.swapTagWithParent(element, "code > pre");
+        runTest(html, htmlExpected, selector);
+    }
 
+    /**
+     * Tests that swapping elements works as expected.
+     */
+    @Test
+    public final void testSwapCodePre() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+
+        html = "<code><pre>Some code</pre></code>";
         htmlExpected = "<pre><code>Some code</code></pre>";
+        selector = "code > pre";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element,
+            final String selector) {
+        util.swapTagWithParent(element, selector);
     }
 
 }

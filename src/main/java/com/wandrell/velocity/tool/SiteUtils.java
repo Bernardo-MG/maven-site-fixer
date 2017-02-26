@@ -50,16 +50,19 @@ import org.jsoup.parser.Tag;
  * Skin</a> and its requirements have dictated the development of this class.
  * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlUtils
  * HtmlUtils}.
- * <p>
- * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
- * editing. This library will process the HTML code received by the methods, so
- * only the contents of the {@code <body>} tag (or the full HTML if this tag is
- * missing) will be used.
  * 
  * @author Bernardo Martínez Garrido
  */
 @DefaultKey("siteTool")
 public class SiteUtils {
+
+    /**
+     * Regular expresion indicating invalid values for ids and internal links.
+     * <p>
+     * It will match empty spaces, underscores and points. Which are meant to be
+     * removed from the ids.
+     */
+    private static final String ID_INVALID_REGEX = "[ _.]";
 
     /**
      * Constructs an instance of the {@code SiteUtil}.
@@ -69,78 +72,86 @@ public class SiteUtils {
     }
 
     /**
-     * Returns the result from fixing links to anchors in the same page on the
-     * received HTML code.
+     * Fixes links to anchors in the same page.
      * <p>
-     * The href value will be in lower case, and with spaces and points removed.
+     * Any link such as {@code <a href=\"#An_Internal.Link\">A link</a>} will be
+     * transformed into {@code <a href=\"#aninternallink\">A link</a>}.
+     * <p>
+     * The href value will receive the following modifications, only if it is an
+     * internal link:
+     * <ul>
+     * <li>Text will be set to lower case</li>
+     * <li>Underscores will be removed</li>
+     * <li>Points will be removed</li>
+     * <li>Empty spaces will be removed</li>
+     * </ul>
      * 
      * @param html
      *            HTML with anchors to fix
-     * @return HTML content, with the anchor href attribute fixed
      */
-    public final String fixAnchorLinks(final String html) {
-        final Element body; // Body of the HTML code
+    public final void fixAnchorLinks(final Element root) {
         String ref;         // Value of the href attribute
 
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
+        checkNotNull(root, "Received a null pointer as root element");
 
         // Anchors
-        for (final Element child : body.getElementsByTag("a")) {
+        for (final Element anchor : root.getElementsByTag("a")) {
             // If the attribute doesn't exist then the ref will be an empty
             // string
-            ref = child.attr("href");
+            ref = anchor.attr("href");
 
             if ((!ref.isEmpty()) && (ref.substring(0, 1).equals("#"))) {
-                child.attr("href", ref.toLowerCase().replaceAll("[ _.]", ""));
+                anchor.attr("href",
+                        ref.toLowerCase().replaceAll(ID_INVALID_REGEX, ""));
             }
         }
-
-        return body.html();
     }
 
     /**
-     * Returns the result from adding or fixing ids to the headings on the
-     * received HTML code.
+     * Adds or fixes heading ids.
      * <p>
-     * The id will be the text from the heading, in lower case, and with spaces
-     * and points removed. If it already has an id, then it will be set to lower
-     * case, with spaces and points removed.
+     * If a heading has an id it will be corrected if needed, otherwise it will
+     * be created from the heading text.
+     * <p>
+     * The following operations are applied during this process:
+     * <ul>
+     * <li>Text will be set to lower case</li>
+     * <li>Underscores will be removed</li>
+     * <li>Points will be removed</li>
+     * <li>Empty spaces will be removed</li>
+     * </ul>
+     * <p>
+     * With this headings will end looking like
+     * {@code <h1 id=\"aheading\">A heading</h1>}.
      * 
      * @param html
      *            HTML with headings where an id should be added
-     * @return HTML content, with the tables transformed
      */
-    public final String fixHeadingIds(final String html) {
+    public final void fixHeadingIds(final Element root) {
         final Collection<Element> headings; // Headings to fix
-        final Element body;     // Body of the HTML code
+        String idText;      // Text to generate the id
 
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
+        checkNotNull(root, "Received a null pointer as root element");
 
         // Table rows with <th> tags in a <tbody>
-        headings = body.select("h1,h2,h3,h4,h5,h6");
+        headings = root.select("h1,h2,h3,h4,h5,h6");
         for (final Element heading : headings) {
             if (heading.hasAttr("id")) {
                 // Contains an id
-                // The id is formatted
-                heading.attr("id", heading.attr("id").toLowerCase()
-                        .replaceAll("[ _.]", ""));
+                // The id text is taken from the attribute
+                idText = heading.attr("id");
             } else {
                 // Doesn't contain an id
-                // The id is created from the heading text
-                heading.attr("id",
-                        heading.text().toLowerCase().replaceAll("[ _.]", ""));
+                // The id text is taken from the heading text
+                idText = heading.text();
             }
+            heading.attr("id",
+                    idText.toLowerCase().replaceAll(ID_INVALID_REGEX, ""));
         }
-
-        return body.html();
     }
 
     /**
-     * Returns the result from fixing the received Maven Site report.
+     * Fixes a Maven Site report.
      * <p>
      * This is prepared for the following reports:
      * <ul>
@@ -167,82 +178,76 @@ public class SiteUtils {
      *            the HTML code from the report
      * @param report
      *            the report name
-     * @return the fixed HTML report
      */
-    public final String fixReport(final String html, final String report) {
-        final Element body; // Body of the HTML code
+    public final void fixReport(final Element root, final String report) {
 
-        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(report, "Received a null pointer as report");
-
-        body = Jsoup.parse(html).body();
 
         switch (report) {
             case "plugins":
-                fixReportPlugins(body);
+                fixReportPlugins(root);
                 break;
             case "plugin-management":
-                fixReportPluginManagement(body);
+                fixReportPluginManagement(root);
                 break;
             case "changes-report":
-                fixReportChanges(body);
+                fixReportChanges(root);
                 break;
             case "surefire-report":
-                fixReportSurefire(body);
+                fixReportSurefire(root);
                 break;
             case "failsafe-report":
-                fixReportFailsafe(body);
+                fixReportFailsafe(root);
                 break;
             case "checkstyle":
-                fixReportCheckstyle(body);
+                fixReportCheckstyle(root);
                 break;
             case "findbugs":
-                fixReportFindbugs(body);
+                fixReportFindbugs(root);
                 break;
             case "pmd":
-                fixReportPmd(body);
+                fixReportPmd(root);
                 break;
             case "cpd":
-                fixReportCpd(body);
+                fixReportCpd(root);
                 break;
             case "jdepend-report":
-                fixReportJdepend(body);
+                fixReportJdepend(root);
                 break;
             case "taglist":
-                fixReportTaglist(body);
+                fixReportTaglist(root);
                 break;
             case "dependencies":
-                fixReportDependencies(body);
+                fixReportDependencies(root);
                 break;
             case "project-summary":
-                fixReportProjectSummary(body);
+                fixReportProjectSummary(root);
                 break;
             case "license":
-                fixReportLicense(body);
+                fixReportLicense(root);
                 break;
             case "team-list":
-                fixReportTeamList(body);
+                fixReportTeamList(root);
                 break;
             default:
                 break;
         }
-
-        return body.html();
     }
 
     /**
-     * Returns the result from transforming the default icons used by the Maven
-     * Site to Font Awesome icons on the received HTML code.
+     * Transforms the default icons used by the Maven Site to Font Awesome
+     * icons.
      * 
      * @param html
      *            HTML code for the page
      * @return the HTML with all the icons swapped for Font Awesome icons
      */
-    public final String transformIcons(final String html) {
+    public final void transformIcons(final Element root) {
         final Map<String, String> replacements; // Texts to replace and
                                                 // replacements
 
-        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(root, "Received a null pointer as root element");
 
         replacements = new LinkedHashMap<>();
         replacements.put("img[src$=images/add.gif]",
@@ -264,12 +269,11 @@ public class SiteUtils {
         replacements.put("img[src$=images/icon_info_sml.gif]",
                 "<span><span class=\"fa fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
 
-        return replaceAll(html, replacements);
+        replaceAll(root, replacements);
     }
 
     /**
-     * Returns the result from transforming simple {@code <img>} elements to
-     * {@code <figure>} elements on the received HTML code.
+     * Transforms simple {@code <img>} elements to {@code <figure>} elements.
      * <p>
      * This will wrap {@code <img>} elements with a {@code <figure>} element,
      * and add a {@code <figcaption>} with the contents of the image's
@@ -280,19 +284,15 @@ public class SiteUtils {
      * 
      * @param html
      *            HTML with images to transform
-     * @return HTML content, with the body image wrapped in figures.
      */
-    public final String transformImagesToFigures(final String html) {
+    public final void transformImagesToFigures(final Element root) {
         final Collection<Element> images; // Image elements from the <body>
-        final Element body; // Body of the HTML code
         Element figure;     // <figure> element
         Element caption;    // <figcaption> element
 
-        checkNotNull(html, "Received a null pointer as html");
+        checkNotNull(root, "Received a null pointer as root element");
 
-        body = Jsoup.parse(html).body();
-
-        images = body.select("section img");
+        images = root.select("section img");
         if (!images.isEmpty()) {
             for (final Element img : images) {
                 figure = new Element(Tag.valueOf("figure"), "");
@@ -307,37 +307,28 @@ public class SiteUtils {
                 }
             }
         }
-
-        return body.html();
     }
 
     /**
-     * Returns the result from transforming tables to stripped and bordered
-     * tables on the received HTML code.
+     * Transforms tables to stripped and bordered tables.
      * <p>
      * This will apply Bootstrap classes to the table.
      * 
      * @param html
      *            HTML with tables to transform
-     * @return HTML content, with the tables transformed
      */
-    public final String transformTables(final String html) {
+    public final void transformTables(final Element root) {
         final Collection<Element> tables; // Tables to fix
-        final Element body; // Body of the HTML code
 
-        checkNotNull(html, "Received a null pointer as html");
-
-        body = Jsoup.parse(html).body();
+        checkNotNull(root, "Received a null pointer as root element");
 
         // Table rows with <th> tags in a <tbody>
-        tables = body.select("table");
+        tables = root.select("table");
         for (final Element table : tables) {
             table.addClass("table");
             table.addClass("table-striped");
             table.addClass("table-bordered");
         }
-
-        return body.html();
     }
 
     /**
@@ -628,25 +619,21 @@ public class SiteUtils {
      * @param replacements
      *            {@code Map} where the key is a CSS selector and the value the
      *            element's replacement
-     * @return HTML content with replaced elements
      */
-    private final String replaceAll(final String html,
+    private final void replaceAll(final Element root,
             final Map<String, String> replacements) {
-        final Element body; // Element parsed from the content
         String selector;    // Iterated selector
         String replacement; // Iterated HTML replacement
         Element replacementElem; // Iterated replacement
         Collection<Element> elements; // Selected elements
         Element replacementBody; // Body of the replacement
 
-        body = Jsoup.parse(html).body();
-
         for (final Entry<String, String> replacementEntry : replacements
                 .entrySet()) {
             selector = replacementEntry.getKey();
             replacement = replacementEntry.getValue();
 
-            elements = body.select(selector);
+            elements = root.select(selector);
             if (!elements.isEmpty()) {
                 // There are elements to replace
 
@@ -662,8 +649,6 @@ public class SiteUtils {
                 }
             }
         }
-
-        return body.html();
     }
 
 }

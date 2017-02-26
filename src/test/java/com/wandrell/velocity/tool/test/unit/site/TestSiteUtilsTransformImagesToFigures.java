@@ -24,10 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
-import org.testng.Assert;
+import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the
@@ -36,7 +37,8 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see SiteUtils
  */
-public final class TestSiteUtilsTransformImagesToFigures {
+public final class TestSiteUtilsTransformImagesToFigures
+        extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -56,17 +58,13 @@ public final class TestSiteUtilsTransformImagesToFigures {
      */
     @Test
     public final void testCaption_Transforms() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<section><p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p></section>";
-
-        result = util.transformImagesToFigures(html);
-
         htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
 
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
@@ -75,53 +73,46 @@ public final class TestSiteUtilsTransformImagesToFigures {
      */
     @Test
     public final void testNoCaption_Transforms() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<section><img src=\"imgs/diagram.png\"></section>";
-
-        result = util.transformImagesToFigures(html);
-
         htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
 
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
-     * Tests that HTML with no images is ignored.
+     * Tests that HTML with no images is left untouched
      */
     @Test
-    public final void testNoImages_Ignored() {
-        final String html;         // HTML code to fix
+    public final void testNoImages_Untouched() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<p>Some text</p>";
-
-        result = util.transformImagesToFigures(html);
-
         htmlExpected = "<p>Some text</p>";
 
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
      * Tests that images out of a content element are ignored.
      */
     @Test
-    public final void testOutOfContent_Ignored() {
-        final String html;         // HTML code to fix
+    public final void testOutOfContent_Untouched() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><footer><img src=\"imgs/footer.png\" alt=\"Footer image\"></footer></body>";
-
-        result = util.transformImagesToFigures(html);
-
         htmlExpected = "<header>\n <img src=\"imgs/header.png\" alt=\"Header image\">\n</header>\n<section></section>\n<footer>\n <img src=\"imgs/footer.png\" alt=\"Footer image\">\n</footer>";
 
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element) {
+        util.transformImagesToFigures(element);
     }
 
 }

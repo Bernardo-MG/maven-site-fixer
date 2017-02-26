@@ -22,53 +22,60 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5update;
+package com.wandrell.velocity.tool.test.utils.test;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.annotations.Test;
-
-import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
+import org.testng.Assert;
 
 /**
- * Unit tests for {@link Html5UpdateUtils} testing the
- * {@code removePointsFromAttr} method.
+ * Base class for HTML modification tests. It simplifies the test methods by
+ * encapsulating the repetitive code, so each test just contains the meaningful
+ * variables.
  * 
  * @author Bernardo Martínez Garrido
- * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsRemovePointsFromAttrLinks
-        extends AbstractUtilsTest {
-
-    /**
-     * Instance of the utils class being tested.
-     */
-    private final Html5UpdateUtils util = new Html5UpdateUtils();
+public abstract class AbstractUtilsTest {
 
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsRemovePointsFromAttrLinks() {
+    public AbstractUtilsTest() {
         super();
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Runs the test with the specified HTML values.
+     * <p>
+     * This will call the tested method, after creating an {@code Element} from
+     * the received HTML code, and will compare the result with the specified
+     * HTML.
+     * <p>
+     * If the final HTML does not match the HTML contained in the {@code result}
+     * parameter then the test will fail.
+     * 
+     * @param html
+     *            initial HTML
+     * @param result
+     *            final HTML
      */
-    @Test
-    public final void testSimple_Removed() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
+    public final void runTest(final String html, final String result) {
+        final Element element; // Parsed HTML
 
-        html = "<a name=\"a_heading\" href=\"a.b.c\">Text</a>";
-        htmlExpected = "<a name=\"a_heading\" href=\"abc\">Text</a>";
+        element = Jsoup.parse(html).body();
+        callTestedMethod(element);
 
-        runTest(html, htmlExpected);
+        Assert.assertEquals(element.html(), result);
     }
 
-    @Override
-    protected final void callTestedMethod(final Element element) {
-        util.removePointsFromAttr(element, "[href]", "href");
-    }
+    /**
+     * Calls the method being tested.
+     * <p>
+     * The received element was created from the initial test HTML.
+     * 
+     * @param element
+     *            element with the HTML being tested
+     */
+    protected abstract void callTestedMethod(final Element element);
 
 }

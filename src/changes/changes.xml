@@ -140,5 +140,10 @@
             The configuration tool no longer gives support to page specific configurations.
          </action>
       </release>
+      <release version="0.6.1" date="2017-02-26" description="Reduced parsing">
+         <action dev="bmg" type="update">
+            Now all the HTML edition methods expect parsed HTML.
+         </action>
+      </release>
    </body>
 </document>

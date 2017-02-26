@@ -24,10 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
-import org.testng.Assert;
+import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code fixAnchorLinks} method.
@@ -35,7 +36,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see SiteUtils
  */
-public final class TestSiteUtilsFixAnchorLinks {
+public final class TestSiteUtilsFixAnchorLinks extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -53,69 +54,61 @@ public final class TestSiteUtilsFixAnchorLinks {
      * Tests that an empty link is left untouched.
      */
     @Test
-    public final void testEmptyLink_NotChanged() {
-        final String html;         // HTML code to fix
+    public final void testEmptyLink_Untouched() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<a href=\"\">A link</a>";
-        htmlExpected = "<a href=\"\">A link</a>";
+        htmlExpected = html;
 
-        result = util.fixAnchorLinks(html);
-
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
      * Tests that an external link is left untouched.
      */
     @Test
-    public final void testExternalLink_NotChanged() {
-        final String html;         // HTML code to fix
+    public final void testExternalLink_Untouched() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<a href=\"www.somewhere.com\">A link</a>";
-        htmlExpected = "<a href=\"www.somewhere.com\">A link</a>";
+        htmlExpected = html;
 
-        result = util.fixAnchorLinks(html);
-
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
-     * Tests that an external link is left untouched.
+     * Tests that an internal link is correctly formatted.
      */
     @Test
     public final void testInternalLink_Formatted() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
-        html = "<a href=\"#an_internal_link\">A link</a>";
+        html = "<a href=\"#An_Internal. Link\">A link</a>";
         htmlExpected = "<a href=\"#aninternallink\">A link</a>";
 
-        result = util.fixAnchorLinks(html);
-
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
     }
 
     /**
-     * Tests that HTML with no links is ignored.
+     * Tests that HTML with no links is left untouched.
      */
     @Test
-    public final void testNoAnchors_Ignored() {
-        final String html;         // HTML code to fix
+    public final void testNoAnchors_Untouched() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<p>Some text</p>";
+        htmlExpected = html;
 
-        result = util.fixAnchorLinks(html);
+        runTest(html, htmlExpected);
+    }
 
-        htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(result, htmlExpected);
+    @Override
+    protected final void callTestedMethod(final Element element) {
+        util.fixAnchorLinks(element);
     }
 
 }

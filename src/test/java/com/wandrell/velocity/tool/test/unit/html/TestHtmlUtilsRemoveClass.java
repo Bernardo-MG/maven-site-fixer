@@ -25,18 +25,19 @@
 package com.wandrell.velocity.tool.test.unit.html;
 
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
- * Unit tests for {@link HtmlUtils}.
+ * Unit tests for {@link HtmlUtils} testing the {@code removeClass} method.
  * 
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
  */
-public final class TestHtmlUtilsRemoveClass {
+public final class TestHtmlUtilsRemoveClass
+        extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
@@ -51,62 +52,65 @@ public final class TestHtmlUtilsRemoveClass {
     }
 
     /**
-     * Tests that when removing the externalLink class from links, if more
-     * classes are left then they are untouched.
+     * Tests that when removing a class, if there are multiple classes in the
+     * element then they are left untouched.
      */
     @Test
     public final void testMultipleClasses() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
 
         html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
-
-        element = new HtmlUtils().parse(html);
-        util.removeClass(element, "a.externalLink", "externalLink");
-
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector, cssClass);
     }
 
     /**
-     * Tests that HTML with no external links is ignored.
+     * Tests that when removing a class, if no more classes are left in the
+     * element then the class attribute is removed too.
      */
     @Test
-    public final void testNoExternalLinks_Ignored() {
-        final String html;         // HTML code to fix
+    public final void testNoClassLeft() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<p>Some text</p>";
-
-        element = new HtmlUtils().parse(html);
-        util.removeClass(element, "a.externalLink", "externalLink");
-
-        htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
-    /**
-     * Tests that when removing the externalLink class from links, if no more
-     * classes are left then the class attribute is removed too.
-     */
-    @Test
-    public final void testSingleClass() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
 
         html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
-
-        element = new HtmlUtils().parse(html);
-        util.removeClass(element, "a.externalLink", "externalLink");
-
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector, cssClass);
+    }
+
+    /**
+     * Tests that removing a not existing class does nothing.
+     */
+    @Test
+    public final void testNotExistingClass_Untouched() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
+
+        html = "<p>Some text</p>";
+        htmlExpected = "<p>Some text</p>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
+
+        runTest(html, htmlExpected, selector, cssClass);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element,
+            final String selector, final String argument) {
+        util.removeClass(element, selector, argument);
     }
 
 }

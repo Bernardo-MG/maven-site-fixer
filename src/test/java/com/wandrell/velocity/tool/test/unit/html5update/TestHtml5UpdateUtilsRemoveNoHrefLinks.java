@@ -25,19 +25,20 @@
 package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link Html5UpdateUtils}.
+ * Unit tests for {@link Html5UpdateUtils} testing the {@code removeNoHrefLinks}
+ * method.
  * 
  * @author Bernardo Martínez Garrido
  * @see Html5UpdateUtils
  */
-public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
+public final class TestHtml5UpdateUtilsRemoveNoHrefLinks
+        extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -52,61 +53,51 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks {
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Tests that HTML with no links is not edited.
      */
     @Test
-    public final void testHeading_NoHref_Removed() {
-        final String html;         // HTML code to fix
+    public final void testNoAnchors_Nothing() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
-
-        element = new HtmlUtils().parse(html);
-        util.removeNoHrefLinks(element);
-
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
-    /**
-     * Tests links without the {@code href} attribute are removed, and their
-     * contents moved to the parent.
-     */
-    @Test
-    public final void testHeading_NoHref_WithText_TextKept() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
-
-        element = new HtmlUtils().parse(html);
-        util.removeNoHrefLinks(element);
-
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no links is ignored.
-     */
-    @Test
-    public final void testNoAnchors_Ignored() {
-        final String html;         // HTML code to fix
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
+        htmlExpected = html;
 
-        element = new HtmlUtils().parse(html);
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that links without the {@code href} attribute are removed.
+     */
+    @Test
+    public final void testNoHref_Empty_Removed() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that links without the {@code href} attribute are removed, and
+     * their contents moved to the parent.
+     */
+    @Test
+    public final void testNoHref_WithText_TextKept() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+
+        runTest(html, htmlExpected);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element) {
         util.removeNoHrefLinks(element);
-
-        htmlExpected = "<p>Some text</p>";
-
-        Assert.assertEquals(element.html(), htmlExpected);
     }
 
 }

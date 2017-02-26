@@ -24,10 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.site;
 
-import org.testng.Assert;
+import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code transformIcons} method.
@@ -35,7 +36,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * @author Bernardo Martínez Garrido
  * @see SiteUtils
  */
-public final class TestSiteUtilsTransformIcons {
+public final class TestSiteUtilsTransformIcons extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
@@ -54,17 +55,32 @@ public final class TestSiteUtilsTransformIcons {
      */
     @Test
     public final void testIcon_Transforms() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final String result;       // Actual result
 
         html = "<img src=\"images/add.gif\" alt=\"An image\">";
-
-        result = util.transformIcons(html);
-
         htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
 
-        Assert.assertEquals(result, htmlExpected);
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no icons is left untouched
+     */
+    @Test
+    public final void testNoIcons_Untouched() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<p>Some text</p>";
+        htmlExpected = html;
+
+        runTest(html, htmlExpected);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element) {
+        util.transformIcons(element);
     }
 
 }

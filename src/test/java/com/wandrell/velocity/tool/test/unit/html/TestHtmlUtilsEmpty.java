@@ -24,6 +24,7 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -54,17 +55,38 @@ public final class TestHtmlUtilsEmpty {
     }
 
     /**
-     * Tests that an empty string causes no problem.
+     * Tests that an empty string causes no problem to the
+     * {@code removeAttribute} method.
      */
     @Test
-    public final void testRemoveClass_EmptyString() {
-        final String html;         // HTML code to fix
+    public final void testRemoveAttribute_EmptyString() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
 
-        element = new HtmlUtils().parse(html);
+        element = Jsoup.parse(html).body();
+        util.removeAttribute(element, "a.externalLink", "externalLink");
+
+        htmlExpected = "";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem to the {@code removeClass}
+     * method.
+     */
+    @Test
+    public final void testRemoveClass_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -73,17 +95,17 @@ public final class TestHtmlUtilsEmpty {
     }
 
     /**
-     * Tests that an empty string causes no problem.
+     * Tests that an empty string causes no problem to the {@code retag} method.
      */
     @Test
     public final void testRetag_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
 
-        element = new HtmlUtils().parse(html);
+        element = Jsoup.parse(html).body();
         util.retag(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -92,17 +114,57 @@ public final class TestHtmlUtilsEmpty {
     }
 
     /**
-     * Tests that an empty string causes no problem.
+     * Tests that an empty string causes no problem to the
+     * {@code swapTagWithParent} method.
      */
     @Test
-    public final void testWrap_EmptyString() {
-        final String html;         // HTML code to fix
+    public final void testSwapTagWithParent_EmptyString() {
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
 
-        element = new HtmlUtils().parse(html);
+        element = Jsoup.parse(html).body();
+        util.swapTagWithParent(element, "code > pre");
+
+        htmlExpected = "";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem to the {@code unwrap}
+     * method.
+     */
+    @Test
+    public final void testUnwrap_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.unwrap(element, "a:not([href])");
+
+        htmlExpected = "";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem to the {@code wrap} method.
+     */
+    @Test
+    public final void testWrap_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
         util.wrap(element, "h1", "<header></header>");
 
         htmlExpected = "";
@@ -111,17 +173,18 @@ public final class TestHtmlUtilsEmpty {
     }
 
     /**
-     * Tests that an empty string causes no problem.
+     * Tests that an empty string causes no problem to the {@code wrapFirst}
+     * method.
      */
     @Test
     public final void testWrapFirst_EmptyString() {
-        final String html;         // HTML code to fix
+        final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
 
-        element = new HtmlUtils().parse(html);
+        element = Jsoup.parse(html).body();
         util.wrapFirst(element, "h1", "<header></header>");
 
         htmlExpected = "";
