@@ -24,12 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
  * Unit tests for {@link HtmlUtils} testing the {@code removeClass} method.
@@ -37,7 +36,8 @@ import com.wandrell.velocity.tool.HtmlUtils;
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
  */
-public final class TestHtmlUtilsRemoveClass {
+public final class TestHtmlUtilsRemoveClass
+        extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
@@ -59,16 +59,15 @@ public final class TestHtmlUtilsRemoveClass {
     public final void testMultipleClasses() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
 
         html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
-
-        element = Jsoup.parse(html).body();
-        util.removeClass(element, "a.externalLink", "externalLink");
-
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector, cssClass);
     }
 
     /**
@@ -79,16 +78,15 @@ public final class TestHtmlUtilsRemoveClass {
     public final void testNoClassLeft() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
 
         html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
-
-        element = Jsoup.parse(html).body();
-        util.removeClass(element, "a.externalLink", "externalLink");
-
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector, cssClass);
     }
 
     /**
@@ -98,16 +96,21 @@ public final class TestHtmlUtilsRemoveClass {
     public final void testNotExistingClass_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
 
         html = "<p>Some text</p>";
-
-        element = Jsoup.parse(html).body();
-        util.removeClass(element, "a.externalLink", "externalLink");
-
         htmlExpected = "<p>Some text</p>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector, cssClass);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element,
+            final String selector, final String argument) {
+        util.removeClass(element, selector, argument);
     }
 
 }

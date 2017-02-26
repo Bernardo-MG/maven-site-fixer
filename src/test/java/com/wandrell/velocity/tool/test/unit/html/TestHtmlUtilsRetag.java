@@ -24,12 +24,11 @@
 
 package com.wandrell.velocity.tool.test.unit.html;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
  * Unit tests for {@link HtmlUtils} testing the {@code retag} method.
@@ -37,7 +36,8 @@ import com.wandrell.velocity.tool.HtmlUtils;
  * @author Bernardo Martínez Garrido
  * @see HtmlUtils
  */
-public final class TestHtmlUtilsRetag {
+public final class TestHtmlUtilsRetag
+        extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
@@ -58,16 +58,15 @@ public final class TestHtmlUtilsRetag {
     public final void testDivToCode() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
+        final String tag;          // New tag
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-
-        element = Jsoup.parse(html).body();
-        util.retag(element, "div.source", "code");
-
         htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
+        selector = "div.source";
+        tag = "code";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector, tag);
     }
 
     /**
@@ -77,16 +76,21 @@ public final class TestHtmlUtilsRetag {
     public final void testNotExisting_Nothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String selector;     // CSS selector
+        final String tag;          // New tag
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-
-        element = Jsoup.parse(html).body();
-        util.retag(element, "div.abc", "code");
-
         htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
+        selector = "div.abc";
+        tag = "code";
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        runTest(html, htmlExpected, selector, tag);
+    }
+
+    @Override
+    protected final void callTestedMethod(final Element element,
+            final String selector, final String argument) {
+        util.retag(element, selector, argument);
     }
 
 }
