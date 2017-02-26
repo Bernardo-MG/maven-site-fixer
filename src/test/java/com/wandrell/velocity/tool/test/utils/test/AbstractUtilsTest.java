@@ -46,7 +46,7 @@ public abstract class AbstractUtilsTest {
 
     /**
      * Runs the test with the specified HTML values.
-     * </p>
+     * <p>
      * This will call the tested method, after creating an {@code Element} from
      * the received HTML code, and will compare the result with the specified
      * HTML.
@@ -70,7 +70,7 @@ public abstract class AbstractUtilsTest {
 
     /**
      * Calls the method being tested.
-     * </p>
+     * <p>
      * The received element was created from the initial test HTML.
      * 
      * @param element

@@ -50,11 +50,6 @@ import org.jsoup.parser.Tag;
  * Skin</a> and its requirements have dictated the development of this class.
  * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlUtils
  * HtmlUtils}.
- * <p>
- * The class makes use of <a href="http://jsoup.org/">jsoup</a> for querying and
- * editing. This library will process the HTML code received by the methods, so
- * only the contents of the {@code <body>} tag (or the full HTML if this tag is
- * missing) will be used.
  * 
  * @author Bernardo Martínez Garrido
  */
@@ -63,6 +58,9 @@ public class SiteUtils {
 
     /**
      * Regular expresion indicating invalid values for ids and internal links.
+     * <p>
+     * It will match empty spaces, underscores and points. Which are meant to be
+     * removed from the ids.
      */
     private static final String ID_INVALID_REGEX = "[ _.]";
 

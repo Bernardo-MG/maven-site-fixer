@@ -50,7 +50,7 @@ public abstract class AbstractUtilsSelectorArgumentTest {
     /**
      * Runs the test with the specified HTML values and using the specified CSS
      * selector.
-     * </p>
+     * <p>
      * This will call the tested method, after creating an {@code Element} from
      * the received HTML code, and will compare the result with the specified
      * HTML.
@@ -77,7 +77,7 @@ public abstract class AbstractUtilsSelectorArgumentTest {
 
     /**
      * Calls the method being tested.
-     * </p>
+     * <p>
      * The received element was created from the initial test HTML.
      * 
      * @param element
