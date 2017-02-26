@@ -86,8 +86,8 @@ public class SiteUtils {
      * <li>Empty spaces will be removed</li>
      * </ul>
      * 
-     * @param html
-     *            HTML with anchors to fix
+     * @param root
+     *            root element with anchors to fix
      */
     public final void fixAnchorLinks(final Element root) {
         String ref;         // Value of the href attribute
@@ -124,8 +124,8 @@ public class SiteUtils {
      * With this headings will end looking like
      * {@code <h1 id=\"aheading\">A heading</h1>}.
      * 
-     * @param html
-     *            HTML with headings where an id should be added
+     * @param root
+     *            root element with headings where an id should be added
      */
     public final void fixHeadingIds(final Element root) {
         final Collection<Element> headings; // Headings to fix
@@ -174,8 +174,8 @@ public class SiteUtils {
      * Most of the times, the fix consists on correcting the heading levels, and
      * adding an initial heading if needed.
      * 
-     * @param html
-     *            the HTML code from the report
+     * @param root
+     *            root element with the report
      * @param report
      *            the report name
      */
@@ -239,9 +239,8 @@ public class SiteUtils {
      * Transforms the default icons used by the Maven Site to Font Awesome
      * icons.
      * 
-     * @param html
-     *            HTML code for the page
-     * @return the HTML with all the icons swapped for Font Awesome icons
+     * @param root
+     *            root element with the page
      */
     public final void transformIcons(final Element root) {
         final Map<String, String> replacements; // Texts to replace and
@@ -282,8 +281,8 @@ public class SiteUtils {
      * Only {@code <img>} elements inside a {@code <section>} will be
      * transformed.
      * 
-     * @param html
-     *            HTML with images to transform
+     * @param root
+     *            root element with images to transform
      */
     public final void transformImagesToFigures(final Element root) {
         final Collection<Element> images; // Image elements from the <body>
@@ -314,8 +313,8 @@ public class SiteUtils {
      * <p>
      * This will apply Bootstrap classes to the table.
      * 
-     * @param html
-     *            HTML with tables to transform
+     * @param root
+     *            root element with tables to transform
      */
     public final void transformTables(final Element root) {
         final Collection<Element> tables; // Tables to fix

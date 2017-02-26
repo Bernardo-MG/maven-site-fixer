@@ -32,7 +32,7 @@
  * a {@code tools.xml} file is included.
  * <p>
  * Using the tools just requires calling its key. For example, to call the
- * {@link com.wandrell.velocity.tool.HTMLUtils HTMLUtils} {@code unwrap} method
+ * {@link com.wandrell.velocity.tool.HtmlUtils HtmlUtils} {@code unwrap} method
  * the following VTL line can be used:
  * <p>
  * {@code #set ( $sections = $htmlTool.unwrap( $bodyContent, "a:not([href])" ) )}
