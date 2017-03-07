@@ -326,11 +326,11 @@ public final class SkinConfigUtils extends SafeConfig {
             if (projectObj instanceof MavenProject) {
                 project = (MavenProject) projectObj;
                 artifactId = project.getArtifactId();
-                if (artifactId != null) {
+                if (artifactId == null) {
+                    setProjectId("");
+                } else {
                     // The artifact id is slugged for the project id
                     setProjectId(slug(artifactId));
-                } else {
-                    setProjectId("");
                 }
             } else {
                 setProjectId("");
