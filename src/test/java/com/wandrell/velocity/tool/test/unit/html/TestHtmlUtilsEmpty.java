@@ -172,24 +172,4 @@ public final class TestHtmlUtilsEmpty {
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
-    /**
-     * Tests that an empty string causes no problem to the {@code wrapFirst}
-     * method.
-     */
-    @Test
-    public final void testWrapFirst_EmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "";
-
-        element = Jsoup.parse(html).body();
-        util.wrapFirst(element, "h1", "<header></header>");
-
-        htmlExpected = "";
-
-        Assert.assertEquals(element.html(), htmlExpected);
-    }
-
 }
