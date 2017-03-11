@@ -145,7 +145,7 @@
             Now all the HTML edition methods expect parsed HTML.
          </action>
       </release>
-      <release version="0.6.2" date="2017-03-08" description="Removed unneeded code">
+      <release version="0.6.2" date="2017-03-11" description="Removed unneeded code">
          <action dev="bmg" type="update">
             Updated base POM.
          </action>
@@ -160,6 +160,11 @@
          </action>
          <action dev="bmg" type="remove">
             Removed redundant wrapFirst method.
+         </action>
+      </release>
+      <release version="0.6.3" date="2017-03-11" description="Fixed tools declaration">
+         <action dev="bmg" type="fix">
+            Fixed tools XML configuration.
          </action>
       </release>
    </body>
