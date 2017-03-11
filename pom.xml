@@ -197,7 +197,7 @@
       <!-- ============================================== -->
       <doxia.decoration.version>1.7.4</doxia.decoration.version>
       <guava.version>21.0</guava.version>
-      <jsoup.version>1.9.2</jsoup.version>
+      <jsoup.version>1.10.2</jsoup.version>
       <maven.project.version>2.2.1</maven.project.version>
       <mockito.version>1.10.19</mockito.version>
       <plexus.version>3.0.24</plexus.version>
