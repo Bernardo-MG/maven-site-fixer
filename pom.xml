@@ -195,12 +195,18 @@
       <!-- ============================================== -->
       <!-- =========== DEPENDENCIES VERSIONS ============ -->
       <!-- ============================================== -->
+      <commons.beanUtils.version>1.9.3</commons.beanUtils.version>
+      <commons.chain.version>1.2</commons.chain.version>
+      <commons.digester.version>2.1</commons.digester.version>
+      <commons.logging.version>1.2</commons.logging.version>
+      <commons.validator.version>1.6</commons.validator.version>
       <doxia.decoration.version>1.7.4</doxia.decoration.version>
       <guava.version>21.0</guava.version>
       <jsoup.version>1.10.2</jsoup.version>
       <maven.project.version>2.2.1</maven.project.version>
       <mockito.version>1.10.19</mockito.version>
       <plexus.version>3.0.24</plexus.version>
+      <struts.version>1.3.10</struts.version>
       <testng.version>6.11</testng.version>
       <velocity.tools.version>2.0</velocity.tools.version>
       <!-- ============================================== -->
@@ -257,6 +263,53 @@
                <artifactId>commons-collections</artifactId>
             </exclusion>
          </exclusions>
+      </dependency>
+      <!-- ============================================== -->
+      <!-- =========== OVERRIDEN DEPENDENCIES =========== -->
+      <!-- ============================================== -->
+      <!-- Obsolete dependencies are overriden, some of them have vulnerabilities 
+         issues -->
+      <dependency>
+         <!-- Commons Bean Utils -->
+         <groupId>commons-beanutils</groupId>
+         <artifactId>commons-beanutils</artifactId>
+         <version>${commons.beanUtils.version}</version>
+      </dependency>
+      <dependency>
+         <!-- Commons Chain -->
+         <groupId>commons-chain</groupId>
+         <artifactId>commons-chain</artifactId>
+         <version>${commons.chain.version}</version>
+      </dependency>
+      <dependency>
+         <!-- Commons Digester -->
+         <groupId>commons-digester</groupId>
+         <artifactId>commons-digester</artifactId>
+         <version>${commons.digester.version}</version>
+      </dependency>
+      <dependency>
+         <!-- Commons Logging -->
+         <groupId>commons-logging</groupId>
+         <artifactId>commons-logging</artifactId>
+         <version>${commons.logging.version}</version>
+      </dependency>
+      <dependency>
+         <!-- Commons Validator -->
+         <groupId>commons-validator</groupId>
+         <artifactId>commons-validator</artifactId>
+         <version>${commons.validator.version}</version>
+      </dependency>
+      <dependency>
+         <!-- Struts Core -->
+         <groupId>org.apache.struts</groupId>
+         <artifactId>struts-core</artifactId>
+         <version>${struts.version}</version>
+      </dependency>
+      <dependency>
+         <!-- Struts Tiles -->
+         <groupId>org.apache.struts</groupId>
+         <artifactId>struts-tiles</artifactId>
+         <version>${struts.version}</version>
       </dependency>
       <!-- ============================================== -->
       <!-- ======= TEST ENVIRONMENT DEPENDENCIES ======== -->
