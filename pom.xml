@@ -20,7 +20,7 @@
 
    <groupId>com.wandrell.velocity</groupId>
    <artifactId>maven-site-fixer</artifactId>
-   <version>0.6.3-SNAPSHOT</version>
+   <version>0.6.3</version>
    <packaging>jar</packaging>
 
    <name>Maven Site Fixer</name>
