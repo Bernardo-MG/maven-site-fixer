@@ -26,8 +26,6 @@ package com.wandrell.velocity.tool;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Collection;
-
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -238,35 +236,6 @@ public final class HtmlUtils {
         elements = root.select(selector);
         for (final Element element : elements) {
             element.wrap(wrapper);
-        }
-    }
-
-    /**
-     * Finds the first element matching a CSS selector and wraps it with the
-     * received wrapper element.
-     * 
-     * @param root
-     *            root element for the selection
-     * @param selector
-     *            CSS selector for the element to wrap
-     * @param wrapper
-     *            HTML to use for wrapping the selected elements
-     */
-    public final void wrapFirst(final Element root, final String selector,
-            final String wrapper) {
-        final Collection<Element> elements; // Selected elements
-
-        // TODO: I think this can be done with the wrapper method and CSS
-        // selectors
-
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(wrapper, "Received a null pointer as HTML wrap");
-
-        // Selects and iterates over the elements
-        elements = root.select(selector);
-        if (!elements.isEmpty()) {
-            elements.iterator().next().wrap(wrapper);
         }
     }
 

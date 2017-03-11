@@ -613,8 +613,8 @@ public class SiteUtils {
      * key is a CSS selector, and the value is the replacement for the selected
      * element.
      * 
-     * @param html
-     *            HTML content to modify
+     * @param root
+     *            root element for the content to modify
      * @param replacements
      *            {@code Map} where the key is a CSS selector and the value the
      *            element's replacement

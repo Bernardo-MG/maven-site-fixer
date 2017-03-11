@@ -145,5 +145,22 @@
             Now all the HTML edition methods expect parsed HTML.
          </action>
       </release>
+      <release version="0.6.2" date="2017-03-08" description="Removed unneeded code">
+         <action dev="bmg" type="update">
+            Updated base POM.
+         </action>
+         <action dev="bmg" type="update">
+            Added dependency vulnerabilities report.
+         </action>
+         <action dev="bmg" type="fix">
+            Fixed vulnerable dependencies.
+         </action>
+         <action dev="bmg" type="remove">
+            Removed menu utils.
+         </action>
+         <action dev="bmg" type="remove">
+            Removed redundant wrapFirst method.
+         </action>
+      </release>
    </body>
 </document>

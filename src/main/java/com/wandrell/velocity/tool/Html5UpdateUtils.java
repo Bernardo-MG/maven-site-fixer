@@ -105,8 +105,6 @@ public class Html5UpdateUtils {
         checkNotNull(selector, "Received a null pointer as selector");
         checkNotNull(attr, "Received a null pointer as attribute");
 
-        // TODO: The selector can be generated from the attribute
-
         // Selects and iterates over the elements
         elements = root.select(selector);
         for (final Element selected : elements) {
