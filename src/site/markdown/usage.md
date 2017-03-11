@@ -46,7 +46,6 @@ The [Docs Maven Skin][docs-skin] makes use of these tools, and can be a good exa
 
 [html5-update-javadoc]: ./apidocs/com/wandrell/velocity/tool/HTML5UpdateUtils.html
 [html-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/HTMLUtils.html
-[menu-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/MenuUtils.html
 [site-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/SiteUtils.html
 [skin-config-javadoc]: ./apidocs/com/wandrell/velocity/tool/SkinConfigUtils.html
 

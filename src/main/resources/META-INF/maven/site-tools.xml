@@ -5,7 +5,7 @@
    <toolbox scope="request">
       <tool class="com.wandrell.velocity.tool.Html5UpdateUtils" />
       <tool class="com.wandrell.velocity.tool.HtmlUtils" />
-      <tool class="com.wandrell.velocity.tool.MenuUtils" />
+      <tool class="com.wandrell.velocity.tool.SiteUtils" />
       <tool class="com.wandrell.velocity.tool.SkinConfigUtils" />
    </toolbox>
 </tools>
