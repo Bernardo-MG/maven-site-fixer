@@ -167,5 +167,13 @@
             Fixed tools XML configuration.
          </action>
       </release>
+      <release version="0.6.4" date="2017-04-22" description="Updated POM and scripts">
+         <action dev="bmg" type="update">
+            Updated parent POM.
+         </action>
+         <action dev="bmg" type="update">
+            Updated CI scripts.
+         </action>
+      </release>
    </body>
 </document>
