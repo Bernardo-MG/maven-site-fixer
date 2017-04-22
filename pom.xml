@@ -115,7 +115,7 @@
       <profile>
          <!-- Release site deployment profile -->
          <!-- Sets the site repository to point to the releases repo -->
-         <id>deploy-release</id>
+         <id>deployment-release</id>
          <activation>
             <!-- Active by default so the repository appears in the reports -->
             <activeByDefault>true</activeByDefault>
@@ -131,7 +131,7 @@
       <profile>
          <!-- Development site deployment profile -->
          <!-- Sets the site repository to point to the development repo -->
-         <id>deploy-development</id>
+         <id>deployment-development</id>
          <distributionManagement>
             <site>
                <id>site-development</id>
