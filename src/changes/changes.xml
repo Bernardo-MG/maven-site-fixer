@@ -167,5 +167,16 @@
             Fixed tools XML configuration.
          </action>
       </release>
+      <release version="0.7.0" date="2017-04-22" description="Removed config tool">
+         <action dev="bmg" type="remove">
+            Moved config tool to its own project.
+         </action>
+         <action dev="bmg" type="update">
+            Updated parent POM.
+         </action>
+         <action dev="bmg" type="update">
+            Updated CI scripts.
+         </action>
+      </release>
    </body>
 </document>
