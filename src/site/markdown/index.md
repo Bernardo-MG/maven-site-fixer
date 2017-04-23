@@ -1,24 +1,26 @@
-#A fix for Maven Sites
+# A fix for Maven Sites
 
-Maven makes use of [Apache Velocity][velocity] to create web pages. Sadly, the result of this is an outdated XHTML page, which also is hard to customize.
+Update the outdated XHTML pages created by the [Maven site plugin][maven_site] to HTML5 with the use of custom [Velocity][velocity] tools classes.
 
-This became apparent when creating the [Docs Maven Skin][docs-skin], which required a set of helping tools, initially adapted from the [Reflow Maven Skin][reflow], to both create the desired look and a valid HTML5 site.
+## Projects making use of these tools
 
-All the tools created to solve these problems are included in this project, but these are not meant to be currently generic tools, but are prepared to be used on the Docs Maven Skin.
+The tools were developed to be used by the [Docs Maven Skin][docs-skin].
 
----
+## Usage
 
-## Maven Skin
+Import the tools into a Maven skin project, and call them inside a Velocity template:
 
-The tools being offered by this project are not to be used by themselves, instead they are to be integrated in a Maven Skin, such as the already mentioned [Docs Maven Skin][docs-skin], and used in the site.vm file.
+```
+#set ( $bodyContent = $html5UpdateTool.updateCodeSections( $bodyContent ) )
+```
 
 ## The tools
 
-Inside the [tools page][tools] all the utilities contained in the project are detailed.
+They are detailed in the [tools page][tools].
 
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin
-[reflow]: http://andriusvelykis.github.io/reflow-maven-skin/
+[maven_site]: https://maven.apache.org/plugins/maven-site-plugin/
 [velocity]: http://velocity.apache.org/
 
 [tools]: ./tools.html

@@ -1,8 +1,6 @@
 # Maven Site Fixer
 
-A small group of tools for the Velocity templating engine, meant to be used for updating Maven Sites to HTML5, and fixing some structure errors and limitations.
-
-These are caused by it depending on the old-fashioned Doxia site creator, which creates outdated XHTML. The classes offered by this project will take such code and patch it into something more fit to the current web standards.
+Update the outdated XHTML pages created by the [Maven site plugin][maven_site] to HTML5 with the use of custom [Velocity][velocity] tools.
 
 To check these tools on action take a look at the [Docs Maven Skin][docs-skin], a modern and reactive Maven Site skin.
 
@@ -17,11 +15,12 @@ To check these tools on action take a look at the [Docs Maven Skin][docs-skin], 
 
 ## Features
 
-The project is composed by a small set of tools each offering solutions to a problem or limitation posed by Doxia:
+The project is composed by a small set of tools which allow editing the content of a Maven site page
 
 - Upgrading XHTML to HTML5.
-- Various corrections, such as fixing report headings.
-- Easy access to custom Maven Site configuration info.
+- Manual edition of HTML.
+- Reports corrections.
+- Various corrections, such as fixing anchor links.
 
 ## Documentation
 
@@ -51,10 +50,10 @@ The code comes from adapting the tools at the [Reflow Maven Skin][reflow-skin]. 
 
 The application is coded in Java, using Maven to manage the project.
 
-The tools are meant to be using through Velocity, by making use of Maven Site autofinder feature. Just include the project as a dependency on any Maven Skin, and then the tools can be used as tags such as this:
+The tools are meant to be using through Velocity, by making use of Maven Site autofinder feature. Just include the project as a dependency on any Maven Skin, and then the tools can be used like this:
 
 ```
-#set ( $bodyContent = $html5UpdateTool.updateCodeSections( $bodyContent ) )
+#set( $empty = $html5UpdateTool.updateTableHeads( $bodyContentParsed ) )
 ```
 
 More information can be found in the documentation pages.
