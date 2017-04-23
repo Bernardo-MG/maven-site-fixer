@@ -6,14 +6,6 @@ Update the outdated XHTML pages created by the [Maven site plugin][maven_site] t
 
 The tools were developed to be used by the [Docs Maven Skin][docs-skin].
 
-## Usage
-
-Import the tools into a Maven skin project, and call them inside a Velocity template:
-
-```
-#set ( $bodyContent = $html5UpdateTool.updateCodeSections( $bodyContent ) )
-```
-
 ## The tools
 
 They are detailed in the [tools page][tools].
