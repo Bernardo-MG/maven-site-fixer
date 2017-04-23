@@ -201,12 +201,9 @@
       <commons.digester.version>2.1</commons.digester.version>
       <commons.logging.version>1.2</commons.logging.version>
       <commons.validator.version>1.6</commons.validator.version>
-      <doxia.decoration.version>1.7.4</doxia.decoration.version>
       <guava.version>20.0</guava.version>
       <jsoup.version>1.10.2</jsoup.version>
-      <maven.project.version>2.2.1</maven.project.version>
       <mockito.version>1.10.19</mockito.version>
-      <plexus.version>3.0.24</plexus.version>
       <testng.version>6.10</testng.version>
       <velocity.tools.version>2.0</velocity.tools.version>
       <!-- ============================================== -->
@@ -223,12 +220,6 @@
 
    <dependencies>
       <dependency>
-         <!-- Doxia Decoration Model -->
-         <groupId>org.apache.maven.doxia</groupId>
-         <artifactId>doxia-decoration-model</artifactId>
-         <version>${doxia.decoration.version}</version>
-      </dependency>
-      <dependency>
          <!-- Guava -->
          <groupId>com.google.guava</groupId>
          <artifactId>guava</artifactId>
@@ -239,18 +230,6 @@
          <groupId>org.jsoup</groupId>
          <artifactId>jsoup</artifactId>
          <version>${jsoup.version}</version>
-      </dependency>
-      <dependency>
-         <!-- Plexus Utils -->
-         <groupId>org.codehaus.plexus</groupId>
-         <artifactId>plexus-utils</artifactId>
-         <version>${plexus.version}</version>
-      </dependency>
-      <dependency>
-         <!-- Maven Project -->
-         <groupId>org.apache.maven</groupId>
-         <artifactId>maven-project</artifactId>
-         <version>${maven.project.version}</version>
       </dependency>
       <dependency>
          <!-- Velocity Tools -->
