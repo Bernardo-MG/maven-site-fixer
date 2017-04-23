@@ -388,6 +388,7 @@
             <configuration>
                <links>
                   <link>https://velocity.apache.org/tools/devel/apidocs/</link>
+                  <link>https://jsoup.org/apidocs/</link>
                </links>
             </configuration>
          </plugin>
