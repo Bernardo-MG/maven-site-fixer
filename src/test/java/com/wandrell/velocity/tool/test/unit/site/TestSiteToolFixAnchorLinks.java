@@ -22,53 +22,93 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5update;
+package com.wandrell.velocity.tool.test.unit.site;
 
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.SiteTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link Html5UpdateUtils} testing the {@code updateTableHeads}
- * method.
+ * Unit tests for {@link SiteTool}, testing the {@code fixAnchorLinks} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see Html5UpdateUtils
+ * @see SiteTool
  */
-public final class TestHtml5UpdateUtilsUpdateTableHeads
-        extends AbstractUtilsTest {
+public final class TestSiteToolFixAnchorLinks extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final Html5UpdateUtils util = new Html5UpdateUtils();
+    private final SiteTool util = new SiteTool();
 
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsUpdateTableHeads() {
+    public TestSiteToolFixAnchorLinks() {
         super();
     }
 
     /**
-     * Tests that a table's head is updated.
+     * Tests that an empty link is left untouched.
      */
     @Test
-    public final void testFullTable_UpdatesHeader() {
+    public final void testEmptyLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
-        html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-        htmlExpected = "<table border=\"0\" class=\"bodyTable testClass\">\n <thead>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        html = "<a href=\"\">A link</a>";
+        htmlExpected = html;
+
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that an external link is left untouched.
+     */
+    @Test
+    public final void testExternalLink_Untouched() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<a href=\"www.somewhere.com\">A link</a>";
+        htmlExpected = html;
+
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that an internal link is correctly formatted.
+     */
+    @Test
+    public final void testInternalLink_Formatted() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<a href=\"#An_Internal. Link\">A link</a>";
+        htmlExpected = "<a href=\"#aninternallink\">A link</a>";
+
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no links is left untouched.
+     */
+    @Test
+    public final void testNoAnchors_Untouched() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<p>Some text</p>";
+        htmlExpected = html;
 
         runTest(html, htmlExpected);
     }
 
     @Override
     protected final void callTestedMethod(final Element element) {
-        util.updateTableHeads(element);
+        util.fixAnchorLinks(element);
     }
 
 }

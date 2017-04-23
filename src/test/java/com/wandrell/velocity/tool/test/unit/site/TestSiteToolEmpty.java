@@ -22,152 +22,142 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html;
+package com.wandrell.velocity.tool.test.unit.site;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.SiteTool;
 
 /**
- * Unit tests for {@link HtmlUtils}, testing the methods using empty strings.
+ * Unit tests for {@link SiteTool}, testing the methods using empty strings.
  * <p>
  * The meaning behind this test is verifying that the initial queries done by
  * the utilities class doesn't break with empty inputs.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see HtmlUtils
+ * @see SiteTool
  */
-public final class TestHtmlUtilsEmpty {
+public final class TestSiteToolEmpty {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HtmlUtils util = new HtmlUtils();
+    private final SiteTool util = new SiteTool();
 
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsEmpty() {
+    public TestSiteToolEmpty() {
         super();
     }
 
     /**
-     * Tests that an empty string causes no problem to the
-     * {@code removeAttribute} method.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testRemoveAttribute_EmptyString() {
+    public final void testFixAnchorLinks_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
+        htmlExpected = "";
 
         element = Jsoup.parse(html).body();
-        util.removeAttribute(element, "a.externalLink", "externalLink");
-
-        htmlExpected = "";
+        util.fixAnchorLinks(element);
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that an empty string causes no problem to the {@code removeClass}
-     * method.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testRemoveClass_EmptyString() {
+    public final void testFixHeadingIds_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
+        htmlExpected = "";
 
         element = Jsoup.parse(html).body();
-        util.removeClass(element, "a.externalLink", "externalLink");
-
-        htmlExpected = "";
+        util.fixHeadingIds(element);
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that an empty string causes no problem to the {@code retag} method.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testRetag_EmptyString() {
+    public final void testFixReport_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
+        htmlExpected = "";
 
         element = Jsoup.parse(html).body();
-        util.retag(element, "a.externalLink", "externalLink");
-
-        htmlExpected = "";
+        util.fixReport(element, "");
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that an empty string causes no problem to the
-     * {@code swapTagWithParent} method.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testSwapTagWithParent_EmptyString() {
+    public final void testTransformIcons_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
+        htmlExpected = "";
 
         element = Jsoup.parse(html).body();
-        util.swapTagWithParent(element, "code > pre");
-
-        htmlExpected = "";
+        util.transformIcons(element);
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that an empty string causes no problem to the {@code unwrap}
-     * method.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testUnwrap_EmptyString() {
+    public final void testTransformImagesToFigures_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
+        htmlExpected = "";
 
         element = Jsoup.parse(html).body();
-        util.unwrap(element, "a:not([href])");
-
-        htmlExpected = "";
+        util.transformImagesToFigures(element);
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that an empty string causes no problem to the {@code wrap} method.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testWrap_EmptyString() {
+    public final void testTransformTables_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "";
+        htmlExpected = "";
 
         element = Jsoup.parse(html).body();
-        util.wrap(element, "h1", "<header></header>");
-
-        htmlExpected = "";
+        util.transformTables(element);
 
         Assert.assertEquals(element.html(), htmlExpected);
     }

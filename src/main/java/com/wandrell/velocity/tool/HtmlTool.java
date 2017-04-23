@@ -45,12 +45,12 @@ import org.jsoup.nodes.Element;
  * @author Bernardo Mart&iacute;nez Garrido
  */
 @DefaultKey("htmlTool")
-public final class HtmlUtils {
+public final class HtmlTool {
 
     /**
      * Constructs an instance of the {@code HTMLUtils}.
      */
-    public HtmlUtils() {
+    public HtmlTool() {
         super();
     }
 

@@ -27,66 +27,70 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HtmlUtils;
-import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
+import com.wandrell.velocity.tool.HtmlTool;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
- * Unit tests for {@link HtmlUtils} testing the {@code swapTagWithParent}
- * method.
+ * Unit tests for {@link HtmlTool} testing the {@code removeAttribute} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see HtmlUtils
+ * @see HtmlTool
  */
-public class TestHtmlUtilsSwapTagWithParent extends AbstractUtilsSelectorTest {
+public class TestHtmlToolRemoveAttribute
+        extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HtmlUtils util = new HtmlUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsSwapTagWithParent() {
+    public TestHtmlToolRemoveAttribute() {
         super();
     }
 
     /**
-     * Tests that swapping a not existing element does nothing.
+     * Tests that removing not existing attributes does nothing.
      */
     @Test
-    public final void testNotExistingNothing() {
+    public final void testNotExistingAttribute_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final String attribute;    // Removed attribute
 
-        html = "<code><pre>Some code</pre></code>";
-        htmlExpected = html;
-        selector = "code > abc";
+        html = "<table class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        selector = "table[border]";
+        attribute = "border";
 
-        runTest(html, htmlExpected, selector);
+        runTest(html, htmlExpected, selector, attribute);
     }
 
     /**
-     * Tests that swapping elements works as expected.
+     * Tests that attributes are removed.
      */
     @Test
-    public final void testSwapCodePre() {
+    public final void testRemovesAttribute() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final String attribute;    // Removed attribute
 
-        html = "<code><pre>Some code</pre></code>";
-        htmlExpected = "<pre><code>Some code</code></pre>";
-        selector = "code > pre";
+        html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        selector = "table[border]";
+        attribute = "border";
 
-        runTest(html, htmlExpected, selector);
+        runTest(html, htmlExpected, selector, attribute);
     }
 
     @Override
     protected final void callTestedMethod(final Element element,
-            final String selector) {
-        util.swapTagWithParent(element, selector);
+            final String selector, final String argument) {
+        util.removeAttribute(element, selector, argument);
     }
 
 }

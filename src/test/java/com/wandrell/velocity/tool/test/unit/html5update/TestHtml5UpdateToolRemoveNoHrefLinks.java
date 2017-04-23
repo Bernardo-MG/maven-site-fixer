@@ -22,97 +22,82 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.site;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.Html5UpdateTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the
- * {@code transformImagesToFigures} method.
+ * Unit tests for {@link Html5UpdateTool} testing the {@code removeNoHrefLinks}
+ * method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see SiteUtils
+ * @see Html5UpdateTool
  */
-public final class TestSiteUtilsTransformImagesToFigures
+public final class TestHtml5UpdateToolRemoveNoHrefLinks
         extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final Html5UpdateTool util = new Html5UpdateTool();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsTransformImagesToFigures() {
+    public TestHtml5UpdateToolRemoveNoHrefLinks() {
         super();
     }
 
     /**
-     * Tests that when transforming images to figures works correctly when an
-     * {@code alt} attribute is not present.
+     * Tests that HTML with no links is not edited.
      */
     @Test
-    public final void testCaption_Transforms() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<section><p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p></section>";
-        htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that when transforming images to figures works correctly when an
-     * {@code alt} attribute is present.
-     */
-    @Test
-    public final void testNoCaption_Transforms() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<section><img src=\"imgs/diagram.png\"></section>";
-        htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no images is left untouched
-     */
-    @Test
-    public final void testNoImages_Untouched() {
+    public final void testNoAnchors_Nothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
         html = "<p>Some text</p>";
-        htmlExpected = "<p>Some text</p>";
+        htmlExpected = html;
 
         runTest(html, htmlExpected);
     }
 
     /**
-     * Tests that images out of a content element are ignored.
+     * Tests that links without the {@code href} attribute are removed.
      */
     @Test
-    public final void testOutOfContent_Untouched() {
+    public final void testNoHref_Empty_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
-        html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><footer><img src=\"imgs/footer.png\" alt=\"Footer image\"></footer></body>";
-        htmlExpected = "<header>\n <img src=\"imgs/header.png\" alt=\"Header image\">\n</header>\n<section></section>\n<footer>\n <img src=\"imgs/footer.png\" alt=\"Footer image\">\n</footer>";
+        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that links without the {@code href} attribute are removed, and
+     * their contents moved to the parent.
+     */
+    @Test
+    public final void testNoHref_WithText_TextKept() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
+        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
         runTest(html, htmlExpected);
     }
 
     @Override
     protected final void callTestedMethod(final Element element) {
-        util.transformImagesToFigures(element);
+        util.removeNoHrefLinks(element);
     }
 
 }

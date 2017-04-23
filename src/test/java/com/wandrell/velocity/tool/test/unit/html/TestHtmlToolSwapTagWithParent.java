@@ -27,73 +27,58 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.HtmlTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
- * Unit tests for {@link HtmlUtils} testing the {@code unwrap} method.
+ * Unit tests for {@link HtmlTool} testing the {@code swapTagWithParent}
+ * method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see HtmlUtils
+ * @see HtmlTool
  */
-public final class TestHtmlUtilsUnwrap extends AbstractUtilsSelectorTest {
+public class TestHtmlToolSwapTagWithParent extends AbstractUtilsSelectorTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HtmlUtils util = new HtmlUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsUnwrap() {
+    public TestHtmlToolSwapTagWithParent() {
         super();
     }
 
     /**
-     * Tests that unwrapping an empty element removes it.
+     * Tests that swapping a not existing element does nothing.
      */
     @Test
-    public final void testEmpty_Removed() {
+    public final void testNotExistingNothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
 
-        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-        selector = "a:not([href])";
+        html = "<code><pre>Some code</pre></code>";
+        htmlExpected = html;
+        selector = "code > abc";
 
         runTest(html, htmlExpected, selector);
     }
 
     /**
-     * Tests that unwrapping a not existing element does nothing.
+     * Tests that swapping elements works as expected.
      */
     @Test
-    public final void testNotExisting_Nothing() {
+    public final void testSwapCodePre() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
 
-        html = "<p>Some text</p>";
-        htmlExpected = "<p>Some text</p>";
-        selector = "a:not([href])";
-
-        runTest(html, htmlExpected, selector);
-    }
-
-    /**
-     * Tests that unwrapping an element with text keeps this text.
-     */
-    @Test
-    public final void testWithText_TextKept() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-
-        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-        selector = "a:not([href])";
+        html = "<code><pre>Some code</pre></code>";
+        htmlExpected = "<pre><code>Some code</code></pre>";
+        selector = "code > pre";
 
         runTest(html, htmlExpected, selector);
     }
@@ -101,7 +86,7 @@ public final class TestHtmlUtilsUnwrap extends AbstractUtilsSelectorTest {
     @Override
     protected final void callTestedMethod(final Element element,
             final String selector) {
-        util.unwrap(element, selector);
+        util.swapTagWithParent(element, selector);
     }
 
 }

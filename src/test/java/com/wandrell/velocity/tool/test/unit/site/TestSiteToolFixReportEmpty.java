@@ -29,29 +29,29 @@ import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.SiteTool;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code fixReport} method using
+ * Unit tests for {@link SiteTool}, testing the {@code fixReport} method using
  * empty strings.
  * <p>
  * The meaning behind this test is verifying that the initial queries done by
  * the utilities class doesn't break with empty inputs.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see SiteUtils
+ * @see SiteTool
  */
-public final class TestSiteUtilsFixReportEmpty {
+public final class TestSiteToolFixReportEmpty {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final SiteTool util = new SiteTool();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsFixReportEmpty() {
+    public TestSiteToolFixReportEmpty() {
         super();
     }
 

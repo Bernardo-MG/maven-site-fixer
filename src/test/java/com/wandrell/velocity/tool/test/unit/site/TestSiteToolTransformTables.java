@@ -27,60 +27,61 @@ package com.wandrell.velocity.tool.test.unit.site;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.SiteTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code transformIcons} method.
+ * Unit tests for {@link SiteTool}, testing the
+ * {@code transformImagesToFigures} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see SiteUtils
+ * @see SiteTool
  */
-public final class TestSiteUtilsTransformIcons extends AbstractUtilsTest {
+public final class TestSiteToolTransformTables extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final SiteTool util = new SiteTool();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsTransformIcons() {
+    public TestSiteToolTransformTables() {
         super();
     }
 
     /**
-     * Tests that when finding an expected icon it is transformed correctly.
+     * Tests that HTML with no tables is left untouched
      */
     @Test
-    public final void testIcon_Transforms() {
+    public final void testNoTable_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
-        html = "<img src=\"images/add.gif\" alt=\"An image\">";
-        htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
+        html = "<p>Some text</p>";
+        htmlExpected = "<p>Some text</p>";
 
         runTest(html, htmlExpected);
     }
 
     /**
-     * Tests that HTML with no icons is left untouched
+     * Tests that tables are transformed correctly.
      */
     @Test
-    public final void testNoIcons_Untouched() {
+    public final void testTable_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
-        html = "<p>Some text</p>";
-        htmlExpected = html;
+        html = "<table class=\"bodyTable\"><thead><tr><th>Header 1</th><th>Header 2</th></tr></thead><tbody><tr><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        htmlExpected = "<table class=\"bodyTable table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         runTest(html, htmlExpected);
     }
 
     @Override
     protected final void callTestedMethod(final Element element) {
-        util.transformIcons(element);
+        util.transformTables(element);
     }
 
 }

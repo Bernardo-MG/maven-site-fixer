@@ -22,82 +22,86 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5update;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
+import com.wandrell.velocity.tool.HtmlTool;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
- * Unit tests for {@link Html5UpdateUtils} testing the {@code removeNoHrefLinks}
- * method.
+ * Unit tests for {@link HtmlTool} testing the {@code unwrap} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see Html5UpdateUtils
+ * @see HtmlTool
  */
-public final class TestHtml5UpdateUtilsRemoveNoHrefLinks
-        extends AbstractUtilsTest {
+public final class TestHtmlToolUnwrap extends AbstractUtilsSelectorTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final Html5UpdateUtils util = new Html5UpdateUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsRemoveNoHrefLinks() {
+    public TestHtmlToolUnwrap() {
         super();
     }
 
     /**
-     * Tests that HTML with no links is not edited.
+     * Tests that unwrapping an empty element removes it.
      */
     @Test
-    public final void testNoAnchors_Nothing() {
+    public final void testEmpty_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
-
-        html = "<p>Some text</p>";
-        htmlExpected = html;
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that links without the {@code href} attribute are removed.
-     */
-    @Test
-    public final void testNoHref_Empty_Removed() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        selector = "a:not([href])";
 
-        runTest(html, htmlExpected);
+        runTest(html, htmlExpected, selector);
     }
 
     /**
-     * Tests that links without the {@code href} attribute are removed, and
-     * their contents moved to the parent.
+     * Tests that unwrapping a not existing element does nothing.
      */
     @Test
-    public final void testNoHref_WithText_TextKept() {
+    public final void testNotExisting_Nothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+
+        html = "<p>Some text</p>";
+        htmlExpected = "<p>Some text</p>";
+        selector = "a:not([href])";
+
+        runTest(html, htmlExpected, selector);
+    }
+
+    /**
+     * Tests that unwrapping an element with text keeps this text.
+     */
+    @Test
+    public final void testWithText_TextKept() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
 
         html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        selector = "a:not([href])";
 
-        runTest(html, htmlExpected);
+        runTest(html, htmlExpected, selector);
     }
 
     @Override
-    protected final void callTestedMethod(final Element element) {
-        util.removeNoHrefLinks(element);
+    protected final void callTestedMethod(final Element element,
+            final String selector) {
+        util.unwrap(element, selector);
     }
 
 }

@@ -27,26 +27,26 @@ package com.wandrell.velocity.tool.test.unit.site;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.SiteTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code fixHeadingIds} method.
+ * Unit tests for {@link SiteTool}, testing the {@code fixHeadingIds} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see SiteUtils
+ * @see SiteTool
  */
-public final class TestSiteUtilsFixHeadingIds extends AbstractUtilsTest {
+public final class TestSiteToolFixHeadingIds extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final SiteTool util = new SiteTool();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsFixHeadingIds() {
+    public TestSiteToolFixHeadingIds() {
         super();
     }
 

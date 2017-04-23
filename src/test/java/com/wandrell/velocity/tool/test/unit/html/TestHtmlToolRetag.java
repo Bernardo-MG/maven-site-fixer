@@ -27,27 +27,27 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.HtmlTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
- * Unit tests for {@link HtmlUtils} testing the {@code retag} method.
+ * Unit tests for {@link HtmlTool} testing the {@code retag} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
- * @see HtmlUtils
+ * @see HtmlTool
  */
-public final class TestHtmlUtilsRetag
+public final class TestHtmlToolRetag
         extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HtmlUtils util = new HtmlUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsRetag() {
+    public TestHtmlToolRetag() {
         super();
     }
 

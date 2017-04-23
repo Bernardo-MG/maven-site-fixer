@@ -43,23 +43,23 @@ import org.jsoup.parser.Tag;
  * <p>
  * The <a href="https://github.com/Bernardo-MG/docs-maven-skin">Docs Maven
  * Skin</a> and its requirements have dictated the development of this class.
- * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlUtils
- * HtmlUtils}.
+ * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlTool
+ * HtmlTool}.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
  */
 @DefaultKey("html5UpdateTool")
-public class Html5UpdateUtils {
+public class Html5UpdateTool {
 
     /**
      * HTML utils class to allow reusing its methods through composition.
      */
-    private final HtmlUtils htmlUtils = new HtmlUtils();
+    private final HtmlTool htmlUtils = new HtmlTool();
 
     /**
      * Constructs an instance of the {@code HTML5UpdateUtils}.
      */
-    public Html5UpdateUtils() {
+    public Html5UpdateTool() {
         super();
     }
 
@@ -84,7 +84,7 @@ public class Html5UpdateUtils {
 
         // Links missing the href attribute
         // Unwrapped to avoid losing texts
-        getHtmlUtils().unwrap(root, "a:not([href])");
+        getHtmlTool().unwrap(root, "a:not([href])");
     }
 
     /**
@@ -152,7 +152,7 @@ public class Html5UpdateUtils {
      * 
      * @return the HTML utils class
      */
-    private final HtmlUtils getHtmlUtils() {
+    private final HtmlTool getHtmlTool() {
         return htmlUtils;
     }
 

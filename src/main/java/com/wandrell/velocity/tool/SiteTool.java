@@ -48,13 +48,13 @@ import org.jsoup.parser.Tag;
  * <p>
  * The <a href="https://github.com/Bernardo-MG/docs-maven-skin">Docs Maven
  * Skin</a> and its requirements have dictated the development of this class.
- * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlUtils
- * HtmlUtils}.
+ * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlTool
+ * HtmlTool}.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
  */
 @DefaultKey("siteTool")
-public class SiteUtils {
+public class SiteTool {
 
     /**
      * Regular expresion indicating invalid values for ids and internal links.
@@ -67,7 +67,7 @@ public class SiteUtils {
     /**
      * Constructs an instance of the {@code SiteUtil}.
      */
-    public SiteUtils() {
+    public SiteTool() {
         super();
     }
 
