@@ -31,13 +31,13 @@ import com.wandrell.velocity.tool.HtmlTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
- * Unit tests for {@link HtmlTool} testing the {@code swapTagWithParent}
- * method.
+ * Unit tests for {@link HtmlTool} testing the {@code swapTagWithParent} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
-public class TestHtmlToolSwapTagWithParent extends AbstractUtilsSelectorTest {
+public final class TestHtmlToolSwapTagWithParent
+        extends AbstractUtilsSelectorTest {
 
     /**
      * Instance of the utils class being tested.

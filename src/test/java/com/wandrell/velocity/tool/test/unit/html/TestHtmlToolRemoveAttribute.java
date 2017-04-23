@@ -36,7 +36,7 @@ import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentT
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
-public class TestHtmlToolRemoveAttribute
+public final class TestHtmlToolRemoveAttribute
         extends AbstractUtilsSelectorArgumentTest {
 
     /**
