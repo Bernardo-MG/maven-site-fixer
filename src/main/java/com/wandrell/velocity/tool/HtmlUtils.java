@@ -42,7 +42,7 @@ import org.jsoup.nodes.Element;
  * To ease parsing HTML the {@link parse} method can be used. It receives HTML
  * code and returns a jsoup element.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 @DefaultKey("htmlTool")
 public final class HtmlUtils {

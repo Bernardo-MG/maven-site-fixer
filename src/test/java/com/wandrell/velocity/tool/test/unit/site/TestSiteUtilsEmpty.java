@@ -37,7 +37,7 @@ import com.wandrell.velocity.tool.SiteUtils;
  * The meaning behind this test is verifying that the initial queries done by
  * the utilities class doesn't break with empty inputs.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteUtils
  */
 public final class TestSiteUtilsEmpty {

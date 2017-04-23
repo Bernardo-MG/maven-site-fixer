@@ -34,7 +34,7 @@ import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
  * Unit tests for {@link Html5UpdateUtils} testing the {@code updateTableHeads}
  * method.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  * @see Html5UpdateUtils
  */
 public final class TestHtml5UpdateUtilsUpdateTableHeads

@@ -34,7 +34,7 @@ import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
  * Unit tests for {@link HtmlUtils} testing the {@code swapTagWithParent}
  * method.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlUtils
  */
 public class TestHtmlUtilsSwapTagWithParent extends AbstractUtilsSelectorTest {

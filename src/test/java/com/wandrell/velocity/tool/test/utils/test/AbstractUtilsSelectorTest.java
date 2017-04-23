@@ -36,7 +36,7 @@ import org.testng.Assert;
  * This variant of the base test is meant for those tests which require a CSS
  * selector.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 public abstract class AbstractUtilsSelectorTest {
 

@@ -46,7 +46,7 @@ import org.jsoup.parser.Tag;
  * For more generic methods use the {@link com.wandrell.velocity.tool.HtmlUtils
  * HtmlUtils}.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 @DefaultKey("html5UpdateTool")
 public class Html5UpdateUtils {

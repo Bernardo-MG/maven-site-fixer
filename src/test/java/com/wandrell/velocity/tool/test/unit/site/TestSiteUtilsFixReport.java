@@ -34,7 +34,7 @@ import com.wandrell.velocity.tool.SiteUtils;
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code fixReport} method.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteUtils
  */
 public final class TestSiteUtilsFixReport {

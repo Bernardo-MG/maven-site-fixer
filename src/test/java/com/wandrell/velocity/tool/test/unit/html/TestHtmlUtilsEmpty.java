@@ -37,7 +37,7 @@ import com.wandrell.velocity.tool.HtmlUtils;
  * The meaning behind this test is verifying that the initial queries done by
  * the utilities class doesn't break with empty inputs.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlUtils
  */
 public final class TestHtmlUtilsEmpty {

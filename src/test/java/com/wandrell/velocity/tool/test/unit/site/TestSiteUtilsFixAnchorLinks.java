@@ -33,7 +33,7 @@ import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 /**
  * Unit tests for {@link SiteUtils}, testing the {@code fixAnchorLinks} method.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteUtils
  */
 public final class TestSiteUtilsFixAnchorLinks extends AbstractUtilsTest {

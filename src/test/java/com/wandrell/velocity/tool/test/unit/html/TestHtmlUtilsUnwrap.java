@@ -33,7 +33,7 @@ import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 /**
  * Unit tests for {@link HtmlUtils} testing the {@code unwrap} method.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlUtils
  */
 public final class TestHtmlUtilsUnwrap extends AbstractUtilsSelectorTest {
