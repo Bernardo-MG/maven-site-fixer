@@ -381,6 +381,17 @@
             </configuration>
          </plugin>
          <plugin>
+            <!-- Javadoc -->
+            <!-- Generates the Javadocs. -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+               <links>
+                  <link>https://velocity.apache.org/tools/devel/apidocs/</link>
+               </links>
+            </configuration>
+         </plugin>
+         <plugin>
             <!-- PMD -->
             <!-- Checks that the code complies with a series of code quality 
                rules -->
