@@ -27,27 +27,27 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.HtmlTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
- * Unit tests for {@link HtmlUtils} testing the {@code removeAttribute} method.
+ * Unit tests for {@link HtmlTool} testing the {@code removeAttribute} method.
  * 
- * @author Bernardo Martínez Garrido
- * @see HtmlUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see HtmlTool
  */
-public class TestHtmlUtilsRemoveAttribute
+public final class TestHtmlToolRemoveAttribute
         extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HtmlUtils util = new HtmlUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsRemoveAttribute() {
+    public TestHtmlToolRemoveAttribute() {
         super();
     }
 

@@ -11,7 +11,7 @@
    <parent>
       <groupId>com.wandrell.maven</groupId>
       <artifactId>base-pom</artifactId>
-      <version>1.1.4</version>
+      <version>1.1.5</version>
    </parent>
 
    <!-- ********************************************** -->
@@ -20,7 +20,7 @@
 
    <groupId>com.wandrell.velocity</groupId>
    <artifactId>maven-site-fixer</artifactId>
-   <version>0.7.0</version>
+   <version>1.0.0-SNAPSHOT</version>
    <packaging>jar</packaging>
 
    <name>Maven Site Fixer</name>
@@ -37,7 +37,7 @@
    </licenses>
 
    <!-- ********************************************** -->
-   <!-- ********* INFRASTRUCTURE AND SERVICES ******** -->
+   <!-- ************ RESOURCES AND SERVICES ********** -->
    <!-- ********************************************** -->
 
    <scm>
@@ -201,15 +201,15 @@
       <commons.digester.version>2.1</commons.digester.version>
       <commons.logging.version>1.2</commons.logging.version>
       <commons.validator.version>1.6</commons.validator.version>
-      <guava.version>20.0</guava.version>
-      <jsoup.version>1.10.2</jsoup.version>
+      <guava.version>22.0</guava.version>
+      <jsoup.version>1.10.3</jsoup.version>
       <mockito.version>1.10.19</mockito.version>
-      <testng.version>6.10</testng.version>
+      <testng.version>6.11</testng.version>
       <velocity.tools.version>2.0</velocity.tools.version>
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
-      <site.skin.version>0.6.0</site.skin.version>
+      <site.skin.version>0.6.1</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer</mavenURL>
    </properties>
@@ -378,6 +378,18 @@
             <configuration>
                <!-- The customized rules file -->
                <configLocation>${project.basedir}/src/config/checkstyle/checkstyle-rules.xml</configLocation>
+            </configuration>
+         </plugin>
+         <plugin>
+            <!-- Javadoc -->
+            <!-- Generates the Javadocs. -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+               <links>
+                  <link>https://velocity.apache.org/tools/devel/apidocs/</link>
+                  <link>https://jsoup.org/apidocs/</link>
+               </links>
             </configuration>
          </plugin>
          <plugin>

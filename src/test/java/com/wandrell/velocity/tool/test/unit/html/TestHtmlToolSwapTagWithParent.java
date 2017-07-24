@@ -22,53 +22,71 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5update;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.Html5UpdateUtils;
-import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
+import com.wandrell.velocity.tool.HtmlTool;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
- * Unit tests for {@link Html5UpdateUtils} testing the {@code updateTableHeads}
- * method.
+ * Unit tests for {@link HtmlTool} testing the {@code swapTagWithParent} method.
  * 
- * @author Bernardo Martínez Garrido
- * @see Html5UpdateUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see HtmlTool
  */
-public final class TestHtml5UpdateUtilsUpdateTableHeads
-        extends AbstractUtilsTest {
+public final class TestHtmlToolSwapTagWithParent
+        extends AbstractUtilsSelectorTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final Html5UpdateUtils util = new Html5UpdateUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsUpdateTableHeads() {
+    public TestHtmlToolSwapTagWithParent() {
         super();
     }
 
     /**
-     * Tests that a table's head is updated.
+     * Tests that swapping a not existing element does nothing.
      */
     @Test
-    public final void testFullTable_UpdatesHeader() {
+    public final void testNotExistingNothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
 
-        html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-        htmlExpected = "<table border=\"0\" class=\"bodyTable testClass\">\n <thead>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        html = "<code><pre>Some code</pre></code>";
+        htmlExpected = html;
+        selector = "code > abc";
 
-        runTest(html, htmlExpected);
+        runTest(html, htmlExpected, selector);
+    }
+
+    /**
+     * Tests that swapping elements works as expected.
+     */
+    @Test
+    public final void testSwapCodePre() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+
+        html = "<code><pre>Some code</pre></code>";
+        htmlExpected = "<pre><code>Some code</code></pre>";
+        selector = "code > pre";
+
+        runTest(html, htmlExpected, selector);
     }
 
     @Override
-    protected final void callTestedMethod(final Element element) {
-        util.updateTableHeads(element);
+    protected final void callTestedMethod(final Element element,
+            final String selector) {
+        util.swapTagWithParent(element, selector);
     }
 
 }

@@ -27,88 +27,61 @@ package com.wandrell.velocity.tool.test.unit.site;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.SiteTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code fixAnchorLinks} method.
+ * Unit tests for {@link SiteTool}, testing the
+ * {@code transformImagesToFigures} method.
  * 
- * @author Bernardo Martínez Garrido
- * @see SiteUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see SiteTool
  */
-public final class TestSiteUtilsFixAnchorLinks extends AbstractUtilsTest {
+public final class TestSiteToolTransformTables extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final SiteTool util = new SiteTool();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsFixAnchorLinks() {
+    public TestSiteToolTransformTables() {
         super();
     }
 
     /**
-     * Tests that an empty link is left untouched.
+     * Tests that HTML with no tables is left untouched
      */
     @Test
-    public final void testEmptyLink_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<a href=\"\">A link</a>";
-        htmlExpected = html;
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that an external link is left untouched.
-     */
-    @Test
-    public final void testExternalLink_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<a href=\"www.somewhere.com\">A link</a>";
-        htmlExpected = html;
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that an internal link is correctly formatted.
-     */
-    @Test
-    public final void testInternalLink_Formatted() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<a href=\"#An_Internal. Link\">A link</a>";
-        htmlExpected = "<a href=\"#aninternallink\">A link</a>";
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no links is left untouched.
-     */
-    @Test
-    public final void testNoAnchors_Untouched() {
+    public final void testNoTable_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
         html = "<p>Some text</p>";
-        htmlExpected = html;
+        htmlExpected = "<p>Some text</p>";
+
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that tables are transformed correctly.
+     */
+    @Test
+    public final void testTable_Transforms() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<table class=\"bodyTable\"><thead><tr><th>Header 1</th><th>Header 2</th></tr></thead><tbody><tr><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        htmlExpected = "<table class=\"bodyTable table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         runTest(html, htmlExpected);
     }
 
     @Override
     protected final void callTestedMethod(final Element element) {
-        util.fixAnchorLinks(element);
+        util.transformTables(element);
     }
 
 }

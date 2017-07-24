@@ -27,70 +27,90 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.HtmlTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
- * Unit tests for {@link HtmlUtils} testing the {@code retag} method.
+ * Unit tests for {@link HtmlTool} testing the {@code removeClass} method.
  * 
- * @author Bernardo Martínez Garrido
- * @see HtmlUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see HtmlTool
  */
-public final class TestHtmlUtilsRetag
+public final class TestHtmlToolRemoveClass
         extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HtmlUtils util = new HtmlUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsRetag() {
+    public TestHtmlToolRemoveClass() {
         super();
     }
 
     /**
-     * Tests that retagging an element works as expected.
+     * Tests that when removing a class, if there are multiple classes in the
+     * element then they are left untouched.
      */
     @Test
-    public final void testDivToCode() {
+    public final void testMultipleClasses() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
-        final String tag;          // New tag
+        final String cssClass;     // Removed class
 
-        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-        htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
-        selector = "div.source";
-        tag = "code";
+        html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
 
-        runTest(html, htmlExpected, selector, tag);
+        runTest(html, htmlExpected, selector, cssClass);
     }
 
     /**
-     * Tests that retagging a not existing element does nothing.
+     * Tests that when removing a class, if no more classes are left in the
+     * element then the class attribute is removed too.
      */
     @Test
-    public final void testNotExisting_Nothing() {
+    public final void testNoClassLeft() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
-        final String tag;          // New tag
+        final String cssClass;     // Removed class
 
-        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-        htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
-        selector = "div.abc";
-        tag = "code";
+        html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
 
-        runTest(html, htmlExpected, selector, tag);
+        runTest(html, htmlExpected, selector, cssClass);
+    }
+
+    /**
+     * Tests that removing a not existing class does nothing.
+     */
+    @Test
+    public final void testNotExistingClass_Untouched() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
+
+        html = "<p>Some text</p>";
+        htmlExpected = "<p>Some text</p>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
+
+        runTest(html, htmlExpected, selector, cssClass);
     }
 
     @Override
     protected final void callTestedMethod(final Element element,
             final String selector, final String argument) {
-        util.retag(element, selector, argument);
+        util.removeClass(element, selector, argument);
     }
 
 }
