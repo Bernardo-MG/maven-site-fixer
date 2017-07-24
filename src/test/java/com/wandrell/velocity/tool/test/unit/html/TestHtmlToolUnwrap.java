@@ -27,26 +27,26 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HtmlUtils;
+import com.wandrell.velocity.tool.HtmlTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
- * Unit tests for {@link HtmlUtils} testing the {@code unwrap} method.
+ * Unit tests for {@link HtmlTool} testing the {@code unwrap} method.
  * 
- * @author Bernardo Martínez Garrido
- * @see HtmlUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see HtmlTool
  */
-public final class TestHtmlUtilsUnwrap extends AbstractUtilsSelectorTest {
+public final class TestHtmlToolUnwrap extends AbstractUtilsSelectorTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HtmlUtils util = new HtmlUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsUnwrap() {
+    public TestHtmlToolUnwrap() {
         super();
     }
 

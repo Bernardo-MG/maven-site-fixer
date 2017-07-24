@@ -44,11 +44,6 @@ Once the content has been fixed, the HTML can be recovered this way:
 
 The [Docs Maven Skin][docs-skin] makes use of these tools, and can be a good example for them.
 
-[html5-update-javadoc]: ./apidocs/com/wandrell/velocity/tool/HTML5UpdateUtils.html
-[html-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/HTMLUtils.html
-[site-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/SiteUtils.html
-[skin-config-javadoc]: ./apidocs/com/wandrell/velocity/tool/ConfigTool.html
-
 [tools]: ./tools.html
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin

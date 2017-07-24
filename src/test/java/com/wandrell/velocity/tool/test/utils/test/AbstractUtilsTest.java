@@ -33,7 +33,7 @@ import org.testng.Assert;
  * encapsulating the repetitive code, so each test just contains the meaningful
  * variables.
  * 
- * @author Bernardo Martínez Garrido
+ * @author Bernardo Mart&iacute;nez Garrido
  */
 public abstract class AbstractUtilsTest {
 
