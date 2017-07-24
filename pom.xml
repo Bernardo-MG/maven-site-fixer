@@ -37,7 +37,7 @@
    </licenses>
 
    <!-- ********************************************** -->
-   <!-- ********* INFRASTRUCTURE AND SERVICES ******** -->
+   <!-- ************ RESOURCES AND SERVICES ********** -->
    <!-- ********************************************** -->
 
    <scm>
@@ -209,7 +209,7 @@
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
-      <site.skin.version>0.6.0</site.skin.version>
+      <site.skin.version>0.6.1</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer</mavenURL>
    </properties>
