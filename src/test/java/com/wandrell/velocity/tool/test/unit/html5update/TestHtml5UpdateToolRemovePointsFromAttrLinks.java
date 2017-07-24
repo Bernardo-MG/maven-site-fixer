@@ -53,7 +53,7 @@ public final class TestHtml5UpdateToolRemovePointsFromAttrLinks
     }
 
     /**
-     * Tests links without the {@code href} attribute are removed.
+     * Points are removed from links.
      */
     @Test
     public final void testSimple_Removed() {
