@@ -3,10 +3,9 @@
 
 # Using Java for the project
 language: java
-jdk:
-  - openjdk7
 matrix:
   include:
+    - jdk: openjdk7
     # Code artifacts deployed with JDK7
     - jdk: oraclejdk7
       env: DEPLOY=true
