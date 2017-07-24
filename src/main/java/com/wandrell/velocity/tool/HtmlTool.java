@@ -48,7 +48,7 @@ import org.jsoup.nodes.Element;
 public final class HtmlTool {
 
     /**
-     * Constructs an instance of the {@code HTMLUtils}.
+     * Constructs an instance of the utilities class.
      */
     public HtmlTool() {
         super();

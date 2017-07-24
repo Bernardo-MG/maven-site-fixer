@@ -57,7 +57,7 @@ public class Html5UpdateTool {
     private final HtmlTool htmlUtils = new HtmlTool();
 
     /**
-     * Constructs an instance of the {@code HTML5UpdateUtils}.
+     * Constructs an instance of the utilities class.
      */
     public Html5UpdateTool() {
         super();

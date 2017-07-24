@@ -65,7 +65,7 @@ public class SiteTool {
     private static final String ID_INVALID_REGEX = "[ _.]";
 
     /**
-     * Constructs an instance of the {@code SiteUtil}.
+     * Constructs an instance of the utilities class.
      */
     public SiteTool() {
         super();

@@ -31,15 +31,16 @@
  * them from Velocity templates each class is annotated with a default key, and
  * a {@code tools.xml} file is included.
  * <p>
- * Using the tools just requires calling its key. For example, to call the
- * {@link com.wandrell.velocity.tool.HtmlTool HtmlTool} {@code unwrap} method
- * the following VTL line can be used:
+ * Using the tools just requires calling its key. For example, the following
+ * line calls the {@code unwrap} method of
+ * {@link com.wandrell.velocity.tool.HtmlTool HtmlTool}:
  * <p>
  * {@code #set ( $sections = $htmlTool.unwrap( $bodyContent, "a:not([href])" ) )}
  * <p>
- * HTML is edited with the use of <a href="http://jsoup.org/">jsoup</a>, and the
- * methods expect a jsoup element to work with, but it is not validated in any
- * way. Validation of the end result is the programmer's responsibility.
+ * The tools make use of <a href="http://jsoup.org/">jsoup</a> to edit the HTML
+ * code. For this reason their methods expect a jsoup element. Take note that
+ * this element won't be validated in any way. Validation of the end result is
+ * the programmer's responsibility.
  */
 
 package com.wandrell.velocity.tool;
