@@ -27,66 +27,70 @@ package com.wandrell.velocity.tool.test.unit.html;
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.HtmlUtils;
-import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
+import com.wandrell.velocity.tool.HtmlTool;
+import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
- * Unit tests for {@link HtmlUtils} testing the {@code swapTagWithParent}
- * method.
+ * Unit tests for {@link HtmlTool} testing the {@code retag} method.
  * 
- * @author Bernardo Martínez Garrido
- * @see HtmlUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see HtmlTool
  */
-public class TestHtmlUtilsSwapTagWithParent extends AbstractUtilsSelectorTest {
+public final class TestHtmlToolRetag
+        extends AbstractUtilsSelectorArgumentTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final HtmlUtils util = new HtmlUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestHtmlUtilsSwapTagWithParent() {
+    public TestHtmlToolRetag() {
         super();
     }
 
     /**
-     * Tests that swapping a not existing element does nothing.
+     * Tests that retagging an element works as expected.
      */
     @Test
-    public final void testNotExistingNothing() {
+    public final void testDivToCode() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final String tag;          // New tag
 
-        html = "<code><pre>Some code</pre></code>";
-        htmlExpected = html;
-        selector = "code > abc";
+        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
+        htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
+        selector = "div.source";
+        tag = "code";
 
-        runTest(html, htmlExpected, selector);
+        runTest(html, htmlExpected, selector, tag);
     }
 
     /**
-     * Tests that swapping elements works as expected.
+     * Tests that retagging a not existing element does nothing.
      */
     @Test
-    public final void testSwapCodePre() {
+    public final void testNotExisting_Nothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final String tag;          // New tag
 
-        html = "<code><pre>Some code</pre></code>";
-        htmlExpected = "<pre><code>Some code</code></pre>";
-        selector = "code > pre";
+        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
+        htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
+        selector = "div.abc";
+        tag = "code";
 
-        runTest(html, htmlExpected, selector);
+        runTest(html, htmlExpected, selector, tag);
     }
 
     @Override
     protected final void callTestedMethod(final Element element,
-            final String selector) {
-        util.swapTagWithParent(element, selector);
+            final String selector, final String argument) {
+        util.retag(element, selector, argument);
     }
 
 }

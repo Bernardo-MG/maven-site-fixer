@@ -4,6 +4,44 @@ Update the outdated XHTML pages created by the [Maven site plugin][maven_site] t
 
 To check these tools on action take a look at the [Docs Maven Skin][docs-skin], a modern and reactive Maven Site skin.
 
+A Maven site contains lots of ugly code such as this:
+
+```html
+<table class="bodyTable testClass">
+   <tbody>
+      <tr class="a">
+         <th>Header 1</th>
+         <th>Header 2</th>
+      </tr>
+      <tr class="b">
+         <td>Data 1</td>
+         <td>Data 2</td>
+      </tr>
+   </tbody>
+</table>
+```
+
+Which is a case of invalid HTML 5 code, as it is a table without heading, using the first row as a replacement for it.
+
+The tools included in this project will transform that example into this:
+
+```html
+<table class="bodyTable testClass">
+   <thead>
+      <tr class="a">
+         <th>Header 1</th>
+         <th>Header 2</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr class="b">
+         <td>Data 1</td>
+         <td>Data 2</td>
+      </tr>
+   </tbody>
+</table>
+```
+
 [![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.velocity/maven-site-fixer.svg)][maven-repo]
 [![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/maven-site-fixer/images/download.svg)][bintray-repo]
 
@@ -21,6 +59,10 @@ The project is composed by a small set of tools which allow editing the content 
 - Manual edition of HTML.
 - Reports corrections.
 - Various corrections, such as fixing anchor links.
+
+## Projects making use of these tools
+
+The tools were developed to be used by the [Docs Maven Skin][docs-skin].
 
 ## Documentation
 

@@ -22,65 +22,53 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.site;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.Html5UpdateTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code transformIcons} method.
+ * Unit tests for {@link Html5UpdateTool} testing the {@code updateTableHeads}
+ * method.
  * 
- * @author Bernardo Martínez Garrido
- * @see SiteUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see Html5UpdateTool
  */
-public final class TestSiteUtilsTransformIcons extends AbstractUtilsTest {
+public final class TestHtml5UpdateToolUpdateTableHeads
+        extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final Html5UpdateTool util = new Html5UpdateTool();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsTransformIcons() {
+    public TestHtml5UpdateToolUpdateTableHeads() {
         super();
     }
 
     /**
-     * Tests that when finding an expected icon it is transformed correctly.
+     * Tests that a table's head is updated.
      */
     @Test
-    public final void testIcon_Transforms() {
+    public final void testFullTable_UpdatesHeader() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
-        html = "<img src=\"images/add.gif\" alt=\"An image\">";
-        htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that HTML with no icons is left untouched
-     */
-    @Test
-    public final void testNoIcons_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<p>Some text</p>";
-        htmlExpected = html;
+        html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
+        htmlExpected = "<table border=\"0\" class=\"bodyTable testClass\">\n <thead>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
         runTest(html, htmlExpected);
     }
 
     @Override
     protected final void callTestedMethod(final Element element) {
-        util.transformIcons(element);
+        util.updateTableHeads(element);
     }
 
 }

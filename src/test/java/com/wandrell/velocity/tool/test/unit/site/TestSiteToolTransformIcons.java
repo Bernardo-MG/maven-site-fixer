@@ -22,41 +22,53 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.html5update;
+package com.wandrell.velocity.tool.test.unit.site;
 
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.Html5UpdateUtils;
+import com.wandrell.velocity.tool.SiteTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link Html5UpdateUtils} testing the {@code removeNoHrefLinks}
- * method.
+ * Unit tests for {@link SiteTool}, testing the {@code transformIcons} method.
  * 
- * @author Bernardo Martínez Garrido
- * @see Html5UpdateUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see SiteTool
  */
-public final class TestHtml5UpdateUtilsRemoveNoHrefLinks
-        extends AbstractUtilsTest {
+public final class TestSiteToolTransformIcons extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final Html5UpdateUtils util = new Html5UpdateUtils();
+    private final SiteTool util = new SiteTool();
 
     /**
      * Default constructor.
      */
-    public TestHtml5UpdateUtilsRemoveNoHrefLinks() {
+    public TestSiteToolTransformIcons() {
         super();
     }
 
     /**
-     * Tests that HTML with no links is not edited.
+     * Tests that when finding an expected icon it is transformed correctly.
      */
     @Test
-    public final void testNoAnchors_Nothing() {
+    public final void testIcon_Transforms() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+
+        html = "<img src=\"images/add.gif\" alt=\"An image\">";
+        htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
+
+        runTest(html, htmlExpected);
+    }
+
+    /**
+     * Tests that HTML with no icons is left untouched
+     */
+    @Test
+    public final void testNoIcons_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
@@ -66,38 +78,9 @@ public final class TestHtml5UpdateUtilsRemoveNoHrefLinks
         runTest(html, htmlExpected);
     }
 
-    /**
-     * Tests that links without the {@code href} attribute are removed.
-     */
-    @Test
-    public final void testNoHref_Empty_Removed() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that links without the {@code href} attribute are removed, and
-     * their contents moved to the parent.
-     */
-    @Test
-    public final void testNoHref_WithText_TextKept() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
-
-        runTest(html, htmlExpected);
-    }
-
     @Override
     protected final void callTestedMethod(final Element element) {
-        util.removeNoHrefLinks(element);
+        util.transformIcons(element);
     }
 
 }

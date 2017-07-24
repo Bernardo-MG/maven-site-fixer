@@ -22,126 +22,152 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.site;
+package com.wandrell.velocity.tool.test.unit.html;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.HtmlTool;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the {@code fixReport} method.
+ * Unit tests for {@link HtmlTool}, testing the methods using empty strings.
+ * <p>
+ * The meaning behind this test is verifying that the initial queries done by
+ * the utilities class doesn't break with empty inputs.
  * 
- * @author Bernardo Martínez Garrido
- * @see SiteUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see HtmlTool
  */
-public final class TestSiteUtilsFixReport {
+public final class TestHtmlToolEmpty {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final HtmlTool util = new HtmlTool();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsFixReport() {
+    public TestHtmlToolEmpty() {
         super();
     }
 
     /**
-     * Tests that the changes report is correctly fixed.
+     * Tests that an empty string causes no problem to the
+     * {@code removeAttribute} method.
      */
     @Test
-    public final void testChangesReport() {
+    public final void testRemoveAttribute_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<section><h2>Project Changes</h2><section><h3>Release History</h3></section><section><h3 id=\"a010\">Release 0.1.0 – 2015-05-17</h3></section></section>";
+        html = "";
 
         element = Jsoup.parse(html).body();
-        util.fixReport(element, "changes-report");
+        util.removeAttribute(element, "a.externalLink", "externalLink");
 
-        htmlExpected = "<h1>Project Changes</h1>\n<section>\n <h2>Release History</h2>\n</section>\n<section id=\"a010\">\n <h3>Release 0.1.0 <small>(<time>2015-05-17</time>)</small></h3>\n</section>";
+        htmlExpected = "";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that the checkstyle report is correctly fixed.
+     * Tests that an empty string causes no problem to the {@code removeClass}
+     * method.
      */
     @Test
-    public final void testCheckstyleReport() {
+    public final void testRemoveClass_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<h2>Checkstyle</h2><section><p><img alt=\"rss feed\" src=\"images/rss.png\"></p></section>";
+        html = "";
 
         element = Jsoup.parse(html).body();
-        util.fixReport(element, "checkstyle");
+        util.removeClass(element, "a.externalLink", "externalLink");
 
-        htmlExpected = "<h1>Checkstyle</h1>\n<section>\n <p></p>\n</section>";
+        htmlExpected = "";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that the plugin management report is correctly fixed.
+     * Tests that an empty string causes no problem to the {@code retag} method.
      */
     @Test
-    public final void testPluginManagementReport() {
+    public final void testRetag_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<section><h2>Plugin Management</h2><p>Data</p></section>";
+        html = "";
 
         element = Jsoup.parse(html).body();
-        util.fixReport(element, "plugin-management");
+        util.retag(element, "a.externalLink", "externalLink");
 
-        htmlExpected = "<h1>Plugin Management</h1>\n<p>Data</p>";
+        htmlExpected = "";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that the plugins report is correctly fixed.
+     * Tests that an empty string causes no problem to the
+     * {@code swapTagWithParent} method.
      */
     @Test
-    public final void testPluginsReport() {
+    public final void testSwapTagWithParent_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<section><h2>Heading 2</h2></section>";
+        html = "";
 
         element = Jsoup.parse(html).body();
-        util.fixReport(element, "plugins");
+        util.swapTagWithParent(element, "code > pre");
 
-        htmlExpected = "<h1>Plugins Report</h1>\n<section>\n <h2>Heading 2</h2>\n</section>";
+        htmlExpected = "";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }
 
     /**
-     * Tests that the surefire report is correctly fixed.
+     * Tests that an empty string causes no problem to the {@code unwrap}
+     * method.
      */
     @Test
-    public final void testSurefireReport() {
+    public final void testUnwrap_EmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<section><h2>Surefire Report</h2></section><section><h2>Summary</h2></section><section><h2>Package List</h2></section>";
+        html = "";
 
         element = Jsoup.parse(html).body();
-        util.fixReport(element, "surefire-report");
+        util.unwrap(element, "a:not([href])");
 
-        htmlExpected = "<section>\n <h1>Surefire Report</h1>\n</section>\n<section>\n <h2>Summary</h2>\n</section>\n<section>\n <h2>Package List</h2>\n</section>";
+        htmlExpected = "";
+
+        Assert.assertEquals(element.html(), htmlExpected);
+    }
+
+    /**
+     * Tests that an empty string causes no problem to the {@code wrap} method.
+     */
+    @Test
+    public final void testWrap_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.wrap(element, "h1", "<header></header>");
+
+        htmlExpected = "";
 
         Assert.assertEquals(element.html(), htmlExpected);
     }

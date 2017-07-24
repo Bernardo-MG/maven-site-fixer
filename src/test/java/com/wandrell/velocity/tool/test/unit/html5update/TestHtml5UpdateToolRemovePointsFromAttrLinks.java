@@ -22,66 +22,53 @@
  * SOFTWARE.
  */
 
-package com.wandrell.velocity.tool.test.unit.site;
+package com.wandrell.velocity.tool.test.unit.html5update;
 
 import org.jsoup.nodes.Element;
 import org.testng.annotations.Test;
 
-import com.wandrell.velocity.tool.SiteUtils;
+import com.wandrell.velocity.tool.Html5UpdateTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link SiteUtils}, testing the
- * {@code transformImagesToFigures} method.
+ * Unit tests for {@link Html5UpdateTool} testing the
+ * {@code removePointsFromAttr} method.
  * 
- * @author Bernardo Martínez Garrido
- * @see SiteUtils
+ * @author Bernardo Mart&iacute;nez Garrido
+ * @see Html5UpdateTool
  */
-public final class TestSiteUtilsTransformTables extends AbstractUtilsTest {
+public final class TestHtml5UpdateToolRemovePointsFromAttrLinks
+        extends AbstractUtilsTest {
 
     /**
      * Instance of the utils class being tested.
      */
-    private final SiteUtils util = new SiteUtils();
+    private final Html5UpdateTool util = new Html5UpdateTool();
 
     /**
      * Default constructor.
      */
-    public TestSiteUtilsTransformTables() {
+    public TestHtml5UpdateToolRemovePointsFromAttrLinks() {
         super();
     }
 
     /**
-     * Tests that HTML with no tables is left untouched
+     * Points are removed from links.
      */
     @Test
-    public final void testNoTable_Untouched() {
+    public final void testSimple_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
 
-        html = "<p>Some text</p>";
-        htmlExpected = "<p>Some text</p>";
-
-        runTest(html, htmlExpected);
-    }
-
-    /**
-     * Tests that tables are transformed correctly.
-     */
-    @Test
-    public final void testTable_Transforms() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-
-        html = "<table class=\"bodyTable\"><thead><tr><th>Header 1</th><th>Header 2</th></tr></thead><tbody><tr><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-        htmlExpected = "<table class=\"bodyTable table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        html = "<a name=\"a_heading\" href=\"a.b.c\">Text</a>";
+        htmlExpected = "<a name=\"a_heading\" href=\"abc\">Text</a>";
 
         runTest(html, htmlExpected);
     }
 
     @Override
     protected final void callTestedMethod(final Element element) {
-        util.transformTables(element);
+        util.removePointsFromAttr(element, "[href]", "href");
     }
 
 }
