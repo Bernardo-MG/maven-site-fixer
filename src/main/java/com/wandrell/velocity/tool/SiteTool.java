@@ -27,6 +27,7 @@ package com.wandrell.velocity.tool;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -248,7 +249,7 @@ public class SiteTool {
 
         checkNotNull(root, "Received a null pointer as root element");
 
-        replacements = new LinkedHashMap<>();
+        replacements = new HashMap<>();
         replacements.put("img[src$=images/add.gif]",
                 "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>");
         replacements.put("img[src$=images/remove.gif]",
