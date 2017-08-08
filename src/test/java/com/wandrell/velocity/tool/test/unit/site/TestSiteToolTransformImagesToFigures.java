@@ -31,8 +31,8 @@ import com.wandrell.velocity.tool.SiteTool;
 import com.wandrell.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
- * Unit tests for {@link SiteTool}, testing the
- * {@code transformImagesToFigures} method.
+ * Unit tests for {@link SiteTool}, testing the {@code transformImagesToFigures}
+ * method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteTool
