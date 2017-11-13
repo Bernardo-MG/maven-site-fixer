@@ -11,5 +11,10 @@
             First release of the project.
          </action>
       </release>
+      <release version="1.0.1" date="2017-11-13" description="Relocation">
+         <action dev="bmg" type="add">
+            Prepared for Maven relocation.
+         </action>
+      </release>
    </body>
 </document>

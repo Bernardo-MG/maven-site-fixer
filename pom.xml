@@ -59,6 +59,9 @@
    </ciManagement>
 
    <distributionManagement>
+      <relocation>
+         <groupId>com.bernardomg.velocity</groupId>
+      </relocation>
       <repository>
          <uniqueVersion>false</uniqueVersion>
          <id>releases</id>
