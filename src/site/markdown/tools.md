@@ -12,9 +12,9 @@ Each tool uses the following configuration:
 
 For more details about how to use these tools and their keys check the [usage page][usage].
 
-[html5-update-javadoc]: ./apidocs/com/wandrell/velocity/tool/Html5UpdateTool.html
-[html-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/HtmlTool.html
-[site-utils-javadoc]: ./apidocs/com/wandrell/velocity/tool/SiteTool.html
+[html5-update-javadoc]: ./apidocs/com/bernardomg/velocity/tool/Html5UpdateTool.html
+[html-utils-javadoc]: ./apidocs/com/bernardomg/velocity/tool/HtmlTool.html
+[site-utils-javadoc]: ./apidocs/com/bernardomg/velocity/tool/SiteTool.html
 
 [docs-skin]: https://github.com/Bernardo-MG/docs-maven-skin
 
