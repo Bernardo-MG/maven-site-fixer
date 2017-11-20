@@ -42,7 +42,7 @@ The tools included in this project will transform that example into this:
 </table>
 ```
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.wandrell.velocity/maven-site-fixer.svg)][maven-repo]
+[![Maven Central](https://img.shields.io/maven-central/v/com.bernardomg.velocity/maven-site-fixer.svg)][maven-repo]
 [![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/maven-site-fixer/images/download.svg)][bintray-repo]
 
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
@@ -144,11 +144,11 @@ The project has been released under the [MIT License][license].
 [velocity]: http://velocity.apache.org/
 
 [bintray-repo]: https://bintray.com/bernardo-mg/maven/maven-site-fixer/view
-[maven-repo]: http://mvnrepository.com/artifact/com.wandrell.velocity/maven-site-fixer
+[maven-repo]: http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer
 [issues]: https://github.com/bernardo-mg/maven-site-fixer/issues
-[javadoc-develop]: http://docs.wandrell.com/development/maven/maven-site-fixer/apidocs
-[javadoc-release]: http://docs.wandrell.com/maven/maven-site-fixer/apidocs
+[javadoc-develop]: http://docs.bernardomg.com/development/maven/maven-site-fixer/apidocs
+[javadoc-release]: http://docs.bernardomg.com/maven/maven-site-fixer/apidocs
 [license]: http://www.opensource.org/licenses/mit-license.php
 [scm]: https://github.com/bernardo-mg/maven-site-fixer
-[site-develop]: http://docs.wandrell.com/development/maven/maven-site-fixer
-[site-release]: http://docs.wandrell.com/maven/maven-site-fixer
+[site-develop]: http://docs.bernardomg.com/development/maven/maven-site-fixer
+[site-release]: http://docs.bernardomg.com/maven/maven-site-fixer

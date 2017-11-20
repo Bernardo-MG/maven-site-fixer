@@ -3,8 +3,8 @@
    the classpath and Velocity finds it. -->
 <tools>
    <toolbox scope="request">
-      <tool class="com.wandrell.velocity.tool.Html5UpdateTool" />
-      <tool class="com.wandrell.velocity.tool.HtmlTool" />
-      <tool class="com.wandrell.velocity.tool.SiteTool" />
+      <tool class="com.bernardomg.velocity.tool.Html5UpdateTool" />
+      <tool class="com.bernardomg.velocity.tool.HtmlTool" />
+      <tool class="com.bernardomg.velocity.tool.SiteTool" />
    </toolbox>
 </tools>
