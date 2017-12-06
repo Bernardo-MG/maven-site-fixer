@@ -26,8 +26,8 @@ package com.bernardomg.velocity.tool.test.unit.site;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import com.bernardomg.velocity.tool.SiteTool;
 

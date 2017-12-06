@@ -205,8 +205,8 @@
       <commons.validator.version>1.6</commons.validator.version>
       <guava.version>20.0</guava.version>
       <jsoup.version>1.10.3</jsoup.version>
+      <junit.version>4.12</junit.version>
       <mockito.version>1.10.19</mockito.version>
-      <testng.version>6.10</testng.version>
       <velocity.tools.version>2.0</velocity.tools.version>
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
@@ -299,17 +299,17 @@
       <!-- ======= TEST ENVIRONMENT DEPENDENCIES ======== -->
       <!-- ============================================== -->
       <dependency>
+         <!-- JUnit -->
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>${junit.version}</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
          <!-- Mockito -->
          <groupId>org.mockito</groupId>
          <artifactId>mockito-all</artifactId>
          <version>${mockito.version}</version>
-         <scope>test</scope>
-      </dependency>
-      <dependency>
-         <!-- TestNG -->
-         <groupId>org.testng</groupId>
-         <artifactId>testng</artifactId>
-         <version>${testng.version}</version>
          <scope>test</scope>
       </dependency>
    </dependencies>

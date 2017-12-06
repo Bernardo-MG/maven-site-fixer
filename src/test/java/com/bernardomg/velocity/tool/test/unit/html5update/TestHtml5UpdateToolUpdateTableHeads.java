@@ -25,7 +25,7 @@
 package com.bernardomg.velocity.tool.test.unit.html5update;
 
 import org.jsoup.nodes.Element;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import com.bernardomg.velocity.tool.Html5UpdateTool;
 import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;

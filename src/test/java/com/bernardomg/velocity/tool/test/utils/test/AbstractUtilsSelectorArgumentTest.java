@@ -26,7 +26,7 @@ package com.bernardomg.velocity.tool.test.utils.test;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
+import org.junit.Assert;
 
 /**
  * Base class for HTML modification tests. It simplifies the test methods by
