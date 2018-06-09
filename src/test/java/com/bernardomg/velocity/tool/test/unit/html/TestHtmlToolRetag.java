@@ -54,7 +54,7 @@ public final class TestHtmlToolRetag extends AbstractUtilsSelectorArgumentTest {
      * Tests that retagging an element works as expected.
      */
     @Test
-    public final void testDivToCode() {
+    public final void testBig() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
@@ -62,6 +62,24 @@ public final class TestHtmlToolRetag extends AbstractUtilsSelectorArgumentTest {
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
         htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
+        selector = "div.source";
+        tag = "code";
+
+        runTest(html, htmlExpected, selector, tag);
+    }
+
+    /**
+     * Tests that empty elements are retagged.
+     */
+    @Test
+    public final void testEmpty() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+        final String tag;          // New tag
+
+        html = "<div class=\"source\">";
+        htmlExpected = "<code class=\"source\"></code>";
         selector = "div.source";
         tag = "code";
 
@@ -81,6 +99,24 @@ public final class TestHtmlToolRetag extends AbstractUtilsSelectorArgumentTest {
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
         htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
         selector = "div.abc";
+        tag = "code";
+
+        runTest(html, htmlExpected, selector, tag);
+    }
+
+    /**
+     * Tests that empty elements are retagged.
+     */
+    @Test
+    public final void testWithPre() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+        final String tag;          // New tag
+
+        html = "<div class=\"source\"><pre>Some code</pre></div></div>";
+        htmlExpected = "<code class=\"source\"><pre>Some code</pre></code>";
+        selector = "div.source";
         tag = "code";
 
         runTest(html, htmlExpected, selector, tag);
