@@ -69,7 +69,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixAnchorLinks(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -87,7 +87,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixHeadingIds(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -105,7 +105,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -123,7 +123,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformIcons(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -141,7 +141,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -159,7 +159,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformTables(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
 }

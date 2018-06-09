@@ -60,19 +60,19 @@ public abstract class AbstractUtilsSelectorTest {
      * 
      * @param html
      *            initial HTML
-     * @param result
-     *            final HTML
+     * @param htmlExpected
+     *            expected HTML
      * @param selector
      *            CSS selector
      */
-    public final void runTest(final String html, final String result,
+    public final void runTest(final String html, final String htmlExpected,
             final String selector) {
         final Element element; // Parsed HTML
 
         element = Jsoup.parse(html).body();
         callTestedMethod(element, selector);
 
-        Assert.assertEquals(element.html(), result);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**

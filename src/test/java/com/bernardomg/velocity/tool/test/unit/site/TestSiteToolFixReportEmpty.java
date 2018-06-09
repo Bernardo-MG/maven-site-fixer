@@ -70,7 +70,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "changes-report");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -88,7 +88,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "checkstyle");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -106,7 +106,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "cpd");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -124,7 +124,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "dependencies");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -142,7 +142,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "failsafe-report");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -160,7 +160,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "findbugs");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -178,7 +178,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "jdepend-report");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -196,7 +196,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "license");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -214,7 +214,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "plugin-management");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -232,7 +232,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "plugins");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -250,7 +250,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "pmd");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -268,7 +268,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "project-summary");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -286,7 +286,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "surefire-report");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -304,7 +304,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "taglist");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -322,7 +322,7 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "team-list");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
 }
