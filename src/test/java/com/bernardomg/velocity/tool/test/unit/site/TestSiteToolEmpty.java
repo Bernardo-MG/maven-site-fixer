@@ -26,8 +26,8 @@ package com.bernardomg.velocity.tool.test.unit.site;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import com.bernardomg.velocity.tool.SiteTool;
 
@@ -69,7 +69,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixAnchorLinks(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -87,7 +87,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixHeadingIds(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -105,7 +105,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "");
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -123,7 +123,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformIcons(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -141,7 +141,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -159,7 +159,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformTables(element);
 
-        Assert.assertEquals(element.html(), htmlExpected);
+        Assert.assertEquals(htmlExpected, element.html());
     }
 
 }
