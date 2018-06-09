@@ -26,5 +26,10 @@
             Updated scripts.
          </action>
       </release>
+      <release version="1.1.2" date="2018-06-09" description="Updated dependencies">
+         <action dev="bmg" type="update">
+            Updated dependencies.
+         </action>
+      </release>
    </body>
 </document>
