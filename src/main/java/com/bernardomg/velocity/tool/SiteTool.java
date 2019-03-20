@@ -201,6 +201,7 @@ public class SiteTool {
                 fixReportFailsafe(root);
                 break;
             case "checkstyle":
+            case "checkstyle-aggregate":
                 fixReportCheckstyle(root);
                 break;
             case "findbugs":
@@ -222,12 +223,15 @@ public class SiteTool {
                 fixReportDependencies(root);
                 break;
             case "project-summary":
+            case "summary":
                 fixReportProjectSummary(root);
                 break;
             case "license":
+            case "licenses":
                 fixReportLicense(root);
                 break;
             case "team-list":
+            case "team":
                 fixReportTeamList(root);
                 break;
             default:
