@@ -216,7 +216,7 @@
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
-      <site.skin.version>1.2.0</site.skin.version>
+      <site.skin.version>1.4.0</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer</mavenURL>
    </properties>
