@@ -234,6 +234,9 @@ public class SiteTool {
             case "team":
                 fixReportTeamList(root);
                 break;
+            case "dependency-analysis":
+                fixReportDependencyAnalysis(root);
+                break;
             default:
                 break;
         }
@@ -435,6 +438,22 @@ public class SiteTool {
      */
     private final void fixReportDependencies(final Element root) {
         root.prepend("<h1>Dependencies Report</h1>");
+    }
+
+    /**
+     * Fixes the dependency analysis report page.
+     * 
+     * @param root
+     *            root element for the report page to fix
+     */
+    private final void fixReportDependencyAnalysis(final Element root) {
+        for (final Element head : root.getElementsByTag("h2")) {
+            head.tagName("h1");
+        }
+
+        for (final Element head : root.getElementsByTag("h3")) {
+            head.tagName("h2");
+        }
     }
 
     /**
