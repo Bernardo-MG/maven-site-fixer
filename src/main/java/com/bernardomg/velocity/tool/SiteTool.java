@@ -201,6 +201,7 @@ public class SiteTool {
                 fixReportFailsafe(root);
                 break;
             case "checkstyle":
+            case "checkstyle-aggregate":
                 fixReportCheckstyle(root);
                 break;
             case "findbugs":
@@ -222,13 +223,19 @@ public class SiteTool {
                 fixReportDependencies(root);
                 break;
             case "project-summary":
+            case "summary":
                 fixReportProjectSummary(root);
                 break;
             case "license":
+            case "licenses":
                 fixReportLicense(root);
                 break;
             case "team-list":
+            case "team":
                 fixReportTeamList(root);
+                break;
+            case "dependency-analysis":
+                fixReportDependencyAnalysis(root);
                 break;
             default:
                 break;
@@ -431,6 +438,22 @@ public class SiteTool {
      */
     private final void fixReportDependencies(final Element root) {
         root.prepend("<h1>Dependencies Report</h1>");
+    }
+
+    /**
+     * Fixes the dependency analysis report page.
+     * 
+     * @param root
+     *            root element for the report page to fix
+     */
+    private final void fixReportDependencyAnalysis(final Element root) {
+        for (final Element head : root.getElementsByTag("h2")) {
+            head.tagName("h1");
+        }
+
+        for (final Element head : root.getElementsByTag("h3")) {
+            head.tagName("h2");
+        }
     }
 
     /**
