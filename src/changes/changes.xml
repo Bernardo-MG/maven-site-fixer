@@ -31,9 +31,9 @@
             Updated dependencies.
          </action>
       </release>
-      <release version="1.2.0" date="2019-06-09" description="Fixes">
+      <release version="1.2.0" date="2019-03-20" description="Fixes">
          <action dev="bmg" type="fix">
-            Added more report identifiers.
+            Added more reports.
          </action>
          <action dev="bmg" type="remove">
             Dropped support for JDK 7.
