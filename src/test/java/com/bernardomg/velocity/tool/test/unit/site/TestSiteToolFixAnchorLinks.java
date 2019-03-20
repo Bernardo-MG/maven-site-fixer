@@ -25,7 +25,9 @@
 package com.bernardomg.velocity.tool.test.unit.site;
 
 import org.jsoup.nodes.Element;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
 import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
@@ -36,6 +38,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteTool
  */
+@RunWith(JUnitPlatform.class)
 public final class TestSiteToolFixAnchorLinks extends AbstractUtilsTest {
 
     /**

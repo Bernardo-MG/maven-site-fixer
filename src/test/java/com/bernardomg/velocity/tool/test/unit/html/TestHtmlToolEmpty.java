@@ -26,8 +26,10 @@ package com.bernardomg.velocity.tool.test.unit.html;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.HtmlTool;
 
@@ -40,6 +42,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
+@RunWith(JUnitPlatform.class)
 public final class TestHtmlToolEmpty {
 
     /**
@@ -71,7 +74,7 @@ public final class TestHtmlToolEmpty {
 
         htmlExpected = "";
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -91,7 +94,7 @@ public final class TestHtmlToolEmpty {
 
         htmlExpected = "";
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -110,7 +113,7 @@ public final class TestHtmlToolEmpty {
 
         htmlExpected = "";
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -130,7 +133,7 @@ public final class TestHtmlToolEmpty {
 
         htmlExpected = "";
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -150,7 +153,7 @@ public final class TestHtmlToolEmpty {
 
         htmlExpected = "";
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -169,7 +172,7 @@ public final class TestHtmlToolEmpty {
 
         htmlExpected = "";
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

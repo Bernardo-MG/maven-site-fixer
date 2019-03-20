@@ -26,7 +26,9 @@ package com.bernardomg.velocity.tool.test.utils.test;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 /**
  * Base class for HTML modification tests. It simplifies the test methods by
@@ -35,6 +37,7 @@ import org.junit.Assert;
  * 
  * @author Bernardo Mart&iacute;nez Garrido
  */
+@RunWith(JUnitPlatform.class)
 public abstract class AbstractUtilsTest {
 
     /**
@@ -65,7 +68,7 @@ public abstract class AbstractUtilsTest {
         element = Jsoup.parse(html).body();
         callTestedMethod(element);
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**

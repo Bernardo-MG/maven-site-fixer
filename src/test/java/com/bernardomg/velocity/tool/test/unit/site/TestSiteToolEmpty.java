@@ -26,8 +26,10 @@ package com.bernardomg.velocity.tool.test.unit.site;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
 
@@ -40,6 +42,7 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteTool
  */
+@RunWith(JUnitPlatform.class)
 public final class TestSiteToolEmpty {
 
     /**
@@ -69,7 +72,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixAnchorLinks(element);
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -87,7 +90,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixHeadingIds(element);
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -105,7 +108,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.fixReport(element, "");
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -123,7 +126,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformIcons(element);
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -141,7 +144,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -159,7 +162,7 @@ public final class TestSiteToolEmpty {
         element = Jsoup.parse(html).body();
         util.transformTables(element);
 
-        Assert.assertEquals(htmlExpected, element.html());
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }
