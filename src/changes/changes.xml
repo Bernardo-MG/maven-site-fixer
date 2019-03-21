@@ -39,10 +39,5 @@
             Dropped support for JDK 7.
          </action>
       </release>
-      <release version="1.2.1" date="2019-03-21" description="Fixes">
-         <action dev="bmg" type="fix">
-            Fixed Maven site.
-         </action>
-      </release>
    </body>
 </document>
