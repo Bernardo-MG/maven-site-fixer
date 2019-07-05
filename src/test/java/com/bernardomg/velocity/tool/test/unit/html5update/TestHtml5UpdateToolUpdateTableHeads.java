@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.html5update;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.Html5UpdateTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link Html5UpdateTool} testing the {@code updateTableHeads}
@@ -40,8 +41,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @see Html5UpdateTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtml5UpdateToolUpdateTableHeads
-        extends AbstractUtilsTest {
+public final class TestHtml5UpdateToolUpdateTableHeads {
 
     /**
      * Instance of the utils class being tested.
@@ -62,16 +62,15 @@ public final class TestHtml5UpdateToolUpdateTableHeads
     public final void testFullTable_UpdatesHeader() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
         htmlExpected = "<table border=\"0\" class=\"bodyTable testClass\">\n <thead>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        runTest(html, htmlExpected);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element) {
+        element = Jsoup.parse(html).body();
         util.updateTableHeads(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

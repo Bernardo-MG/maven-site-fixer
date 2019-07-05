@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteTool}, testing the {@code transformImagesToFigures}
@@ -40,8 +41,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestSiteToolTransformImagesToFigures
-        extends AbstractUtilsTest {
+public final class TestSiteToolTransformImagesToFigures {
 
     /**
      * Instance of the utils class being tested.
@@ -63,11 +63,15 @@ public final class TestSiteToolTransformImagesToFigures
     public final void testCaption_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<section><p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p></section>";
         htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -78,11 +82,15 @@ public final class TestSiteToolTransformImagesToFigures
     public final void testNoCaption_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<section><img src=\"imgs/diagram.png\"></section>";
         htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -92,11 +100,15 @@ public final class TestSiteToolTransformImagesToFigures
     public final void testNoImages_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = "<p>Some text</p>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -106,16 +118,15 @@ public final class TestSiteToolTransformImagesToFigures
     public final void testOutOfContent_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><footer><img src=\"imgs/footer.png\" alt=\"Footer image\"></footer></body>";
         htmlExpected = "<header>\n <img src=\"imgs/header.png\" alt=\"Header image\">\n</header>\n<section></section>\n<footer>\n <img src=\"imgs/footer.png\" alt=\"Footer image\">\n</footer>";
 
-        runTest(html, htmlExpected);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element) {
+        element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

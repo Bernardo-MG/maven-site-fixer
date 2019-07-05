@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteTool}, testing the {@code transformImagesToFigures}
@@ -40,7 +41,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestSiteToolTransformTables extends AbstractUtilsTest {
+public final class TestSiteToolTransformTables {
 
     /**
      * Instance of the utils class being tested.
@@ -61,11 +62,15 @@ public final class TestSiteToolTransformTables extends AbstractUtilsTest {
     public final void testNoTable_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = "<p>Some text</p>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.transformTables(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -75,16 +80,15 @@ public final class TestSiteToolTransformTables extends AbstractUtilsTest {
     public final void testTable_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<table class=\"bodyTable\"><thead><tr><th>Header 1</th><th>Header 2</th></tr></thead><tbody><tr><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
         htmlExpected = "<table class=\"bodyTable table table-striped table-bordered\">\n <thead>\n  <tr>\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr>\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        runTest(html, htmlExpected);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element) {
+        element = Jsoup.parse(html).body();
         util.transformTables(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

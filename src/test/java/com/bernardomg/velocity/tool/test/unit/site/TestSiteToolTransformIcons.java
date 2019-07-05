@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteTool}, testing the {@code transformIcons} method.
@@ -39,7 +40,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestSiteToolTransformIcons extends AbstractUtilsTest {
+public final class TestSiteToolTransformIcons {
 
     /**
      * Instance of the utils class being tested.
@@ -60,11 +61,15 @@ public final class TestSiteToolTransformIcons extends AbstractUtilsTest {
     public final void testIcon_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<img src=\"images/add.gif\" alt=\"An image\">";
         htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.transformIcons(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -74,16 +79,15 @@ public final class TestSiteToolTransformIcons extends AbstractUtilsTest {
     public final void testNoIcons_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = html;
 
-        runTest(html, htmlExpected);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element) {
+        element = Jsoup.parse(html).body();
         util.transformIcons(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }
