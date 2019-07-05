@@ -84,7 +84,7 @@ public class Html5UpdateTool {
 
         // Links missing the href attribute
         // Unwrapped to avoid losing texts
-        getHtmlTool().unwrap(root, "a:not([href])");
+        htmlUtils.unwrap(root, "a:not([href])");
     }
 
     /**
@@ -145,15 +145,6 @@ public class Html5UpdateTool {
             // Adds the head at the beginning of the table
             table.prependChild(thead);
         }
-    }
-
-    /**
-     * Returns the HTML utils class.
-     * 
-     * @return the HTML utils class
-     */
-    private final HtmlTool getHtmlTool() {
-        return htmlUtils;
     }
 
     /**
