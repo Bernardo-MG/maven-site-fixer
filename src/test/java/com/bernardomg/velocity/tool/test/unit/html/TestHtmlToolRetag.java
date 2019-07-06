@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.HtmlTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
  * Unit tests for {@link HtmlTool} testing the {@code retag} method.
@@ -39,7 +40,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumen
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtmlToolRetag extends AbstractUtilsSelectorArgumentTest {
+public final class TestHtmlToolRetag {
 
     /**
      * Instance of the utils class being tested.
@@ -62,13 +63,17 @@ public final class TestHtmlToolRetag extends AbstractUtilsSelectorArgumentTest {
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
         final String tag;          // New tag
+        final Element element;     // Parsed HTML
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
         htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
         selector = "div.source";
         tag = "code";
 
-        runTest(html, htmlExpected, selector, tag);
+        element = Jsoup.parse(html).body();
+        util.retag(element, selector, tag);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -80,13 +85,17 @@ public final class TestHtmlToolRetag extends AbstractUtilsSelectorArgumentTest {
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
         final String tag;          // New tag
+        final Element element;     // Parsed HTML
 
         html = "<div class=\"source\">";
         htmlExpected = "<code class=\"source\"></code>";
         selector = "div.source";
         tag = "code";
 
-        runTest(html, htmlExpected, selector, tag);
+        element = Jsoup.parse(html).body();
+        util.retag(element, selector, tag);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -98,13 +107,17 @@ public final class TestHtmlToolRetag extends AbstractUtilsSelectorArgumentTest {
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
         final String tag;          // New tag
+        final Element element;     // Parsed HTML
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
         htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
         selector = "div.abc";
         tag = "code";
 
-        runTest(html, htmlExpected, selector, tag);
+        element = Jsoup.parse(html).body();
+        util.retag(element, selector, tag);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -116,19 +129,17 @@ public final class TestHtmlToolRetag extends AbstractUtilsSelectorArgumentTest {
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
         final String tag;          // New tag
+        final Element element;     // Parsed HTML
 
         html = "<div class=\"source\"><pre>Some code</pre></div></div>";
         htmlExpected = "<code class=\"source\"><pre>Some code</pre></code>";
         selector = "div.source";
         tag = "code";
 
-        runTest(html, htmlExpected, selector, tag);
-    }
+        element = Jsoup.parse(html).body();
+        util.retag(element, selector, tag);
 
-    @Override
-    protected final void callTestedMethod(final Element element,
-            final String selector, final String argument) {
-        util.retag(element, selector, argument);
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

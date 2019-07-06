@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.HtmlTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumentTest;
 
 /**
  * Unit tests for {@link HtmlTool} testing the {@code wrap} method.
@@ -39,7 +40,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsSelectorArgumen
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtmlToolWrap extends AbstractUtilsSelectorArgumentTest {
+public final class TestHtmlToolWrap {
 
     /**
      * Instance of the utils class being tested.
@@ -63,13 +64,17 @@ public final class TestHtmlToolWrap extends AbstractUtilsSelectorArgumentTest {
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
         final String wrapper;      // Node for wrapping
+        final Element element;     // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
         htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
         selector = "h1";
         wrapper = "<header>";
 
-        runTest(html, htmlExpected, selector, wrapper);
+        element = Jsoup.parse(html).body();
+        util.wrap(element, selector, wrapper);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -81,13 +86,17 @@ public final class TestHtmlToolWrap extends AbstractUtilsSelectorArgumentTest {
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
         final String wrapper;      // Node for wrapping
+        final Element element;     // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
         htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
         selector = "h3";
         wrapper = "<header></header>";
 
-        runTest(html, htmlExpected, selector, wrapper);
+        element = Jsoup.parse(html).body();
+        util.wrap(element, selector, wrapper);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -99,19 +108,17 @@ public final class TestHtmlToolWrap extends AbstractUtilsSelectorArgumentTest {
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
         final String wrapper;      // Node for wrapping
+        final Element element;     // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
         htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
         selector = "h1";
         wrapper = "<header></header>";
 
-        runTest(html, htmlExpected, selector, wrapper);
-    }
+        element = Jsoup.parse(html).body();
+        util.wrap(element, selector, wrapper);
 
-    @Override
-    protected final void callTestedMethod(final Element element,
-            final String selector, final String argument) {
-        util.wrap(element, selector, argument);
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }
