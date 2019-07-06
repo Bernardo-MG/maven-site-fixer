@@ -296,9 +296,6 @@ public class SiteTool {
      * This will wrap {@code <img>} elements with a {@code <figure>} element,
      * and add a {@code <figcaption>} with the contents of the image's
      * {@code alt} attribute, if said attribute exists.
-     * <p>
-     * Only {@code <img>} elements inside a {@code <section>} will be
-     * transformed.
      * 
      * @param root
      *            root element with images to transform
@@ -311,7 +308,7 @@ public class SiteTool {
 
         checkNotNull(root, "Received a null pointer as root element");
 
-        images = root.select("section img");
+        images = root.select("img");
         if (!images.isEmpty()) {
             for (final Element img : images) {
                 figure = new Element(Tag.valueOf("figure"), "");

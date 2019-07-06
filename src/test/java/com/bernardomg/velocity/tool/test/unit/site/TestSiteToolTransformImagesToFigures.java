@@ -65,8 +65,8 @@ public final class TestSiteToolTransformImagesToFigures {
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<section><p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p></section>";
-        htmlExpected = "<section>\n <p>\n  <figure>\n   <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n   <figcaption>\n    A diagram\n   </figcaption>\n  </figure></p>\n</section>";
+        html = "<p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p>";
+        htmlExpected = "<p>\n <figure>\n  <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n  <figcaption>\n   A diagram\n  </figcaption>\n </figure></p>";
 
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
@@ -84,8 +84,8 @@ public final class TestSiteToolTransformImagesToFigures {
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<section><img src=\"imgs/diagram.png\"></section>";
-        htmlExpected = "<section>\n <figure>\n  <img src=\"imgs/diagram.png\">\n </figure>\n</section>";
+        html = "<img src=\"imgs/diagram.png\">";
+        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
 
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
@@ -104,24 +104,6 @@ public final class TestSiteToolTransformImagesToFigures {
 
         html = "<p>Some text</p>";
         htmlExpected = "<p>Some text</p>";
-
-        element = Jsoup.parse(html).body();
-        util.transformImagesToFigures(element);
-
-        Assertions.assertEquals(htmlExpected, element.html());
-    }
-
-    /**
-     * Tests that images out of a content element are ignored.
-     */
-    @Test
-    public final void testOutOfContent_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
-
-        html = "<body><header><img src=\"imgs/header.png\" alt=\"Header image\"></header><section></section><footer><img src=\"imgs/footer.png\" alt=\"Footer image\"></footer></body>";
-        htmlExpected = "<header>\n <img src=\"imgs/header.png\" alt=\"Header image\">\n</header>\n<section></section>\n<footer>\n <img src=\"imgs/footer.png\" alt=\"Footer image\">\n</footer>";
 
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
