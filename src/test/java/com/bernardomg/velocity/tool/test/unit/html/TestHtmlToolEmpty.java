@@ -58,6 +58,26 @@ public final class TestHtmlToolEmpty {
     }
 
     /**
+     * Tests that an empty string causes no problem to the {@code addClass}
+     * method.
+     */
+    @Test
+    public final void testAddClass_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.addClass(element, "a.externalLink", "externalLink");
+
+        htmlExpected = "";
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    /**
      * Tests that an empty string causes no problem to the
      * {@code removeAttribute} method.
      */
