@@ -34,13 +34,13 @@ import org.junit.runner.RunWith;
 import com.bernardomg.velocity.tool.HtmlTool;
 
 /**
- * Unit tests for {@link HtmlTool} testing the {@code removeAttribute} method.
+ * Unit tests for {@link HtmlTool} testing the {@code addClass} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtmlToolRemoveAttribute {
+public final class TestHtmlToolAddClass {
 
     /**
      * Instance of the utils class being tested.
@@ -50,50 +50,74 @@ public final class TestHtmlToolRemoveAttribute {
     /**
      * Default constructor.
      */
-    public TestHtmlToolRemoveAttribute() {
+    public TestHtmlToolAddClass() {
         super();
     }
 
     /**
-     * Tests that removing not existing attributes does nothing.
+     * Tests that when adding a class, if the element has multiple classes the
+     * new one is added.
      */
     @Test
-    public final void testNotExistingAttribute_Untouched() {
+    public final void testMultipleClasses() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
-        final String attribute;    // Removed attribute
+        final String cssClass;     // Removed class
         final Element element;     // Parsed HTML
 
-        html = "<table class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-        htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
-        selector = "table";
-        attribute = "border";
+        html = "<a class=\"class1 class2\" href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a class=\"class1 class2 class3\" href=\"https://somewhere.com/\">A link</a>";
+        selector = "a";
+        cssClass = "class3";
 
         element = Jsoup.parse(html).body();
-        util.removeAttribute(element, selector, attribute);
+        util.addClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
-     * Tests that attributes are removed.
+     * Tests that when adding a class, if the element has no classes the new one
+     * is added.
      */
     @Test
-    public final void testRemovesAttribute() {
+    public final void testNoClass() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
-        final String attribute;    // Removed attribute
+        final String cssClass;     // Removed class
         final Element element;     // Parsed HTML
 
-        html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-        htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
-        selector = "table[border]";
-        attribute = "border";
+        html = "<a href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a href=\"https://somewhere.com/\" class=\"class1\">A link</a>";
+        selector = "a";
+        cssClass = "class1";
 
         element = Jsoup.parse(html).body();
-        util.removeAttribute(element, selector, attribute);
+        util.addClass(element, selector, cssClass);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    /**
+     * Tests that add to a not existing element does nothing.
+     */
+    @Test
+    public final void testNotExistingElement_Untouched() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
+        final Element element;     // Parsed HTML
+
+        html = "<a href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+        selector = "p";
+        cssClass = "class2";
+
+        element = Jsoup.parse(html).body();
+        util.addClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
     }

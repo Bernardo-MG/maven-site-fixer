@@ -111,8 +111,8 @@ public final class TestHtmlToolRemoveClass {
         final String cssClass;     // Removed class
         final Element element;     // Parsed HTML
 
-        html = "<p>Some text</p>";
-        htmlExpected = "<p>Some text</p>";
+        html = "<a href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
         selector = "a.externalLink";
         cssClass = "externalLink";
 

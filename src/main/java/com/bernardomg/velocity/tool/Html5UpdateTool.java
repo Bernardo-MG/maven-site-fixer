@@ -122,7 +122,7 @@ public class Html5UpdateTool {
      * Corrects table headers by adding a {@code <thead>} section where missing.
      * <p>
      * This serves to fix an error with tables created by Doxia, which will add
-     * the header rows into the {@code <tbody>} element, instead on a {@code 
+     * the header rows into the {@code <tbody>} element, instead on a {@code
      * <thead>} element.
      * 
      * @param root

@@ -55,6 +55,34 @@ public final class HtmlTool {
     }
 
     /**
+     * Finds a set of elements through a CSS selector and adds a class to them.
+     * 
+     * @param root
+     *            root element for the selection
+     * @param selector
+     *            CSS selector for the elements to retag
+     * @param className
+     *            new class for the elements
+     * @return transformed element
+     */
+    public final Element addClass(final Element root, final String selector,
+            final String className) {
+        final Iterable<Element> elements; // Elements selected
+
+        checkNotNull(root, "Received a null pointer as root element");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(className, "Received a null pointer as class");
+
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            element.addClass(className);
+        }
+
+        return root;
+    }
+
+    /**
      * Parses the received HTML code.
      * <p>
      * The resulting object can be used on the other methods. Only the content
