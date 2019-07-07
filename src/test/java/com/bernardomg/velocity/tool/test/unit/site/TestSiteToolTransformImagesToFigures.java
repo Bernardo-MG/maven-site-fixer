@@ -66,7 +66,7 @@ public final class TestSiteToolTransformImagesToFigures {
         final Element element;     // Parsed HTML
 
         html = "<p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p>";
-        htmlExpected = "<p>\n <figure>\n  <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n  <figcaption>\n   A diagram\n  </figcaption>\n </figure></p>";
+        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n <figcaption>\n  A diagram\n </figcaption>\n</figure>";
 
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);

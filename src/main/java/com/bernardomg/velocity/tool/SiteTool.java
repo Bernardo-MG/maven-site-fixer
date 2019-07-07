@@ -303,24 +303,30 @@ public class SiteTool {
      */
     public final Element transformImagesToFigures(final Element root) {
         final Collection<Element> images; // Image elements from the <body>
+        final Collection<Element> figures; // figure elements from the <body>
         Element figure;     // <figure> element
         Element caption;    // <figcaption> element
 
         checkNotNull(root, "Received a null pointer as root element");
 
         images = root.select("img");
-        if (!images.isEmpty()) {
-            for (final Element img : images) {
-                figure = new Element(Tag.valueOf("figure"), "");
+        for (final Element img : images) {
+            figure = new Element(Tag.valueOf("figure"), "");
 
-                img.replaceWith(figure);
-                figure.appendChild(img);
+            img.replaceWith(figure);
+            figure.appendChild(img);
 
-                if (img.hasAttr("alt")) {
-                    caption = new Element(Tag.valueOf("figcaption"), "");
-                    caption.text(img.attr("alt"));
-                    figure.appendChild(caption);
-                }
+            if (img.hasAttr("alt")) {
+                caption = new Element(Tag.valueOf("figcaption"), "");
+                caption.text(img.attr("alt"));
+                figure.appendChild(caption);
+            }
+        }
+
+        figures = root.select("figure");
+        for (final Element fig : figures) {
+            if (fig.parent().tag().getName().equals("p")) {
+                fig.parent().unwrap();
             }
         }
 
