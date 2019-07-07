@@ -88,8 +88,9 @@ public class SiteTool {
      * 
      * @param root
      *            root element with anchors to fix
+     * @return transformed element
      */
-    public final void fixAnchorLinks(final Element root) {
+    public final Element fixAnchorLinks(final Element root) {
         String ref;         // Value of the href attribute
 
         checkNotNull(root, "Received a null pointer as root element");
@@ -105,6 +106,8 @@ public class SiteTool {
                         ref.toLowerCase().replaceAll(ID_INVALID_REGEX, ""));
             }
         }
+
+        return root;
     }
 
     /**
@@ -126,8 +129,9 @@ public class SiteTool {
      * 
      * @param root
      *            root element with headings where an id should be added
+     * @return transformed element
      */
-    public final void fixHeadingIds(final Element root) {
+    public final Element fixHeadingIds(final Element root) {
         final Collection<Element> headings; // Headings to fix
         String idText;      // Text to generate the id
 
@@ -148,6 +152,8 @@ public class SiteTool {
             heading.attr("id",
                     idText.toLowerCase().replaceAll(ID_INVALID_REGEX, ""));
         }
+
+        return root;
     }
 
     /**
@@ -178,8 +184,9 @@ public class SiteTool {
      *            root element with the report
      * @param report
      *            the report name
+     * @return transformed element
      */
-    public final void fixReport(final Element root, final String report) {
+    public final Element fixReport(final Element root, final String report) {
 
         checkNotNull(root, "Received a null pointer as root element");
         checkNotNull(report, "Received a null pointer as report");
@@ -240,6 +247,8 @@ public class SiteTool {
             default:
                 break;
         }
+
+        return root;
     }
 
     /**
@@ -248,8 +257,9 @@ public class SiteTool {
      * 
      * @param root
      *            root element with the page
+     * @return transformed element
      */
-    public final void transformIcons(final Element root) {
+    public final Element transformIcons(final Element root) {
         final Map<String, String> replacements; // Texts to replace and
                                                 // replacements
 
@@ -276,6 +286,8 @@ public class SiteTool {
                 "<span><span class=\"fa fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
 
         replaceAll(root, replacements);
+
+        return root;
     }
 
     /**
@@ -284,35 +296,41 @@ public class SiteTool {
      * This will wrap {@code <img>} elements with a {@code <figure>} element,
      * and add a {@code <figcaption>} with the contents of the image's
      * {@code alt} attribute, if said attribute exists.
-     * <p>
-     * Only {@code <img>} elements inside a {@code <section>} will be
-     * transformed.
      * 
      * @param root
      *            root element with images to transform
+     * @return transformed element
      */
-    public final void transformImagesToFigures(final Element root) {
+    public final Element transformImagesToFigures(final Element root) {
         final Collection<Element> images; // Image elements from the <body>
+        final Collection<Element> figures; // figure elements from the <body>
         Element figure;     // <figure> element
         Element caption;    // <figcaption> element
 
         checkNotNull(root, "Received a null pointer as root element");
 
-        images = root.select("section img");
-        if (!images.isEmpty()) {
-            for (final Element img : images) {
-                figure = new Element(Tag.valueOf("figure"), "");
+        images = root.select("img");
+        for (final Element img : images) {
+            figure = new Element(Tag.valueOf("figure"), "");
 
-                img.replaceWith(figure);
-                figure.appendChild(img);
+            img.replaceWith(figure);
+            figure.appendChild(img);
 
-                if (img.hasAttr("alt")) {
-                    caption = new Element(Tag.valueOf("figcaption"), "");
-                    caption.text(img.attr("alt"));
-                    figure.appendChild(caption);
-                }
+            if (img.hasAttr("alt")) {
+                caption = new Element(Tag.valueOf("figcaption"), "");
+                caption.text(img.attr("alt"));
+                figure.appendChild(caption);
             }
         }
+
+        figures = root.select("figure");
+        for (final Element fig : figures) {
+            if (fig.parent().tag().getName().equals("p")) {
+                fig.parent().unwrap();
+            }
+        }
+
+        return root;
     }
 
     /**
@@ -322,8 +340,9 @@ public class SiteTool {
      * 
      * @param root
      *            root element with tables to transform
+     * @return transformed element
      */
-    public final void transformTables(final Element root) {
+    public final Element transformTables(final Element root) {
         final Collection<Element> tables; // Tables to fix
 
         checkNotNull(root, "Received a null pointer as root element");
@@ -335,6 +354,8 @@ public class SiteTool {
             table.addClass("table-striped");
             table.addClass("table-bordered");
         }
+
+        return root;
     }
 
     /**

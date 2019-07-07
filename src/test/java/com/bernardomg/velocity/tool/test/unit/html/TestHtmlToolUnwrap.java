@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.HtmlTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
  * Unit tests for {@link HtmlTool} testing the {@code unwrap} method.
@@ -39,7 +40,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtmlToolUnwrap extends AbstractUtilsSelectorTest {
+public final class TestHtmlToolUnwrap {
 
     /**
      * Instance of the utils class being tested.
@@ -61,12 +62,16 @@ public final class TestHtmlToolUnwrap extends AbstractUtilsSelectorTest {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
         selector = "a:not([href])";
 
-        runTest(html, htmlExpected, selector);
+        element = Jsoup.parse(html).body();
+        util.unwrap(element, selector);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -77,12 +82,16 @@ public final class TestHtmlToolUnwrap extends AbstractUtilsSelectorTest {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = "<p>Some text</p>";
         selector = "a:not([href])";
 
-        runTest(html, htmlExpected, selector);
+        element = Jsoup.parse(html).body();
+        util.unwrap(element, selector);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -93,18 +102,16 @@ public final class TestHtmlToolUnwrap extends AbstractUtilsSelectorTest {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
         selector = "a:not([href])";
 
-        runTest(html, htmlExpected, selector);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element,
-            final String selector) {
+        element = Jsoup.parse(html).body();
         util.unwrap(element, selector);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

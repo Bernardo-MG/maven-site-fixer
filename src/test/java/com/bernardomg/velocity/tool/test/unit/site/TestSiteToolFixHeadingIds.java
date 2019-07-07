@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteTool}, testing the {@code fixHeadingIds} method.
@@ -39,7 +40,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestSiteToolFixHeadingIds extends AbstractUtilsTest {
+public final class TestSiteToolFixHeadingIds {
 
     /**
      * Instance of the utils class being tested.
@@ -60,11 +61,15 @@ public final class TestSiteToolFixHeadingIds extends AbstractUtilsTest {
     public final void testNoHeadings_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = html;
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -74,11 +79,15 @@ public final class TestSiteToolFixHeadingIds extends AbstractUtilsTest {
     public final void testWithId_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<h1 id=\"A.Heading\">A heading</h1><h3 id=\"another_heading\">Another heading</h3>";
         htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -88,11 +97,15 @@ public final class TestSiteToolFixHeadingIds extends AbstractUtilsTest {
     public final void testWithPoints_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<h1>com.bernardomg</h1><h3>com.bernardomg</h3>";
         htmlExpected = "<h1 id=\"combernardomg\">com.bernardomg</h1>\n<h3 id=\"combernardomg\">com.bernardomg</h3>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -102,16 +115,15 @@ public final class TestSiteToolFixHeadingIds extends AbstractUtilsTest {
     public final void testWithSpaces_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<h1>A heading</h1><h3>Another heading</h3>";
         htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"anotherheading\">Another heading</h3>";
 
-        runTest(html, htmlExpected);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element) {
+        element = Jsoup.parse(html).body();
         util.fixHeadingIds(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

@@ -34,14 +34,9 @@
    <module name="FileLength" />
 
    <!-- Checks for whitespace -->
-   <module name="FileTabCharacter" />
-
-   <!-- Checks for Headers -->
-   <!-- See http://checkstyle.sf.net/config_header.html -->
-   <!-- <module name="Header"> -->
-   <!-- <property name="headerFile" value="${checkstyle.header.file}"/> -->
-   <!-- <property name="fileExtensions" value="java"/> -->
-   <!-- </module> -->
+   <module name="FileTabCharacter">
+      <property name="eachLine" value="true" />
+   </module>
 
    <module name="TreeWalker">
 
@@ -55,9 +50,12 @@
          <property name="target"
             value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF" />
       </module>
-      <!-- <module name="JavadocTagContinuationIndentation"/> -->
       <module name="NonEmptyAtclauseDescription" />
-      <!-- <module name="CommentsIndentation"/> -->
+      <module name="SummaryJavadocCheck" />
+      <!-- Not yet supported -->
+      <!--<module name="JavadocParagraph"> <property name="allowNewlineParagraph" 
+         value="true" /> </module> -->
+      <module name="CommentsIndentation" />
 
       <!-- Checks for texts -->
       <module name="IllegalTokenText">
@@ -87,9 +85,18 @@
       <module name="MethodName" />
       <module name="PackageName" />
       <module name="ParameterName" />
+      <!-- Not yet supported -->
+      <!-- <module name="LambdaParameterName" /> -->
+      <module name="CatchParameterName" />
       <module name="StaticVariableName" />
+      <module name="ClassTypeParameterName" />
+      <module name="MethodTypeParameterName" />
+      <module name="InterfaceTypeParameterName" />
       <module name="TypeName" />
       <module name="OuterTypeFilename" />
+      <module name="AbbreviationAsWordInName">
+         <property name="ignoreFinal" value="false" />
+      </module>
 
       <!-- Checks for imports -->
       <module name="AvoidStarImport" />
@@ -147,6 +154,7 @@
       <module name="InterfaceIsType" />
       <module name="VisibilityModifier" />
       <module name="OneTopLevelClass" />
+      <module name="NoFinalizer" />
 
       <!-- Checks for statements -->
       <module name="OneStatementPerLine" />
@@ -161,7 +169,8 @@
       <module name="EmptyLineSeparator">
          <property name="allowNoEmptyLineBetweenFields" value="true" />
       </module>
-      <!-- <module name="EmptyCatchBlock"/> -->
+      <module name="SeparatorWrap" />
+      <module name="AnnotationLocation" />
 
    </module>
 

@@ -39,5 +39,10 @@
             Dropped support for JDK 7.
          </action>
       </release>
+      <release version="1.2.1" date="2019-07-07" description="Fixes">
+         <action dev="bmg" type="fix">
+            The image figure wrapper no longer requires a section.
+         </action>
+      </release>
    </body>
 </document>

@@ -77,14 +77,17 @@ public class Html5UpdateTool {
      * 
      * @param root
      *            root element to clear of any empty {@code href} link
+     * @return transformed element
      */
-    public final void removeNoHrefLinks(final Element root) {
+    public final Element removeNoHrefLinks(final Element root) {
 
         checkNotNull(root, "Received a null pointer as root element");
 
         // Links missing the href attribute
         // Unwrapped to avoid losing texts
-        getHtmlTool().unwrap(root, "a:not([href])");
+        htmlUtils.unwrap(root, "a:not([href])");
+
+        return root;
     }
 
     /**
@@ -96,8 +99,9 @@ public class Html5UpdateTool {
      *            CSS selector for the elements
      * @param attr
      *            attribute to clean
+     * @return transformed element
      */
-    public final void removePointsFromAttr(final Element root,
+    public final Element removePointsFromAttr(final Element root,
             final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
@@ -110,19 +114,22 @@ public class Html5UpdateTool {
         for (final Element selected : elements) {
             removePointsFromAttr(selected, attr);
         }
+
+        return root;
     }
 
     /**
      * Corrects table headers by adding a {@code <thead>} section where missing.
      * <p>
      * This serves to fix an error with tables created by Doxia, which will add
-     * the header rows into the {@code <tbody>} element, instead on a {@code 
+     * the header rows into the {@code <tbody>} element, instead on a {@code
      * <thead>} element.
      * 
      * @param root
      *            root element with tables to fix
+     * @return transformed element
      */
-    public final void updateTableHeads(final Element root) {
+    public final Element updateTableHeads(final Element root) {
         final Iterable<Element> tableHeadRows; // Heads to fix
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
@@ -145,15 +152,8 @@ public class Html5UpdateTool {
             // Adds the head at the beginning of the table
             table.prependChild(thead);
         }
-    }
 
-    /**
-     * Returns the HTML utils class.
-     * 
-     * @return the HTML utils class
-     */
-    private final HtmlTool getHtmlTool() {
-        return htmlUtils;
+        return root;
     }
 
     /**

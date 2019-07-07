@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.html;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.HtmlTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
 
 /**
  * Unit tests for {@link HtmlTool} testing the {@code swapTagWithParent} method.
@@ -39,8 +40,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsSelectorTest;
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtmlToolSwapTagWithParent
-        extends AbstractUtilsSelectorTest {
+public final class TestHtmlToolSwapTagWithParent {
 
     /**
      * Instance of the utils class being tested.
@@ -62,12 +62,16 @@ public final class TestHtmlToolSwapTagWithParent
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final Element element;     // Parsed HTML
 
         html = "<code><pre>Some code</pre></code>";
         htmlExpected = html;
         selector = "code > abc";
 
-        runTest(html, htmlExpected, selector);
+        element = Jsoup.parse(html).body();
+        util.swapTagWithParent(element, selector);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -78,18 +82,16 @@ public final class TestHtmlToolSwapTagWithParent
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
+        final Element element;     // Parsed HTML
 
         html = "<code><pre>Some code</pre></code>";
         htmlExpected = "<pre><code>Some code</code></pre>";
         selector = "code > pre";
 
-        runTest(html, htmlExpected, selector);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element,
-            final String selector) {
+        element = Jsoup.parse(html).body();
         util.swapTagWithParent(element, selector);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

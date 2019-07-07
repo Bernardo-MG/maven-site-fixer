@@ -34,13 +34,13 @@ import org.junit.runner.RunWith;
 import com.bernardomg.velocity.tool.HtmlTool;
 
 /**
- * Unit tests for {@link HtmlTool} testing the {@code retag} method.
+ * Unit tests for {@link HtmlTool} testing the {@code addClass} method.
  * 
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtmlToolRetag {
+public final class TestHtmlToolAddClass {
 
     /**
      * Instance of the utils class being tested.
@@ -50,94 +50,74 @@ public final class TestHtmlToolRetag {
     /**
      * Default constructor.
      */
-    public TestHtmlToolRetag() {
+    public TestHtmlToolAddClass() {
         super();
     }
 
     /**
-     * Tests that retagging an element works as expected.
+     * Tests that when adding a class, if the element has multiple classes the
+     * new one is added.
      */
     @Test
-    public final void testBig() {
+    public final void testMultipleClasses() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
-        final String tag;          // New tag
+        final String cssClass;     // Removed class
         final Element element;     // Parsed HTML
 
-        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-        htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
-        selector = "div.source";
-        tag = "code";
+        html = "<a class=\"class1 class2\" href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a class=\"class1 class2 class3\" href=\"https://somewhere.com/\">A link</a>";
+        selector = "a";
+        cssClass = "class3";
 
         element = Jsoup.parse(html).body();
-        util.retag(element, selector, tag);
+        util.addClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
-     * Tests that empty elements are retagged.
+     * Tests that when adding a class, if the element has no classes the new one
+     * is added.
      */
     @Test
-    public final void testEmpty() {
+    public final void testNoClass() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
-        final String tag;          // New tag
+        final String cssClass;     // Removed class
         final Element element;     // Parsed HTML
 
-        html = "<div class=\"source\">";
-        htmlExpected = "<code class=\"source\"></code>";
-        selector = "div.source";
-        tag = "code";
+        html = "<a href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a href=\"https://somewhere.com/\" class=\"class1\">A link</a>";
+        selector = "a";
+        cssClass = "class1";
 
         element = Jsoup.parse(html).body();
-        util.retag(element, selector, tag);
+        util.addClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
-     * Tests that retagging a not existing element does nothing.
+     * Tests that add to a not existing element does nothing.
      */
     @Test
-    public final void testNotExisting_Nothing() {
+    public final void testNotExistingElement_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final String selector;     // CSS selector
-        final String tag;          // New tag
+        final String cssClass;     // Removed class
         final Element element;     // Parsed HTML
 
-        html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-        htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
-        selector = "div.abc";
-        tag = "code";
+        html = "<a href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
+        selector = "p";
+        cssClass = "class2";
 
         element = Jsoup.parse(html).body();
-        util.retag(element, selector, tag);
-
-        Assertions.assertEquals(htmlExpected, element.html());
-    }
-
-    /**
-     * Tests that empty elements are retagged.
-     */
-    @Test
-    public final void testWithPre() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String tag;          // New tag
-        final Element element;     // Parsed HTML
-
-        html = "<div class=\"source\"><pre>Some code</pre></div></div>";
-        htmlExpected = "<code class=\"source\"><pre>Some code</pre></code>";
-        selector = "div.source";
-        tag = "code";
-
-        element = Jsoup.parse(html).body();
-        util.retag(element, selector, tag);
+        util.addClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
     }

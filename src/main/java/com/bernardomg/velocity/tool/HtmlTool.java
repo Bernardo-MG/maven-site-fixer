@@ -55,6 +55,34 @@ public final class HtmlTool {
     }
 
     /**
+     * Finds a set of elements through a CSS selector and adds a class to them.
+     * 
+     * @param root
+     *            root element for the selection
+     * @param selector
+     *            CSS selector for the elements to retag
+     * @param className
+     *            new class for the elements
+     * @return transformed element
+     */
+    public final Element addClass(final Element root, final String selector,
+            final String className) {
+        final Iterable<Element> elements; // Elements selected
+
+        checkNotNull(root, "Received a null pointer as root element");
+        checkNotNull(selector, "Received a null pointer as selector");
+        checkNotNull(className, "Received a null pointer as class");
+
+        // Selects and iterates over the elements
+        elements = root.select(selector);
+        for (final Element element : elements) {
+            element.addClass(className);
+        }
+
+        return root;
+    }
+
+    /**
      * Parses the received HTML code.
      * <p>
      * The resulting object can be used on the other methods. Only the content
@@ -80,9 +108,10 @@ public final class HtmlTool {
      *            CSS selector for the elements with the attribute to remove
      * @param attribute
      *            attribute to remove
+     * @return transformed element
      */
-    public final void removeAttribute(final Element root, final String selector,
-            final String attribute) {
+    public final Element removeAttribute(final Element root,
+            final String selector, final String attribute) {
         final Iterable<Element> elements; // Elements selected
 
         checkNotNull(root, "Received a null pointer as root element");
@@ -94,6 +123,8 @@ public final class HtmlTool {
         for (final Element element : elements) {
             element.removeAttr(attribute);
         }
+
+        return root;
     }
 
     /**
@@ -109,8 +140,9 @@ public final class HtmlTool {
      *            CSS selector for the elements with the class to remove
      * @param className
      *            class to remove
+     * @return transformed element
      */
-    public final void removeClass(final Element root, final String selector,
+    public final Element removeClass(final Element root, final String selector,
             final String className) {
         final Iterable<Element> elements; // Elements selected
 
@@ -127,6 +159,8 @@ public final class HtmlTool {
                 element.removeAttr("class");
             }
         }
+
+        return root;
     }
 
     /**
@@ -138,8 +172,9 @@ public final class HtmlTool {
      *            CSS selector for the elements to retag
      * @param tag
      *            new tag for the elements
+     * @return transformed element
      */
-    public final void retag(final Element root, final String selector,
+    public final Element retag(final Element root, final String selector,
             final String tag) {
         final Iterable<Element> elements; // Elements selected
 
@@ -152,6 +187,8 @@ public final class HtmlTool {
         for (final Element element : elements) {
             element.tagName(tag);
         }
+
+        return root;
     }
 
     /**
@@ -162,8 +199,9 @@ public final class HtmlTool {
      *            body element with source divisions to upgrade
      * @param selector
      *            CSS selector for the elements to swap with its parent
+     * @return transformed element
      */
-    public final void swapTagWithParent(final Element root,
+    public final Element swapTagWithParent(final Element root,
             final String selector) {
         final Iterable<Element> elements; // Selected elements
         Element parent;                   // Parent element
@@ -188,6 +226,8 @@ public final class HtmlTool {
             // Sets the text into what was the parent element
             parent.text(text);
         }
+
+        return root;
     }
 
     /**
@@ -199,8 +239,9 @@ public final class HtmlTool {
      *            root element for the selection
      * @param selector
      *            CSS selector for the elements to unwrap
+     * @return transformed element
      */
-    public final void unwrap(final Element root, final String selector) {
+    public final Element unwrap(final Element root, final String selector) {
         final Iterable<Element> elements; // Elements to unwrap
 
         checkNotNull(root, "Received a null pointer as root element");
@@ -211,6 +252,8 @@ public final class HtmlTool {
         for (final Element element : elements) {
             element.unwrap();
         }
+
+        return root;
     }
 
     /**
@@ -223,8 +266,9 @@ public final class HtmlTool {
      *            CSS selector for the elements to wrap
      * @param wrapper
      *            HTML to use for wrapping the selected elements
+     * @return transformed element
      */
-    public final void wrap(final Element root, final String selector,
+    public final Element wrap(final Element root, final String selector,
             final String wrapper) {
         final Iterable<Element> elements; // Selected elements
 
@@ -237,6 +281,8 @@ public final class HtmlTool {
         for (final Element element : elements) {
             element.wrap(wrapper);
         }
+
+        return root;
     }
 
 }

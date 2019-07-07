@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.site;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link SiteTool}, testing the {@code fixAnchorLinks} method.
@@ -39,7 +40,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestSiteToolFixAnchorLinks extends AbstractUtilsTest {
+public final class TestSiteToolFixAnchorLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -60,11 +61,15 @@ public final class TestSiteToolFixAnchorLinks extends AbstractUtilsTest {
     public final void testEmptyLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<a href=\"\">A link</a>";
         htmlExpected = html;
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -74,11 +79,15 @@ public final class TestSiteToolFixAnchorLinks extends AbstractUtilsTest {
     public final void testExternalLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<a href=\"www.somewhere.com\">A link</a>";
         htmlExpected = html;
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -88,11 +97,15 @@ public final class TestSiteToolFixAnchorLinks extends AbstractUtilsTest {
     public final void testInternalLink_Formatted() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<a href=\"#An_Internal. Link\">A link</a>";
         htmlExpected = "<a href=\"#aninternallink\">A link</a>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -102,16 +115,15 @@ public final class TestSiteToolFixAnchorLinks extends AbstractUtilsTest {
     public final void testNoAnchors_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = html;
 
-        runTest(html, htmlExpected);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element) {
+        element = Jsoup.parse(html).body();
         util.fixAnchorLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

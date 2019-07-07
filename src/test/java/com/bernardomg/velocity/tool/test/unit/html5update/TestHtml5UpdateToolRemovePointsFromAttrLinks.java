@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.html5update;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.Html5UpdateTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link Html5UpdateTool} testing the
@@ -40,8 +41,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @see Html5UpdateTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtml5UpdateToolRemovePointsFromAttrLinks
-        extends AbstractUtilsTest {
+public final class TestHtml5UpdateToolRemovePointsFromAttrLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -62,16 +62,15 @@ public final class TestHtml5UpdateToolRemovePointsFromAttrLinks
     public final void testSimple_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<a name=\"a_heading\" href=\"a.b.c\">Text</a>";
         htmlExpected = "<a name=\"a_heading\" href=\"abc\">Text</a>";
 
-        runTest(html, htmlExpected);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element) {
+        element = Jsoup.parse(html).body();
         util.removePointsFromAttr(element, "[href]", "href");
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

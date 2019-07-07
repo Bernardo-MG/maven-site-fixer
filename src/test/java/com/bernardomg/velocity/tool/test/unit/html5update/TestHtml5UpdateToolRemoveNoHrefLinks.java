@@ -24,13 +24,14 @@
 
 package com.bernardomg.velocity.tool.test.unit.html5update;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.Html5UpdateTool;
-import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
 
 /**
  * Unit tests for {@link Html5UpdateTool} testing the {@code removeNoHrefLinks}
@@ -40,8 +41,7 @@ import com.bernardomg.velocity.tool.test.utils.test.AbstractUtilsTest;
  * @see Html5UpdateTool
  */
 @RunWith(JUnitPlatform.class)
-public final class TestHtml5UpdateToolRemoveNoHrefLinks
-        extends AbstractUtilsTest {
+public final class TestHtml5UpdateToolRemoveNoHrefLinks {
 
     /**
      * Instance of the utils class being tested.
@@ -62,11 +62,15 @@ public final class TestHtml5UpdateToolRemoveNoHrefLinks
     public final void testNoAnchors_Nothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = html;
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.removeNoHrefLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -76,11 +80,15 @@ public final class TestHtml5UpdateToolRemoveNoHrefLinks
     public final void testNoHref_Empty_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
-        runTest(html, htmlExpected);
+        element = Jsoup.parse(html).body();
+        util.removeNoHrefLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
     /**
@@ -91,16 +99,15 @@ public final class TestHtml5UpdateToolRemoveNoHrefLinks
     public final void testNoHref_WithText_TextKept() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
 
         html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
         htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
 
-        runTest(html, htmlExpected);
-    }
-
-    @Override
-    protected final void callTestedMethod(final Element element) {
+        element = Jsoup.parse(html).body();
         util.removeNoHrefLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
     }
 
 }

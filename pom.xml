@@ -20,7 +20,7 @@
 
    <groupId>com.bernardomg.velocity</groupId>
    <artifactId>maven-site-fixer</artifactId>
-   <version>1.2.0</version>
+   <version>1.2.1-SNAPSHOT</version>
    <packaging>jar</packaging>
 
    <name>Maven Site Fixer</name>
@@ -207,16 +207,16 @@
       <commons.digester.version>2.1</commons.digester.version>
       <commons.logging.version>1.2</commons.logging.version>
       <commons.validator.version>1.6</commons.validator.version>
-      <guava.version>27.1-jre</guava.version>
-      <jsoup.version>1.11.3</jsoup.version>
-      <junit.jupiter.version>5.4.0</junit.jupiter.version>
-      <junit.platform.version>1.4.0</junit.platform.version>
-      <mockito.version>2.25.1</mockito.version>
+      <guava.version>28.0-jre</guava.version>
+      <jsoup.version>1.12.1</jsoup.version>
+      <junit.jupiter.version>5.5.0</junit.jupiter.version>
+      <junit.platform.version>1.5.0</junit.platform.version>
+      <mockito.version>2.28.2</mockito.version>
       <velocity.tools.version>2.0</velocity.tools.version>
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
-      <site.skin.version>1.4.0</site.skin.version>
+      <site.skin.version>1.4.1</site.skin.version>
       <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer</mavenURL>
    </properties>
