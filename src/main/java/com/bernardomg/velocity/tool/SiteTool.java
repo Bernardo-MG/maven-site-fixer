@@ -57,12 +57,16 @@ import org.jsoup.parser.Tag;
 public class SiteTool {
 
     /**
-     * Regular expresion indicating invalid values for ids and internal links.
-     * <p>
-     * It will match empty spaces, underscores and points. Which are meant to be
-     * removed from the ids.
+     * Regular expresion indicating invalid values for ids and internal links
+     * which will be replaced by hyphens.
      */
-    private static final String ID_INVALID_REGEX = "[ _.]";
+    private static final String ID_HYPHEN_REGEX   = "[ _]";
+
+    /**
+     * Regular expresion indicating invalid values for ids and internal links
+     * will will be removed.
+     */
+    private static final String ID_REJECTED_REGEX = "[.]";
 
     /**
      * Constructs an instance of the utilities class.
@@ -91,7 +95,8 @@ public class SiteTool {
      * @return transformed element
      */
     public final Element fixAnchorLinks(final Element root) {
-        String ref;         // Value of the href attribute
+        String ref; // Value of the href attribute
+        String id;  // Formatted id
 
         checkNotNull(root, "Received a null pointer as root element");
 
@@ -102,8 +107,8 @@ public class SiteTool {
             ref = anchor.attr("href");
 
             if ((!ref.isEmpty()) && (ref.substring(0, 1).equals("#"))) {
-                anchor.attr("href",
-                        ref.toLowerCase().replaceAll(ID_INVALID_REGEX, ""));
+                id = formatId(ref);
+                anchor.attr("href", id);
             }
         }
 
@@ -133,7 +138,8 @@ public class SiteTool {
      */
     public final Element fixHeadingIds(final Element root) {
         final Collection<Element> headings; // Headings to fix
-        String idText;      // Text to generate the id
+        String idText;  // Text to generate the id
+        String id;      // Formatted id
 
         checkNotNull(root, "Received a null pointer as root element");
 
@@ -149,8 +155,8 @@ public class SiteTool {
                 // The id text is taken from the heading text
                 idText = heading.text();
             }
-            heading.attr("id",
-                    idText.toLowerCase().replaceAll(ID_INVALID_REGEX, ""));
+            id = formatId(idText);
+            heading.attr("id", id);
         }
 
         return root;
@@ -647,6 +653,18 @@ public class SiteTool {
         for (final Element head : root.getElementsByTag("h3")) {
             head.tagName("h2");
         }
+    }
+
+    /**
+     * Formats the received id, transforming it into a valid internal anchor id.
+     * 
+     * @param id
+     *            id to transform
+     * @return a valid anchor id
+     */
+    private final String formatId(final String id) {
+        return id.toLowerCase().replaceAll(ID_REJECTED_REGEX, "")
+                .replaceAll(ID_HYPHEN_REGEX, "-");
     }
 
     /**

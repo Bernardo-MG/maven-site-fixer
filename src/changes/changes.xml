@@ -44,5 +44,10 @@
             The image figure wrapper no longer requires a section.
          </action>
       </release>
+      <release version="1.2.2" date="2019-09-03" description="Changed id formatting">
+         <action dev="bmg" type="update">
+            Changed id formatting for internal anchors.
+         </action>
+      </release>
    </body>
 </document>
