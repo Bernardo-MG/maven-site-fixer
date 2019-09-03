@@ -100,7 +100,7 @@ public final class TestSiteToolFixAnchorLinks {
         final Element element;     // Parsed HTML
 
         html = "<a href=\"#An_Internal. Link\">A link</a>";
-        htmlExpected = "<a href=\"#aninternallink\">A link</a>";
+        htmlExpected = "<a href=\"#an-internal-link\">A link</a>";
 
         element = Jsoup.parse(html).body();
         util.fixAnchorLinks(element);
