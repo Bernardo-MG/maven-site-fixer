@@ -201,7 +201,7 @@
       <!-- ============================================== -->
       <!-- =========== DEPENDENCIES VERSIONS ============ -->
       <!-- ============================================== -->
-      <commons.beanUtils.version>1.9.4</commons.beanUtils.version>
+      <commons.beanUtils.version>1.9.3</commons.beanUtils.version>
       <commons.chain.version>1.2</commons.chain.version>
       <commons.collections.version>3.2.2</commons.collections.version>
       <commons.digester.version>2.1</commons.digester.version>
