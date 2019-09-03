@@ -60,13 +60,13 @@ public class SiteTool {
      * Regular expresion indicating invalid values for ids and internal links
      * which will be replaced by hyphens.
      */
-    private static final String ID_HYPHEN_REGEX   = "[ _]";
+    private static final String ID_HYPHEN_REGEX   = "[]";
 
     /**
      * Regular expresion indicating invalid values for ids and internal links
      * will will be removed.
      */
-    private static final String ID_REJECTED_REGEX = "[.]";
+    private static final String ID_REJECTED_REGEX = "[ _.]";
 
     /**
      * Constructs an instance of the utilities class.
@@ -663,8 +663,7 @@ public class SiteTool {
      * @return a valid anchor id
      */
     private final String formatId(final String id) {
-        return id.toLowerCase().replaceAll(ID_REJECTED_REGEX, "")
-                .replaceAll(ID_HYPHEN_REGEX, "-");
+        return id.toLowerCase().replaceAll(ID_REJECTED_REGEX, "");
     }
 
     /**
