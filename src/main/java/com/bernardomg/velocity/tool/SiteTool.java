@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,7 @@ public class SiteTool {
      * Regular expresion indicating invalid values for ids and internal links
      * will will be removed.
      */
-    private static final String ID_REJECTED_REGEX = "[.]";
+    private static final String ID_REJECTED_REGEX = "[^\\w#-]";
 
     /**
      * Constructs an instance of the utilities class.
@@ -663,8 +663,8 @@ public class SiteTool {
      * @return a valid anchor id
      */
     private final String formatId(final String id) {
-        return id.toLowerCase().replaceAll(ID_REJECTED_REGEX, "")
-                .replaceAll(ID_HYPHEN_REGEX, "-");
+        return id.trim().toLowerCase().replaceAll(ID_HYPHEN_REGEX, "-")
+                .replaceAll(ID_REJECTED_REGEX, "");
     }
 
     /**

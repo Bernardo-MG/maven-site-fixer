@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.html5update;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -41,6 +42,7 @@ import com.bernardomg.velocity.tool.Html5UpdateTool;
  * @see Html5UpdateTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("Html5UpdateTool.removeNoHrefLinks")
 public final class TestHtml5UpdateToolRemoveNoHrefLinks {
 
     /**
@@ -55,10 +57,24 @@ public final class TestHtml5UpdateToolRemoveNoHrefLinks {
         super();
     }
 
-    /**
-     * Tests that HTML with no links is not edited.
-     */
     @Test
+    @DisplayName("Removing from an empty string does nothing")
+    public final void testEmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+        htmlExpected = html;
+
+        element = Jsoup.parse(html).body();
+        util.removeNoHrefLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("If there are no anchor it does nothing")
     public final void testNoAnchors_Nothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -73,10 +89,8 @@ public final class TestHtml5UpdateToolRemoveNoHrefLinks {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that links without the {@code href} attribute are removed.
-     */
     @Test
+    @DisplayName("Links without the href attribute are removed")
     public final void testNoHref_Empty_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -91,11 +105,8 @@ public final class TestHtml5UpdateToolRemoveNoHrefLinks {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that links without the {@code href} attribute are removed, and
-     * their contents moved to the parent.
-     */
     @Test
+    @DisplayName("Links without the href attribute are removed, and their contents moved to the parent")
     public final void testNoHref_WithText_TextKept() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

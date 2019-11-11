@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.site;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("SiteTool.transformIcons")
 public final class TestSiteToolTransformIcons {
 
     /**
@@ -54,10 +56,24 @@ public final class TestSiteToolTransformIcons {
         super();
     }
 
-    /**
-     * Tests that when finding an expected icon it is transformed correctly.
-     */
     @Test
+    @DisplayName("Transforming an empty string does nothing")
+    public final void testEmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+        htmlExpected = "";
+
+        element = Jsoup.parse(html).body();
+        util.transformIcons(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Transforms icons")
     public final void testIcon_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -72,10 +88,8 @@ public final class TestSiteToolTransformIcons {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that HTML with no icons is left untouched
-     */
     @Test
+    @DisplayName("If there are no icons it does nothing")
     public final void testNoIcons_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

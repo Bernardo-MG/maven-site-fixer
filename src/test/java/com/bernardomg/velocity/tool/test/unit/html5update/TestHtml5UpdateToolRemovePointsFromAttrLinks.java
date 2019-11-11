@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.html5update;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -41,6 +42,7 @@ import com.bernardomg.velocity.tool.Html5UpdateTool;
  * @see Html5UpdateTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("Html5UpdateTool.removePointsFromAttr")
 public final class TestHtml5UpdateToolRemovePointsFromAttrLinks {
 
     /**
@@ -55,10 +57,24 @@ public final class TestHtml5UpdateToolRemovePointsFromAttrLinks {
         super();
     }
 
-    /**
-     * Points are removed from links.
-     */
     @Test
+    @DisplayName("Removing from an empty string does nothing")
+    public final void testEmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<a name=\"a_heading\" href=\"a.b.c\">Text</a>";
+        htmlExpected = "<a name=\"a_heading\" href=\"abc\">Text</a>";
+
+        element = Jsoup.parse(html).body();
+        util.removePointsFromAttr(element, "[href]", "href");
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Points are removed from links")
     public final void testSimple_Removed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

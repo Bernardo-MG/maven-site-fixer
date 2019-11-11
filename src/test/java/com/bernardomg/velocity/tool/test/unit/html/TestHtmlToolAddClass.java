@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.html;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("HtmlTool.addClass")
 public final class TestHtmlToolAddClass {
 
     /**
@@ -54,11 +56,25 @@ public final class TestHtmlToolAddClass {
         super();
     }
 
-    /**
-     * Tests that when adding a class, if the element has multiple classes the
-     * new one is added.
-     */
     @Test
+    @DisplayName("Adding to an empty string does nothing")
+    public final void testAddClass_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.addClass(element, "a.externalLink", "externalLink");
+
+        htmlExpected = "";
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Adds a class when there are already multiple classes")
     public final void testMultipleClasses() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -77,11 +93,8 @@ public final class TestHtmlToolAddClass {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that when adding a class, if the element has no classes the new one
-     * is added.
-     */
     @Test
+    @DisplayName("Adds a class when there are no classes")
     public final void testNoClass() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -100,10 +113,8 @@ public final class TestHtmlToolAddClass {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that add to a not existing element does nothing.
-     */
     @Test
+    @DisplayName("Adding to a not existing element does nothing")
     public final void testNotExistingElement_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

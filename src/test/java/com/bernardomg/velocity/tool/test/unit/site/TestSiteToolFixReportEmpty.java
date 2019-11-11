@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.site;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -44,6 +45,7 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("SiteTool.fixReport")
 public final class TestSiteToolFixReportEmpty {
 
     /**
@@ -58,10 +60,8 @@ public final class TestSiteToolFixReportEmpty {
         super();
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the changes report is empty it does nothing")
     public final void testChangesReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -76,10 +76,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the checkstyle report is empty it does nothing")
     public final void testCheckstyleReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -94,10 +92,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the cpd report is empty it does nothing")
     public final void testCpdReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -112,10 +108,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the dependencies report is empty it does nothing")
     public final void testDependenciesReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -130,10 +124,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the failsafe report is empty it does nothing")
     public final void testFailsafeReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -148,10 +140,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the findbugs report is empty it does nothing")
     public final void testFindbugsReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -166,10 +156,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the JDepend report is empty it does nothing")
     public final void testJdependReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -184,10 +172,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the license report is empty it does nothing")
     public final void testLicenseReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -202,10 +188,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the plugin management report is empty it does nothing")
     public final void testPluginManagementReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -220,10 +204,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the plugins report is empty it does nothing")
     public final void testPluginsReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -238,10 +220,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the PMD report is empty it does nothing")
     public final void testPmdReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -256,10 +236,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the project summary report is empty it does nothing")
     public final void testProjectSummaryReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -274,10 +252,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the surefire report is empty it does nothing")
     public final void testSurefireReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -292,10 +268,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the taglist report is empty it does nothing")
     public final void testTaglistReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -310,10 +284,8 @@ public final class TestSiteToolFixReportEmpty {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
+    @DisplayName("If the team list report is empty it does nothing")
     public final void testTeamListReport_Empty() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

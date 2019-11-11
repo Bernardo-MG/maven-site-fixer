@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.html;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("HtmlTool.swapTagWithParent")
 public final class TestHtmlToolSwapTagWithParent {
 
     /**
@@ -54,10 +56,25 @@ public final class TestHtmlToolSwapTagWithParent {
         super();
     }
 
-    /**
-     * Tests that swapping a not existing element does nothing.
-     */
     @Test
+    @DisplayName("Swapping an empty string does nothing")
+    public final void testEmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.swapTagWithParent(element, "code > pre");
+
+        htmlExpected = "";
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Swapping a not existing element does nothing")
     public final void testNotExistingNothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -74,10 +91,8 @@ public final class TestHtmlToolSwapTagWithParent {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that swapping elements works as expected.
-     */
     @Test
+    @DisplayName("Swaps elements")
     public final void testSwapCodePre() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

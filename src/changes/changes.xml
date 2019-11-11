@@ -54,5 +54,10 @@
             Reduced dependency version due to conflict on Maven Skin.
          </action>
       </release>
+      <release version="1.2.4" date="2019-11-11" description="">
+         <action dev="bmg" type="fix">
+            Id formatting for anchors rejects special characters.
+         </action>
+      </release>
    </body>
 </document>

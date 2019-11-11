@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.html;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("HtmlTool.wrap")
 public final class TestHtmlToolWrap {
 
     /**
@@ -54,11 +56,8 @@ public final class TestHtmlToolWrap {
         super();
     }
 
-    /**
-     * Tests that wrapping an element, without indicating the closing tag,
-     * closes the wrap.
-     */
     @Test
+    @DisplayName("Wrapping without giving a closing tag closes the tag")
     public final void testNotClosed_Closed() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -77,10 +76,8 @@ public final class TestHtmlToolWrap {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Test that wrapping a not existing element does nothing.
-     */
     @Test
+    @DisplayName("Wrapping a not existing element does nothing")
     public final void testNotExisting_Nothing() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -99,10 +96,8 @@ public final class TestHtmlToolWrap {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that wrapping an element works as expected.
-     */
     @Test
+    @DisplayName("Wraps an element")
     public final void testWrap() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -117,6 +112,23 @@ public final class TestHtmlToolWrap {
 
         element = Jsoup.parse(html).body();
         util.wrap(element, selector, wrapper);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Wrapping an empty string does nothing")
+    public final void testWrap_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.wrap(element, "h1", "<header></header>");
+
+        htmlExpected = "";
 
         Assertions.assertEquals(htmlExpected, element.html());
     }

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.site;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("SiteTool.fixHeadingIds")
 public final class TestSiteToolFixHeadingIds {
 
     /**
@@ -54,10 +56,24 @@ public final class TestSiteToolFixHeadingIds {
         super();
     }
 
-    /**
-     * Tests that HTML with no headings is left untouched
-     */
     @Test
+    @DisplayName("Fixing an empty string does nothing")
+    public final void testEmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+        htmlExpected = "";
+
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Fixing an element without headings does nothing")
     public final void testNoHeadings_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -72,10 +88,8 @@ public final class TestSiteToolFixHeadingIds {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that the id is correctly fixed.
-     */
     @Test
+    @DisplayName("Fixes heading ids")
     public final void testWithId_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -90,10 +104,8 @@ public final class TestSiteToolFixHeadingIds {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that the id is correctly added to headings with points.
-     */
     @Test
+    @DisplayName("Fixes heading ids which include points")
     public final void testWithPoints_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -108,10 +120,8 @@ public final class TestSiteToolFixHeadingIds {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that the id is correctly added to headings with spaces.
-     */
     @Test
+    @DisplayName("Fixes heading ids which include spaces")
     public final void testWithSpaces_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -119,6 +129,22 @@ public final class TestSiteToolFixHeadingIds {
 
         html = "<h1>A heading</h1><h3>Another heading</h3>";
         htmlExpected = "<h1 id=\"a-heading\">A heading</h1>\n<h3 id=\"another-heading\">Another heading</h3>";
+
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Fixes heading ids which include special characters")
+    public final void testWithSpecialChars_CorrectId() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<h1>A -_#heading *! </h1><h3>Another heading</h3>";
+        htmlExpected = "<h1 id=\"a---#heading-\">A -_#heading *! </h1>\n<h3 id=\"another-heading\">Another heading</h3>";
 
         element = Jsoup.parse(html).body();
         util.fixHeadingIds(element);

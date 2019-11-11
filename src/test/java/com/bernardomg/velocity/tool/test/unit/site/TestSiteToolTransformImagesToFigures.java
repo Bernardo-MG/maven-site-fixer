@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2017 the original author or authors.
+ * Copyright (c) 2015-2019 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.site;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -41,6 +42,7 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("SiteTool.transformImagesToFigures")
 public final class TestSiteToolTransformImagesToFigures {
 
     /**
@@ -55,11 +57,8 @@ public final class TestSiteToolTransformImagesToFigures {
         super();
     }
 
-    /**
-     * Tests that when transforming images to figures works correctly when an
-     * {@code alt} attribute is not present.
-     */
     @Test
+    @DisplayName("Generates a caption from the alt attribute")
     public final void testCaption_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -75,17 +74,17 @@ public final class TestSiteToolTransformImagesToFigures {
     }
 
     /**
-     * Tests that when transforming images to figures works correctly when an
-     * {@code alt} attribute is present.
+     * Tests that an empty string causes no problem.
      */
     @Test
-    public final void testNoCaption_Transforms() {
+    @DisplayName("Transforming an emtpy string does nothing")
+    public final void testEmptyString() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<img src=\"imgs/diagram.png\">";
-        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
+        html = "";
+        htmlExpected = "";
 
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
@@ -93,10 +92,8 @@ public final class TestSiteToolTransformImagesToFigures {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that HTML with no images is left untouched
-     */
     @Test
+    @DisplayName("If there are no images it does nothing")
     public final void testNoImages_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -104,6 +101,22 @@ public final class TestSiteToolTransformImagesToFigures {
 
         html = "<p>Some text</p>";
         htmlExpected = "<p>Some text</p>";
+
+        element = Jsoup.parse(html).body();
+        util.transformImagesToFigures(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Transforms images into figures")
+    public final void testSimple_Transforms() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<img src=\"imgs/diagram.png\">";
+        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
 
         element = Jsoup.parse(html).body();
         util.transformImagesToFigures(element);
