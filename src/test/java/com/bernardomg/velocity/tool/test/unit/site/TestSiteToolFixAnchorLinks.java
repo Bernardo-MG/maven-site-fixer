@@ -109,6 +109,24 @@ public final class TestSiteToolFixAnchorLinks {
     }
 
     /**
+     * Tests that an internal link is correctly formatted.
+     */
+    @Test
+    public final void testInternalLink_SpecialCharacters_Formatted() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<a href=\"#link_-with?special!*chars\">A link</a>";
+        htmlExpected = "<a href=\"#link--withspecialchars\">A link</a>";
+
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    /**
      * Tests that HTML with no links is left untouched.
      */
     @Test
