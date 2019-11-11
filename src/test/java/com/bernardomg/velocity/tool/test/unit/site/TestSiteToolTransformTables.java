@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.site;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -41,6 +42,7 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("SiteTool.transformTables")
 public final class TestSiteToolTransformTables {
 
     /**
@@ -55,10 +57,24 @@ public final class TestSiteToolTransformTables {
         super();
     }
 
-    /**
-     * Tests that HTML with no tables is left untouched
-     */
     @Test
+    @DisplayName("Transforming empty strings does nothing")
+    public final void testEmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+        htmlExpected = "";
+
+        element = Jsoup.parse(html).body();
+        util.transformTables(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("If there are no tables it does nothing")
     public final void testNoTable_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -73,10 +89,8 @@ public final class TestSiteToolTransformTables {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that tables are transformed correctly.
-     */
     @Test
+    @DisplayName("Transforms tables correctly")
     public final void testTable_Transforms() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

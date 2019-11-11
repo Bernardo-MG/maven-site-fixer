@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.html;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("HtmlTool.unwrap")
 public final class TestHtmlToolUnwrap {
 
     /**
@@ -90,6 +92,26 @@ public final class TestHtmlToolUnwrap {
 
         element = Jsoup.parse(html).body();
         util.unwrap(element, selector);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    /**
+     * Tests that an empty string causes no problem to the {@code unwrap}
+     * method.
+     */
+    @Test
+    public final void testUnwrap_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.unwrap(element, "a:not([href])");
+
+        htmlExpected = "";
 
         Assertions.assertEquals(htmlExpected, element.html());
     }

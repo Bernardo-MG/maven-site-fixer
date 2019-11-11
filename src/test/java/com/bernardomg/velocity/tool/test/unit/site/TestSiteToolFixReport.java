@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.site;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("SiteTool.fixReport")
 public final class TestSiteToolFixReport {
 
     /**
@@ -54,10 +56,8 @@ public final class TestSiteToolFixReport {
         super();
     }
 
-    /**
-     * Tests that the changes report is correctly fixed.
-     */
     @Test
+    @DisplayName("Fixes changes report")
     public final void testChangesReport() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -73,10 +73,8 @@ public final class TestSiteToolFixReport {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that the checkstyle report is correctly fixed.
-     */
     @Test
+    @DisplayName("Fixes checkstyle report")
     public final void testCheckstyleReport() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -92,10 +90,24 @@ public final class TestSiteToolFixReport {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that the plugin management report is correctly fixed.
-     */
     @Test
+    @DisplayName("Fixing an empty string does nothing")
+    public final void testEmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+        htmlExpected = "";
+
+        element = Jsoup.parse(html).body();
+        util.fixReport(element, "");
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Fixes plugin management report")
     public final void testPluginManagementReport() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -111,10 +123,8 @@ public final class TestSiteToolFixReport {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that the plugins report is correctly fixed.
-     */
     @Test
+    @DisplayName("Fixes plugins report")
     public final void testPluginsReport() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -130,10 +140,8 @@ public final class TestSiteToolFixReport {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that the surefire report is correctly fixed.
-     */
     @Test
+    @DisplayName("Fixes surefire report")
     public final void testSurefireReport() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

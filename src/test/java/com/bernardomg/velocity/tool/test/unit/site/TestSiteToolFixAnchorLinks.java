@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.site;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @see SiteTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("SiteTool.fixAnchorLinks")
 public final class TestSiteToolFixAnchorLinks {
 
     /**
@@ -54,10 +56,8 @@ public final class TestSiteToolFixAnchorLinks {
         super();
     }
 
-    /**
-     * Tests that an empty link is left untouched.
-     */
     @Test
+    @DisplayName("Empty links are not modified")
     public final void testEmptyLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -72,10 +72,24 @@ public final class TestSiteToolFixAnchorLinks {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an external link is left untouched.
-     */
     @Test
+    @DisplayName("Fixing empty strings does nothing")
+    public final void testEmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+        htmlExpected = "";
+
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("External links are not modified")
     public final void testExternalLink_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -90,10 +104,8 @@ public final class TestSiteToolFixAnchorLinks {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an internal link is correctly formatted.
-     */
     @Test
+    @DisplayName("Internal links are formatted correctly")
     public final void testInternalLink_Formatted() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -108,10 +120,8 @@ public final class TestSiteToolFixAnchorLinks {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an internal link is correctly formatted.
-     */
     @Test
+    @DisplayName("Internal links with special characters are formatted correctly")
     public final void testInternalLink_SpecialCharacters_Formatted() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -126,10 +136,24 @@ public final class TestSiteToolFixAnchorLinks {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that HTML with no links is left untouched.
-     */
     @Test
+    @DisplayName("Internal links with points are formatted correctly")
+    public final void testInternalLink_WithPoints_Formatted() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<a href=\"#link.with.points\">A link</a>";
+        htmlExpected = "<a href=\"#linkwithpoints\">A link</a>";
+
+        element = Jsoup.parse(html).body();
+        util.fixAnchorLinks(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Elements without anchors are not modified")
     public final void testNoAnchors_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

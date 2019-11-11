@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.html;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("HtmlTool.removeAttribute")
 public final class TestHtmlToolRemoveAttribute {
 
     /**
@@ -54,10 +56,8 @@ public final class TestHtmlToolRemoveAttribute {
         super();
     }
 
-    /**
-     * Tests that removing not existing attributes does nothing.
-     */
     @Test
+    @DisplayName("Removing not existing attributes does nothing")
     public final void testNotExistingAttribute_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -76,10 +76,25 @@ public final class TestHtmlToolRemoveAttribute {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that attributes are removed.
-     */
     @Test
+    @DisplayName("Removing attributes from an empty string does nothing")
+    public final void testRemoveAttribute_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.removeAttribute(element, "a.externalLink", "externalLink");
+
+        htmlExpected = "";
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Removing attributes")
     public final void testRemovesAttribute() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result

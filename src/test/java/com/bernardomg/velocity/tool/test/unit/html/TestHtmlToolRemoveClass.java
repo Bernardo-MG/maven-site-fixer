@@ -27,6 +27,7 @@ package com.bernardomg.velocity.tool.test.unit.html;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -40,6 +41,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
  * @see HtmlTool
  */
 @RunWith(JUnitPlatform.class)
+@DisplayName("HtmlTool.removeClass")
 public final class TestHtmlToolRemoveClass {
 
     /**
@@ -54,11 +56,28 @@ public final class TestHtmlToolRemoveClass {
         super();
     }
 
-    /**
-     * Tests that when removing a class, if there are multiple classes in the
-     * element then they are left untouched.
-     */
     @Test
+    @DisplayName("If the class is duplicated all the instances are removed")
+    public final void testDuplicated() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final String selector;     // CSS selector
+        final String cssClass;     // Removed class
+        final Element element;     // Parsed HTML
+
+        html = "<a class=\"externalLink someClass externalLink\" href=\"https://somewhere.com/\">A link</a>";
+        htmlExpected = "<a class=\"someClass\" href=\"https://somewhere.com/\">A link</a>";
+        selector = "a.externalLink";
+        cssClass = "externalLink";
+
+        element = Jsoup.parse(html).body();
+        util.removeClass(element, selector, cssClass);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Removes a class when there are multiple other classes")
     public final void testMultipleClasses() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -77,11 +96,8 @@ public final class TestHtmlToolRemoveClass {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that when removing a class, if no more classes are left in the
-     * element then the class attribute is removed too.
-     */
     @Test
+    @DisplayName("When there are no more classes are left after removing then the class attribute is removed too")
     public final void testNoClassLeft() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -100,10 +116,8 @@ public final class TestHtmlToolRemoveClass {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that removing a not existing class does nothing.
-     */
     @Test
+    @DisplayName("Removing a not existing class does nothing")
     public final void testNotExistingClass_Untouched() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
@@ -118,6 +132,23 @@ public final class TestHtmlToolRemoveClass {
 
         element = Jsoup.parse(html).body();
         util.removeClass(element, selector, cssClass);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Removing from an empty string does nothing")
+    public final void testRemoveClass_EmptyString() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "";
+
+        element = Jsoup.parse(html).body();
+        util.removeClass(element, "a.externalLink", "externalLink");
+
+        htmlExpected = "";
 
         Assertions.assertEquals(htmlExpected, element.html());
     }
