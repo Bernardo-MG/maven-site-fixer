@@ -198,57 +198,57 @@ public class SiteTool {
         checkNotNull(report, "Received a null pointer as report");
 
         switch (report) {
+            case "changes-report":
+                fixReportChanges(root);
+                break;
+            case "checkstyle":
+            case "checkstyle-aggregate":
+                fixReportCheckstyle(root);
+                break;
+            case "cpd":
+                fixReportCpd(root);
+                break;
+            case "dependencies":
+                fixReportDependencies(root);
+                break;
+            case "dependency-analysis":
+                fixReportDependencyAnalysis(root);
+                break;
+            case "failsafe-report":
+                fixReportFailsafe(root);
+                break;
+            case "findbugs":
+                fixReportFindbugs(root);
+                break;
+            case "jdepend-report":
+                fixReportJdepend(root);
+                break;
+            case "license":
+            case "licenses":
+                fixReportLicense(root);
+                break;
             case "plugins":
                 fixReportPlugins(root);
                 break;
             case "plugin-management":
                 fixReportPluginManagement(root);
                 break;
-            case "changes-report":
-                fixReportChanges(root);
-                break;
-            case "surefire-report":
-                fixReportSurefire(root);
-                break;
-            case "failsafe-report":
-                fixReportFailsafe(root);
-                break;
-            case "checkstyle":
-            case "checkstyle-aggregate":
-                fixReportCheckstyle(root);
-                break;
-            case "findbugs":
-                fixReportFindbugs(root);
-                break;
             case "pmd":
                 fixReportPmd(root);
-                break;
-            case "cpd":
-                fixReportCpd(root);
-                break;
-            case "jdepend-report":
-                fixReportJdepend(root);
-                break;
-            case "taglist":
-                fixReportTaglist(root);
-                break;
-            case "dependencies":
-                fixReportDependencies(root);
                 break;
             case "project-summary":
             case "summary":
                 fixReportProjectSummary(root);
                 break;
-            case "license":
-            case "licenses":
-                fixReportLicense(root);
+            case "surefire-report":
+                fixReportSurefire(root);
+                break;
+            case "taglist":
+                fixReportTaglist(root);
                 break;
             case "team-list":
             case "team":
                 fixReportTeamList(root);
-                break;
-            case "dependency-analysis":
-                fixReportDependencyAnalysis(root);
                 break;
             default:
                 break;
