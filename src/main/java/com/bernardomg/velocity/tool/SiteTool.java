@@ -340,31 +340,6 @@ public class SiteTool {
     }
 
     /**
-     * Transforms tables to stripped and bordered tables.
-     * <p>
-     * This will apply Bootstrap classes to the table.
-     * 
-     * @param root
-     *            root element with tables to transform
-     * @return transformed element
-     */
-    public final Element transformTables(final Element root) {
-        final Collection<Element> tables; // Tables to fix
-
-        checkNotNull(root, "Received a null pointer as root element");
-
-        // Table rows with <th> tags in a <tbody>
-        tables = root.select("table");
-        for (final Element table : tables) {
-            table.addClass("table");
-            table.addClass("table-striped");
-            table.addClass("table-bordered");
-        }
-
-        return root;
-    }
-
-    /**
      * Fixes the changes report page.
      * 
      * @param root
