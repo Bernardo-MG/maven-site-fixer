@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/DECORATION/1.6.0"
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.0.0"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.6.0 http://maven.apache.org/xsd/decoration-1.6.0.xsd">
+   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
 
    <skin>
       <groupId>com.bernardomg.maven.skins</groupId>
@@ -57,6 +57,10 @@
          <item name="Issues" href="${project.issueManagement.url}">
             <description>${project.issueManagement.system}</description>
          </item>
+      </menu>
+      <menu name="Releases" inherit="bottom">
+         <item name="Bintray" href="${bintrayURL}" />
+         <item name="Maven Central" href="${mavenURL}" />
       </menu>
       <menu name="Icons" inherit="bottom">
          <item name="Github" img="github" href="${project.scm.url}" />
