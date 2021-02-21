@@ -53,8 +53,8 @@
    </issueManagement>
 
    <ciManagement>
-      <system>Travis CI</system>
-      <url>https://travis-ci.org/Bernardo-MG/maven-site-fixer</url>
+      <system>Github Actions</system>
+      <url>https://github.com/Bernardo-MG/maven-site-fixer/actions</url>
       <notifiers />
    </ciManagement>
 
