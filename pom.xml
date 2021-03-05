@@ -201,12 +201,7 @@
       <!-- ============================================== -->
       <!-- =========== DEPENDENCIES VERSIONS ============ -->
       <!-- ============================================== -->
-      <commons.beanUtils.version>1.9.3</commons.beanUtils.version>
-      <commons.chain.version>1.2</commons.chain.version>
       <commons.collections.version>3.2.2</commons.collections.version>
-      <commons.digester.version>2.1</commons.digester.version>
-      <commons.logging.version>1.2</commons.logging.version>
-      <commons.validator.version>1.6</commons.validator.version>
       <guava.version>30.1-jre</guava.version>
       <jsoup.version>1.12.1</jsoup.version>
       <junit.jupiter.version>5.7.1</junit.jupiter.version>
@@ -272,44 +267,11 @@
       <!-- ============================================== -->
       <!-- ============ ENFORCED DEPENDENCIES =========== -->
       <!-- ============================================== -->
-      <!-- Obsolete dependencies are overriden -->
-      <!-- Some of them have vulnerabilities issues, others just cause version 
-         collisions -->
-      <dependency>
-         <!-- Commons Bean Utils -->
-         <groupId>commons-beanutils</groupId>
-         <artifactId>commons-beanutils</artifactId>
-         <version>${commons.beanUtils.version}</version>
-      </dependency>
-      <dependency>
-         <!-- Commons Chain -->
-         <groupId>commons-chain</groupId>
-         <artifactId>commons-chain</artifactId>
-         <version>${commons.chain.version}</version>
-      </dependency>
       <dependency>
          <!-- Commons Collections -->
          <groupId>commons-collections</groupId>
          <artifactId>commons-collections</artifactId>
          <version>${commons.collections.version}</version>
-      </dependency>
-      <dependency>
-         <!-- Commons Digester -->
-         <groupId>commons-digester</groupId>
-         <artifactId>commons-digester</artifactId>
-         <version>${commons.digester.version}</version>
-      </dependency>
-      <dependency>
-         <!-- Commons Logging -->
-         <groupId>commons-logging</groupId>
-         <artifactId>commons-logging</artifactId>
-         <version>${commons.logging.version}</version>
-      </dependency>
-      <dependency>
-         <!-- Commons Validator -->
-         <groupId>commons-validator</groupId>
-         <artifactId>commons-validator</artifactId>
-         <version>${commons.validator.version}</version>
       </dependency>
       <!-- ============================================== -->
       <!-- ======= TEST ENVIRONMENT DEPENDENCIES ======== -->
@@ -422,6 +384,18 @@
                </rulesets>
             </configuration>
          </plugin>
+                     <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>6.1.1</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
       </plugins>
    </reporting>
 
