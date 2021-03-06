@@ -65,7 +65,7 @@
          </action>
       </release>
       <release version="1.2.6" date="2021-03-06" description="Corrected dependencies">
-         <action dev="bmg" type="update">
+         <action dev="bmg" type="fix">
             Corrected dependencies.
          </action>
       </release>
