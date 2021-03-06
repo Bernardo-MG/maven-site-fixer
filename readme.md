@@ -146,9 +146,9 @@ The project has been released under the [MIT License][license].
 [bintray-repo]: https://bintray.com/bernardo-mg/maven/maven-site-fixer/view
 [maven-repo]: http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer
 [issues]: https://github.com/bernardo-mg/maven-site-fixer/issues
-[javadoc-develop]: http://docs.bernardomg.com/development/maven/maven-site-fixer/apidocs
-[javadoc-release]: http://docs.bernardomg.com/maven/maven-site-fixer/apidocs
+[javadoc-develop]: https://docs.bernardomg.com/development/maven/maven-site-fixer/apidocs
+[javadoc-release]: https://docs.bernardomg.com/maven/maven-site-fixer/apidocs
 [license]: http://www.opensource.org/licenses/mit-license.php
 [scm]: https://github.com/bernardo-mg/maven-site-fixer
-[site-develop]: http://docs.bernardomg.com/development/maven/maven-site-fixer
-[site-release]: http://docs.bernardomg.com/maven/maven-site-fixer
+[site-develop]: https://docs.bernardomg.com/development/maven/maven-site-fixer
+[site-release]: https://docs.bernardomg.com/maven/maven-site-fixer

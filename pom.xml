@@ -20,7 +20,7 @@
 
    <groupId>com.bernardomg.velocity</groupId>
    <artifactId>maven-site-fixer</artifactId>
-   <version>1.2.5</version>
+   <version>1.2.6</version>
    <packaging>jar</packaging>
 
    <name>Maven Site Fixer</name>
@@ -201,16 +201,12 @@
       <!-- ============================================== -->
       <!-- =========== DEPENDENCIES VERSIONS ============ -->
       <!-- ============================================== -->
-      <commons.beanUtils.version>1.9.4</commons.beanUtils.version>
-      <commons.chain.version>1.2</commons.chain.version>
+      <commons.beanUtils.version>1.9.3</commons.beanUtils.version>
       <commons.collections.version>3.2.2</commons.collections.version>
-      <commons.digester.version>2.1</commons.digester.version>
       <commons.logging.version>1.2</commons.logging.version>
-      <commons.validator.version>1.7</commons.validator.version>
       <guava.version>30.1-jre</guava.version>
       <jsoup.version>1.12.1</jsoup.version>
-      <junit.jupiter.version>5.5.1</junit.jupiter.version>
-      <junit.platform.version>1.5.1</junit.platform.version>
+      <junit.jupiter.version>5.7.1</junit.jupiter.version>
       <velocity.tools.version>2.0</velocity.tools.version>
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
@@ -223,6 +219,19 @@
    <!-- ********************************************** -->
    <!-- *************** DEPENDENCIES ***************** -->
    <!-- ********************************************** -->
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <!-- JUnit BOM -->
+            <groupId>org.junit</groupId>
+            <artifactId>junit-bom</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
 
    <dependencies>
       <dependency>
@@ -270,34 +279,16 @@
          <version>${commons.beanUtils.version}</version>
       </dependency>
       <dependency>
-         <!-- Commons Chain -->
-         <groupId>commons-chain</groupId>
-         <artifactId>commons-chain</artifactId>
-         <version>${commons.chain.version}</version>
-      </dependency>
-      <dependency>
          <!-- Commons Collections -->
          <groupId>commons-collections</groupId>
          <artifactId>commons-collections</artifactId>
          <version>${commons.collections.version}</version>
       </dependency>
       <dependency>
-         <!-- Commons Digester -->
-         <groupId>commons-digester</groupId>
-         <artifactId>commons-digester</artifactId>
-         <version>${commons.digester.version}</version>
-      </dependency>
-      <dependency>
          <!-- Commons Logging -->
          <groupId>commons-logging</groupId>
          <artifactId>commons-logging</artifactId>
          <version>${commons.logging.version}</version>
-      </dependency>
-      <dependency>
-         <!-- Commons Validator -->
-         <groupId>commons-validator</groupId>
-         <artifactId>commons-validator</artifactId>
-         <version>${commons.validator.version}</version>
       </dependency>
       <!-- ============================================== -->
       <!-- ======= TEST ENVIRONMENT DEPENDENCIES ======== -->
@@ -306,14 +297,12 @@
          <!-- JUnit Jupiter Engine -->
          <groupId>org.junit.jupiter</groupId>
          <artifactId>junit-jupiter-engine</artifactId>
-         <version>${junit.jupiter.version}</version>
          <scope>test</scope>
       </dependency>
       <dependency>
          <!-- JUnit Jupiter Platform -->
          <groupId>org.junit.platform</groupId>
          <artifactId>junit-platform-runner</artifactId>
-         <version>${junit.platform.version}</version>
          <scope>test</scope>
       </dependency>
    </dependencies>
