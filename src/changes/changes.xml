@@ -69,5 +69,10 @@
             Corrected dependencies.
          </action>
       </release>
+      <release version="1.2.7" date="2021-03-08" description="Spotbugs">
+         <action dev="bmg" type="add">
+            Added support for Spotbugs.
+         </action>
+      </release>
    </body>
 </document>
