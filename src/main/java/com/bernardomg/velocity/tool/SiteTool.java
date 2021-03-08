@@ -218,6 +218,7 @@ public class SiteTool {
                 fixReportFailsafe(root);
                 break;
             case "findbugs":
+            case "spotbugs":
                 fixReportFindbugs(root);
                 break;
             case "jdepend-report":
