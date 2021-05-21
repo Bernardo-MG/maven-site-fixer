@@ -22,3 +22,6 @@ jobs:
         server-password: MAVEN_PASSWORD
     - name: Deploy
       run: mvn deploy -B -P deployment,deployment-release
+      env:
+        MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
