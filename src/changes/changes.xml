@@ -69,6 +69,11 @@
             Corrected dependencies.
          </action>
       </release>
+      <release version="1.2.7" date="2021-03-08" description="Spotbugs">
+         <action dev="bmg" type="add">
+            Added support for Spotbugs.
+         </action>
+      </release>
       <release version="1.2.8" date="2021-05-21" description="Font Awesome">
          <action dev="bmg" type="update">
             Updated Font Awesome styles.
