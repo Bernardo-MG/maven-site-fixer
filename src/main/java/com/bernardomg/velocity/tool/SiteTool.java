@@ -274,23 +274,23 @@ public class SiteTool {
 
         replacements = new HashMap<>();
         replacements.put("img[src$=images/add.gif]",
-                "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>");
+                "<span><span class=\"fas fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>");
         replacements.put("img[src$=images/remove.gif]",
-                "<span><span class=\"fa fa-minus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Remove</span></span>");
+                "<span><span class=\"fas fa-minus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Remove</span></span>");
         replacements.put("img[src$=images/fix.gif]",
-                "<span><span class=\"fa fa-wrench\" aria-hidden=\"true\"></span><span class=\"sr-only\">Fix</span></span>");
+                "<span><span class=\"fas fa-wrench\" aria-hidden=\"true\"></span><span class=\"sr-only\">Fix</span></span>");
         replacements.put("img[src$=images/update.gif]",
-                "<span><span class=\"fa fa-refresh\" aria-hidden=\"true\"></span><span class=\"sr-only\">Refresh</span></span>");
+                "<span><span class=\"fas fa-sync\" aria-hidden=\"true\"></span><span class=\"sr-only\">Refresh</span></span>");
         replacements.put("img[src$=images/icon_help_sml.gif]",
-                "<span><span class=\"fa fa-question\" aria-hidden=\"true\"></span><span class=\"sr-only\">Question</span></span>");
+                "<span><span class=\"fas fa-question\" aria-hidden=\"true\"></span><span class=\"sr-only\">Question</span></span>");
         replacements.put("img[src$=images/icon_success_sml.gif]",
-                "<span><span class=\"navbar-icon fa fa-check\" aria-hidden=\"true\" title=\"Passed\" aria-label=\"Passed\"></span><span class=\"sr-only\">Passed</span></span>");
+                "<span><span class=\"navbar-icon fa fas-check\" aria-hidden=\"true\" title=\"Passed\" aria-label=\"Passed\"></span><span class=\"sr-only\">Passed</span></span>");
         replacements.put("img[src$=images/icon_warning_sml.gif]",
-                "<span><span class=\"fa fa-exclamation\" aria-hidden=\"true\"></span><span class=\"sr-only\">Warning</span>");
+                "<span><span class=\"fas fa-exclamation\" aria-hidden=\"true\"></span><span class=\"sr-only\">Warning</span>");
         replacements.put("img[src$=images/icon_error_sml.gif]",
-                "<span><span class=\"navbar-icon fa fa-close\" aria-hidden=\"true\" title=\"Failed\" aria-label=\"Failed\"></span><span class=\"sr-only\">Failed</span></span>");
+                "<span><span class=\"navbar-icon fas fa-times\" aria-hidden=\"true\" title=\"Failed\" aria-label=\"Failed\"></span><span class=\"sr-only\">Failed</span></span>");
         replacements.put("img[src$=images/icon_info_sml.gif]",
-                "<span><span class=\"fa fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
+                "<span><span class=\"fas fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
 
         replaceAll(root, replacements);
 

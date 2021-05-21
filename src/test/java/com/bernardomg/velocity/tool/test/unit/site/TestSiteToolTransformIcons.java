@@ -80,7 +80,7 @@ public final class TestSiteToolTransformIcons {
         final Element element;     // Parsed HTML
 
         html = "<img src=\"images/add.gif\" alt=\"An image\">";
-        htmlExpected = "<span><span class=\"fa fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
+        htmlExpected = "<span><span class=\"fas fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
 
         element = Jsoup.parse(html).body();
         util.transformIcons(element);
