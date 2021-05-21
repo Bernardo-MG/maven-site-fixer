@@ -58,6 +58,21 @@
       <notifiers />
    </ciManagement>
 
+   <repositories>
+      <repository>
+         <!-- Github repository -->
+         <id>github</id>
+         <name>GitHub Packages</name>
+         <url>https://maven.pkg.github.com/Bernardo-MG/maven-site-fixer</url>
+      </repository>
+      <repository>
+         <!-- OSSRH repository -->
+         <id>ossrh</id>
+         <name>Central Repository OSSRH</name>
+         <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      </repository>
+   </repositories>
+
    <!-- ********************************************** -->
    <!-- ****************** PROFILES ****************** -->
    <!-- ********************************************** -->
@@ -121,30 +136,6 @@
                <!-- The URL should be set externally -->
                <url>${site.develop.url}</url>
             </site>
-         </distributionManagement>
-      </profile>
-      <profile>
-         <!-- Github deployment profile -->
-         <!-- Sets up the Github deployment repository -->
-         <id>deployment-github</id>
-         <distributionManagement>
-            <repository>
-               <id>github</id>
-               <name>GitHub Packages</name>
-               <url>https://maven.pkg.github.com/Bernardo-MG/maven-site-fixer</url>
-            </repository>
-         </distributionManagement>
-      </profile>
-      <profile>
-         <!-- OSSRH deployment profile -->
-         <!-- Sets up the OSSRH deployment repository -->
-         <id>deployment-ossrh</id>
-         <distributionManagement>
-            <repository>
-               <id>ossrh</id>
-               <name>Central Repository OSSRH</name>
-               <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-            </repository>
          </distributionManagement>
       </profile>
       <profile>
