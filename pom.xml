@@ -60,17 +60,10 @@
 
    <distributionManagement>
       <repository>
-         <uniqueVersion>false</uniqueVersion>
-         <id>releases</id>
-         <name>Releases Repository</name>
-         <url>https://api.bintray.com/maven/bernardo-mg/maven/maven-site-fixer</url>
+         <id>ossrh</id>
+         <name>Central Repository OSSRH</name>
+         <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
       </repository>
-      <snapshotRepository>
-         <uniqueVersion>false</uniqueVersion>
-         <id>snapshots</id>
-         <name>Snapshots Repository</name>
-         <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-      </snapshotRepository>
    </distributionManagement>
 
    <!-- ********************************************** -->
@@ -212,7 +205,6 @@
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
       <site.skin.version>2.0.11</site.skin.version>
-      <bintrayURL>https://bintray.com/bernardo-mg/maven/maven-site-fixer/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer</mavenURL>
    </properties>
 
