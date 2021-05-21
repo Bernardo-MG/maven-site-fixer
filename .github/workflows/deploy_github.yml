@@ -22,6 +22,6 @@ jobs:
         java-version: 1.8
         server-id: releases
     - name: Deploy
-      run: mvn deploy -B -P deployment,deployment-release
+      run: mvn deploy -B -P deployment,deployment-release,deployment-github
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

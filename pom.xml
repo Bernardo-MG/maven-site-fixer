@@ -58,14 +58,6 @@
       <notifiers />
    </ciManagement>
 
-   <distributionManagement>
-      <repository>
-         <id>ossrh</id>
-         <name>Central Repository OSSRH</name>
-         <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-      </repository>
-   </distributionManagement>
-
    <!-- ********************************************** -->
    <!-- ****************** PROFILES ****************** -->
    <!-- ********************************************** -->
@@ -73,10 +65,8 @@
    <profiles>
       <profile>
          <!-- Profile for the Eclipse Maven plugin -->
-         <!-- Sets the POM so this plugin does not give the usual unregistered 
-            goals errors -->
-         <!-- It will be activated automatically on Eclipse if this has the 
-            m2e plugin, by detecting the version property -->
+         <!-- Sets the POM so this plugin does not give the usual unregistered goals errors -->
+         <!-- It will be activated automatically on Eclipse if this has the m2e plugin, by detecting the version property -->
          <id>eclipse-maven</id>
          <activation>
             <property>
@@ -88,10 +78,8 @@
                <plugins>
                   <plugin>
                      <!-- m2e lifecycle mapping -->
-                     <!-- This is used to configure the Maven plugin for 
-                        Eclipse. -->
-                     <!-- Among other things, it allows registering goals, 
-                        which Eclipse would otherwise reject. -->
+                     <!-- This is used to configure the Maven plugin for Eclipse. -->
+                     <!-- Among other things, it allows registering goals, which Eclipse would otherwise reject. -->
                      <!-- It has no real effect on Maven. -->
                      <groupId>org.eclipse.m2e</groupId>
                      <artifactId>lifecycle-mapping</artifactId>
@@ -133,6 +121,30 @@
                <!-- The URL should be set externally -->
                <url>${site.develop.url}</url>
             </site>
+         </distributionManagement>
+      </profile>
+      <profile>
+         <!-- Github deployment profile -->
+         <!-- Sets up the Github deployment repository -->
+         <id>deployment-github</id>
+         <distributionManagement>
+            <repository>
+               <id>github</id>
+               <name>GitHub Packages</name>
+               <url>https://maven.pkg.github.com/Bernardo-MG/maven-site-fixer</url>
+            </repository>
+         </distributionManagement>
+      </profile>
+      <profile>
+         <!-- OSSRH deployment profile -->
+         <!-- Sets up the OSSRH deployment repository -->
+         <id>deployment-ossrh</id>
+         <distributionManagement>
+            <repository>
+               <id>ossrh</id>
+               <name>Central Repository OSSRH</name>
+               <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            </repository>
          </distributionManagement>
       </profile>
       <profile>
@@ -262,8 +274,7 @@
       <!-- ============ ENFORCED DEPENDENCIES =========== -->
       <!-- ============================================== -->
       <!-- Obsolete dependencies are overriden -->
-      <!-- Some of them have vulnerabilities issues, others just cause version 
-         collisions -->
+      <!-- Some of them have vulnerabilities issues, others just cause version collisions -->
       <dependency>
          <!-- Commons Bean Utils -->
          <groupId>commons-beanutils</groupId>
@@ -381,8 +392,7 @@
          </plugin>
          <plugin>
             <!-- PMD -->
-            <!-- Checks that the code complies with a series of code quality 
-               rules -->
+            <!-- Checks that the code complies with a series of code quality rules -->
             <!-- It is using a customized rules file -->
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
