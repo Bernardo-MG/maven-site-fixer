@@ -43,7 +43,6 @@ The tools included in this project will transform that example into this:
 ```
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.bernardomg.velocity/maven-site-fixer.svg)][maven-repo]
-[![Bintray](https://api.bintray.com/packages/bernardo-mg/maven/maven-site-fixer/images/download.svg)][bintray-repo]
 
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
 [![Development docs](https://img.shields.io/badge/docs-develop-blue.svg)][site-develop]
@@ -111,7 +110,7 @@ All other dependencies are handled through Maven, and noted in the included POM 
 
 ### Installing
 
-The recommended way to install the project is by setting up your preferred dependencies manager. To get the configuration information for this check the [Bintray repository][bintray-repo], or the [Maven Central Repository][maven-repo].
+The recommended way to install the project is by setting up your preferred dependencies manager. To get the configuration information for this check the [Maven Central Repository][maven-repo].
 
 If for some reason manual installation is necessary, just use the following Maven command:
 
@@ -143,7 +142,6 @@ The project has been released under the [MIT License][license].
 [reflow-skin]: https://github.com/andriusvelykis/reflow-maven-skin
 [velocity]: http://velocity.apache.org/
 
-[bintray-repo]: https://bintray.com/bernardo-mg/maven/maven-site-fixer/view
 [maven-repo]: http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer
 [issues]: https://github.com/bernardo-mg/maven-site-fixer/issues
 [javadoc-develop]: https://docs.bernardomg.com/development/maven/maven-site-fixer/apidocs

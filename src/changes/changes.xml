@@ -74,5 +74,10 @@
             Added support for Spotbugs.
          </action>
       </release>
+      <release version="1.2.8" date="2021-05-21" description="Font Awesome">
+         <action dev="bmg" type="update">
+            Updated Font Awesome styles.
+         </action>
+      </release>
    </body>
 </document>
