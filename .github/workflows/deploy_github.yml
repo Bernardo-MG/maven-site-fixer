@@ -23,6 +23,6 @@ jobs:
         distribution: 'adopt'
         server-id: github
     - name: Deploy
-      run: mvn deploy -B -P deployment,deployment-release
+      run: mvn deploy -B -P deployment,deployment-release,deployment-github
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
