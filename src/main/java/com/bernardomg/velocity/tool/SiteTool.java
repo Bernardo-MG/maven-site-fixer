@@ -284,7 +284,7 @@ public class SiteTool {
         replacements.put("img[src$=images/icon_help_sml.gif]",
                 "<span><span class=\"fas fa-question\" aria-hidden=\"true\"></span><span class=\"sr-only\">Question</span></span>");
         replacements.put("img[src$=images/icon_success_sml.gif]",
-                "<span><span class=\"navbar-icon fa fas-check\" aria-hidden=\"true\" title=\"Passed\" aria-label=\"Passed\"></span><span class=\"sr-only\">Passed</span></span>");
+                "<span><span class=\"navbar-icon fas fa-check\" aria-hidden=\"true\" title=\"Passed\" aria-label=\"Passed\"></span><span class=\"sr-only\">Passed</span></span>");
         replacements.put("img[src$=images/icon_warning_sml.gif]",
                 "<span><span class=\"fas fa-exclamation\" aria-hidden=\"true\"></span><span class=\"sr-only\">Warning</span>");
         replacements.put("img[src$=images/icon_error_sml.gif]",
