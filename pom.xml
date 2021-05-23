@@ -249,7 +249,7 @@
       <!-- ============================================== -->
       <site.skin.version>2.0.11</site.skin.version>
       <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer</mavenURL>
-      <githubArtifactURL>https://github.com/Bernardo-MG?tab=packages&amp;repo_name=maven-site-fixer</githubArtifactURL>
+      <githubArtifactURL><![CDATA[https://github.com/Bernardo-MG?tab=packages&amp;repo_name=maven-site-fixer]]></githubArtifactURL>
    </properties>
 
    <!-- ********************************************** -->
