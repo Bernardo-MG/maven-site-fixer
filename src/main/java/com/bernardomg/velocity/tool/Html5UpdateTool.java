@@ -52,42 +52,10 @@ import org.jsoup.parser.Tag;
 public class Html5UpdateTool {
 
     /**
-     * HTML utils class to allow reusing its methods through composition.
-     */
-    private final HtmlTool htmlUtils = new HtmlTool();
-
-    /**
      * Constructs an instance of the utilities class.
      */
     public Html5UpdateTool() {
         super();
-    }
-
-    /**
-     * Returns the result from removing links with no {@code href} attribute
-     * defined from the received element contents.
-     * <p>
-     * These links are added by Doxia mainly to the headings. The idea seems to
-     * allow getting an internal anchor by clicking on a heading, but it does
-     * not work correctly on all skins (or maybe it is just missing something)
-     * making it invalid HTML code.
-     * <p>
-     * Instead of just removing the links these will be actually unwrapped,
-     * keeping any text they may contain.
-     * 
-     * @param root
-     *            root element to clear of any empty {@code href} link
-     * @return transformed element
-     */
-    public final Element removeNoHrefLinks(final Element root) {
-
-        checkNotNull(root, "Received a null pointer as root element");
-
-        // Links missing the href attribute
-        // Unwrapped to avoid losing texts
-        htmlUtils.unwrap(root, "a:not([href])");
-
-        return root;
     }
 
     /**
