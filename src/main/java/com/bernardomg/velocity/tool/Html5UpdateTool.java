@@ -24,7 +24,7 @@
 
 package com.bernardomg.velocity.tool;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Objects;
 
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.nodes.Element;
@@ -73,9 +73,9 @@ public class Html5UpdateTool {
             final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(attr, "Received a null pointer as attribute");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(attr, "Received a null pointer as attribute");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -102,7 +102,7 @@ public class Html5UpdateTool {
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
 
-        checkNotNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
 
         // Table rows with <th> tags in a <tbody>
         tableHeadRows = root.select("table > tbody > tr:has(th)");

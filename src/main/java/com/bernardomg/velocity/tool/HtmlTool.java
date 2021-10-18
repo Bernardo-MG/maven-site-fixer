@@ -24,7 +24,7 @@
 
 package com.bernardomg.velocity.tool;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Objects;
 
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
@@ -69,9 +69,9 @@ public final class HtmlTool {
             final String className) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(className, "Received a null pointer as class");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(className, "Received a null pointer as class");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -93,7 +93,7 @@ public final class HtmlTool {
      * @return the parsed HTML body
      */
     public final Element parse(final String html) {
-        checkNotNull(html, "Received a null pointer as body");
+        Objects.requireNonNull(html, "Received a null pointer as body");
 
         return Jsoup.parse(html).body();
     }
@@ -114,9 +114,9 @@ public final class HtmlTool {
             final String selector, final String attribute) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(attribute, "Received a null pointer as attribute");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(attribute, "Received a null pointer as attribute");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -146,9 +146,9 @@ public final class HtmlTool {
             final String className) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(className, "Received a null pointer as className");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(className, "Received a null pointer as className");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -178,9 +178,9 @@ public final class HtmlTool {
             final String tag) {
         final Iterable<Element> elements; // Elements selected
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(tag, "Received a null pointer as tag");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(tag, "Received a null pointer as tag");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -207,8 +207,8 @@ public final class HtmlTool {
         Element parent;                   // Parent element
         String text;                      // Preserved text
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -244,8 +244,8 @@ public final class HtmlTool {
     public final Element unwrap(final Element root, final String selector) {
         final Iterable<Element> elements; // Elements to unwrap
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -272,9 +272,9 @@ public final class HtmlTool {
             final String wrapper) {
         final Iterable<Element> elements; // Selected elements
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(wrapper, "Received a null pointer as HTML wrap");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(wrapper, "Received a null pointer as HTML wrap");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
