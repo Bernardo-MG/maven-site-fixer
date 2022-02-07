@@ -84,5 +84,16 @@
             Updated Font Awesome styles.
          </action>
       </release>
+      <release version="1.2.10" date="2022-02-07" description="Uptaded dependencies">
+         <action dev="bmg" type="update">
+            Updated dependencies.
+         </action>
+         <action dev="bmg" type="update">
+            Removed Guava.
+         </action>
+         <action dev="bmg" type="update">
+            Updated CI scripts.
+         </action>
+      </release>
    </body>
 </document>

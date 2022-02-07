@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2019 the original author or authors.
+ * Copyright (c) 2015-2021 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package com.bernardomg.velocity.tool;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Objects;
 
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.nodes.Element;
@@ -52,42 +52,10 @@ import org.jsoup.parser.Tag;
 public class Html5UpdateTool {
 
     /**
-     * HTML utils class to allow reusing its methods through composition.
-     */
-    private final HtmlTool htmlUtils = new HtmlTool();
-
-    /**
      * Constructs an instance of the utilities class.
      */
     public Html5UpdateTool() {
         super();
-    }
-
-    /**
-     * Returns the result from removing links with no {@code href} attribute
-     * defined from the received element contents.
-     * <p>
-     * These links are added by Doxia mainly to the headings. The idea seems to
-     * allow getting an internal anchor by clicking on a heading, but it does
-     * not work correctly on all skins (or maybe it is just missing something)
-     * making it invalid HTML code.
-     * <p>
-     * Instead of just removing the links these will be actually unwrapped,
-     * keeping any text they may contain.
-     * 
-     * @param root
-     *            root element to clear of any empty {@code href} link
-     * @return transformed element
-     */
-    public final Element removeNoHrefLinks(final Element root) {
-
-        checkNotNull(root, "Received a null pointer as root element");
-
-        // Links missing the href attribute
-        // Unwrapped to avoid losing texts
-        htmlUtils.unwrap(root, "a:not([href])");
-
-        return root;
     }
 
     /**
@@ -105,9 +73,9 @@ public class Html5UpdateTool {
             final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(selector, "Received a null pointer as selector");
-        checkNotNull(attr, "Received a null pointer as attribute");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(selector, "Received a null pointer as selector");
+        Objects.requireNonNull(attr, "Received a null pointer as attribute");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -134,7 +102,7 @@ public class Html5UpdateTool {
         Element table;  // HTML table
         Element thead;  // Table's head for wrapping
 
-        checkNotNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
 
         // Table rows with <th> tags in a <tbody>
         tableHeadRows = root.select("table > tbody > tr:has(th)");

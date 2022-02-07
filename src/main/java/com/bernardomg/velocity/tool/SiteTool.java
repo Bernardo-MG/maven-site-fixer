@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2019 the original author or authors.
+ * Copyright (c) 2015-2021 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,11 @@
 
 package com.bernardomg.velocity.tool;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
@@ -98,7 +97,7 @@ public class SiteTool {
         String ref; // Value of the href attribute
         String id;  // Formatted id
 
-        checkNotNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
 
         // Anchors
         for (final Element anchor : root.getElementsByTag("a")) {
@@ -141,7 +140,7 @@ public class SiteTool {
         String idText;  // Text to generate the id
         String id;      // Formatted id
 
-        checkNotNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
 
         // Table rows with <th> tags in a <tbody>
         headings = root.select("h1,h2,h3,h4,h5,h6");
@@ -194,8 +193,8 @@ public class SiteTool {
      */
     public final Element fixReport(final Element root, final String report) {
 
-        checkNotNull(root, "Received a null pointer as root element");
-        checkNotNull(report, "Received a null pointer as report");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(report, "Received a null pointer as report");
 
         switch (report) {
             case "changes-report":
@@ -270,7 +269,7 @@ public class SiteTool {
         final Map<String, String> replacements; // Texts to replace and
                                                 // replacements
 
-        checkNotNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
 
         replacements = new HashMap<>();
         replacements.put("img[src$=images/add.gif]",
@@ -314,7 +313,7 @@ public class SiteTool {
         Element figure;     // <figure> element
         Element caption;    // <figcaption> element
 
-        checkNotNull(root, "Received a null pointer as root element");
+        Objects.requireNonNull(root, "Received a null pointer as root element");
 
         images = root.select("img");
         for (final Element img : images) {
