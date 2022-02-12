@@ -638,7 +638,7 @@ public class SiteTool {
      * @return a valid anchor id
      */
     private final String formatId(final String id) {
-        return id.trim().toLowerCase().replaceAll(ID_HYPHEN_REGEX, "-")
+        return id.trim().replaceAll(ID_HYPHEN_REGEX, "-")
                 .replaceAll(ID_REJECTED_REGEX, "");
     }
 
