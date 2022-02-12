@@ -29,8 +29,6 @@ import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
 
@@ -44,7 +42,6 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteTool
  */
-@RunWith(JUnitPlatform.class)
 @DisplayName("SiteTool.fixReport")
 public final class TestSiteToolFixReportEmpty {
 
