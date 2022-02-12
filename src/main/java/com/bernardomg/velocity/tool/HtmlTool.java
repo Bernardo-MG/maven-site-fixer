@@ -116,7 +116,8 @@ public final class HtmlTool {
 
         Objects.requireNonNull(root, "Received a null pointer as root element");
         Objects.requireNonNull(selector, "Received a null pointer as selector");
-        Objects.requireNonNull(attribute, "Received a null pointer as attribute");
+        Objects.requireNonNull(attribute,
+                "Received a null pointer as attribute");
 
         // Selects and iterates over the elements
         elements = root.select(selector);
@@ -148,7 +149,8 @@ public final class HtmlTool {
 
         Objects.requireNonNull(root, "Received a null pointer as root element");
         Objects.requireNonNull(selector, "Received a null pointer as selector");
-        Objects.requireNonNull(className, "Received a null pointer as className");
+        Objects.requireNonNull(className,
+                "Received a null pointer as className");
 
         // Selects and iterates over the elements
         elements = root.select(selector);

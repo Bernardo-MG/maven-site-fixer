@@ -29,8 +29,6 @@ import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.SiteTool;
 
@@ -40,7 +38,6 @@ import com.bernardomg.velocity.tool.SiteTool;
  * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteTool
  */
-@RunWith(JUnitPlatform.class)
 @DisplayName("SiteTool.fixHeadingIds")
 public final class TestSiteToolFixHeadingIds {
 
@@ -89,14 +86,14 @@ public final class TestSiteToolFixHeadingIds {
     }
 
     @Test
-    @DisplayName("Fixes heading ids")
-    public final void testWithId_CorrectId() {
+    @DisplayName("Adds heading ids")
+    public final void testNoId_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
-        html = "<h1 id=\"A.Heading\">A heading</h1><h3 id=\"another_heading\">Another heading</h3>";
-        htmlExpected = "<h1 id=\"aheading\">A heading</h1>\n<h3 id=\"another-heading\">Another heading</h3>";
+        html = "<h1>A heading</h1><h3>Another heading</h3>";
+        htmlExpected = "<h1 id=\"A-heading\">A heading</h1>\n<h3 id=\"Another-heading\">Another heading</h3>";
 
         element = Jsoup.parse(html).body();
         util.fixHeadingIds(element);
@@ -105,8 +102,8 @@ public final class TestSiteToolFixHeadingIds {
     }
 
     @Test
-    @DisplayName("Fixes heading ids which include points")
-    public final void testWithPoints_CorrectId() {
+    @DisplayName("Adds heading ids for titles which include points")
+    public final void testNoId_WithPoints_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
@@ -121,14 +118,14 @@ public final class TestSiteToolFixHeadingIds {
     }
 
     @Test
-    @DisplayName("Fixes heading ids which include spaces")
-    public final void testWithSpaces_CorrectId() {
+    @DisplayName("Adds heading ids for titles which include spaces")
+    public final void testNoId_WithSpaces_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "<h1>A heading</h1><h3>Another heading</h3>";
-        htmlExpected = "<h1 id=\"a-heading\">A heading</h1>\n<h3 id=\"another-heading\">Another heading</h3>";
+        htmlExpected = "<h1 id=\"A-heading\">A heading</h1>\n<h3 id=\"Another-heading\">Another heading</h3>";
 
         element = Jsoup.parse(html).body();
         util.fixHeadingIds(element);
@@ -137,14 +134,30 @@ public final class TestSiteToolFixHeadingIds {
     }
 
     @Test
-    @DisplayName("Fixes heading ids which include special characters")
-    public final void testWithSpecialChars_CorrectId() {
+    @DisplayName("Adds heading ids for titles which include special characters")
+    public final void testNoId_WithSpecialChars_CorrectId() {
         final String html;         // HTML code to edit
         final String htmlExpected; // Expected result
         final Element element;     // Parsed HTML
 
         html = "<h1>A -_#heading *! </h1><h3>Another heading</h3>";
-        htmlExpected = "<h1 id=\"a---#heading-\">A -_#heading *! </h1>\n<h3 id=\"another-heading\">Another heading</h3>";
+        htmlExpected = "<h1 id=\"A---#heading-\">A -_#heading *! </h1>\n<h3 id=\"Another-heading\">Another heading</h3>";
+
+        element = Jsoup.parse(html).body();
+        util.fixHeadingIds(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
+    @DisplayName("Fixes heading ids")
+    public final void testWithId_CorrectId() {
+        final String html;         // HTML code to edit
+        final String htmlExpected; // Expected result
+        final Element element;     // Parsed HTML
+
+        html = "<h1 id=\"A.Heading\">A heading</h1><h3 id=\"another_heading\">Another heading</h3>";
+        htmlExpected = "<h1 id=\"AHeading\">A heading</h1>\n<h3 id=\"another-heading\">Another heading</h3>";
 
         element = Jsoup.parse(html).body();
         util.fixHeadingIds(element);

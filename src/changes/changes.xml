@@ -84,7 +84,7 @@
             Updated Font Awesome styles.
          </action>
       </release>
-      <release version="1.2.10" date="2022-02-07" description="Uptaded dependencies">
+      <release version="1.2.10" date="2022-02-07" description="Updated dependencies">
          <action dev="bmg" type="update">
             Updated dependencies.
          </action>
@@ -93,6 +93,11 @@
          </action>
          <action dev="bmg" type="update">
             Updated CI scripts.
+         </action>
+      </release>
+      <release version="1.2.11" date="2022-02-12" description="Inner link id fix">
+         <action dev="bmg" type="fix">
+            Link ids are no longer changed to lower case.
          </action>
       </release>
    </body>

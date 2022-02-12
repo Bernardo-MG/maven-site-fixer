@@ -29,8 +29,6 @@ import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import com.bernardomg.velocity.tool.Html5UpdateTool;
 
@@ -41,7 +39,6 @@ import com.bernardomg.velocity.tool.Html5UpdateTool;
  * @author Bernardo Mart&iacute;nez Garrido
  * @see Html5UpdateTool
  */
-@RunWith(JUnitPlatform.class)
 @DisplayName("Html5UpdateTool.removePointsFromAttr")
 public final class TestHtml5UpdateToolRemovePointsFromAttrLinks {
 
