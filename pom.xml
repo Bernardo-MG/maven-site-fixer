@@ -11,7 +11,7 @@
    <parent>
       <groupId>com.bernardomg.maven</groupId>
       <artifactId>base-pom</artifactId>
-      <version>1.5.0</version>
+      <version>1.5.1</version>
    </parent>
 
    <!-- ********************************************** -->
@@ -197,7 +197,7 @@
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
-      <site.skin.version>2.2.5</site.skin.version>
+      <site.skin.version>2.2.6</site.skin.version>
       <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer</mavenURL>
       <githubArtifactURL><![CDATA[https://github.com/Bernardo-MG?tab=packages&amp;repo_name=maven-site-fixer]]></githubArtifactURL>
    </properties>
