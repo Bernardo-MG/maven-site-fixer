@@ -22,24 +22,21 @@
  * SOFTWARE.
  */
 /**
- * Provides various utilities classes for Apache Velocity, used to update the
- * XHTML produced by Doxia to current HTML5 standards.
+ * Provides various utilities classes for Apache Velocity, used to update the XHTML produced by Doxia to current HTML5
+ * standards.
  * <p>
  * They also improve the look and structure of Maven Sites.
  * <p>
- * All these classes are prepared to be run through Velocity. To allow calling
- * them from Velocity templates each class is annotated with a default key, and
- * a {@code tools.xml} file is included.
+ * All these classes are prepared to be run through Velocity. To allow calling them from Velocity templates each class
+ * is annotated with a default key, and a {@code tools.xml} file is included.
  * <p>
- * Using the tools just requires calling its key. For example, the following
- * line calls the {@code unwrap} method of
+ * Using the tools just requires calling its key. For example, the following line calls the {@code unwrap} method of
  * {@link com.bernardomg.velocity.tool.HtmlTool HtmlTool}:
  * <p>
  * {@code #set ( $sections = $htmlTool.unwrap( $bodyContent, "a:not([href])" ) )}
  * <p>
- * The tools make use of <a href="http://jsoup.org/">jsoup</a> to edit the HTML
- * code. For this reason their methods expect a jsoup element. Take note that
- * this element won't be validated in any way. Validation of the end result is
+ * The tools make use of <a href="http://jsoup.org/">jsoup</a> to edit the HTML code. For this reason their methods
+ * expect a jsoup element. Take note that this element won't be validated in any way. Validation of the end result is
  * the programmer's responsibility.
  */
 

@@ -33,9 +33,8 @@ import org.junit.jupiter.api.Test;
 import com.bernardomg.velocity.tool.SiteTool;
 
 /**
- * Unit tests for {@link SiteTool}, testing the {@code transformImagesToFigures}
- * method.
- * 
+ * Unit tests for {@link SiteTool}, testing the {@code transformImagesToFigures} method.
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteTool
  */
@@ -57,14 +56,15 @@ public final class TestSiteToolTransformImagesToFigures {
     @Test
     @DisplayName("Generates a caption from the alt attribute")
     public final void testCaption_Transforms() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p>";
         htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n <figcaption>\n  A diagram\n </figcaption>\n</figure>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.transformImagesToFigures(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -76,14 +76,15 @@ public final class TestSiteToolTransformImagesToFigures {
     @Test
     @DisplayName("Transforming an emtpy string does nothing")
     public final void testEmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.transformImagesToFigures(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -92,14 +93,15 @@ public final class TestSiteToolTransformImagesToFigures {
     @Test
     @DisplayName("If there are no images it does nothing")
     public final void testNoImages_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = "<p>Some text</p>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.transformImagesToFigures(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -108,14 +110,15 @@ public final class TestSiteToolTransformImagesToFigures {
     @Test
     @DisplayName("Transforms images into figures")
     public final void testSimple_Transforms() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<img src=\"imgs/diagram.png\">";
         htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.transformImagesToFigures(element);
 
         Assertions.assertEquals(htmlExpected, element.html());

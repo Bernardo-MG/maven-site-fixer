@@ -33,9 +33,8 @@ import org.junit.jupiter.api.Test;
 import com.bernardomg.velocity.tool.Html5UpdateTool;
 
 /**
- * Unit tests for {@link Html5UpdateTool} testing the
- * {@code removePointsFromAttr} method.
- * 
+ * Unit tests for {@link Html5UpdateTool} testing the {@code removePointsFromAttr} method.
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see Html5UpdateTool
  */
@@ -57,14 +56,15 @@ public final class TestHtml5UpdateToolRemovePointsFromAttrLinks {
     @Test
     @DisplayName("Removing from an empty string does nothing")
     public final void testEmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<a name=\"a_heading\" href=\"a.b.c\">Text</a>";
         htmlExpected = "<a name=\"a_heading\" href=\"abc\">Text</a>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removePointsFromAttr(element, "[href]", "href");
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -73,14 +73,15 @@ public final class TestHtml5UpdateToolRemovePointsFromAttrLinks {
     @Test
     @DisplayName("Points are removed from links")
     public final void testSimple_Removed() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<a name=\"a_heading\" href=\"a.b.c\">Text</a>";
         htmlExpected = "<a name=\"a_heading\" href=\"abc\">Text</a>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removePointsFromAttr(element, "[href]", "href");
 
         Assertions.assertEquals(htmlExpected, element.html());
