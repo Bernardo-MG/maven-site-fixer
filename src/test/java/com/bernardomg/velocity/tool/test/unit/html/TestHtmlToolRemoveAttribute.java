@@ -34,7 +34,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
 
 /**
  * Unit tests for {@link HtmlTool} testing the {@code removeAttribute} method.
- * 
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
@@ -56,18 +56,19 @@ public final class TestHtmlToolRemoveAttribute {
     @Test
     @DisplayName("Removing not existing attributes does nothing")
     public final void testNotExistingAttribute_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String attribute;    // Removed attribute
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  attribute;    // Removed attribute
+        final Element element;      // Parsed HTML
 
         html = "<table class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
         htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
         selector = "table";
         attribute = "border";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removeAttribute(element, selector, attribute);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -76,13 +77,14 @@ public final class TestHtmlToolRemoveAttribute {
     @Test
     @DisplayName("Removing attributes from an empty string does nothing")
     public final void testRemoveAttribute_EmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removeAttribute(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -93,18 +95,19 @@ public final class TestHtmlToolRemoveAttribute {
     @Test
     @DisplayName("Removing attributes")
     public final void testRemovesAttribute() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String attribute;    // Removed attribute
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  attribute;    // Removed attribute
+        final Element element;      // Parsed HTML
 
         html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
         htmlExpected = "<table class=\"bodyTable testClass\">\n <tbody>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
         selector = "table[border]";
         attribute = "border";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removeAttribute(element, selector, attribute);
 
         Assertions.assertEquals(htmlExpected, element.html());

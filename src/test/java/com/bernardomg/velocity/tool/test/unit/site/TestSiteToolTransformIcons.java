@@ -34,7 +34,7 @@ import com.bernardomg.velocity.tool.SiteTool;
 
 /**
  * Unit tests for {@link SiteTool}, testing the {@code transformIcons} method.
- * 
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteTool
  */
@@ -56,14 +56,15 @@ public final class TestSiteToolTransformIcons {
     @Test
     @DisplayName("Transforming an empty string does nothing")
     public final void testEmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.transformIcons(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -72,14 +73,15 @@ public final class TestSiteToolTransformIcons {
     @Test
     @DisplayName("Transforms icons")
     public final void testIcon_Transforms() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<img src=\"images/add.gif\" alt=\"An image\">";
         htmlExpected = "<span><span class=\"fas fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.transformIcons(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -88,14 +90,15 @@ public final class TestSiteToolTransformIcons {
     @Test
     @DisplayName("If there are no icons it does nothing")
     public final void testNoIcons_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = html;
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.transformIcons(element);
 
         Assertions.assertEquals(htmlExpected, element.html());

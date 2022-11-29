@@ -34,7 +34,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
 
 /**
  * Unit tests for {@link HtmlTool} testing the {@code retag} method.
- * 
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
@@ -56,18 +56,19 @@ public final class TestHtmlToolRetag {
     @Test
     @DisplayName("Retags empty elements")
     public final void testEmpty() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String tag;          // New tag
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  tag;          // New tag
+        final Element element;      // Parsed HTML
 
         html = "<div class=\"source\">";
         htmlExpected = "<code class=\"source\"></code>";
         selector = "div.source";
         tag = "code";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.retag(element, selector, tag);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -76,18 +77,19 @@ public final class TestHtmlToolRetag {
     @Test
     @DisplayName("Retags nested elements")
     public final void testNested() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String tag;          // New tag
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  tag;          // New tag
+        final Element element;      // Parsed HTML
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
         htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\"><pre>Some code</pre></code>\n </div></code>";
         selector = "div.source";
         tag = "code";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.retag(element, selector, tag);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -96,18 +98,19 @@ public final class TestHtmlToolRetag {
     @Test
     @DisplayName("Retagging a not existing element does nothing")
     public final void testNotExisting_Nothing() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String tag;          // New tag
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  tag;          // New tag
+        final Element element;      // Parsed HTML
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
         htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
         selector = "div.abc";
         tag = "code";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.retag(element, selector, tag);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -116,13 +119,14 @@ public final class TestHtmlToolRetag {
     @Test
     @DisplayName("Retagging an empty string does nothing")
     public final void testRetag_EmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.retag(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -133,18 +137,19 @@ public final class TestHtmlToolRetag {
     @Test
     @DisplayName("Retags elements")
     public final void testSimple() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String tag;          // New tag
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  tag;          // New tag
+        final Element element;      // Parsed HTML
 
         html = "<div class=\"source\"><pre>Some code</pre></div>";
         htmlExpected = "<code class=\"source\"><pre>Some code</pre></code>";
         selector = "div.source";
         tag = "code";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.retag(element, selector, tag);
 
         Assertions.assertEquals(htmlExpected, element.html());

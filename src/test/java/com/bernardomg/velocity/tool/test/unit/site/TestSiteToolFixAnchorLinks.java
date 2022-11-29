@@ -34,7 +34,7 @@ import com.bernardomg.velocity.tool.SiteTool;
 
 /**
  * Unit tests for {@link SiteTool}, testing the {@code fixAnchorLinks} method.
- * 
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see SiteTool
  */
@@ -56,14 +56,15 @@ public final class TestSiteToolFixAnchorLinks {
     @Test
     @DisplayName("Empty links are not modified")
     public final void testEmptyLink_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<a href=\"\">A link</a>";
         htmlExpected = html;
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.fixAnchorLinks(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -72,14 +73,15 @@ public final class TestSiteToolFixAnchorLinks {
     @Test
     @DisplayName("Fixing empty strings does nothing")
     public final void testEmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.fixAnchorLinks(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -88,14 +90,15 @@ public final class TestSiteToolFixAnchorLinks {
     @Test
     @DisplayName("External links are not modified")
     public final void testExternalLink_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<a href=\"www.somewhere.com\">A link</a>";
         htmlExpected = html;
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.fixAnchorLinks(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -104,14 +107,15 @@ public final class TestSiteToolFixAnchorLinks {
     @Test
     @DisplayName("Internal links are formatted correctly")
     public final void testInternalLink_Formatted() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<a href=\"#An_Internal. Link \">A link</a>";
         htmlExpected = "<a href=\"#An-Internal-Link\">A link</a>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.fixAnchorLinks(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -120,14 +124,15 @@ public final class TestSiteToolFixAnchorLinks {
     @Test
     @DisplayName("Internal links with special characters are formatted correctly")
     public final void testInternalLink_SpecialCharacters_Formatted() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<a href=\"#link_-with?special!*chars\">A link</a>";
         htmlExpected = "<a href=\"#link--withspecialchars\">A link</a>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.fixAnchorLinks(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -136,14 +141,15 @@ public final class TestSiteToolFixAnchorLinks {
     @Test
     @DisplayName("Internal links with points are formatted correctly")
     public final void testInternalLink_WithPoints_Formatted() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<a href=\"#link.with.points\">A link</a>";
         htmlExpected = "<a href=\"#linkwithpoints\">A link</a>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.fixAnchorLinks(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -152,14 +158,15 @@ public final class TestSiteToolFixAnchorLinks {
     @Test
     @DisplayName("Elements without anchors are not modified")
     public final void testNoAnchors_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<p>Some text</p>";
         htmlExpected = html;
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.fixAnchorLinks(element);
 
         Assertions.assertEquals(htmlExpected, element.html());

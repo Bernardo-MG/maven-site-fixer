@@ -33,9 +33,8 @@ import org.junit.jupiter.api.Test;
 import com.bernardomg.velocity.tool.Html5UpdateTool;
 
 /**
- * Unit tests for {@link Html5UpdateTool} testing the {@code updateTableHeads}
- * method.
- * 
+ * Unit tests for {@link Html5UpdateTool} testing the {@code updateTableHeads} method.
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see Html5UpdateTool
  */
@@ -57,14 +56,15 @@ public final class TestHtml5UpdateToolUpdateTableHeads {
     @Test
     @DisplayName("Updating an empty string does nothing")
     public final void testEmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "";
         htmlExpected = "";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.updateTableHeads(element);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -73,14 +73,15 @@ public final class TestHtml5UpdateToolUpdateTableHeads {
     @Test
     @DisplayName("Updated a table's head")
     public final void testFullTable_UpdatesHeader() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
         htmlExpected = "<table border=\"0\" class=\"bodyTable testClass\">\n <thead>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.updateTableHeads(element);
 
         Assertions.assertEquals(htmlExpected, element.html());

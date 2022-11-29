@@ -33,19 +33,17 @@ import org.jsoup.parser.Tag;
 /**
  * Utilities class for upgrading XHTML code to HTML5.
  * <p>
- * This was created for Maven Sites. These are built through Doxia which
- * supports XHTML, and not HTML5, and so this library generates outdated pages.
+ * This was created for Maven Sites. These are built through Doxia which supports XHTML, and not HTML5, and so this
+ * library generates outdated pages.
  * <p>
- * The various methods contained in this class aim to fix this problem, and will
- * transform several known mistakes into valid HTML5, but they won't transform
- * the full page. The end user should make sure that the template being used,
+ * The various methods contained in this class aim to fix this problem, and will transform several known mistakes into
+ * valid HTML5, but they won't transform the full page. The end user should make sure that the template being used,
  * probably a Maven Skin, matches expectations.
  * <p>
- * The <a href="https://github.com/Bernardo-MG/docs-maven-skin">Docs Maven
- * Skin</a> and its requirements have dictated the development of this class.
- * For more generic methods use the {@link com.bernardomg.velocity.tool.HtmlTool
+ * The <a href="https://github.com/Bernardo-MG/docs-maven-skin">Docs Maven Skin</a> and its requirements have dictated
+ * the development of this class. For more generic methods use the {@link com.bernardomg.velocity.tool.HtmlTool
  * HtmlTool}.
- * 
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  */
 @DefaultKey("html5UpdateTool")
@@ -60,7 +58,7 @@ public class Html5UpdateTool {
 
     /**
      * Removes the points from the contents of the specified attribute.
-     * 
+     *
      * @param root
      *            root element for the selection
      * @param selector
@@ -69,8 +67,7 @@ public class Html5UpdateTool {
      *            attribute to clean
      * @return transformed element
      */
-    public final Element removePointsFromAttr(final Element root,
-            final String selector, final String attr) {
+    public final Element removePointsFromAttr(final Element root, final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
         Objects.requireNonNull(root, "Received a null pointer as root element");
@@ -89,18 +86,18 @@ public class Html5UpdateTool {
     /**
      * Corrects table headers by adding a {@code <thead>} section where missing.
      * <p>
-     * This serves to fix an error with tables created by Doxia, which will add
-     * the header rows into the {@code <tbody>} element, instead on a {@code
+     * This serves to fix an error with tables created by Doxia, which will add the header rows into the {@code <tbody>}
+     * element, instead on a {@code
      * <thead>} element.
-     * 
+     *
      * @param root
      *            root element with tables to fix
      * @return transformed element
      */
     public final Element updateTableHeads(final Element root) {
         final Iterable<Element> tableHeadRows; // Heads to fix
-        Element table;  // HTML table
-        Element thead;  // Table's head for wrapping
+        Element                 table;         // HTML table
+        Element                 thead;         // Table's head for wrapping
 
         Objects.requireNonNull(root, "Received a null pointer as root element");
 
@@ -109,7 +106,8 @@ public class Html5UpdateTool {
         for (final Element row : tableHeadRows) {
             // Gets the row's table
             // The selector ensured the row is inside a tbody
-            table = row.parent().parent();
+            table = row.parent()
+                .parent();
 
             // Removes the row from its original position
             row.remove();
@@ -126,18 +124,18 @@ public class Html5UpdateTool {
 
     /**
      * Removes the points from the contents of the specified attribute.
-     * 
+     *
      * @param element
      *            element with the attribute to clean
      * @param attr
      *            attribute to clean
      */
-    private final void removePointsFromAttr(final Element element,
-            final String attr) {
+    private final void removePointsFromAttr(final Element element, final String attr) {
         final String value; // Content of the attribute
 
         // Takes and clean the old attribute value
-        value = element.attr(attr).replaceAll("\\.", "");
+        value = element.attr(attr)
+            .replace(".", "");
 
         // Sets the cleaned value
         element.attr(attr, value);

@@ -34,7 +34,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
 
 /**
  * Unit tests for {@link HtmlTool} testing the {@code removeClass} method.
- * 
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
@@ -56,18 +56,19 @@ public final class TestHtmlToolRemoveClass {
     @Test
     @DisplayName("If the class is duplicated all the instances are removed")
     public final void testDuplicated() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String cssClass;     // Removed class
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  cssClass;     // Removed class
+        final Element element;      // Parsed HTML
 
         html = "<a class=\"externalLink someClass externalLink\" href=\"https://somewhere.com/\">A link</a>";
         htmlExpected = "<a class=\"someClass\" href=\"https://somewhere.com/\">A link</a>";
         selector = "a.externalLink";
         cssClass = "externalLink";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removeClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -76,18 +77,19 @@ public final class TestHtmlToolRemoveClass {
     @Test
     @DisplayName("Removes a class when there are multiple other classes")
     public final void testMultipleClasses() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String cssClass;     // Removed class
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  cssClass;     // Removed class
+        final Element element;      // Parsed HTML
 
         html = "<a class=\"externalLink class1\" href=\"https://somewhere.com/\">A link</a>";
         htmlExpected = "<a class=\"class1\" href=\"https://somewhere.com/\">A link</a>";
         selector = "a.externalLink";
         cssClass = "externalLink";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removeClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -96,18 +98,19 @@ public final class TestHtmlToolRemoveClass {
     @Test
     @DisplayName("When there are no more classes are left after removing then the class attribute is removed too")
     public final void testNoClassLeft() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String cssClass;     // Removed class
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  cssClass;     // Removed class
+        final Element element;      // Parsed HTML
 
         html = "<a class=\"externalLink\" href=\"https://somewhere.com/\">A link</a>";
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
         selector = "a.externalLink";
         cssClass = "externalLink";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removeClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -116,18 +119,19 @@ public final class TestHtmlToolRemoveClass {
     @Test
     @DisplayName("Removing a not existing class does nothing")
     public final void testNotExistingClass_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String cssClass;     // Removed class
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  cssClass;     // Removed class
+        final Element element;      // Parsed HTML
 
         html = "<a href=\"https://somewhere.com/\">A link</a>";
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
         selector = "a.externalLink";
         cssClass = "externalLink";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removeClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -136,13 +140,14 @@ public final class TestHtmlToolRemoveClass {
     @Test
     @DisplayName("Removing from an empty string does nothing")
     public final void testRemoveClass_EmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.removeClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";

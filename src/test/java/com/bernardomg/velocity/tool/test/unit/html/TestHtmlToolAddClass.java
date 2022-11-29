@@ -34,7 +34,7 @@ import com.bernardomg.velocity.tool.HtmlTool;
 
 /**
  * Unit tests for {@link HtmlTool} testing the {@code addClass} method.
- * 
+ *
  * @author Bernardo Mart&iacute;nez Garrido
  * @see HtmlTool
  */
@@ -56,13 +56,14 @@ public final class TestHtmlToolAddClass {
     @Test
     @DisplayName("Adding to an empty string does nothing")
     public final void testAddClass_EmptyString() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
 
         html = "";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.addClass(element, "a.externalLink", "externalLink");
 
         htmlExpected = "";
@@ -73,18 +74,19 @@ public final class TestHtmlToolAddClass {
     @Test
     @DisplayName("Adds a class when there are already multiple classes")
     public final void testMultipleClasses() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String cssClass;     // Removed class
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  cssClass;     // Removed class
+        final Element element;      // Parsed HTML
 
         html = "<a class=\"class1 class2\" href=\"https://somewhere.com/\">A link</a>";
         htmlExpected = "<a class=\"class1 class2 class3\" href=\"https://somewhere.com/\">A link</a>";
         selector = "a";
         cssClass = "class3";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.addClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -93,18 +95,19 @@ public final class TestHtmlToolAddClass {
     @Test
     @DisplayName("Adds a class when there are no classes")
     public final void testNoClass() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String cssClass;     // Removed class
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  cssClass;     // Removed class
+        final Element element;      // Parsed HTML
 
         html = "<a href=\"https://somewhere.com/\">A link</a>";
         htmlExpected = "<a href=\"https://somewhere.com/\" class=\"class1\">A link</a>";
         selector = "a";
         cssClass = "class1";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.addClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
@@ -113,18 +116,19 @@ public final class TestHtmlToolAddClass {
     @Test
     @DisplayName("Adding to a not existing element does nothing")
     public final void testNotExistingElement_Untouched() {
-        final String html;         // HTML code to edit
-        final String htmlExpected; // Expected result
-        final String selector;     // CSS selector
-        final String cssClass;     // Removed class
-        final Element element;     // Parsed HTML
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final String  selector;     // CSS selector
+        final String  cssClass;     // Removed class
+        final Element element;      // Parsed HTML
 
         html = "<a href=\"https://somewhere.com/\">A link</a>";
         htmlExpected = "<a href=\"https://somewhere.com/\">A link</a>";
         selector = "p";
         cssClass = "class2";
 
-        element = Jsoup.parse(html).body();
+        element = Jsoup.parse(html)
+            .body();
         util.addClass(element, selector, cssClass);
 
         Assertions.assertEquals(htmlExpected, element.html());
