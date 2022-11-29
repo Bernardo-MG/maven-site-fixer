@@ -146,7 +146,7 @@ public final class TestSiteToolFixHeadingIds {
         final Element element;      // Parsed HTML
 
         html = "<h1>A -_#heading *! </h1><h3>Another heading</h3>";
-        htmlExpected = "<h1 id=\"A---#heading-\">A -_#heading *! </h1>\n<h3 id=\"Another-heading\">Another heading</h3>";
+        htmlExpected = "<h1 id=\"A---#heading-\">A -_#heading *!</h1>\n<h3 id=\"Another-heading\">Another heading</h3>";
 
         element = Jsoup.parse(html)
             .body();
