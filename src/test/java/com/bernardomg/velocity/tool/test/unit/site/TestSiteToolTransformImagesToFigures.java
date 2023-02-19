@@ -54,8 +54,25 @@ public final class TestSiteToolTransformImagesToFigures {
     }
 
     @Test
+    @DisplayName("Generates no caption when there is no alt attribute")
+    public final void testCaption_NoAlt_NoFigCaption() {
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
+
+        html = "<p><img src=\"imgs/diagram.png\"></p>";
+        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
+
+        element = Jsoup.parse(html)
+            .body();
+        util.transformImagesToFigures(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
     @DisplayName("Generates a caption from the alt attribute")
-    public final void testCaption_Transforms() {
+    public final void testCaption_WithAlt_FigCaption() {
         final String  html;         // HTML code to edit
         final String  htmlExpected; // Expected result
         final Element element;      // Parsed HTML
@@ -70,9 +87,6 @@ public final class TestSiteToolTransformImagesToFigures {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem.
-     */
     @Test
     @DisplayName("Transforming an emtpy string does nothing")
     public final void testEmptyString() {
