@@ -71,6 +71,23 @@ public final class TestSiteToolTransformImagesToFigures {
     }
 
     @Test
+    @DisplayName("Generates no caption when the alt attribute is empty")
+    public final void testCaption_EmptyAlt_NoFigCaption() {
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
+
+        html = "<p><img src=\"imgs/diagram.png\"></p>";
+        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
+
+        element = Jsoup.parse(html)
+            .body();
+        util.transformImagesToFigures(element);
+
+        Assertions.assertEquals(htmlExpected, element.html());
+    }
+
+    @Test
     @DisplayName("Generates a caption from the alt attribute")
     public final void testCaption_WithAlt_FigCaption() {
         final String  html;         // HTML code to edit

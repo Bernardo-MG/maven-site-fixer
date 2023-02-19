@@ -53,10 +53,8 @@ public final class TestHtmlToolUnwrap {
         super();
     }
 
-    /**
-     * Tests that unwrapping an empty element removes it.
-     */
     @Test
+    @DisplayName("Unwrapping an empty element removes it")
     public final void testEmpty_Removed() {
         final String  html;         // HTML code to edit
         final String  htmlExpected; // Expected result
@@ -74,10 +72,8 @@ public final class TestHtmlToolUnwrap {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that unwrapping a not existing element does nothing.
-     */
     @Test
+    @DisplayName("Unwrapping a not existing element does nothing")
     public final void testNotExisting_Nothing() {
         final String  html;         // HTML code to edit
         final String  htmlExpected; // Expected result
@@ -95,10 +91,8 @@ public final class TestHtmlToolUnwrap {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that an empty string causes no problem to the {@code unwrap} method.
-     */
     @Test
+    @DisplayName("an empty string causes no problem when unwrapping")
     public final void testUnwrap_EmptyString() {
         final String  html;         // HTML code to edit
         final String  htmlExpected; // Expected result
@@ -115,10 +109,8 @@ public final class TestHtmlToolUnwrap {
         Assertions.assertEquals(htmlExpected, element.html());
     }
 
-    /**
-     * Tests that unwrapping an element with text keeps this text.
-     */
     @Test
+    @DisplayName("Unwrapping an element with text keeps this text")
     public final void testWithText_TextKept() {
         final String  html;         // HTML code to edit
         final String  htmlExpected; // Expected result
