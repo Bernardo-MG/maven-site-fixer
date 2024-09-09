@@ -1,32 +1,26 @@
-name: Tests and docs
+name: Tests
 
 on: [push, pull_request]
 
 jobs:
   tests:
-    name: Tests
-    uses: Bernardo-MG/github-workflow/.github/workflows/maven_testing.yml@v1
+    name: Tests with JDK ${{ matrix.jdk }}
+    runs-on: ubuntu-latest
 
-  deploy_develop_docs:
-    name: Deploy development docs
-    needs: tests
-    uses: Bernardo-MG/github-workflow/.github/workflows/maven_deploy_site.yml@v1
-    with:
-      branch: develop
-      host: docs.bernardomg.com
-    secrets:
-      url: ${{ secrets.DEPLOY_DOCS_DEVELOP_SITE }}
-      username: ${{ secrets.DEPLOY_DOCS_DEVELOP_USER }}
-      password: ${{ secrets.DEPLOY_DOCS_DEVELOP_PASSWORD }}
+    strategy:
+      matrix:
+        jdk: [17, 21]
 
-  deploy_docs:
-    name: Deploy docs
-    needs: tests
-    uses: Bernardo-MG/github-workflow/.github/workflows/maven_deploy_site.yml@v1
-    with:
-      branch: master
-      host: docs.bernardomg.com
-    secrets:
-      url: ${{ secrets.DEPLOY_DOCS_SITE }}
-      username: ${{ secrets.DEPLOY_DOCS_USER }}
-      password: ${{ secrets.DEPLOY_DOCS_PASSWORD }}
+    steps:
+    - name: Check-out
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: Set up JDK ${{ matrix.jdk }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.jdk }}
+        distribution: 'temurin'
+        cache: 'maven'
+    - name: Run up to integration tests
+      run: mvn verify -fae

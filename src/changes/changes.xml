@@ -121,5 +121,10 @@
             Updated JDK compatibility level.
          </action>
       </release>
+      <release version="1.3.2" date="2024-09-09" description="Updated dependencies">
+         <action dev="bmg" type="update">
+            Updated dependencies.
+         </action>
+      </release>
    </body>
 </document>
