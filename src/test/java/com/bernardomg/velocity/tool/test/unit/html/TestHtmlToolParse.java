@@ -24,8 +24,8 @@
 
 package com.bernardomg.velocity.tool.test.unit.html;
 
+import org.assertj.core.api.Assertions;
 import org.jsoup.nodes.Element;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +62,7 @@ public final class TestHtmlToolParse {
 
         element = util.parse(html);
 
-        Assertions.assertNotNull(element);
+        Assertions.assertThat(element).isNotNull();
     }
 
     @Test
@@ -75,7 +75,7 @@ public final class TestHtmlToolParse {
 
         element = util.parse(html);
 
-        Assertions.assertNull(element);
+        Assertions.assertThat(element).isNull();
     }
 
 }

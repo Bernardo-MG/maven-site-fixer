@@ -24,9 +24,9 @@
 
 package com.bernardomg.velocity.tool.test.unit.html;
 
+import org.assertj.core.api.Assertions;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -68,7 +68,7 @@ public final class TestHtmlToolAddClass {
 
         htmlExpected = "";
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
     }
 
     @Test
@@ -89,7 +89,7 @@ public final class TestHtmlToolAddClass {
             .body();
         util.addClass(element, selector, cssClass);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
     }
 
     @Test
@@ -110,7 +110,7 @@ public final class TestHtmlToolAddClass {
             .body();
         util.addClass(element, selector, cssClass);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
     }
 
     @Test
@@ -131,7 +131,7 @@ public final class TestHtmlToolAddClass {
             .body();
         util.addClass(element, selector, cssClass);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
     }
 
 }
