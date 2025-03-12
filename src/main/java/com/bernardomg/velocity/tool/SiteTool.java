@@ -35,6 +35,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Utilities class for fixing several issues in Doxia generated sites, updating and homogenising their layouts.
  * <p>
@@ -48,6 +50,7 @@ import org.jsoup.parser.Tag;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
+@Slf4j
 @DefaultKey("siteTool")
 public class SiteTool {
 
@@ -90,8 +93,9 @@ public class SiteTool {
         String ref; // Value of the href attribute
         String id;  // Formatted id
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
-
+        if(root==null) {
+    		log.warn("Received null root");
+        } else {
         // Anchors
         for (final Element anchor : root.getElementsByTag("a")) {
             // If the attribute doesn't exist then the ref will be an empty
@@ -102,6 +106,7 @@ public class SiteTool {
                 id = formatId(ref);
                 anchor.attr("href", id);
             }
+        }
         }
 
         return root;
@@ -131,8 +136,9 @@ public class SiteTool {
         String                    idText;   // Text to generate the id
         String                    id;       // Formatted id
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
-
+        if(root==null) {
+    		log.warn("Received null root");
+        } else {
         // Table rows with <th> tags in a <tbody>
         headings = root.select("h1,h2,h3,h4,h5,h6");
         for (final Element heading : headings) {
@@ -147,6 +153,7 @@ public class SiteTool {
             }
             id = formatId(idText);
             heading.attr("id", id);
+        }
         }
 
         return root;
@@ -183,9 +190,11 @@ public class SiteTool {
      */
     public final Element fixReport(final Element root, final String report) {
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
         Objects.requireNonNull(report, "Received a null pointer as report");
 
+        if(root==null) {
+    		log.warn("Received null root");
+        } else {
         switch (report) {
             case "changes-report":
                 fixReportChanges(root);
@@ -243,6 +252,7 @@ public class SiteTool {
             default:
                 break;
         }
+        }
 
         return root;
     }
@@ -255,11 +265,11 @@ public class SiteTool {
      * @return transformed element
      */
     public final Element transformIcons(final Element root) {
-        final Map<String, String> replacements; // Texts to replace and
-                                                // replacements
+        final Map<String, String> replacements;
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
-
+        if(root==null) {
+    		log.warn("Received null root");
+        } else {
         replacements = new HashMap<>();
         replacements.put("img[src$=images/add.gif]",
             "<span><span class=\"fa-solid fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>");
@@ -281,6 +291,7 @@ public class SiteTool {
             "<span><span class=\"fa-solid fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
 
         replaceAll(root, replacements);
+        }
 
         return root;
     }
@@ -301,8 +312,9 @@ public class SiteTool {
         Element                   figure;  // <figure> element
         Element                   caption; // <figcaption> element
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
-
+        if(root==null) {
+    		log.warn("Received null root");
+        } else {
         images = root.select("img");
         for (final Element img : images) {
             figure = new Element(Tag.valueOf("figure"), "");
@@ -325,6 +337,7 @@ public class SiteTool {
                 fig.parent()
                     .unwrap();
             }
+        }
         }
 
         return root;

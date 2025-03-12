@@ -30,6 +30,8 @@ import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Utilities class for upgrading XHTML code to HTML5.
  * <p>
@@ -46,6 +48,7 @@ import org.jsoup.parser.Tag;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
+@Slf4j
 @DefaultKey("html5UpdateTool")
 public class Html5UpdateTool {
 
@@ -70,14 +73,17 @@ public class Html5UpdateTool {
     public final Element removePointsFromAttr(final Element root, final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
         Objects.requireNonNull(selector, "Received a null pointer as selector");
         Objects.requireNonNull(attr, "Received a null pointer as attribute");
 
+        if(root==null) {
+    		log.warn("Received null root");
+        } else {
         // Selects and iterates over the elements
         elements = root.select(selector);
         for (final Element selected : elements) {
             removePointsFromAttr(selected, attr);
+        }
         }
 
         return root;
@@ -99,8 +105,9 @@ public class Html5UpdateTool {
         Element                 table;         // HTML table
         Element                 thead;         // Table's head for wrapping
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
-
+        if(root==null) {
+    		log.warn("Received null root");
+        } else {
         // Table rows with <th> tags in a <tbody>
         tableHeadRows = root.select("table > tbody > tr:has(th)");
         for (final Element row : tableHeadRows) {
@@ -117,6 +124,7 @@ public class Html5UpdateTool {
             thead.appendChild(row);
             // Adds the head at the beginning of the table
             table.prependChild(thead);
+        }
         }
 
         return root;
