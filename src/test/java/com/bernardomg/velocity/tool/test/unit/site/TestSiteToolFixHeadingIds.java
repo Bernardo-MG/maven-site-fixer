@@ -24,9 +24,9 @@
 
 package com.bernardomg.velocity.tool.test.unit.site;
 
+import org.assertj.core.api.Assertions;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -67,7 +67,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -84,7 +85,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -101,7 +103,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -118,7 +121,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -135,7 +139,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -152,7 +157,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -169,7 +175,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

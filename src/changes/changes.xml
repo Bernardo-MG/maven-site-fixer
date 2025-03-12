@@ -126,5 +126,10 @@
             Updated dependencies.
          </action>
       </release>
+      <release version="1.3.3" date="2025-03-12" description="Handle nulls">
+         <action dev="bmg" type="fix">
+            Don't break on a null.
+         </action>
+      </release>
    </body>
 </document>

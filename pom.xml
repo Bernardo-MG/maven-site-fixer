@@ -11,7 +11,7 @@
    <parent>
       <groupId>com.bernardomg.maven</groupId>
       <artifactId>base-pom</artifactId>
-      <version>1.5.4</version>
+      <version>1.5.8</version>
    </parent>
 
    <!-- ********************************************** -->
@@ -20,7 +20,7 @@
 
    <groupId>com.bernardomg.velocity</groupId>
    <artifactId>maven-site-fixer</artifactId>
-   <version>1.3.2</version>
+   <version>1.3.3</version>
    <packaging>jar</packaging>
 
    <name>Maven Site Fixer</name>
@@ -184,11 +184,15 @@
       <!-- ============================================== -->
       <!-- =========== DEPENDENCIES VERSIONS ============ -->
       <!-- ============================================== -->
+      <assertj.version>3.27.3</assertj.version>
       <commons.beanUtils.version>1.9.4</commons.beanUtils.version>
       <commons.lang3.version>3.17.0</commons.lang3.version>
       <commons.logging.version>1.3.4</commons.logging.version>
       <jsoup.version>1.18.1</jsoup.version>
-      <junit.jupiter.version>5.11.0</junit.jupiter.version>
+      <junit.jupiter.version>5.12.0</junit.jupiter.version>
+      <lombok.version>1.18.36</lombok.version>
+      <slf4j.version>2.0.17</slf4j.version>
+      <log4j.version>2.24.3</log4j.version>
       <velocity.tools.version>3.1</velocity.tools.version>
       <!-- ============================================== -->
       <!-- ============ PLUGIN CONFIGURATION ============ -->
@@ -198,7 +202,7 @@
       <!-- ============================================== -->
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
-      <site.skin.version>2.3.2</site.skin.version>
+      <site.skin.version>2.3.3</site.skin.version>
       <mavenURL>http://mvnrepository.com/artifact/com.bernardomg.velocity/maven-site-fixer</mavenURL>
       <githubArtifactURL><![CDATA[https://github.com/Bernardo-MG?tab=packages&amp;repo_name=maven-site-fixer]]></githubArtifactURL>
    </properties>
@@ -232,6 +236,52 @@
          <groupId>org.apache.velocity.tools</groupId>
          <artifactId>velocity-tools-generic</artifactId>
          <version>${velocity.tools.version}</version>
+      </dependency>
+      <!-- ============================================== -->
+      <!-- ================== LOMBOK ==================== -->
+      <!-- ============================================== -->
+      <dependency>
+         <!-- Lombok -->
+         <groupId>org.projectlombok</groupId>
+         <artifactId>lombok</artifactId>
+         <version>${lombok.version}</version>
+         <scope>provided</scope>
+      </dependency>
+      <!-- ============================================== -->
+      <!-- ================== LOGGING =================== -->
+      <!-- ============================================== -->
+      <dependency>
+         <!-- SL4J API -->
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+         <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+         <!-- Log4j SLF4J Bridge -->
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-slf4j2-impl</artifactId>
+         <version>${log4j.version}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <!-- Log4j core -->
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-core</artifactId>
+         <version>${log4j.version}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <!-- Log4j Commons Logging Bridge -->
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-jcl</artifactId>
+         <version>${log4j.version}</version>
+         <scope>provided</scope>
+         <exclusions>
+            <exclusion>
+               <groupId>commons-logging</groupId>
+               <artifactId>commons-logging</artifactId>
+            </exclusion>
+         </exclusions>
       </dependency>
       <!-- ============================================== -->
       <!-- ============ ENFORCED DEPENDENCIES =========== -->
@@ -269,6 +319,13 @@
          <!-- JUnit Jupiter Platform -->
          <groupId>org.junit.platform</groupId>
          <artifactId>junit-platform-runner</artifactId>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <!-- AssertJ -->
+         <groupId>org.assertj</groupId>
+         <artifactId>assertj-core</artifactId>
+         <version>${assertj.version}</version>
          <scope>test</scope>
       </dependency>
    </dependencies>
