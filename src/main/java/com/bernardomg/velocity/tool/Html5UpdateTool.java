@@ -30,6 +30,8 @@ import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Utilities class for upgrading XHTML code to HTML5.
  * <p>
@@ -46,6 +48,7 @@ import org.jsoup.parser.Tag;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
+@Slf4j
 @DefaultKey("html5UpdateTool")
 public class Html5UpdateTool {
 
@@ -54,6 +57,25 @@ public class Html5UpdateTool {
      */
     public Html5UpdateTool() {
         super();
+    }
+
+    /**
+     * Removes the points from the contents of the specified attribute.
+     *
+     * @param element
+     *            element with the attribute to clean
+     * @param attr
+     *            attribute to clean
+     */
+    private final void removePointsFromAttr(final Element element, final String attr) {
+        final String value; // Content of the attribute
+
+        // Takes and clean the old attribute value
+        value = element.attr(attr)
+            .replace(".", "");
+
+        // Sets the cleaned value
+        element.attr(attr, value);
     }
 
     /**
@@ -70,14 +92,17 @@ public class Html5UpdateTool {
     public final Element removePointsFromAttr(final Element root, final String selector, final String attr) {
         final Iterable<Element> elements; // Elements to fix
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
         Objects.requireNonNull(selector, "Received a null pointer as selector");
         Objects.requireNonNull(attr, "Received a null pointer as attribute");
 
-        // Selects and iterates over the elements
-        elements = root.select(selector);
-        for (final Element selected : elements) {
-            removePointsFromAttr(selected, attr);
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            // Selects and iterates over the elements
+            elements = root.select(selector);
+            for (final Element selected : elements) {
+                removePointsFromAttr(selected, attr);
+            }
         }
 
         return root;
@@ -99,46 +124,29 @@ public class Html5UpdateTool {
         Element                 table;         // HTML table
         Element                 thead;         // Table's head for wrapping
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            // Table rows with <th> tags in a <tbody>
+            tableHeadRows = root.select("table > tbody > tr:has(th)");
+            for (final Element row : tableHeadRows) {
+                // Gets the row's table
+                // The selector ensured the row is inside a tbody
+                table = row.parent()
+                    .parent();
 
-        // Table rows with <th> tags in a <tbody>
-        tableHeadRows = root.select("table > tbody > tr:has(th)");
-        for (final Element row : tableHeadRows) {
-            // Gets the row's table
-            // The selector ensured the row is inside a tbody
-            table = row.parent()
-                .parent();
+                // Removes the row from its original position
+                row.remove();
 
-            // Removes the row from its original position
-            row.remove();
-
-            // Creates a table header element with the row
-            thead = new Element(Tag.valueOf("thead"), "");
-            thead.appendChild(row);
-            // Adds the head at the beginning of the table
-            table.prependChild(thead);
+                // Creates a table header element with the row
+                thead = new Element(Tag.valueOf("thead"), "");
+                thead.appendChild(row);
+                // Adds the head at the beginning of the table
+                table.prependChild(thead);
+            }
         }
 
         return root;
-    }
-
-    /**
-     * Removes the points from the contents of the specified attribute.
-     *
-     * @param element
-     *            element with the attribute to clean
-     * @param attr
-     *            attribute to clean
-     */
-    private final void removePointsFromAttr(final Element element, final String attr) {
-        final String value; // Content of the attribute
-
-        // Takes and clean the old attribute value
-        value = element.attr(attr)
-            .replace(".", "");
-
-        // Sets the cleaned value
-        element.attr(attr, value);
     }
 
 }

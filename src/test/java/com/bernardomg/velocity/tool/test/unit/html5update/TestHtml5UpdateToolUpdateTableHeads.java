@@ -24,9 +24,9 @@
 
 package com.bernardomg.velocity.tool.test.unit.html5update;
 
+import org.assertj.core.api.Assertions;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -67,7 +67,8 @@ public final class TestHtml5UpdateToolUpdateTableHeads {
             .body();
         util.updateTableHeads(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -84,7 +85,8 @@ public final class TestHtml5UpdateToolUpdateTableHeads {
             .body();
         util.updateTableHeads(element);
 
-        Assertions.assertEquals(htmlExpected, element.html());
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

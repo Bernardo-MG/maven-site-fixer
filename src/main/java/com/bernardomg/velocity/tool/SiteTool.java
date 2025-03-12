@@ -35,6 +35,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Utilities class for fixing several issues in Doxia generated sites, updating and homogenising their layouts.
  * <p>
@@ -48,6 +50,7 @@ import org.jsoup.parser.Tag;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
+@Slf4j
 @DefaultKey("siteTool")
 public class SiteTool {
 
@@ -90,17 +93,19 @@ public class SiteTool {
         String ref; // Value of the href attribute
         String id;  // Formatted id
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            // Anchors
+            for (final Element anchor : root.getElementsByTag("a")) {
+                // If the attribute doesn't exist then the ref will be an empty
+                // string
+                ref = anchor.attr("href");
 
-        // Anchors
-        for (final Element anchor : root.getElementsByTag("a")) {
-            // If the attribute doesn't exist then the ref will be an empty
-            // string
-            ref = anchor.attr("href");
-
-            if ((!ref.isEmpty()) && ("#".equals(ref.substring(0, 1)))) {
-                id = formatId(ref);
-                anchor.attr("href", id);
+                if ((!ref.isEmpty()) && ("#".equals(ref.substring(0, 1)))) {
+                    id = formatId(ref);
+                    anchor.attr("href", id);
+                }
             }
         }
 
@@ -131,22 +136,24 @@ public class SiteTool {
         String                    idText;   // Text to generate the id
         String                    id;       // Formatted id
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
-
-        // Table rows with <th> tags in a <tbody>
-        headings = root.select("h1,h2,h3,h4,h5,h6");
-        for (final Element heading : headings) {
-            if (heading.hasAttr("id")) {
-                // Contains an id
-                // The id text is taken from the attribute
-                idText = heading.attr("id");
-            } else {
-                // Doesn't contain an id
-                // The id text is taken from the heading text
-                idText = heading.text();
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            // Table rows with <th> tags in a <tbody>
+            headings = root.select("h1,h2,h3,h4,h5,h6");
+            for (final Element heading : headings) {
+                if (heading.hasAttr("id")) {
+                    // Contains an id
+                    // The id text is taken from the attribute
+                    idText = heading.attr("id");
+                } else {
+                    // Doesn't contain an id
+                    // The id text is taken from the heading text
+                    idText = heading.text();
+                }
+                id = formatId(idText);
+                heading.attr("id", id);
             }
-            id = formatId(idText);
-            heading.attr("id", id);
         }
 
         return root;
@@ -183,147 +190,67 @@ public class SiteTool {
      */
     public final Element fixReport(final Element root, final String report) {
 
-        Objects.requireNonNull(root, "Received a null pointer as root element");
         Objects.requireNonNull(report, "Received a null pointer as report");
 
-        switch (report) {
-            case "changes-report":
-                fixReportChanges(root);
-                break;
-            case "checkstyle":
-            case "checkstyle-aggregate":
-                fixReportCheckstyle(root);
-                break;
-            case "cpd":
-                fixReportCpd(root);
-                break;
-            case "dependencies":
-                fixReportDependencies(root);
-                break;
-            case "dependency-analysis":
-                fixReportDependencyAnalysis(root);
-                break;
-            case "failsafe-report":
-                fixReportFailsafe(root);
-                break;
-            case "findbugs":
-            case "spotbugs":
-                fixReportFindbugs(root);
-                break;
-            case "jdepend-report":
-                fixReportJdepend(root);
-                break;
-            case "license":
-            case "licenses":
-                fixReportLicense(root);
-                break;
-            case "plugins":
-                fixReportPlugins(root);
-                break;
-            case "plugin-management":
-                fixReportPluginManagement(root);
-                break;
-            case "pmd":
-                fixReportPmd(root);
-                break;
-            case "project-summary":
-            case "summary":
-                fixReportProjectSummary(root);
-                break;
-            case "surefire-report":
-                fixReportSurefire(root);
-                break;
-            case "taglist":
-                fixReportTaglist(root);
-                break;
-            case "team-list":
-            case "team":
-                fixReportTeamList(root);
-                break;
-            default:
-                break;
-        }
-
-        return root;
-    }
-
-    /**
-     * Transforms the default icons used by the Maven Site to Font Awesome icons.
-     *
-     * @param root
-     *            root element with the page
-     * @return transformed element
-     */
-    public final Element transformIcons(final Element root) {
-        final Map<String, String> replacements; // Texts to replace and
-                                                // replacements
-
-        Objects.requireNonNull(root, "Received a null pointer as root element");
-
-        replacements = new HashMap<>();
-        replacements.put("img[src$=images/add.gif]",
-            "<span><span class=\"fa-solid fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>");
-        replacements.put("img[src$=images/remove.gif]",
-            "<span><span class=\"fa-solid fa-minus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Remove</span></span>");
-        replacements.put("img[src$=images/fix.gif]",
-            "<span><span class=\"fa-solid fa-wrench\" aria-hidden=\"true\"></span><span class=\"sr-only\">Fix</span></span>");
-        replacements.put("img[src$=images/update.gif]",
-            "<span><span class=\"fa-solid fa-rotate\" aria-hidden=\"true\"></span><span class=\"sr-only\">Refresh</span></span>");
-        replacements.put("img[src$=images/icon_help_sml.gif]",
-            "<span><span class=\"fa-solid fa-question\" aria-hidden=\"true\"></span><span class=\"sr-only\">Question</span></span>");
-        replacements.put("img[src$=images/icon_success_sml.gif]",
-            "<span><span class=\"navbar-icon fa-solid fa-check\" aria-hidden=\"true\" title=\"Passed\" aria-label=\"Passed\"></span><span class=\"sr-only\">Passed</span></span>");
-        replacements.put("img[src$=images/icon_warning_sml.gif]",
-            "<span><span class=\"fa-solid fa-exclamation\" aria-hidden=\"true\"></span><span class=\"sr-only\">Warning</span>");
-        replacements.put("img[src$=images/icon_error_sml.gif]",
-            "<span><span class=\"navbar-icon fa-solid fa-xmark\" aria-hidden=\"true\" title=\"Failed\" aria-label=\"Failed\"></span><span class=\"sr-only\">Failed</span></span>");
-        replacements.put("img[src$=images/icon_info_sml.gif]",
-            "<span><span class=\"fa-solid fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
-
-        replaceAll(root, replacements);
-
-        return root;
-    }
-
-    /**
-     * Transforms simple {@code <img>} elements to {@code <figure>} elements.
-     * <p>
-     * This will wrap {@code <img>} elements with a {@code <figure>} element, and add a {@code <figcaption>} with the
-     * contents of the image's {@code alt} attribute, if said attribute exists.
-     *
-     * @param root
-     *            root element with images to transform
-     * @return transformed element
-     */
-    public final Element transformImagesToFigures(final Element root) {
-        final Collection<Element> images;  // Image elements from the <body>
-        final Collection<Element> figures; // figure elements from the <body>
-        Element                   figure;  // <figure> element
-        Element                   caption; // <figcaption> element
-
-        Objects.requireNonNull(root, "Received a null pointer as root element");
-
-        images = root.select("img");
-        for (final Element img : images) {
-            figure = new Element(Tag.valueOf("figure"), "");
-
-            img.replaceWith(figure);
-            figure.appendChild(img);
-
-            if (img.hasAttr("alt")) {
-                caption = new Element(Tag.valueOf("figcaption"), "");
-                caption.text(img.attr("alt"));
-                figure.appendChild(caption);
-            }
-        }
-
-        figures = root.select("figure");
-        for (final Element fig : figures) {
-            if ("p".equals(fig.parent()
-                .tag()
-                .getName())) {
-                fig.parent()
-                    .unwrap();
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            switch (report) {
+                case "changes-report":
+                    fixReportChanges(root);
+                    break;
+                case "checkstyle":
+                case "checkstyle-aggregate":
+                    fixReportCheckstyle(root);
+                    break;
+                case "cpd":
+                    fixReportCpd(root);
+                    break;
+                case "dependencies":
+                    fixReportDependencies(root);
+                    break;
+                case "dependency-analysis":
+                    fixReportDependencyAnalysis(root);
+                    break;
+                case "failsafe-report":
+                    fixReportFailsafe(root);
+                    break;
+                case "findbugs":
+                case "spotbugs":
+                    fixReportFindbugs(root);
+                    break;
+                case "jdepend-report":
+                    fixReportJdepend(root);
+                    break;
+                case "license":
+                case "licenses":
+                    fixReportLicense(root);
+                    break;
+                case "plugins":
+                    fixReportPlugins(root);
+                    break;
+                case "plugin-management":
+                    fixReportPluginManagement(root);
+                    break;
+                case "pmd":
+                    fixReportPmd(root);
+                    break;
+                case "project-summary":
+                case "summary":
+                    fixReportProjectSummary(root);
+                    break;
+                case "surefire-report":
+                    fixReportSurefire(root);
+                    break;
+                case "taglist":
+                    fixReportTaglist(root);
+                    break;
+                case "team-list":
+                case "team":
+                    fixReportTeamList(root);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -695,6 +622,92 @@ public class SiteTool {
                 }
             }
         }
+    }
+
+    /**
+     * Transforms the default icons used by the Maven Site to Font Awesome icons.
+     *
+     * @param root
+     *            root element with the page
+     * @return transformed element
+     */
+    public final Element transformIcons(final Element root) {
+        final Map<String, String> replacements;
+
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            replacements = new HashMap<>();
+            replacements.put("img[src$=images/add.gif]",
+                "<span><span class=\"fa-solid fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>");
+            replacements.put("img[src$=images/remove.gif]",
+                "<span><span class=\"fa-solid fa-minus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Remove</span></span>");
+            replacements.put("img[src$=images/fix.gif]",
+                "<span><span class=\"fa-solid fa-wrench\" aria-hidden=\"true\"></span><span class=\"sr-only\">Fix</span></span>");
+            replacements.put("img[src$=images/update.gif]",
+                "<span><span class=\"fa-solid fa-rotate\" aria-hidden=\"true\"></span><span class=\"sr-only\">Refresh</span></span>");
+            replacements.put("img[src$=images/icon_help_sml.gif]",
+                "<span><span class=\"fa-solid fa-question\" aria-hidden=\"true\"></span><span class=\"sr-only\">Question</span></span>");
+            replacements.put("img[src$=images/icon_success_sml.gif]",
+                "<span><span class=\"navbar-icon fa-solid fa-check\" aria-hidden=\"true\" title=\"Passed\" aria-label=\"Passed\"></span><span class=\"sr-only\">Passed</span></span>");
+            replacements.put("img[src$=images/icon_warning_sml.gif]",
+                "<span><span class=\"fa-solid fa-exclamation\" aria-hidden=\"true\"></span><span class=\"sr-only\">Warning</span>");
+            replacements.put("img[src$=images/icon_error_sml.gif]",
+                "<span><span class=\"navbar-icon fa-solid fa-xmark\" aria-hidden=\"true\" title=\"Failed\" aria-label=\"Failed\"></span><span class=\"sr-only\">Failed</span></span>");
+            replacements.put("img[src$=images/icon_info_sml.gif]",
+                "<span><span class=\"fa-solid fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
+
+            replaceAll(root, replacements);
+        }
+
+        return root;
+    }
+
+    /**
+     * Transforms simple {@code <img>} elements to {@code <figure>} elements.
+     * <p>
+     * This will wrap {@code <img>} elements with a {@code <figure>} element, and add a {@code <figcaption>} with the
+     * contents of the image's {@code alt} attribute, if said attribute exists.
+     *
+     * @param root
+     *            root element with images to transform
+     * @return transformed element
+     */
+    public final Element transformImagesToFigures(final Element root) {
+        final Collection<Element> images;  // Image elements from the <body>
+        final Collection<Element> figures; // figure elements from the <body>
+        Element                   figure;  // <figure> element
+        Element                   caption; // <figcaption> element
+
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            images = root.select("img");
+            for (final Element img : images) {
+                figure = new Element(Tag.valueOf("figure"), "");
+
+                img.replaceWith(figure);
+                figure.appendChild(img);
+
+                if (img.hasAttr("alt")) {
+                    caption = new Element(Tag.valueOf("figcaption"), "");
+                    caption.text(img.attr("alt"));
+                    figure.appendChild(caption);
+                }
+            }
+
+            figures = root.select("figure");
+            for (final Element fig : figures) {
+                if ("p".equals(fig.parent()
+                    .tag()
+                    .getName())) {
+                    fig.parent()
+                        .unwrap();
+                }
+            }
+        }
+
+        return root;
     }
 
 }
