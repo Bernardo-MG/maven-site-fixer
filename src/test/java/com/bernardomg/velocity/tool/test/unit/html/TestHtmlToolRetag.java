@@ -71,7 +71,8 @@ public final class TestHtmlToolRetag {
             .body();
         util.retag(element, selector, tag);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -92,7 +93,8 @@ public final class TestHtmlToolRetag {
             .body();
         util.retag(element, selector, tag);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -113,7 +115,8 @@ public final class TestHtmlToolRetag {
             .body();
         util.retag(element, selector, tag);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -131,7 +134,8 @@ public final class TestHtmlToolRetag {
 
         htmlExpected = "";
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -152,7 +156,8 @@ public final class TestHtmlToolRetag {
             .body();
         util.retag(element, selector, tag);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

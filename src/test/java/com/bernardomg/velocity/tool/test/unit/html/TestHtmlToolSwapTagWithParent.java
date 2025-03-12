@@ -68,7 +68,8 @@ public final class TestHtmlToolSwapTagWithParent {
 
         htmlExpected = "";
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -87,7 +88,8 @@ public final class TestHtmlToolSwapTagWithParent {
             .body();
         util.swapTagWithParent(element, selector);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -106,7 +108,8 @@ public final class TestHtmlToolSwapTagWithParent {
             .body();
         util.swapTagWithParent(element, selector);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

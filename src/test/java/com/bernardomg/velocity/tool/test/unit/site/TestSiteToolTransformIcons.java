@@ -67,7 +67,8 @@ public final class TestSiteToolTransformIcons {
             .body();
         util.transformIcons(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -84,7 +85,8 @@ public final class TestSiteToolTransformIcons {
             .body();
         util.transformIcons(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -101,7 +103,8 @@ public final class TestSiteToolTransformIcons {
             .body();
         util.transformIcons(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

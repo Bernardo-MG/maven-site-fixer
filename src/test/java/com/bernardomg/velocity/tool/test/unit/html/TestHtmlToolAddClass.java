@@ -68,7 +68,8 @@ public final class TestHtmlToolAddClass {
 
         htmlExpected = "";
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -89,7 +90,8 @@ public final class TestHtmlToolAddClass {
             .body();
         util.addClass(element, selector, cssClass);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -110,7 +112,8 @@ public final class TestHtmlToolAddClass {
             .body();
         util.addClass(element, selector, cssClass);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -131,7 +134,8 @@ public final class TestHtmlToolAddClass {
             .body();
         util.addClass(element, selector, cssClass);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

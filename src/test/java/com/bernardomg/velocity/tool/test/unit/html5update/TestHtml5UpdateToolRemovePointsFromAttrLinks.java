@@ -67,7 +67,8 @@ public final class TestHtml5UpdateToolRemovePointsFromAttrLinks {
             .body();
         util.removePointsFromAttr(element, "[href]", "href");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -84,7 +85,8 @@ public final class TestHtml5UpdateToolRemovePointsFromAttrLinks {
             .body();
         util.removePointsFromAttr(element, "[href]", "href");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

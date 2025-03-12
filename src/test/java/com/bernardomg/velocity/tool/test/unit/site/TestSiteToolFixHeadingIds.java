@@ -67,7 +67,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -84,7 +85,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -101,7 +103,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -118,7 +121,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -135,7 +139,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -152,7 +157,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -169,7 +175,8 @@ public final class TestSiteToolFixHeadingIds {
             .body();
         util.fixHeadingIds(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

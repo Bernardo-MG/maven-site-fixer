@@ -70,7 +70,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "changes-report");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -87,7 +88,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "checkstyle");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -104,7 +106,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "cpd");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -121,7 +124,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "dependencies");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -138,7 +142,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "failsafe-report");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -155,7 +160,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "findbugs");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -172,7 +178,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "jdepend-report");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -189,7 +196,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "license");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -206,7 +214,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "plugin-management");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -223,7 +232,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "plugins");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -240,7 +250,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "pmd");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -257,7 +268,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "project-summary");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -274,7 +286,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "surefire-report");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -291,7 +304,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "taglist");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -308,7 +322,8 @@ public final class TestSiteToolFixReportEmpty {
             .body();
         util.fixReport(element, "team-list");
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

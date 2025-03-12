@@ -54,23 +54,6 @@ public final class TestSiteToolTransformImagesToFigures {
     }
 
     @Test
-    @DisplayName("Generates no caption when there is no alt attribute")
-    public final void testCaption_NoAlt_NoFigCaption() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "<p><img src=\"imgs/diagram.png\"></p>";
-        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.transformImagesToFigures(element);
-
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
-    }
-
-    @Test
     @DisplayName("Generates no caption when the alt attribute is empty")
     public final void testCaption_EmptyAlt_NoFigCaption() {
         final String  html;         // HTML code to edit
@@ -84,7 +67,26 @@ public final class TestSiteToolTransformImagesToFigures {
             .body();
         util.transformImagesToFigures(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
+    }
+
+    @Test
+    @DisplayName("Generates no caption when there is no alt attribute")
+    public final void testCaption_NoAlt_NoFigCaption() {
+        final String  html;         // HTML code to edit
+        final String  htmlExpected; // Expected result
+        final Element element;      // Parsed HTML
+
+        html = "<p><img src=\"imgs/diagram.png\"></p>";
+        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
+
+        element = Jsoup.parse(html)
+            .body();
+        util.transformImagesToFigures(element);
+
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -101,7 +103,8 @@ public final class TestSiteToolTransformImagesToFigures {
             .body();
         util.transformImagesToFigures(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -118,7 +121,8 @@ public final class TestSiteToolTransformImagesToFigures {
             .body();
         util.transformImagesToFigures(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -135,7 +139,8 @@ public final class TestSiteToolTransformImagesToFigures {
             .body();
         util.transformImagesToFigures(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -152,7 +157,8 @@ public final class TestSiteToolTransformImagesToFigures {
             .body();
         util.transformImagesToFigures(element);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

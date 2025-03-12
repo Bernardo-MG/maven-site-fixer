@@ -69,7 +69,8 @@ public final class TestHtmlToolUnwrap {
             .body();
         util.unwrap(element, selector);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -88,7 +89,8 @@ public final class TestHtmlToolUnwrap {
             .body();
         util.unwrap(element, selector);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -106,7 +108,8 @@ public final class TestHtmlToolUnwrap {
 
         htmlExpected = "";
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -125,7 +128,8 @@ public final class TestHtmlToolUnwrap {
             .body();
         util.unwrap(element, selector);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

@@ -71,14 +71,14 @@ public final class HtmlTool {
         Objects.requireNonNull(selector, "Received a null pointer as selector");
         Objects.requireNonNull(className, "Received a null pointer as class");
 
-        if(root==null) {
-    		log.warn("Received null root");
+        if (root == null) {
+            log.warn("Received null root");
         } else {
-        // Selects and iterates over the elements
-        elements = root.select(selector);
-        for (final Element element : elements) {
-            element.addClass(className);
-        }
+            // Selects and iterates over the elements
+            elements = root.select(selector);
+            for (final Element element : elements) {
+                element.addClass(className);
+            }
         }
 
         return root;
@@ -94,14 +94,14 @@ public final class HtmlTool {
      * @return the parsed HTML body
      */
     public final Element parse(final String html) {
-    	final Element parsed;
+        final Element parsed;
 
-    	if (html == null) {
-    		log.warn("Received null to parse");
-    		parsed = null;
+        if (html == null) {
+            log.warn("Received null to parse");
+            parsed = null;
         } else {
-        	parsed = Jsoup.parse(html)
-                    .body();
+            parsed = Jsoup.parse(html)
+                .body();
         }
 
         return parsed;
@@ -124,8 +124,8 @@ public final class HtmlTool {
         Objects.requireNonNull(selector, "Received a null pointer as selector");
         Objects.requireNonNull(attribute, "Received a null pointer as attribute");
 
-        if(root==null) {
-    		log.warn("Received null root");
+        if (root == null) {
+            log.warn("Received null root");
         } else {
             // Selects and iterates over the elements
             elements = root.select(selector);
@@ -156,19 +156,19 @@ public final class HtmlTool {
         Objects.requireNonNull(selector, "Received a null pointer as selector");
         Objects.requireNonNull(className, "Received a null pointer as className");
 
-        if(root==null) {
-    		log.warn("Received null root");
+        if (root == null) {
+            log.warn("Received null root");
         } else {
-        // Selects and iterates over the elements
-        elements = root.select(selector);
-        for (final Element element : elements) {
-            element.removeClass(className);
+            // Selects and iterates over the elements
+            elements = root.select(selector);
+            for (final Element element : elements) {
+                element.removeClass(className);
 
-            if (element.classNames()
-                .isEmpty()) {
-                element.removeAttr("class");
+                if (element.classNames()
+                    .isEmpty()) {
+                    element.removeAttr("class");
+                }
             }
-        }
         }
 
         return root;
@@ -191,14 +191,14 @@ public final class HtmlTool {
         Objects.requireNonNull(selector, "Received a null pointer as selector");
         Objects.requireNonNull(tag, "Received a null pointer as tag");
 
-        if(root==null) {
-    		log.warn("Received null root");
+        if (root == null) {
+            log.warn("Received null root");
         } else {
-        // Selects and iterates over the elements
-        elements = root.select(selector);
-        for (final Element element : elements) {
-            element.tagName(tag);
-        }
+            // Selects and iterates over the elements
+            elements = root.select(selector);
+            for (final Element element : elements) {
+                element.tagName(tag);
+            }
         }
 
         return root;
@@ -220,25 +220,26 @@ public final class HtmlTool {
 
         Objects.requireNonNull(selector, "Received a null pointer as selector");
 
-        if(root==null) {
-    		log.warn("Received null root");
+        if (root == null) {
+            log.warn("Received null root");
         } else {
-        // Selects and iterates over the elements
-        elements = root.select(selector);
-        for (final Element element : elements) {
-            parent = element.parent();
+            // Selects and iterates over the elements
+            elements = root.select(selector);
+            for (final Element element : elements) {
+                parent = element.parent();
 
-            // Takes the text out of the element
-            text = element.text();
-            element.text("");
+                // Takes the text out of the element
+                text = element.text();
+                element.text("");
 
-            // Swaps elements
-            parent.replaceWith(element);
-            element.appendChild(parent);
+                // Swaps elements
+                parent.replaceWith(element);
+                element.appendChild(parent);
 
-            // Sets the text into what was the parent element
-            parent.text(text);
-        }}
+                // Sets the text into what was the parent element
+                parent.text(text);
+            }
+        }
 
         return root;
     }
@@ -259,14 +260,14 @@ public final class HtmlTool {
 
         Objects.requireNonNull(selector, "Received a null pointer as selector");
 
-        if(root==null) {
-    		log.warn("Received null root");
+        if (root == null) {
+            log.warn("Received null root");
         } else {
-        // Selects and iterates over the elements
-        elements = root.select(selector);
-        for (final Element element : elements) {
-            element.unwrap();
-        }
+            // Selects and iterates over the elements
+            elements = root.select(selector);
+            for (final Element element : elements) {
+                element.unwrap();
+            }
         }
 
         return root;
@@ -289,14 +290,14 @@ public final class HtmlTool {
         Objects.requireNonNull(selector, "Received a null pointer as selector");
         Objects.requireNonNull(wrapper, "Received a null pointer as HTML wrap");
 
-        if(root==null) {
-    		log.warn("Received null root");
+        if (root == null) {
+            log.warn("Received null root");
         } else {
-        // Selects and iterates over the elements
-        elements = root.select(selector);
-        for (final Element element : elements) {
-            element.wrap(wrapper);
-        }
+            // Selects and iterates over the elements
+            elements = root.select(selector);
+            for (final Element element : elements) {
+                element.wrap(wrapper);
+            }
         }
 
         return root;

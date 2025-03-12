@@ -55,27 +55,29 @@ public final class TestHtmlToolParse {
     @Test
     @DisplayName("Parsing an empty string returns an element")
     public final void testParse_EmptyString() {
-        final String  html;         // HTML code to edit
-        final Element element;      // Parsed HTML
+        final String  html;    // HTML code to edit
+        final Element element; // Parsed HTML
 
         html = "";
 
         element = util.parse(html);
 
-        Assertions.assertThat(element).isNotNull();
+        Assertions.assertThat(element)
+            .isNotNull();
     }
 
     @Test
     @DisplayName("Parsing a null returns an element")
     public final void testParse_Null() {
-        final String  html;         // HTML code to edit
-        final Element element;      // Parsed HTML
+        final String  html;    // HTML code to edit
+        final Element element; // Parsed HTML
 
         html = null;
 
         element = util.parse(html);
 
-        Assertions.assertThat(element).isNull();
+        Assertions.assertThat(element)
+            .isNull();
     }
 
 }

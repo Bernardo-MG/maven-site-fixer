@@ -71,7 +71,8 @@ public final class TestHtmlToolRemoveAttribute {
             .body();
         util.removeAttribute(element, selector, attribute);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -89,7 +90,8 @@ public final class TestHtmlToolRemoveAttribute {
 
         htmlExpected = "";
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -110,7 +112,8 @@ public final class TestHtmlToolRemoveAttribute {
             .body();
         util.removeAttribute(element, selector, attribute);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }

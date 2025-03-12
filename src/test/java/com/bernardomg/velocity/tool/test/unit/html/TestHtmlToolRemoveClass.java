@@ -71,7 +71,8 @@ public final class TestHtmlToolRemoveClass {
             .body();
         util.removeClass(element, selector, cssClass);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -92,7 +93,8 @@ public final class TestHtmlToolRemoveClass {
             .body();
         util.removeClass(element, selector, cssClass);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -113,7 +115,8 @@ public final class TestHtmlToolRemoveClass {
             .body();
         util.removeClass(element, selector, cssClass);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -134,7 +137,8 @@ public final class TestHtmlToolRemoveClass {
             .body();
         util.removeClass(element, selector, cssClass);
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
     @Test
@@ -152,7 +156,8 @@ public final class TestHtmlToolRemoveClass {
 
         htmlExpected = "";
 
-        Assertions.assertThat(element.html()).isEqualTo(htmlExpected);
+        Assertions.assertThat(element.html())
+            .isEqualTo(htmlExpected);
     }
 
 }
