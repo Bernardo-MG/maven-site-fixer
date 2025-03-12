@@ -190,6 +190,8 @@
       <jsoup.version>1.18.1</jsoup.version>
       <junit.jupiter.version>5.11.0</junit.jupiter.version>
       <lombok.version>1.18.36</lombok.version>
+      <slf4j.version>2.0.17</slf4j.version>
+      <log4j.version>2.24.3</log4j.version>
       <velocity.tools.version>3.1</velocity.tools.version>
       <!-- ============================================== -->
       <!-- ============ PLUGIN CONFIGURATION ============ -->
@@ -243,6 +245,42 @@
          <artifactId>lombok</artifactId>
          <version>${lombok.version}</version>
          <scope>provided</scope>
+      </dependency>
+      <!-- ============================================== -->
+      <!-- ================== LOGGING =================== -->
+      <!-- ============================================== -->
+      <dependency>
+         <!-- SL4J API -->
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+         <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+         <!-- Log4j SLF4J Bridge -->
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-slf4j2-impl</artifactId>
+         <version>${log4j.version}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <!-- Log4j core -->
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-core</artifactId>
+         <version>${log4j.version}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <!-- Log4j Commons Logging Bridge -->
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-jcl</artifactId>
+         <version>${log4j.version}</version>
+         <scope>provided</scope>
+         <exclusions>
+            <exclusion>
+               <groupId>commons-logging</groupId>
+               <artifactId>commons-logging</artifactId>
+            </exclusion>
+         </exclusions>
       </dependency>
       <!-- ============================================== -->
       <!-- ============ ENFORCED DEPENDENCIES =========== -->
