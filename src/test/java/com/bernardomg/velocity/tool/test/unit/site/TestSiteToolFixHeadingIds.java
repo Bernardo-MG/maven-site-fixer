@@ -97,7 +97,9 @@ public final class TestSiteToolFixHeadingIds {
         final Element element;      // Parsed HTML
 
         html = "<h1>A heading</h1><h3>Another heading</h3>";
-        htmlExpected = "<h1 id=\"A-heading\">A heading</h1>\n<h3 id=\"Another-heading\">Another heading</h3>";
+        htmlExpected = """
+                       <h1 id=\"A-heading\">A heading</h1>
+                       <h3 id=\"Another-heading\">Another heading</h3>""";
 
         element = Jsoup.parse(html)
             .body();
@@ -115,7 +117,9 @@ public final class TestSiteToolFixHeadingIds {
         final Element element;      // Parsed HTML
 
         html = "<h1>com.bernardomg</h1><h3>com.bernardomg</h3>";
-        htmlExpected = "<h1 id=\"combernardomg\">com.bernardomg</h1>\n<h3 id=\"combernardomg\">com.bernardomg</h3>";
+        htmlExpected = """
+                       <h1 id=\"combernardomg\">com.bernardomg</h1>
+                       <h3 id=\"combernardomg\">com.bernardomg</h3>""";
 
         element = Jsoup.parse(html)
             .body();
@@ -133,7 +137,9 @@ public final class TestSiteToolFixHeadingIds {
         final Element element;      // Parsed HTML
 
         html = "<h1>A heading</h1><h3>Another heading</h3>";
-        htmlExpected = "<h1 id=\"A-heading\">A heading</h1>\n<h3 id=\"Another-heading\">Another heading</h3>";
+        htmlExpected = """
+                       <h1 id=\"A-heading\">A heading</h1>
+                       <h3 id=\"Another-heading\">Another heading</h3>""";
 
         element = Jsoup.parse(html)
             .body();
@@ -151,7 +157,9 @@ public final class TestSiteToolFixHeadingIds {
         final Element element;      // Parsed HTML
 
         html = "<h1>A -_#heading *! </h1><h3>Another heading</h3>";
-        htmlExpected = "<h1 id=\"A---#heading-\">A -_#heading *!</h1>\n<h3 id=\"Another-heading\">Another heading</h3>";
+        htmlExpected = """
+                       <h1 id=\"A---#heading-\">A -_#heading *!</h1>
+                       <h3 id=\"Another-heading\">Another heading</h3>""";
 
         element = Jsoup.parse(html)
             .body();
@@ -169,7 +177,9 @@ public final class TestSiteToolFixHeadingIds {
         final Element element;      // Parsed HTML
 
         html = "<h1 id=\"A.Heading\">A heading</h1><h3 id=\"another_heading\">Another heading</h3>";
-        htmlExpected = "<h1 id=\"AHeading\">A heading</h1>\n<h3 id=\"another-heading\">Another heading</h3>";
+        htmlExpected = """
+                       <h1 id=\"AHeading\">A heading</h1>
+                       <h3 id=\"another-heading\">Another heading</h3>""";
 
         element = Jsoup.parse(html)
             .body();

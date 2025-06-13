@@ -63,7 +63,17 @@ public final class TestHtmlToolWrap {
         final Element element;      // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
+        htmlExpected = """
+                       <header>
+                        <h1>A heading</h1>
+                       </header>
+                       <p>Some text</p>
+                       <h2>Subheading</h2>
+                       <p>More text</p>
+                       <header>
+                        <h1>Another heading</h1>
+                       </header>
+                       <p>Even more text</p>""";
         selector = "h1";
         wrapper = "<header>";
 
@@ -85,7 +95,13 @@ public final class TestHtmlToolWrap {
         final Element element;      // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
-        htmlExpected = "<h1>A heading</h1>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<h1>Another heading</h1>\n<p>Even more text</p>";
+        htmlExpected = """
+                       <h1>A heading</h1>
+                       <p>Some text</p>
+                       <h2>Subheading</h2>
+                       <p>More text</p>
+                       <h1>Another heading</h1>
+                       <p>Even more text</p>""";
         selector = "h3";
         wrapper = "<header></header>";
 
@@ -107,7 +123,17 @@ public final class TestHtmlToolWrap {
         final Element element;      // Parsed HTML
 
         html = "<body><h1>A heading</h1><p>Some text</p><h2>Subheading</h2><p>More text</p><h1>Another heading</h1><p>Even more text</p></body>";
-        htmlExpected = "<header>\n <h1>A heading</h1>\n</header>\n<p>Some text</p>\n<h2>Subheading</h2>\n<p>More text</p>\n<header>\n <h1>Another heading</h1>\n</header>\n<p>Even more text</p>";
+        htmlExpected = """
+                       <header>
+                        <h1>A heading</h1>
+                       </header>
+                       <p>Some text</p>
+                       <h2>Subheading</h2>
+                       <p>More text</p>
+                       <header>
+                        <h1>Another heading</h1>
+                       </header>
+                       <p>Even more text</p>""";
         selector = "h1";
         wrapper = "<header></header>";
 

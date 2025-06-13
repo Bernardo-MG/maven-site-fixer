@@ -66,7 +66,14 @@ public final class TestSiteToolFixReport {
             .body();
         util.fixReport(element, "changes-report");
 
-        htmlExpected = "<h1>Project Changes</h1>\n<section>\n <h2>Release History</h2>\n</section>\n<section id=\"a010\">\n <h3>Release 0.1.0 <small>(<time>2015-05-17</time>)</small></h3>\n</section>";
+        htmlExpected = """
+                       <h1>Project Changes</h1>
+                       <section>
+                        <h2>Release History</h2>
+                       </section>
+                       <section id=\"a010\">
+                        <h3>Release 0.1.0 <small>(<time>2015-05-17</time>)</small></h3>
+                       </section>""";
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);
@@ -85,7 +92,11 @@ public final class TestSiteToolFixReport {
             .body();
         util.fixReport(element, "checkstyle");
 
-        htmlExpected = "<h1>Checkstyle</h1>\n<section>\n <p></p>\n</section>";
+        htmlExpected = """
+                       <h1>Checkstyle</h1>
+                       <section>
+                        <p></p>
+                       </section>""";
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);
@@ -122,7 +133,9 @@ public final class TestSiteToolFixReport {
             .body();
         util.fixReport(element, "plugin-management");
 
-        htmlExpected = "<h1>Plugin Management</h1>\n<p>Data</p>";
+        htmlExpected = """
+                       <h1>Plugin Management</h1>
+                       <p>Data</p>""";
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);
@@ -141,7 +154,11 @@ public final class TestSiteToolFixReport {
             .body();
         util.fixReport(element, "plugins");
 
-        htmlExpected = "<h1>Plugins Report</h1>\n<section>\n <h2>Heading 2</h2>\n</section>";
+        htmlExpected = """
+                       <h1>Plugins Report</h1>
+                       <section>
+                        <h2>Heading 2</h2>
+                       </section>""";
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);
@@ -160,7 +177,16 @@ public final class TestSiteToolFixReport {
             .body();
         util.fixReport(element, "surefire-report");
 
-        htmlExpected = "<section>\n <h1>Surefire Report</h1>\n</section>\n<section>\n <h2>Summary</h2>\n</section>\n<section>\n <h2>Package List</h2>\n</section>";
+        htmlExpected = """
+                       <section>
+                        <h1>Surefire Report</h1>
+                       </section>
+                       <section>
+                        <h2>Summary</h2>
+                       </section>
+                       <section>
+                        <h2>Package List</h2>
+                       </section>""";
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);

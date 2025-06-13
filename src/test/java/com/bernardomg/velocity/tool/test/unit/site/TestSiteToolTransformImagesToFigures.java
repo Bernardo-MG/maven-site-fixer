@@ -61,7 +61,10 @@ public final class TestSiteToolTransformImagesToFigures {
         final Element element;      // Parsed HTML
 
         html = "<p><img src=\"imgs/diagram.png\"></p>";
-        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
+        htmlExpected = """
+                       <figure>
+                        <img src=\"imgs/diagram.png\">
+                       </figure>""";
 
         element = Jsoup.parse(html)
             .body();
@@ -79,7 +82,10 @@ public final class TestSiteToolTransformImagesToFigures {
         final Element element;      // Parsed HTML
 
         html = "<p><img src=\"imgs/diagram.png\"></p>";
-        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
+        htmlExpected = """
+                       <figure>
+                        <img src=\"imgs/diagram.png\">
+                       </figure>""";
 
         element = Jsoup.parse(html)
             .body();
@@ -97,7 +103,11 @@ public final class TestSiteToolTransformImagesToFigures {
         final Element element;      // Parsed HTML
 
         html = "<p><img src=\"imgs/diagram.png\" alt=\"A diagram\"></p>";
-        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\" alt=\"A diagram\">\n <figcaption>A diagram</figcaption>\n</figure>";
+        htmlExpected = """
+                       <figure>
+                        <img src=\"imgs/diagram.png\" alt=\"A diagram\">
+                        <figcaption>A diagram</figcaption>
+                       </figure>""";
 
         element = Jsoup.parse(html)
             .body();
@@ -151,7 +161,10 @@ public final class TestSiteToolTransformImagesToFigures {
         final Element element;      // Parsed HTML
 
         html = "<img src=\"imgs/diagram.png\">";
-        htmlExpected = "<figure>\n <img src=\"imgs/diagram.png\">\n</figure>";
+        htmlExpected = """
+                       <figure>
+                        <img src=\"imgs/diagram.png\">
+                       </figure>""";
 
         element = Jsoup.parse(html)
             .body();

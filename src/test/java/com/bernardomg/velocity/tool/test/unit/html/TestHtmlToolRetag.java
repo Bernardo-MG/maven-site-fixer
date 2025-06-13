@@ -85,7 +85,14 @@ public final class TestHtmlToolRetag {
         final Element element;      // Parsed HTML
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-        htmlExpected = "<code class=\"source\">\n <div>\n  <code class=\"source\">\n   <pre>Some code</pre>\n  </code>\n </div>\n</code>";
+        htmlExpected = """
+                       <code class=\"source\">
+                        <div>
+                         <code class=\"source\">
+                          <pre>Some code</pre>
+                         </code>
+                        </div>
+                       </code>""";
         selector = "div.source";
         tag = "code";
 
@@ -107,7 +114,14 @@ public final class TestHtmlToolRetag {
         final Element element;      // Parsed HTML
 
         html = "<div class=\"source\"><div><div class=\"source\"><pre>Some code</pre></div></div></div>";
-        htmlExpected = "<div class=\"source\">\n <div>\n  <div class=\"source\">\n   <pre>Some code</pre>\n  </div>\n </div>\n</div>";
+        htmlExpected = """
+                       <div class=\"source\">
+                        <div>
+                         <div class=\"source\">
+                          <pre>Some code</pre>
+                         </div>
+                        </div>
+                       </div>""";
         selector = "div.abc";
         tag = "code";
 
@@ -148,7 +162,10 @@ public final class TestHtmlToolRetag {
         final Element element;      // Parsed HTML
 
         html = "<div class=\"source\"><pre>Some code</pre></div>";
-        htmlExpected = "<code class=\"source\">\n <pre>Some code</pre>\n</code>";
+        htmlExpected = """
+                       <code class=\"source\">
+                        <pre>Some code</pre>
+                       </code>""";
         selector = "div.source";
         tag = "code";
 
