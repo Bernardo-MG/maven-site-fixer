@@ -80,7 +80,7 @@ public final class TestHtmlToolSwapTagWithParent {
         final String  selector;     // CSS selector
         final Element element;      // Parsed HTML
 
-        html = "<code><pre>Some code</pre></code>";
+        html = "<code> \n <pre>Some code</pre> \n</code>";
         htmlExpected = html;
         selector = "code > abc";
 
