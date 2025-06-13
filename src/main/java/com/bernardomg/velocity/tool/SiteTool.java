@@ -26,6 +26,7 @@ package com.bernardomg.velocity.tool;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -200,28 +201,14 @@ public class SiteTool {
             log.warn("Received null root");
         } else {
             switch (report) {
-                case "changes-report":
-                    fixReportChanges(root);
-                    break;
-                case "checkstyle":
-                case "checkstyle-aggregate":
-                    fixReportCheckstyle(root);
-                    break;
                 case "cpd":
                     fixReportCpd(root);
-                    break;
-                case "dependencies":
-                    fixReportDependencies(root);
-                    break;
-                case "dependency-analysis":
-                    fixReportDependencyAnalysis(root);
                     break;
                 case "failsafe-report":
                     fixReportFailsafe(root);
                     break;
-                case "findbugs":
                 case "spotbugs":
-                    fixReportFindbugs(root);
+                    fixReportSpotBugs(root);
                     break;
                 case "jdepend-report":
                     fixReportJdepend(root);
@@ -230,24 +217,12 @@ public class SiteTool {
                 case "licenses":
                     fixReportLicense(root);
                     break;
-                case "plugins":
-                    fixReportPlugins(root);
-                    break;
-                case "plugin-management":
-                    fixReportPluginManagement(root);
-                    break;
-                case "pmd":
-                    fixReportPmd(root);
-                    break;
                 case "project-summary":
                 case "summary":
                     fixReportProjectSummary(root);
                     break;
                 case "surefire-report":
                     fixReportSurefire(root);
-                    break;
-                case "taglist":
-                    fixReportTaglist(root);
                     break;
                 case "team-list":
                 case "team":
@@ -346,92 +321,7 @@ public class SiteTool {
 
         return root;
     }
-
-    /**
-     * Fixes the changes report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportChanges(final Element root) {
-        final Collection<Element> headings;     // Headings in the body
-        final Collection<Element> sections;     // Sections in the body
-        final Element             section;      // First section
-        Element                   timeElement;  // Element with the date
-        Element                   smallElement; // Element with the small date
-        String                    text;         // Heading text
-        String[]                  texts;        // Split heading text
-
-        // Sets all the h2 to h1
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        headings = root.getElementsByTag("h3");
-        if (!headings.isEmpty()) {
-            // Sets first h3 to h2
-            headings.iterator()
-                .next()
-                .tagName("h2");
-        }
-
-        // Takes again all the h3 elements, to avoid the new h2
-        for (final Element heading : root.getElementsByTag("h3")) {
-            // Moves the heading id to the parent
-            heading.parent()
-                .attr("id", heading.id());
-            heading.removeAttr("id");
-
-            // Transforms the date on the heading
-            text = heading.text();
-            texts = text.split("–", 2);
-            if (texts.length == 2) {
-                timeElement = new Element(Tag.valueOf("time"), "");
-                timeElement.text(texts[1].trim());
-
-                smallElement = new Element(Tag.valueOf("small"), "");
-                smallElement.append("(");
-                smallElement.appendChild(timeElement);
-                smallElement.append(")");
-
-                heading.text(texts[0]);
-                heading.appendChild(smallElement);
-            }
-        }
-
-        // Moves all the elements out of the sections
-        sections = root.getElementsByTag("section");
-        if (!sections.isEmpty()) {
-            section = sections.iterator()
-                .next();
-            for (final Element child : section.children()) {
-                child.remove();
-                root.appendChild(child);
-            }
-
-            section.remove();
-        }
-    }
-
-    /**
-     * Fixes the Checkstyle report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportCheckstyle(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-        root.select("img[src=\"images/rss.png\"]")
-            .remove();
-    }
-
+    
     /**
      * Fixes the CPD report page.
      *
@@ -450,28 +340,23 @@ public class SiteTool {
     }
 
     /**
-     * Fixes the dependencies report page.
+     * Fixes the SpotBugs report page.
      *
      * @param root
-     *            root element for the report page to fix
+     *            element for the body of the report page
      */
-    private final void fixReportDependencies(final Element root) {
-        root.prepend("<h1>Dependencies Report</h1>");
-    }
+    private final void fixReportSpotBugs(final Element root) {
+        final Iterator<Element> elements;
 
-    /**
-     * Fixes the dependency analysis report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportDependencyAnalysis(final Element root) {
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
+        elements = root.getElementsByTag("h1").iterator();
+        if (elements.hasNext()) {
+            // Ignore the first heading
+            elements.next();
         }
-
-        for (final Element head : root.getElementsByTag("h3")) {
-            head.tagName("h2");
+        while(elements.hasNext()) {
+            elements
+            .next()
+            .tagName("h2");
         }
     }
 
@@ -491,23 +376,6 @@ public class SiteTool {
                 .next();
             heading.tagName("h1");
             heading.text("Failsafe Report");
-        }
-    }
-
-    /**
-     * Fixes the Findbugs report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportFindbugs(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
         }
     }
 
@@ -539,61 +407,6 @@ public class SiteTool {
     }
 
     /**
-     * Fixes the plugin management report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportPluginManagement(final Element root) {
-        final Collection<Element> sections; // Sections in the body
-        final Element             section;  // Section element
-
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        sections = root.getElementsByTag("section");
-        if (!sections.isEmpty()) {
-            section = sections.iterator()
-                .next();
-
-            for (final Element child : section.children()) {
-                child.remove();
-                root.appendChild(child);
-            }
-
-            section.remove();
-        }
-    }
-
-    /**
-     * Fixes the plugins report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportPlugins(final Element root) {
-        root.prepend("<h1>Plugins Report</h1>");
-    }
-
-    /**
-     * Fixes the PMD report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportPmd(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
      * Fixes the project summary report page.
      *
      * @param root
@@ -616,23 +429,6 @@ public class SiteTool {
      *            root element for the report page to fix
      */
     private final void fixReportSurefire(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the tag list report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportTaglist(final Element root) {
         final Collection<Element> elements; // Found elements
 
         elements = root.getElementsByTag("h2");
