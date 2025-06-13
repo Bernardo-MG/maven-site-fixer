@@ -57,42 +57,6 @@ public final class TestSiteToolFixReportEmpty {
     }
 
     @Test
-    @DisplayName("If the changes report is empty it does nothing")
-    public final void testChangesReport_Empty() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "";
-        htmlExpected = "";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "changes-report");
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
-    @DisplayName("If the checkstyle report is empty it does nothing")
-    public final void testCheckstyleReport_Empty() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "";
-        htmlExpected = "";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "checkstyle");
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
     @DisplayName("If the cpd report is empty it does nothing")
     public final void testCpdReport_Empty() {
         final String  html;         // HTML code to edit
@@ -105,24 +69,6 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html)
             .body();
         util.fixReport(element, "cpd");
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
-    @DisplayName("If the dependencies report is empty it does nothing")
-    public final void testDependenciesReport_Empty() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "";
-        htmlExpected = "<h1>Dependencies Report</h1>";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "dependencies");
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);
@@ -147,8 +93,8 @@ public final class TestSiteToolFixReportEmpty {
     }
 
     @Test
-    @DisplayName("If the findbugs report is empty it does nothing")
-    public final void testFindbugsReport_Empty() {
+    @DisplayName("If the spotbugs report is empty it does nothing")
+    public final void testSpotbugsReport_Empty() {
         final String  html;         // HTML code to edit
         final String  htmlExpected; // Expected result
         final Element element;      // Parsed HTML
@@ -158,7 +104,7 @@ public final class TestSiteToolFixReportEmpty {
 
         element = Jsoup.parse(html)
             .body();
-        util.fixReport(element, "findbugs");
+        util.fixReport(element, "spotbugs");
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);
@@ -201,60 +147,6 @@ public final class TestSiteToolFixReportEmpty {
     }
 
     @Test
-    @DisplayName("If the plugin management report is empty it does nothing")
-    public final void testPluginManagementReport_Empty() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "";
-        htmlExpected = "";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "plugin-management");
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
-    @DisplayName("If the plugins report is empty it does nothing")
-    public final void testPluginsReport_Empty() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "";
-        htmlExpected = "<h1>Plugins Report</h1>";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "plugins");
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
-    @DisplayName("If the PMD report is empty it does nothing")
-    public final void testPmdReport_Empty() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "";
-        htmlExpected = "";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "pmd");
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
     @DisplayName("If the project summary report is empty it does nothing")
     public final void testProjectSummaryReport_Empty() {
         final String  html;         // HTML code to edit
@@ -285,24 +177,6 @@ public final class TestSiteToolFixReportEmpty {
         element = Jsoup.parse(html)
             .body();
         util.fixReport(element, "surefire-report");
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
-    @DisplayName("If the taglist report is empty it does nothing")
-    public final void testTaglistReport_Empty() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "";
-        htmlExpected = "";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "taglist");
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);

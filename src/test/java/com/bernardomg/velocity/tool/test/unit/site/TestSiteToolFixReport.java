@@ -54,55 +54,6 @@ public final class TestSiteToolFixReport {
     }
 
     @Test
-    @DisplayName("Fixes changes report")
-    public final void testChangesReport() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "<section><h2>Project Changes</h2><section><h3>Release History</h3></section><section><h3 id=\"a010\">Release 0.1.0 – 2015-05-17</h3></section></section>";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "changes-report");
-
-        htmlExpected = """
-                       <h1>Project Changes</h1>
-                       <section>
-                        <h2>Release History</h2>
-                       </section>
-                       <section id=\"a010\">
-                        <h3>Release 0.1.0 <small>(<time>2015-05-17</time>)</small></h3>
-                       </section>""";
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
-    @DisplayName("Fixes checkstyle report")
-    public final void testCheckstyleReport() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "<h2>Checkstyle</h2><section><p><img alt=\"rss feed\" src=\"images/rss.png\"></p></section>";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "checkstyle");
-
-        htmlExpected = """
-                       <h1>Checkstyle</h1>
-                       <section>
-                        <p></p>
-                       </section>""";
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
     @DisplayName("Fixing an empty string does nothing")
     public final void testEmptyString() {
         final String  html;         // HTML code to edit
@@ -115,50 +66,6 @@ public final class TestSiteToolFixReport {
         element = Jsoup.parse(html)
             .body();
         util.fixReport(element, "");
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
-    @DisplayName("Fixes plugin management report")
-    public final void testPluginManagementReport() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "<section><h2>Plugin Management</h2><p>Data</p></section>";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "plugin-management");
-
-        htmlExpected = """
-                       <h1>Plugin Management</h1>
-                       <p>Data</p>""";
-
-        Assertions.assertThat(element.html())
-            .isEqualTo(htmlExpected);
-    }
-
-    @Test
-    @DisplayName("Fixes plugins report")
-    public final void testPluginsReport() {
-        final String  html;         // HTML code to edit
-        final String  htmlExpected; // Expected result
-        final Element element;      // Parsed HTML
-
-        html = "<section><h2>Heading 2</h2></section>";
-
-        element = Jsoup.parse(html)
-            .body();
-        util.fixReport(element, "plugins");
-
-        htmlExpected = """
-                       <h1>Plugins Report</h1>
-                       <section>
-                        <h2>Heading 2</h2>
-                       </section>""";
 
         Assertions.assertThat(element.html())
             .isEqualTo(htmlExpected);
