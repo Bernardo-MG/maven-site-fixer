@@ -29,8 +29,8 @@ import java.util.Objects;
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
-
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities class for upgrading XHTML code to HTML5.
@@ -48,9 +48,13 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
-@Slf4j
 @DefaultKey("html5UpdateTool")
 public class Html5UpdateTool {
+
+    /**
+     * Logger for the class.
+     */
+    private static final Logger log = LoggerFactory.getLogger(Html5UpdateTool.class);
 
     /**
      * Constructs an instance of the utilities class.

@@ -34,8 +34,8 @@ import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
-
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities class for fixing several issues in Doxia generated sites, updating and homogenising their layouts.
@@ -50,7 +50,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
-@Slf4j
 @DefaultKey("siteTool")
 public class SiteTool {
 
@@ -63,6 +62,11 @@ public class SiteTool {
      * Regular expresion indicating invalid values for ids and internal links will will be removed.
      */
     private static final String ID_REJECTED_REGEX = "[^\\w#-]";
+
+    /**
+     * Logger for the class.
+     */
+    private static final Logger log               = LoggerFactory.getLogger(SiteTool.class);
 
     /**
      * Constructs an instance of the utilities class.
