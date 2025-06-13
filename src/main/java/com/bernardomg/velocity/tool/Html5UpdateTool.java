@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2023 the original author or authors.
+ * Copyright (c) 2015-2025 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@ import java.util.Objects;
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
-
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities class for upgrading XHTML code to HTML5.
@@ -48,34 +48,19 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
-@Slf4j
 @DefaultKey("html5UpdateTool")
 public class Html5UpdateTool {
+
+    /**
+     * Logger for the class.
+     */
+    private static final Logger log = LoggerFactory.getLogger(Html5UpdateTool.class);
 
     /**
      * Constructs an instance of the utilities class.
      */
     public Html5UpdateTool() {
         super();
-    }
-
-    /**
-     * Removes the points from the contents of the specified attribute.
-     *
-     * @param element
-     *            element with the attribute to clean
-     * @param attr
-     *            attribute to clean
-     */
-    private final void removePointsFromAttr(final Element element, final String attr) {
-        final String value; // Content of the attribute
-
-        // Takes and clean the old attribute value
-        value = element.attr(attr)
-            .replace(".", "");
-
-        // Sets the cleaned value
-        element.attr(attr, value);
     }
 
     /**
@@ -147,6 +132,25 @@ public class Html5UpdateTool {
         }
 
         return root;
+    }
+
+    /**
+     * Removes the points from the contents of the specified attribute.
+     *
+     * @param element
+     *            element with the attribute to clean
+     * @param attr
+     *            attribute to clean
+     */
+    private final void removePointsFromAttr(final Element element, final String attr) {
+        final String value; // Content of the attribute
+
+        // Takes and clean the old attribute value
+        value = element.attr(attr)
+            .replace(".", "");
+
+        // Sets the cleaned value
+        element.attr(attr, value);
     }
 
 }

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2023 the original author or authors.
+ * Copyright (c) 2015-2025 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,8 @@ import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
-
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities class for fixing several issues in Doxia generated sites, updating and homogenising their layouts.
@@ -50,7 +50,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
-@Slf4j
 @DefaultKey("siteTool")
 public class SiteTool {
 
@@ -63,6 +62,11 @@ public class SiteTool {
      * Regular expresion indicating invalid values for ids and internal links will will be removed.
      */
     private static final String ID_REJECTED_REGEX = "[^\\w#-]";
+
+    /**
+     * Logger for the class.
+     */
+    private static final Logger log               = LoggerFactory.getLogger(SiteTool.class);
 
     /**
      * Constructs an instance of the utilities class.
@@ -251,6 +255,92 @@ public class SiteTool {
                     break;
                 default:
                     break;
+            }
+        }
+
+        return root;
+    }
+
+    /**
+     * Transforms the default icons used by the Maven Site to Font Awesome icons.
+     *
+     * @param root
+     *            root element with the page
+     * @return transformed element
+     */
+    public final Element transformIcons(final Element root) {
+        final Map<String, String> replacements;
+
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            replacements = new HashMap<>();
+            replacements.put("img[src$=images/add.gif]",
+                "<span><span class=\"fa-solid fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>");
+            replacements.put("img[src$=images/remove.gif]",
+                "<span><span class=\"fa-solid fa-minus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Remove</span></span>");
+            replacements.put("img[src$=images/fix.gif]",
+                "<span><span class=\"fa-solid fa-wrench\" aria-hidden=\"true\"></span><span class=\"sr-only\">Fix</span></span>");
+            replacements.put("img[src$=images/update.gif]",
+                "<span><span class=\"fa-solid fa-rotate\" aria-hidden=\"true\"></span><span class=\"sr-only\">Refresh</span></span>");
+            replacements.put("img[src$=images/icon_help_sml.gif]",
+                "<span><span class=\"fa-solid fa-question\" aria-hidden=\"true\"></span><span class=\"sr-only\">Question</span></span>");
+            replacements.put("img[src$=images/icon_success_sml.gif]",
+                "<span><span class=\"navbar-icon fa-solid fa-check\" aria-hidden=\"true\" title=\"Passed\" aria-label=\"Passed\"></span><span class=\"sr-only\">Passed</span></span>");
+            replacements.put("img[src$=images/icon_warning_sml.gif]",
+                "<span><span class=\"fa-solid fa-exclamation\" aria-hidden=\"true\"></span><span class=\"sr-only\">Warning</span>");
+            replacements.put("img[src$=images/icon_error_sml.gif]",
+                "<span><span class=\"navbar-icon fa-solid fa-xmark\" aria-hidden=\"true\" title=\"Failed\" aria-label=\"Failed\"></span><span class=\"sr-only\">Failed</span></span>");
+            replacements.put("img[src$=images/icon_info_sml.gif]",
+                "<span><span class=\"fa-solid fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
+
+            replaceAll(root, replacements);
+        }
+
+        return root;
+    }
+
+    /**
+     * Transforms simple {@code <img>} elements to {@code <figure>} elements.
+     * <p>
+     * This will wrap {@code <img>} elements with a {@code <figure>} element, and add a {@code <figcaption>} with the
+     * contents of the image's {@code alt} attribute, if said attribute exists.
+     *
+     * @param root
+     *            root element with images to transform
+     * @return transformed element
+     */
+    public final Element transformImagesToFigures(final Element root) {
+        final Collection<Element> images;  // Image elements from the <body>
+        final Collection<Element> figures; // figure elements from the <body>
+        Element                   figure;  // <figure> element
+        Element                   caption; // <figcaption> element
+
+        if (root == null) {
+            log.warn("Received null root");
+        } else {
+            images = root.select("img");
+            for (final Element img : images) {
+                figure = new Element(Tag.valueOf("figure"), "");
+
+                img.replaceWith(figure);
+                figure.appendChild(img);
+
+                if (img.hasAttr("alt")) {
+                    caption = new Element(Tag.valueOf("figcaption"), "");
+                    caption.text(img.attr("alt"));
+                    figure.appendChild(caption);
+                }
+            }
+
+            figures = root.select("figure");
+            for (final Element fig : figures) {
+                if ("p".equals(fig.parent()
+                    .tag()
+                    .getName())) {
+                    fig.parent()
+                        .unwrap();
+                }
             }
         }
 
@@ -622,92 +712,6 @@ public class SiteTool {
                 }
             }
         }
-    }
-
-    /**
-     * Transforms the default icons used by the Maven Site to Font Awesome icons.
-     *
-     * @param root
-     *            root element with the page
-     * @return transformed element
-     */
-    public final Element transformIcons(final Element root) {
-        final Map<String, String> replacements;
-
-        if (root == null) {
-            log.warn("Received null root");
-        } else {
-            replacements = new HashMap<>();
-            replacements.put("img[src$=images/add.gif]",
-                "<span><span class=\"fa-solid fa-plus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Addition</span></span>");
-            replacements.put("img[src$=images/remove.gif]",
-                "<span><span class=\"fa-solid fa-minus\" aria-hidden=\"true\"></span><span class=\"sr-only\">Remove</span></span>");
-            replacements.put("img[src$=images/fix.gif]",
-                "<span><span class=\"fa-solid fa-wrench\" aria-hidden=\"true\"></span><span class=\"sr-only\">Fix</span></span>");
-            replacements.put("img[src$=images/update.gif]",
-                "<span><span class=\"fa-solid fa-rotate\" aria-hidden=\"true\"></span><span class=\"sr-only\">Refresh</span></span>");
-            replacements.put("img[src$=images/icon_help_sml.gif]",
-                "<span><span class=\"fa-solid fa-question\" aria-hidden=\"true\"></span><span class=\"sr-only\">Question</span></span>");
-            replacements.put("img[src$=images/icon_success_sml.gif]",
-                "<span><span class=\"navbar-icon fa-solid fa-check\" aria-hidden=\"true\" title=\"Passed\" aria-label=\"Passed\"></span><span class=\"sr-only\">Passed</span></span>");
-            replacements.put("img[src$=images/icon_warning_sml.gif]",
-                "<span><span class=\"fa-solid fa-exclamation\" aria-hidden=\"true\"></span><span class=\"sr-only\">Warning</span>");
-            replacements.put("img[src$=images/icon_error_sml.gif]",
-                "<span><span class=\"navbar-icon fa-solid fa-xmark\" aria-hidden=\"true\" title=\"Failed\" aria-label=\"Failed\"></span><span class=\"sr-only\">Failed</span></span>");
-            replacements.put("img[src$=images/icon_info_sml.gif]",
-                "<span><span class=\"fa-solid fa-info\" aria-hidden=\"true\"></span><span class=\"sr-only\">Info</span></span>");
-
-            replaceAll(root, replacements);
-        }
-
-        return root;
-    }
-
-    /**
-     * Transforms simple {@code <img>} elements to {@code <figure>} elements.
-     * <p>
-     * This will wrap {@code <img>} elements with a {@code <figure>} element, and add a {@code <figcaption>} with the
-     * contents of the image's {@code alt} attribute, if said attribute exists.
-     *
-     * @param root
-     *            root element with images to transform
-     * @return transformed element
-     */
-    public final Element transformImagesToFigures(final Element root) {
-        final Collection<Element> images;  // Image elements from the <body>
-        final Collection<Element> figures; // figure elements from the <body>
-        Element                   figure;  // <figure> element
-        Element                   caption; // <figcaption> element
-
-        if (root == null) {
-            log.warn("Received null root");
-        } else {
-            images = root.select("img");
-            for (final Element img : images) {
-                figure = new Element(Tag.valueOf("figure"), "");
-
-                img.replaceWith(figure);
-                figure.appendChild(img);
-
-                if (img.hasAttr("alt")) {
-                    caption = new Element(Tag.valueOf("figcaption"), "");
-                    caption.text(img.attr("alt"));
-                    figure.appendChild(caption);
-                }
-            }
-
-            figures = root.select("figure");
-            for (final Element fig : figures) {
-                if ("p".equals(fig.parent()
-                    .tag()
-                    .getName())) {
-                    fig.parent()
-                        .unwrap();
-                }
-            }
-        }
-
-        return root;
     }
 
 }

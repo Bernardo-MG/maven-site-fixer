@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2023 the original author or authors.
+ * Copyright (c) 2015-2025 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,7 +62,9 @@ public final class TestHtmlToolUnwrap {
         final Element element;      // Parsed HTML
 
         html = "<h1><a name=\"a_heading\"></a>A heading</h1><h3><a name=\"a_heading\"/>A heading</h3><a></a>";
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        htmlExpected = """
+                       <h1>A heading</h1>
+                       <h3>A heading</h3>""";
         selector = "a:not([href])";
 
         element = Jsoup.parse(html)
@@ -121,7 +123,9 @@ public final class TestHtmlToolUnwrap {
         final Element element;      // Parsed HTML
 
         html = "<h1><a name=\"a_heading\">A heading</a></h1><h3><a name=\"a_heading\">A heading</h3></a><a></a>";
-        htmlExpected = "<h1>A heading</h1>\n<h3>A heading</h3>";
+        htmlExpected = """
+                       <h1>A heading</h1>
+                       <h3>A heading</h3>""";
         selector = "a:not([href])";
 
         element = Jsoup.parse(html)

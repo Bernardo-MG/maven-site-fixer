@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2023 the original author or authors.
+ * Copyright (c) 2015-2025 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,7 @@ public final class TestHtmlToolSwapTagWithParent {
         final String  selector;     // CSS selector
         final Element element;      // Parsed HTML
 
-        html = "<code><pre>Some code</pre></code>";
+        html = "<code> \n <pre>Some code</pre> \n</code>";
         htmlExpected = html;
         selector = "code > abc";
 

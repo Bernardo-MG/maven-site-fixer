@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2023 the original author or authors.
+ * Copyright (c) 2015-2025 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@ import java.util.Objects;
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities class for manipulating HTML, to be used as an extension of the Velocity templating engine.
@@ -43,9 +43,13 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
-@Slf4j
 @DefaultKey("htmlTool")
 public final class HtmlTool {
+
+    /**
+     * Logger for the class.
+     */
+    private static final Logger log = LoggerFactory.getLogger(HtmlTool.class);
 
     /**
      * Constructs an instance of the utilities class.
