@@ -66,6 +66,25 @@ public class Html5UpdateTool {
     /**
      * Removes the points from the contents of the specified attribute.
      *
+     * @param element
+     *            element with the attribute to clean
+     * @param attr
+     *            attribute to clean
+     */
+    private final void removePointsFromAttr(final Element element, final String attr) {
+        final String value; // Content of the attribute
+
+        // Takes and clean the old attribute value
+        value = element.attr(attr)
+            .replace(".", "");
+
+        // Sets the cleaned value
+        element.attr(attr, value);
+    }
+
+    /**
+     * Removes the points from the contents of the specified attribute.
+     *
      * @param root
      *            root element for the selection
      * @param selector
@@ -132,25 +151,6 @@ public class Html5UpdateTool {
         }
 
         return root;
-    }
-
-    /**
-     * Removes the points from the contents of the specified attribute.
-     *
-     * @param element
-     *            element with the attribute to clean
-     * @param attr
-     *            attribute to clean
-     */
-    private final void removePointsFromAttr(final Element element, final String attr) {
-        final String value; // Content of the attribute
-
-        // Takes and clean the old attribute value
-        value = element.attr(attr)
-            .replace(".", "");
-
-        // Sets the cleaned value
-        element.attr(attr, value);
     }
 
 }
