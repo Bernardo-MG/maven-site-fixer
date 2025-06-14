@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2023 the original author or authors.
+ * Copyright (c) 2015-2025 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,14 +28,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
-
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities class for fixing several issues in Doxia generated sites, updating and homogenising their layouts.
@@ -50,7 +49,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Bernardo Mart&iacute;nez Garrido
  */
-@Slf4j
 @DefaultKey("siteTool")
 public class SiteTool {
 
@@ -63,6 +61,11 @@ public class SiteTool {
      * Regular expresion indicating invalid values for ids and internal links will will be removed.
      */
     private static final String ID_REJECTED_REGEX = "[^\\w#-]";
+
+    /**
+     * Logger for the class.
+     */
+    private static final Logger log               = LoggerFactory.getLogger(SiteTool.class);
 
     /**
      * Constructs an instance of the utilities class.
@@ -157,416 +160,6 @@ public class SiteTool {
         }
 
         return root;
-    }
-
-    /**
-     * Fixes a Maven Site report.
-     * <p>
-     * This is prepared for the following reports:
-     * <ul>
-     * <li>Changes report</li>
-     * <li>Checkstyle</li>
-     * <li>CPD</li>
-     * <li>Dependencies</li>
-     * <li>Failsafe report</li>
-     * <li>Findbugs</li>
-     * <li>JDepend</li>
-     * <li>License</li>
-     * <li>Plugins</li>
-     * <li>Plugin management</li>
-     * <li>Project summary</li>
-     * <li>PMD</li>
-     * <li>Surefire report</li>
-     * <li>Tags list</li>
-     * <li>Team list</li>
-     * </ul>
-     * Most of the times, the fix consists on correcting the heading levels, and adding an initial heading if needed.
-     *
-     * @param root
-     *            root element with the report
-     * @param report
-     *            the report name
-     * @return transformed element
-     */
-    public final Element fixReport(final Element root, final String report) {
-
-        Objects.requireNonNull(report, "Received a null pointer as report");
-
-        if (root == null) {
-            log.warn("Received null root");
-        } else {
-            switch (report) {
-                case "changes-report":
-                    fixReportChanges(root);
-                    break;
-                case "checkstyle":
-                case "checkstyle-aggregate":
-                    fixReportCheckstyle(root);
-                    break;
-                case "cpd":
-                    fixReportCpd(root);
-                    break;
-                case "dependencies":
-                    fixReportDependencies(root);
-                    break;
-                case "dependency-analysis":
-                    fixReportDependencyAnalysis(root);
-                    break;
-                case "failsafe-report":
-                    fixReportFailsafe(root);
-                    break;
-                case "findbugs":
-                case "spotbugs":
-                    fixReportFindbugs(root);
-                    break;
-                case "jdepend-report":
-                    fixReportJdepend(root);
-                    break;
-                case "license":
-                case "licenses":
-                    fixReportLicense(root);
-                    break;
-                case "plugins":
-                    fixReportPlugins(root);
-                    break;
-                case "plugin-management":
-                    fixReportPluginManagement(root);
-                    break;
-                case "pmd":
-                    fixReportPmd(root);
-                    break;
-                case "project-summary":
-                case "summary":
-                    fixReportProjectSummary(root);
-                    break;
-                case "surefire-report":
-                    fixReportSurefire(root);
-                    break;
-                case "taglist":
-                    fixReportTaglist(root);
-                    break;
-                case "team-list":
-                case "team":
-                    fixReportTeamList(root);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        return root;
-    }
-
-    /**
-     * Fixes the changes report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportChanges(final Element root) {
-        final Collection<Element> headings;     // Headings in the body
-        final Collection<Element> sections;     // Sections in the body
-        final Element             section;      // First section
-        Element                   timeElement;  // Element with the date
-        Element                   smallElement; // Element with the small date
-        String                    text;         // Heading text
-        String[]                  texts;        // Split heading text
-
-        // Sets all the h2 to h1
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        headings = root.getElementsByTag("h3");
-        if (!headings.isEmpty()) {
-            // Sets first h3 to h2
-            headings.iterator()
-                .next()
-                .tagName("h2");
-        }
-
-        // Takes again all the h3 elements, to avoid the new h2
-        for (final Element heading : root.getElementsByTag("h3")) {
-            // Moves the heading id to the parent
-            heading.parent()
-                .attr("id", heading.id());
-            heading.removeAttr("id");
-
-            // Transforms the date on the heading
-            text = heading.text();
-            texts = text.split("–", 2);
-            if (texts.length == 2) {
-                timeElement = new Element(Tag.valueOf("time"), "");
-                timeElement.text(texts[1].trim());
-
-                smallElement = new Element(Tag.valueOf("small"), "");
-                smallElement.append("(");
-                smallElement.appendChild(timeElement);
-                smallElement.append(")");
-
-                heading.text(texts[0]);
-                heading.appendChild(smallElement);
-            }
-        }
-
-        // Moves all the elements out of the sections
-        sections = root.getElementsByTag("section");
-        if (!sections.isEmpty()) {
-            section = sections.iterator()
-                .next();
-            for (final Element child : section.children()) {
-                child.remove();
-                root.appendChild(child);
-            }
-
-            section.remove();
-        }
-    }
-
-    /**
-     * Fixes the Checkstyle report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportCheckstyle(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-        root.select("img[src=\"images/rss.png\"]")
-            .remove();
-    }
-
-    /**
-     * Fixes the CPD report page.
-     *
-     * @param root
-     *            element for the body of the report page
-     */
-    private final void fixReportCpd(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the dependencies report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportDependencies(final Element root) {
-        root.prepend("<h1>Dependencies Report</h1>");
-    }
-
-    /**
-     * Fixes the dependency analysis report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportDependencyAnalysis(final Element root) {
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        for (final Element head : root.getElementsByTag("h3")) {
-            head.tagName("h2");
-        }
-    }
-
-    /**
-     * Fixes the Failsafe report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportFailsafe(final Element root) {
-        final Collection<Element> elements; // Found elements
-        final Element             heading;  // First h2 heading
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            heading = elements.iterator()
-                .next();
-            heading.tagName("h1");
-            heading.text("Failsafe Report");
-        }
-    }
-
-    /**
-     * Fixes the Findbugs report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportFindbugs(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the JDepend report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportJdepend(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the License report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportLicense(final Element root) {
-        root.prepend("<h1>License</h1>");
-    }
-
-    /**
-     * Fixes the plugin management report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportPluginManagement(final Element root) {
-        final Collection<Element> sections; // Sections in the body
-        final Element             section;  // Section element
-
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        sections = root.getElementsByTag("section");
-        if (!sections.isEmpty()) {
-            section = sections.iterator()
-                .next();
-
-            for (final Element child : section.children()) {
-                child.remove();
-                root.appendChild(child);
-            }
-
-            section.remove();
-        }
-    }
-
-    /**
-     * Fixes the plugins report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportPlugins(final Element root) {
-        root.prepend("<h1>Plugins Report</h1>");
-    }
-
-    /**
-     * Fixes the PMD report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportPmd(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the project summary report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportProjectSummary(final Element root) {
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        for (final Element head : root.getElementsByTag("h3")) {
-            head.tagName("h2");
-        }
-    }
-
-    /**
-     * Fixes the Surefire report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportSurefire(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the tag list report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportTaglist(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the team list report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportTeamList(final Element root) {
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        for (final Element head : root.getElementsByTag("h3")) {
-            head.tagName("h2");
-        }
     }
 
     /**

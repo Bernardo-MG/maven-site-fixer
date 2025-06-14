@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p>
- * Copyright (c) 2015-2023 the original author or authors.
+ * Copyright (c) 2015-2025 the original author or authors.
  * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -79,7 +79,21 @@ public final class TestHtml5UpdateToolUpdateTableHeads {
         final Element element;      // Parsed HTML
 
         html = "<table border=\"0\" class=\"bodyTable testClass\"><tbody><tr class=\"a\"><th>Header 1</th><th>Header 2</th></tr><tr class=\"b\"><td>Data 1</td><td>Data 2</td></tr></tbody></table>";
-        htmlExpected = "<table border=\"0\" class=\"bodyTable testClass\">\n <thead>\n  <tr class=\"a\">\n   <th>Header 1</th>\n   <th>Header 2</th>\n  </tr>\n </thead>\n <tbody>\n  <tr class=\"b\">\n   <td>Data 1</td>\n   <td>Data 2</td>\n  </tr>\n </tbody>\n</table>";
+        htmlExpected = """
+                       <table border=\"0\" class=\"bodyTable testClass\">
+                        <thead>
+                         <tr class=\"a\">
+                          <th>Header 1</th>
+                          <th>Header 2</th>
+                         </tr>
+                        </thead>
+                        <tbody>
+                         <tr class=\"b\">
+                          <td>Data 1</td>
+                          <td>Data 2</td>
+                         </tr>
+                        </tbody>
+                       </table>""";
 
         element = Jsoup.parse(html)
             .body();
