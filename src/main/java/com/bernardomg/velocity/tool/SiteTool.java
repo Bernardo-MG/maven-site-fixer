@@ -26,10 +26,8 @@ package com.bernardomg.velocity.tool;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 
 import org.apache.velocity.tools.config.DefaultKey;
 import org.jsoup.Jsoup;
@@ -165,75 +163,58 @@ public class SiteTool {
     }
 
     /**
-     * Fixes a Maven Site report.
+     * Formats the received id, transforming it into a valid internal anchor id.
+     *
+     * @param id
+     *            id to transform
+     * @return a valid anchor id
+     */
+    private final String formatId(final String id) {
+        return id.trim()
+            .replaceAll(ID_HYPHEN_REGEX, "-")
+            .replaceAll(ID_REJECTED_REGEX, "");
+    }
+
+    /**
+     * Returns the result from replacing a collection of HTML elements on the received HTML code.
      * <p>
-     * This is prepared for the following reports:
-     * <ul>
-     * <li>Changes report</li>
-     * <li>Checkstyle</li>
-     * <li>CPD</li>
-     * <li>Dependencies</li>
-     * <li>Failsafe report</li>
-     * <li>Findbugs</li>
-     * <li>JDepend</li>
-     * <li>License</li>
-     * <li>Plugins</li>
-     * <li>Plugin management</li>
-     * <li>Project summary</li>
-     * <li>PMD</li>
-     * <li>Surefire report</li>
-     * <li>Tags list</li>
-     * <li>Team list</li>
-     * </ul>
-     * Most of the times, the fix consists on correcting the heading levels, and adding an initial heading if needed.
+     * These elements are received as a {@code Map}, made up of pairs where the key is a CSS selector, and the value is
+     * the replacement for the selected element.
      *
      * @param root
-     *            root element with the report
-     * @param report
-     *            the report name
-     * @return transformed element
+     *            root element for the content to modify
+     * @param replacements
+     *            {@code Map} where the key is a CSS selector and the value the element's replacement
      */
-    public final Element fixReport(final Element root, final String report) {
+    private final void replaceAll(final Element root, final Map<String, String> replacements) {
+        String              selector;        // Iterated selector
+        String              replacement;     // Iterated HTML replacement
+        Element             replacementElem; // Iterated replacement
+        Collection<Element> elements;        // Selected elements
+        Element             replacementBody; // Body of the replacement
 
-        Objects.requireNonNull(report, "Received a null pointer as report");
+        for (final Entry<String, String> replacementEntry : replacements.entrySet()) {
+            selector = replacementEntry.getKey();
+            replacement = replacementEntry.getValue();
 
-        if (root == null) {
-            log.warn("Received null root");
-        } else {
-            switch (report) {
-                case "cpd":
-                    fixReportCpd(root);
-                    break;
-                case "failsafe-report":
-                    fixReportFailsafe(root);
-                    break;
-                case "spotbugs":
-                    fixReportSpotBugs(root);
-                    break;
-                case "jdepend-report":
-                    fixReportJdepend(root);
-                    break;
-                case "license":
-                case "licenses":
-                    fixReportLicense(root);
-                    break;
-                case "project-summary":
-                case "summary":
-                    fixReportProjectSummary(root);
-                    break;
-                case "surefire-report":
-                    fixReportSurefire(root);
-                    break;
-                case "team-list":
-                case "team":
-                    fixReportTeamList(root);
-                    break;
-                default:
-                    break;
+            elements = root.select(selector);
+            if (!elements.isEmpty()) {
+                // There are elements to replace
+
+                // Processes the replacement
+                replacementBody = Jsoup.parse(replacement)
+                    .body();
+                if (!replacementBody.children()
+                    .isEmpty()) {
+                    replacementElem = replacementBody.child(0);
+
+                    // Replaces the elements
+                    for (final Element element : elements) {
+                        element.replaceWith(replacementElem.clone());
+                    }
+                }
             }
         }
-
-        return root;
     }
 
     /**
@@ -320,194 +301,6 @@ public class SiteTool {
         }
 
         return root;
-    }
-    
-    /**
-     * Fixes the CPD report page.
-     *
-     * @param root
-     *            element for the body of the report page
-     */
-    private final void fixReportCpd(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the SpotBugs report page.
-     *
-     * @param root
-     *            element for the body of the report page
-     */
-    private final void fixReportSpotBugs(final Element root) {
-        final Iterator<Element> elements;
-
-        elements = root.getElementsByTag("h1").iterator();
-        if (elements.hasNext()) {
-            // Ignore the first heading
-            elements.next();
-        }
-        while(elements.hasNext()) {
-            elements
-            .next()
-            .tagName("h2");
-        }
-    }
-
-    /**
-     * Fixes the Failsafe report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportFailsafe(final Element root) {
-        final Collection<Element> elements; // Found elements
-        final Element             heading;  // First h2 heading
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            heading = elements.iterator()
-                .next();
-            heading.tagName("h1");
-            heading.text("Failsafe Report");
-        }
-    }
-
-    /**
-     * Fixes the JDepend report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportJdepend(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the License report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportLicense(final Element root) {
-        root.prepend("<h1>License</h1>");
-    }
-
-    /**
-     * Fixes the project summary report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportProjectSummary(final Element root) {
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        for (final Element head : root.getElementsByTag("h3")) {
-            head.tagName("h2");
-        }
-    }
-
-    /**
-     * Fixes the Surefire report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportSurefire(final Element root) {
-        final Collection<Element> elements; // Found elements
-
-        elements = root.getElementsByTag("h2");
-        if (!elements.isEmpty()) {
-            elements.iterator()
-                .next()
-                .tagName("h1");
-        }
-    }
-
-    /**
-     * Fixes the team list report page.
-     *
-     * @param root
-     *            root element for the report page to fix
-     */
-    private final void fixReportTeamList(final Element root) {
-        for (final Element head : root.getElementsByTag("h2")) {
-            head.tagName("h1");
-        }
-
-        for (final Element head : root.getElementsByTag("h3")) {
-            head.tagName("h2");
-        }
-    }
-
-    /**
-     * Formats the received id, transforming it into a valid internal anchor id.
-     *
-     * @param id
-     *            id to transform
-     * @return a valid anchor id
-     */
-    private final String formatId(final String id) {
-        return id.trim()
-            .replaceAll(ID_HYPHEN_REGEX, "-")
-            .replaceAll(ID_REJECTED_REGEX, "");
-    }
-
-    /**
-     * Returns the result from replacing a collection of HTML elements on the received HTML code.
-     * <p>
-     * These elements are received as a {@code Map}, made up of pairs where the key is a CSS selector, and the value is
-     * the replacement for the selected element.
-     *
-     * @param root
-     *            root element for the content to modify
-     * @param replacements
-     *            {@code Map} where the key is a CSS selector and the value the element's replacement
-     */
-    private final void replaceAll(final Element root, final Map<String, String> replacements) {
-        String              selector;        // Iterated selector
-        String              replacement;     // Iterated HTML replacement
-        Element             replacementElem; // Iterated replacement
-        Collection<Element> elements;        // Selected elements
-        Element             replacementBody; // Body of the replacement
-
-        for (final Entry<String, String> replacementEntry : replacements.entrySet()) {
-            selector = replacementEntry.getKey();
-            replacement = replacementEntry.getValue();
-
-            elements = root.select(selector);
-            if (!elements.isEmpty()) {
-                // There are elements to replace
-
-                // Processes the replacement
-                replacementBody = Jsoup.parse(replacement)
-                    .body();
-                if (!replacementBody.children()
-                    .isEmpty()) {
-                    replacementElem = replacementBody.child(0);
-
-                    // Replaces the elements
-                    for (final Element element : elements) {
-                        element.replaceWith(replacementElem.clone());
-                    }
-                }
-            }
-        }
     }
 
 }
